@@ -53,7 +53,7 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16'
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -62,9 +62,7 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      env: {
-        env: require('dotenv').config().parsed
-      },
+      env: require('dotenv').config().parsed,
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -75,33 +73,14 @@ module.exports = configure(function (/* ctx */) {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
-        [
-          'unplugin-auto-import/vite',
-          {
-            include: [
-              /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-              /\.vue$/,
-              /\.vue\?vue/, // .vue
-              /\.md$/ // .md
-            ],
-            imports: ['vue', 'vue-router', 'quasar'],
-            dts: 'src/auto-imports.d.ts'
-          }
-        ],
-        [
-          'unplugin-vue-components/vite',
-          {
-            extensions: ['vue', 'md'],
-            include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-            dts: 'src/components.d.ts'
-          }
-        ]
+        // ['', {}]
       ]
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
+      port: 8080, // by me
       open: true // opens browser window automatically
     },
 
@@ -120,7 +99,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Dialog', 'Notify', 'Loading', 'LocalStorage']
     },
 
     // animations: 'all', // --- includes all animations
