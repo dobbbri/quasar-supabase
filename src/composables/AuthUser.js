@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 import useSupabase from 'boot/supabase'
 
-const user = ref(null) //global state
+//global state
+const user = ref(null)
 
 export default function useAuthUser() {
   const { supabase } = useSupabase()
@@ -24,7 +25,8 @@ export default function useAuthUser() {
   }
 
   const isLoggedIn = () => {
-    return !!user.value
+    const user = supabase.auth.user()
+    return !!user
   }
 
   const register = async ({ email, password, ...meta }) => {

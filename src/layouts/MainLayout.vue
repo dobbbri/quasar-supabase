@@ -3,14 +3,14 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import useAuthUser from 'src/composables/UseAuthUser'
-import useApi from 'src/composables/UseApi'
+// import useApi from 'src/composables/UseApi'
 
 const { logout } = useAuthUser()
-const { getBrand } = useApi()
+// const { getBrand } = useApi()
 
 const $q = useQuasar()
 const router = useRouter()
-const leftDrawerOpen = ref(false)
+const drawerOpen = ref(false)
 
 const handleLogout = async () => {
   $q.dialog({
@@ -24,8 +24,8 @@ const handleLogout = async () => {
   })
 }
 
-const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+const toggleDrawer = () => {
+  drawerOpen.value = !drawerOpen.value
 }
 
 const linksList = [
@@ -35,7 +35,7 @@ const linksList = [
   { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' }
 ]
 
-onMounted(() => getBrand())
+// onMounted(() => getBrand())
 </script>
 
 <template>
@@ -48,7 +48,7 @@ onMounted(() => getBrand())
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="toggleDrawer"
         />
 
         <q-toolbar-title class="text-weight-bold text-h6">EndlesS</q-toolbar-title>
@@ -76,7 +76,7 @@ onMounted(() => getBrand())
     </q-header>
 
     <q-drawer
-      v-model="leftDrawerOpen"
+      v-model="drawerOpen"
       show-if-above
       bordered
     >

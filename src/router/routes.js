@@ -3,23 +3,23 @@ const routes = [
     path: '/',
     component: () => import('layouts/LoginLayout.vue'),
     children: [
-      { path: '', name: 'loginDefault', component: () => import('pages/Login.vue') },
-      { path: 'login', name: 'login', component: () => import('pages/Login.vue') },
-      { path: 'register', name: 'register', component: () => import('pages/Register.vue') },
+      { path: '', name: 'loginDefault', component: () => import('pages/auth/Login.vue') },
+      { path: 'login', name: 'login', component: () => import('pages/auth/Login.vue') },
+      { path: 'register', name: 'register', component: () => import('pages/auth/Register.vue') },
       {
         path: 'email-confirmation',
         name: 'email-confirmation',
-        component: () => import('pages/EmailConfirmation.vue')
+        component: () => import('pages/auth/EmailConfirmation.vue')
       },
       {
         path: 'forgot-password',
         name: 'forgot-password',
-        component: () => import('pages/ForgotPassword.vue')
+        component: () => import('pages/auth/ForgotPassword.vue')
       },
       {
         path: 'reset-password',
         name: 'reset-password',
-        component: () => import('pages/ResetPassword.vue')
+        component: () => import('pages/auth/ResetPassword.vue')
       },
       {
         path: 'product-public/:id',
@@ -32,7 +32,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: 'me', name: 'me', component: () => import('pages/Me.vue') },
+      { path: 'me', name: 'me', component: () => import('pages/auth/Me.vue') },
       { path: 'category', name: 'category', component: () => import('pages/category/List.vue') },
       {
         path: 'form-category/:id?',

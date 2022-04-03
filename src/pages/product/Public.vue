@@ -47,7 +47,7 @@
             class="q-mr-sm"
           >
             <template v-slot:append>
-              <q-icon name="mdi-magnify" />
+              <q-icon name="magnify" />
             </template>
           </q-input>
         </template>

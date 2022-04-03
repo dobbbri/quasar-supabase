@@ -1,3 +1,56 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { useApi, useNotify, useAuthUser } from 'src/composables'
+import { columnsCategory } from './table'
+
+const categories = ref([])
+const loading = ref(true)
+const router = useRouter()
+const $q = useQuasar()
+const { user } = useAuthUser()
+const table = 'category'
+
+const { listPublic, remove } = useApi()
+const { notifyError, notifySuccess } = useNotify()
+
+const handleListCategories = async () => {
+  try {
+    loading.value = true
+    categories.value = await listPublic(table, user.value.id)
+    loading.value = false
+  } catch (error) {
+    notifyError(error.message)
+  }
+}
+
+const handleEdit = (category) => {
+  router.push({ name: 'form-category', params: { id: category.id } })
+}
+
+const handleRemoveCategory = async (category) => {
+  try {
+    $q.dialog({
+      title: 'Confirm',
+      message: `Do you really delete ${category.name} ?`,
+      cancel: true,
+      persistent: true
+    }).onOk(async () => {
+      await remove(table, category.id)
+      notifySuccess('successfully deleted')
+      handleListCategories()
+    })
+  } catch (error) {
+    notifyError(error.message)
+  }
+}
+
+onMounted(() => {
+  handleListCategories()
+})
+</script>
+
 <template>
   <q-page padding>
     <div class="row">
@@ -15,7 +68,7 @@
             v-if="$q.platform.is.desktop"
             label="Add New"
             color="primary"
-            icon="mdi-plus"
+            icon="plus"
             dense
             :to="{ name: 'form-category' }"
           />
@@ -26,7 +79,7 @@
             class="q-gutter-x-sm"
           >
             <q-btn
-              icon="mdi-pencil-outline"
+              icon="pencil-outline"
               color="info"
               dense
               size="sm"
@@ -35,7 +88,7 @@
               <q-tooltip> Edit </q-tooltip>
             </q-btn>
             <q-btn
-              icon="mdi-delete-outline"
+              icon="delete-outline"
               color="negative"
               dense
               size="sm"
@@ -54,78 +107,10 @@
       <q-btn
         v-if="$q.platform.is.mobile"
         fab
-        icon="mdi-plus"
+        icon="plus"
         color="primary"
         :to="{ name: 'form-category' }"
       />
     </q-page-sticky>
   </q-page>
 </template>
-
-<script>
-import { defineComponent, ref, onMounted } from 'vue'
-import useApi from 'src/composables/UseApi'
-import useNotify from 'src/composables/UseNotify'
-import useAuthUser from 'src/composables/UseAuthUser'
-import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-import { columnsCategory } from './table'
-
-export default defineComponent({
-  name: 'PageCategoryList',
-  setup() {
-    const categories = ref([])
-    const loading = ref(true)
-    const router = useRouter()
-    const $q = useQuasar()
-    const { user } = useAuthUser()
-    const table = 'category'
-
-    const { listPublic, remove } = useApi()
-    const { notifyError, notifySuccess } = useNotify()
-
-    const handleListCategories = async () => {
-      try {
-        loading.value = true
-        categories.value = await listPublic(table, user.value.id)
-        loading.value = false
-      } catch (error) {
-        notifyError(error.message)
-      }
-    }
-
-    const handleEdit = (category) => {
-      router.push({ name: 'form-category', params: { id: category.id } })
-    }
-
-    const handleRemoveCategory = async (category) => {
-      try {
-        $q.dialog({
-          title: 'Confirm',
-          message: `Do you really delete ${category.name} ?`,
-          cancel: true,
-          persistent: true
-        }).onOk(async () => {
-          await remove(table, category.id)
-          notifySuccess('successfully deleted')
-          handleListCategories()
-        })
-      } catch (error) {
-        notifyError(error.message)
-      }
-    }
-
-    onMounted(() => {
-      handleListCategories()
-    })
-
-    return {
-      columnsCategory,
-      categories,
-      loading,
-      handleEdit,
-      handleRemoveCategory
-    }
-  }
-})
-</script>

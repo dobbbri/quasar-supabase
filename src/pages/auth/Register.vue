@@ -1,3 +1,32 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthUser, useNotify } from 'src/composables'
+
+const router = useRouter()
+const { register } = useAuthUser()
+const { notifyError, notifySuccess } = useNotify()
+
+const form = ref({
+  name: '',
+  email: '',
+  password: ''
+})
+
+const handleRegister = async () => {
+  try {
+    await register(form.value)
+    notifySuccess()
+    router.push({
+      name: 'email-confirmation',
+      query: { email: form.value.email }
+    })
+  } catch (error) {
+    notifyError(error.message)
+  }
+}
+</script>
+
 <template>
   <q-page padding>
     <q-form
@@ -51,44 +80,3 @@
     </q-form>
   </q-page>
 </template>
-
-<script>
-import { defineComponent, ref } from 'vue'
-import useAuthUser from 'src/composables/UseAuthUser'
-import useNotify from 'src/composables/UseNotify'
-import { useRouter } from 'vue-router'
-
-export default defineComponent({
-  name: 'PageRegister',
-
-  setup() {
-    const router = useRouter()
-    const { register } = useAuthUser()
-    const { notifyError, notifySuccess } = useNotify()
-
-    const form = ref({
-      name: '',
-      email: '',
-      password: ''
-    })
-
-    const handleRegister = async () => {
-      try {
-        await register(form.value)
-        notifySuccess()
-        router.push({
-          name: 'email-confirmation',
-          query: { email: form.value.email }
-        })
-      } catch (error) {
-        notifyError(error.message)
-      }
-    }
-
-    return {
-      form,
-      handleRegister
-    }
-  }
-})
-</script>

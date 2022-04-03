@@ -16,7 +16,7 @@
             size="sm"
             outline
             class="q-ml-sm"
-            icon="mdi-store"
+            icon="store"
             color="primary"
             @click="handleGoToStore"
           />
@@ -26,7 +26,7 @@
             size="sm"
             outline
             class="q-ml-sm"
-            icon="mdi-content-copy"
+            icon="content-copy"
             color="primary"
             @click="handleCopyPublicUrl"
           />
@@ -35,7 +35,7 @@
             v-if="$q.platform.is.desktop"
             label="Add New"
             color="primary"
-            icon="mdi-plus"
+            icon="plus"
             dense
             :to="{ name: 'form-product' }"
           />
@@ -49,7 +49,7 @@
               v-else
               color="grey"
               text-color="white"
-              icon="mdi-image-off"
+              icon="image-off"
             />
           </q-td>
         </template>
@@ -59,7 +59,7 @@
             class="q-gutter-x-sm"
           >
             <q-btn
-              icon="mdi-pencil-outline"
+              icon="pencil-outline"
               color="info"
               dense
               size="sm"
@@ -68,7 +68,7 @@
               <q-tooltip> Edit </q-tooltip>
             </q-btn>
             <q-btn
-              icon="mdi-delete-outline"
+              icon="delete-outline"
               color="negative"
               dense
               size="sm"
@@ -87,7 +87,7 @@
       <q-btn
         v-if="$q.platform.is.mobile"
         fab
-        icon="mdi-plus"
+        icon="plus"
         color="primary"
         :to="{ name: 'form-product' }"
       />
