@@ -97,9 +97,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import useApi from 'src/composables/UseApi'
-import useAuthUser from 'src/composables/UseAuthUser'
-import useNotify from 'src/composables/UseNotify'
+import { useApi, useNotify, useAuthUser } from 'src/composables'
 import { useRouter } from 'vue-router'
 import { useQuasar, openURL, copyToClipboard } from 'quasar'
 import { columnsProduct } from './table'

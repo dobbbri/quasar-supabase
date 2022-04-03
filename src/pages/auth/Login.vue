@@ -1,13 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import useAuthUser from 'src/composables/UseAuthUser'
-import useNotify from 'src/composables/UseNotify'
 import { useRouter } from 'vue-router'
+import { useAuthUser, useNotify } from 'src/composables'
 
 const router = useRouter()
 
 const { login, isLoggedIn } = useAuthUser()
-
 const { notifyError, notifySuccess } = useNotify()
 
 const form = ref({
@@ -48,14 +46,24 @@ const handleLogin = async () => {
           type="email"
         />
 
-        <q-input
-          label="Password"
-          v-model="form.password"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Password is required']"
-        />
+        <div>
+          <q-input
+            label="Password"
+            v-model="form.password"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || 'Password is required']"
+          />
+          <q-btn
+            label="Esqueceu sua senha?"
+            color="primary"
+            class="float-right"
+            flat
+            :to="{ name: 'forgot-password' }"
+            size="sm"
+          />
+        </div>
 
-        <div class="full-width q-pt-md">
+        <div class="full-width q-pt-xl">
           <q-btn
             label="Entrar"
             color="primary"
@@ -63,14 +71,6 @@ const handleLogin = async () => {
             outline
             rounded
             type="submit"
-          />
-          <q-btn
-            label="Esqueceu sua senha?"
-            color="primary"
-            class="text-right"
-            flat
-            :to="{ name: 'forgot-password' }"
-            size="sm"
           />
         </div>
         <div class="full-width q-gutter-y-sm">

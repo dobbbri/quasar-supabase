@@ -61,7 +61,7 @@ export default function useApi() {
     return publicUrl
   }
 
-  const getImageUrl = async (fileName, storage) => {
+  const getUrlPublic = async (fileName, storage) => {
     const { publicURL, error } = supabase.storage.from(storage).getPublicUrl(fileName)
     if (error) throw error
     return publicURL
@@ -75,6 +75,6 @@ export default function useApi() {
     edit,
     remove,
     uploadImage,
-    getImageUrl
+    getUrlPublic
   }
 }

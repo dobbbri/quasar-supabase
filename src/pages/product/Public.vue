@@ -115,8 +115,7 @@
 
 <script>
 import { defineComponent, ref, onMounted, computed } from 'vue'
-import useApi from 'src/composables/UseApi'
-import useNotify from 'src/composables/UseNotify'
+import { useApi, useNotify } from 'src/composables'
 import { useRoute } from 'vue-router'
 import { columnsProduct, initialPagination } from './table'
 import { formatCurrency } from 'src/utils/format'

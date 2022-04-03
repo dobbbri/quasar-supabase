@@ -6,7 +6,7 @@ import {
   createWebHashHistory
 } from 'vue-router'
 import routes from './routes'
-import useAuthUser from 'src/composables/UseAuthUser'
+import { useAuthUser } from 'src/composables'
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import useAuthUser from 'src/composables/UseAuthUser'
+import { useAuthUser } from 'src/composables'
 // import useApi from 'src/composables/UseApi'
 
 const { logout } = useAuthUser()

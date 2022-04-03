@@ -2,7 +2,7 @@
 import { defineProps, defineEmits } from 'vue'
 import { formatCurrency } from 'src/utils/format'
 import { openURL } from 'quasar'
-import UseApi from 'src/composables/UseApi'
+import { UseApi } from 'src/composables'
 
 const props = defineProps({
   show: {

@@ -8,6 +8,6 @@ supabase.auth.onAuthStateChange((event, session) => {
   console.info(event, session)
 })
 
-export default function useSupabase() {
+export function useSupabase() {
   return { supabase }
 }
