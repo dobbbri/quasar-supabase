@@ -1,29 +1,20 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthUser, useNotify } from 'src/composables'
+import { useAuthUser } from 'src/composables'
 
 const router = useRouter()
-const { register } = useAuthUser()
-const { notifyError, notifySuccess } = useNotify()
+const { error, loading, register } = useAuthUser()
 
 const form = ref({
-  name: '',
-  email: '',
-  password: ''
+  name: 'Sergio Dobri',
+  email: 'sergiodobri@gmail.com',
+  password: '123456'
 })
 
 const handleRegister = async () => {
-  try {
-    await register(form.value)
-    notifySuccess()
-    router.push({
-      name: 'email-confirmation',
-      query: { email: form.value.email }
-    })
-  } catch (error) {
-    notifyError(error.message)
-  }
+  await register(form.value)
+  if (!error.value) router.push({ name: 'email-confirmation', params: { email: form.value.email } })
 }
 </script>
 
@@ -64,11 +55,13 @@ const handleRegister = async () => {
             class="full-width"
             outline
             rounded
+            :loading="loading"
+            :disable="loading"
             type="submit"
           />
 
           <q-btn
-            label="Back"
+            label="Login"
             color="dark"
             class="full-width"
             rounded

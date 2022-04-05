@@ -14,7 +14,7 @@ export default function useNotify() {
     if (process.env.DEV) console.info(`${message} - error: ${error.code} - ${error.message}`)
     Notify.create({
       message: message,
-      caption: `${error.code} - ${error.message}`,
+      caption: `${error.message} (${error.code || ''})`,
       icon: 'error',
       iconColor: 'red',
       timeout: 200000,

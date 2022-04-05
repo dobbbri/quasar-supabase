@@ -28,13 +28,7 @@ export default function useAuthUser() {
   const register = async ({ email, password, ...meta }) => {
     error.value = null
     loading.value = true
-    const { error: err } = await supabase.auth.signUp(
-      { email, password },
-      {
-        data: meta,
-        redirectTo: `${window.location.origin}/index?fromEmail=registrationConfirmation"`
-      }
-    )
+    const { error: err } = await supabase.auth.signUp({ email, password }, { data: meta })
     loading.value = false
     if (err) {
       error.value = true

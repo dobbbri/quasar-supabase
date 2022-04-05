@@ -73,7 +73,7 @@ onMounted(() => {
               @click="handleLogout"
             >
               <q-item-section>
-                <q-item-label>Sair</q-item-label>
+                <q-item-label class="text-red text-body1">Sair</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
