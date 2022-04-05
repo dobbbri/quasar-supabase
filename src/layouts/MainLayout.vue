@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useAuthUser } from 'src/composables'
@@ -7,12 +7,13 @@ import { useAuthUser } from 'src/composables'
 import SidebarLinkList from 'src/components/SidebarLinkList.vue'
 import DarkModeToggle from 'src/components/DarkModeToggle.vue'
 
-const { logout } = useAuthUser()
+const { user, logout } = useAuthUser()
 // const { getBrand } = useApi()
 
 const $q = useQuasar()
 const router = useRouter()
 const drawerOpen = ref(false)
+const firstName = ref('')
 
 const handleLogout = async () => {
   $q.dialog({
@@ -37,7 +38,10 @@ const linksList = [
   { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' }
 ]
 
-// onMounted(() => getBrand())
+onMounted(() => {
+  firstName.value = user.value.user_metadata.name.split(' ')[0]
+  // getBrand()
+})
 </script>
 
 <template>
@@ -58,9 +62,9 @@ const linksList = [
         <dark-mode-toggle />
 
         <q-btn-dropdown
+          :label="firstName"
           flat
           color="white"
-          icon="person"
         >
           <q-list>
             <q-item

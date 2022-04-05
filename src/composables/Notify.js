@@ -11,7 +11,7 @@ export default function useNotify() {
   }
 
   const notifyError = (message, error = null) => {
-    console.info(`${message} - error: ${error.code} - ${error.message}`)
+    if (process.env.DEV) console.info(`${message} - error: ${error.code} - ${error.message}`)
     Notify.create({
       message: message,
       caption: `${error.code} - ${error.message}`,

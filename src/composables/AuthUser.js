@@ -1,12 +1,10 @@
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue'
 import { useSupabase } from 'boot/supabase'
 import { useNotify } from 'src/composables'
 
 export default function useAuthUser() {
   const error = ref(null)
   const loading = ref(false)
-  const router = useRouter()
   const { supabase } = useSupabase()
   const { notifyError, notifySuccess } = useNotify()
 
@@ -16,13 +14,12 @@ export default function useAuthUser() {
     const { error: err } = await supabase.auth.signIn({ email, password })
     loading.value = false
     if (err) {
-      error.value = true
+      error.value = err
       notifyError('Credenciais inválidas.', err)
     }
   }
 
   const logout = async () => {
-    error.value = null
     loading.value = true
     await supabase.auth.signOut()
     loading.value = false
@@ -38,7 +35,6 @@ export default function useAuthUser() {
         redirectTo: `${window.location.origin}/index?fromEmail=registrationConfirmation"`
       }
     )
-    router.push({ name: 'email-confirmation', query: { email: email } })
     loading.value = false
     if (err) {
       error.value = true
@@ -86,10 +82,10 @@ export default function useAuthUser() {
   }
 
   return {
+    isLoggedIn: () => !!supabase.auth.user(),
+    user: computed(() => supabase.auth.user()),
     error,
     loading,
-    user: () => supabase.auth.user(),
-    isLoggedIn: () => !!supabase.auth.user(),
     login,
     logout,
     register,

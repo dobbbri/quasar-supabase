@@ -21,7 +21,9 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 
-  Router.beforeEach((to) => {
+  Router.beforeEach((to, from) => {
+    if (process.env.DEV) console.info(`navigating from ${from.path} to ${to.path}`)
+
     const { isLoggedIn } = useAuthUser()
 
     if (to.hash.includes('type=recovery') && to.name !== 'reset-password') {

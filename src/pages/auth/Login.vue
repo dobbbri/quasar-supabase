@@ -13,7 +13,7 @@ const form = ref({
 
 const handleLogin = async () => {
   await login(form.value)
-  if (!error) router.push({ name: 'me' })
+  if (!error.value) router.push({ name: 'index' })
 }
 
 onMounted(() => {
