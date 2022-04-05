@@ -1,33 +1,24 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthUser, useNotify } from 'src/composables'
+import { useAuthUser } from 'src/composables'
 
 const router = useRouter()
-
-const { login, isLoggedIn } = useAuthUser()
-const { notifyError, notifySuccess } = useNotify()
+const { error, loading, login, isLoggedIn } = useAuthUser()
 
 const form = ref({
-  email: '',
-  password: ''
-})
-
-onMounted(() => {
-  if (isLoggedIn) {
-    router.push({ name: 'me' })
-  }
+  email: 'sergiodobri@gmail.com',
+  password: '123456'
 })
 
 const handleLogin = async () => {
-  try {
-    await login(form.value)
-    notifySuccess('Login successfully!')
-    router.push({ name: 'me' })
-  } catch (error) {
-    notifyError(error.message)
-  }
+  await login(form.value)
+  if (!error) router.push({ name: 'me' })
 }
+
+onMounted(() => {
+  if (isLoggedIn()) router.push({ name: 'index' })
+})
 </script>
 
 <template>
@@ -70,6 +61,8 @@ const handleLogin = async () => {
             class="full-width"
             outline
             rounded
+            :loading="loading"
+            :disable="loading"
             type="submit"
           />
         </div>
@@ -78,9 +71,9 @@ const handleLogin = async () => {
             label="Registro"
             color="primary"
             class="full-width"
+            rounded
             flat
             to="/register"
-            size="sm"
           />
         </div>
       </div>

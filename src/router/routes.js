@@ -32,7 +32,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: 'me', name: 'me', component: () => import('pages/auth/Me.vue') },
+      { path: 'index', name: 'index', component: () => import('pages/IndexPage.vue') },
       { path: 'category', name: 'category', component: () => import('pages/category/List.vue') },
       {
         path: 'form-category/:id?',

@@ -47,7 +47,7 @@ const route = useRoute()
 const { post, getById, update } = useApi()
 const { notifyError, notifySuccess } = useNotify()
 
-const isUpdate = computed(() => route.params.id)
+const isUpdate = computed(() => (route.params.id ? true : false))
 
 let category = {}
 
@@ -70,9 +70,9 @@ const handleSubmit = async () => {
   }
 }
 
-const handleGetCategory = async (id) => {
+const handleGetCategory = async () => {
   try {
-    category = await getById(table, id)
+    category = await getById(table, route.params.id)
     form.value = category
   } catch (error) {
     notifyError(error.message)
@@ -80,8 +80,6 @@ const handleGetCategory = async (id) => {
 }
 
 onMounted(() => {
-  if (isUpdate.value) {
-    handleGetCategory(isUpdate.value)
-  }
+  if (isUpdate.value) handleGetCategory()
 })
 </script>

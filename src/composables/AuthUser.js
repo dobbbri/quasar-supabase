@@ -1,71 +1,96 @@
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSupabase } from 'boot/supabase'
-
-//global state
-const user = ref(null)
+import { useNotify } from 'src/composables'
 
 export default function useAuthUser() {
+  const error = ref(null)
+  const loading = ref(false)
+  const router = useRouter()
   const { supabase } = useSupabase()
+  const { notifyError, notifySuccess } = useNotify()
 
   const login = async ({ email, password }) => {
-    const { user, error } = await supabase.auth.signIn({ email, password })
-    if (error) throw error
-    return user
-  }
-
-  const loginWithSocialProvider = async (provider) => {
-    const { user, error } = await supabase.auth.signIn({ provider })
-    if (error) throw error
-    return user
+    error.value = null
+    loading.value = true
+    const { error: err } = await supabase.auth.signIn({ email, password })
+    loading.value = false
+    if (err) {
+      error.value = true
+      notifyError('Credenciais inválidas.', err)
+    }
   }
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
-  }
-
-  const isLoggedIn = () => {
-    const user = supabase.auth.user()
-    return !!user
+    error.value = null
+    loading.value = true
+    await supabase.auth.signOut()
+    loading.value = false
   }
 
   const register = async ({ email, password, ...meta }) => {
-    const { user, error } = await supabase.auth.signUp(
+    error.value = null
+    loading.value = true
+    const { error: err } = await supabase.auth.signUp(
       { email, password },
       {
         data: meta,
-        redirectTo: `${window.location.origin}/me?fromEmail=registrationConfirmation"`
+        redirectTo: `${window.location.origin}/index?fromEmail=registrationConfirmation"`
       }
     )
-    if (error) throw error
-    return user
+    router.push({ name: 'email-confirmation', query: { email: email } })
+    loading.value = false
+    if (err) {
+      error.value = true
+      notifyError('Credenciais inválidas.', err)
+    }
   }
 
   const update = async (data) => {
-    const { user, error } = await supabase.auth.update(data)
-    if (error) throw error
-    return user
+    error.value = null
+    loading.value = true
+    const { error: err } = await supabase.auth.update(data)
+    loading.value = false
+    if (err) {
+      error.value = true
+      notifyError('Erro ao alterar os dados do usuário.', err)
+      return
+    }
+    notifySuccess()
   }
 
   const sendPasswordRestEmail = async (email) => {
-    const { user, error } = await supabase.auth.api.resetPasswordForEmail(email)
-    if (error) throw error
-    return user
+    error.value = null
+    loading.value = true
+    const { error: err } = await supabase.auth.api.resetPasswordForEmail(email)
+    loading.value = false
+    if (err) {
+      error.value = true
+      notifyError('Erro ao enviar o email de troca de senha.', err)
+      return
+    }
   }
 
   const resetPassword = async (accessToken, newPassword) => {
-    const { user, error } = await supabase.auth.api.updateUser(accessToken, {
+    error.value = null
+    loading.value = true
+    const { error: err } = await supabase.auth.api.updateUser(accessToken, {
       password: newPassword
     })
-    if (error) throw error
-    return user
+    loading.value = false
+    if (err) {
+      error.value = err
+      notifyError('Erro ao trocar a senha do usuário.', err)
+      return
+    }
   }
 
   return {
-    user,
+    error,
+    loading,
+    user: () => supabase.auth.user(),
+    isLoggedIn: () => !!supabase.auth.user(),
     login,
-    loginWithSocialProvider,
-    isLoggedIn,
     logout,
     register,
     update,

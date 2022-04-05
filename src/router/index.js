@@ -29,9 +29,11 @@ export default route(function (/* { store, ssrContext } */) {
       const token = accessToken.replace('#access_token=', '')
       return { name: 'reset-password', query: { token } }
     }
+
     if (!isLoggedIn() && to.meta.requiresAuth && !Object.keys(to.query).includes('fromEmail')) {
       return { name: 'login' }
     }
   })
+
   return Router
 })

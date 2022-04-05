@@ -1,9 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useAuthUser } from 'src/composables'
 // import useApi from 'src/composables/UseApi'
+import SidebarLinkList from 'src/components/SidebarLinkList.vue'
+import DarkModeToggle from 'src/components/DarkModeToggle.vue'
 
 const { logout } = useAuthUser()
 // const { getBrand } = useApi()
@@ -29,7 +31,7 @@ const toggleDrawer = () => {
 }
 
 const linksList = [
-  { title: 'Início', caption: '', icon: 'home', routeName: 'me' },
+  { title: 'Início', caption: '', icon: 'home', routeName: 'index' },
   { title: 'Categoria', caption: '', icon: 'category', routeName: 'category' },
   { title: 'Produto', caption: '', icon: 'inventory', routeName: 'product' },
   { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' }
@@ -53,7 +55,7 @@ const linksList = [
 
         <q-toolbar-title class="text-weight-bold text-h6">EndlesS</q-toolbar-title>
 
-        <dark-mode-toogle />
+        <dark-mode-toggle />
 
         <q-btn-dropdown
           flat
@@ -88,7 +90,7 @@ const linksList = [
           Menu
         </q-item-label>
 
-        <EssentialLink
+        <sidebar-link-list
           v-for="link in linksList"
           :key="link.title"
           v-bind="link"

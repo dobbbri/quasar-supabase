@@ -1,19 +1,24 @@
-import { useQuasar } from 'quasar'
+import { Notify } from 'quasar'
 
 export default function useNotify() {
-  const $q = useQuasar()
-
   const notifySuccess = (message) => {
-    $q.notify({
-      type: 'positive',
-      message: message || 'All right !'
+    Notify.create({
+      message: message || 'Gravado.',
+      icon: 'check_circle',
+      iconColor: 'green',
+      timeout: 2000
     })
   }
 
-  const notifyError = (message) => {
-    $q.notify({
-      type: 'negative',
-      message: message || 'Failed !'
+  const notifyError = (message, error = null) => {
+    console.info(`${message} - error: ${error.code} - ${error.message}`)
+    Notify.create({
+      message: message,
+      caption: `${error.code} - ${error.message}`,
+      icon: 'error',
+      iconColor: 'red',
+      timeout: 200000,
+      actions: [{ label: 'Fechar', color: 'white' }]
     })
   }
 

@@ -1,4 +1,7 @@
 <script setup>
+import { ref, watch, onMounted } from 'vue'
+import { useQuasar } from 'quasar'
+
 const darkMode = ref(false)
 const $q = useQuasar()
 
@@ -19,7 +22,7 @@ onMounted(() => {
   <q-toggle
     v-model="darkMode"
     checked-icon="dark_mode"
-    color="green"
+    color="dark"
     unchecked-icon="light_mode"
     size="lg"
   />
