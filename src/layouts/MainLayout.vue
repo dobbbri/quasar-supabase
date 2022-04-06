@@ -2,12 +2,12 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useAuthUser } from 'src/composables'
+import { useAuth } from 'src/composables'
 // import useApi from 'src/composables/UseApi'
-import SidebarLinkList from 'src/components/SidebarLinkList.vue'
+import SidebarList from 'src/components/SidebarList.vue'
 import DarkModeToggle from 'src/components/DarkModeToggle.vue'
 
-const { user, logout } = useAuthUser()
+const { user, logout } = useAuth()
 // const { getBrand } = useApi()
 
 const $q = useQuasar()
@@ -30,13 +30,6 @@ const handleLogout = async () => {
 const toggleDrawer = () => {
   drawerOpen.value = !drawerOpen.value
 }
-
-const linksList = [
-  { title: 'Início', caption: '', icon: 'home', routeName: 'index' },
-  { title: 'Categoria', caption: '', icon: 'category', routeName: 'category' },
-  { title: 'Produto', caption: '', icon: 'inventory', routeName: 'product' },
-  { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' }
-]
 
 onMounted(() => {
   firstName.value = user.value.user_metadata.name.split(' ')[0]
@@ -86,20 +79,7 @@ onMounted(() => {
       show-if-above
       bordered
     >
-      <q-list>
-        <q-item-label
-          header
-          class="text-weight-bold text-h6 text-primary"
-        >
-          Menu
-        </q-item-label>
-
-        <sidebar-link-list
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+      <sidebar-list />
     </q-drawer>
 
     <q-page-container>

@@ -1,18 +1,25 @@
 <script setup>
 import { ref } from 'vue'
-import { useAuthUser, useNotify } from 'src/composables'
+import { useRouter } from 'vue-router'
+import { useAuth, useNotify } from 'src/composables'
 
-const { sendPasswordRestEmail } = useAuthUser()
-const { notifyError, notifySuccess } = useNotify()
+const router = useRouter()
+
+const { loading, sendPasswordResetEmail } = useAuth()
+const { notifyError, notifyInfo } = useNotify()
 
 const email = ref('')
 
 const handleForgotPassowrd = async () => {
   try {
-    await sendPasswordRestEmail(email.value)
-    notifySuccess(`Password reset email sent to: ${email.value}`)
+    await sendPasswordResetEmail(email.value)
+    notifyInfo(
+      'Para finalizar o registro,',
+      `um email de confirmação foi enviado para: ${form.value.email}.`
+    )
+    router.push({ name: 'login' })
   } catch (error) {
-    notifyError(error.message)
+    notifyError('Erro ao enviar email de troca de senha.', error)
   }
 }
 </script>
@@ -40,6 +47,8 @@ const handleForgotPassowrd = async () => {
             class="full-width"
             outline
             rounded
+            :loading="loading"
+            :disable="loading"
             type="submit"
           />
 

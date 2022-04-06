@@ -2,22 +2,17 @@
 import { defineProps, defineEmits } from 'vue'
 import { formatCurrency } from 'src/utils/format'
 import { openURL } from 'quasar'
-import { UseApi } from 'src/composables'
+import { useApi } from 'src/composables'
 
 const props = defineProps({
-  show: {
-    type: Boolean,
-    required: true
-  },
-  product: {
-    type: Object
-  }
+  show: {type: Boolean, required: true},
+  product: { type: Object  }
 })
 
 const emit = defineEmits(['hideDialog'])
 
 const msg = 'Olá, fiquei interressado no produto: '
-const { brand } = UseApi()
+const { brand } = useApi()
 
 const handleClose = () => {
   emit('hideDialog')

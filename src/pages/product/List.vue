@@ -97,7 +97,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { useApi, useNotify, useAuthUser } from 'src/composables'
+import { useApi, useNotify, useAuth } from 'src/composables'
 import { useRouter } from 'vue-router'
 import { useQuasar, openURL, copyToClipboard } from 'quasar'
 import { columnsProduct } from './table'
@@ -112,7 +112,7 @@ export default defineComponent({
     const $q = useQuasar()
 
     const { listPublic, remove } = useApi()
-    const { user } = useAuthUser()
+    const { user } = useAuth()
     const { notifyError, notifySuccess } = useNotify()
 
     const handleListProducts = async () => {

@@ -1,5 +1,5 @@
 <script setup>
-import { useApi, useNotify, useBrand, useAuthUser } from 'src/composables'
+import { useApi, useNotify, useBrand, useAuth } from 'src/composables'
 
 const { post, listPublic, update, uploadImg } = useApi()
 const { notifyError, notifySuccess } = useNotify()

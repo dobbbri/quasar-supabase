@@ -2,14 +2,14 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useApi, useNotify, useAuthUser } from 'src/composables'
+import { useApi, useNotify, useAuth } from 'src/composables'
 import { columnsCategory } from './table'
 
 const categories = ref([])
 const loading = ref(true)
 const router = useRouter()
 const $q = useQuasar()
-const { user } = useAuthUser()
+const { user } = useAuth()
 const table = 'category'
 
 const { listPublic, remove } = useApi()

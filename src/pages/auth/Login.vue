@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthUser } from 'src/composables'
+import { useAuth, useNotify } from 'src/composables'
 
 const router = useRouter()
-const { error, loading, login, isLoggedIn } = useAuthUser()
+
+const { loading, login, isLoggedIn } = useAuth()
+const { notifyError } = useNotify()
 
 const form = ref({
   email: 'sergiodobri@gmail.com',
@@ -12,8 +14,12 @@ const form = ref({
 })
 
 const handleLogin = async () => {
-  await login(form.value)
-  if (!error.value) router.push({ name: 'index' })
+  try {
+    await login(form.value)
+    router.push({ name: 'index' })
+  } catch (error) {
+    notifyError('Credenciais inbálidas.', error)
+  }
 }
 
 onMounted(() => {
@@ -48,6 +54,7 @@ onMounted(() => {
             label="Esqueceu sua senha?"
             color="primary"
             class="float-right"
+            rounded
             flat
             :to="{ name: 'forgot-password' }"
             size="sm"

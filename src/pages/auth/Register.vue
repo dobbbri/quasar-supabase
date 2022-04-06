@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuthUser } from 'src/composables'
+import { useAuth, useNotify } from 'src/composables'
 
 const router = useRouter()
-const { error, loading, register } = useAuthUser()
+
+const { loading, register } = useAuth()
+const { notifyError, notifyInfo } = useNotify()
 
 const form = ref({
   name: 'Sergio Dobri',
@@ -13,8 +15,16 @@ const form = ref({
 })
 
 const handleRegister = async () => {
-  await register(form.value)
-  if (!error.value) router.push({ name: 'email-confirmation', params: { email: form.value.email } })
+  try {
+    await register(form.value)
+    notifyInfo(
+      'Para finalizar o registro,',
+      `um email de confirmação foi enviado para: ${form.value.email}.`
+    )
+    router.push({ name: 'login' })
+  } catch (error) {
+    notifyError('Credenciais inválidas', error)
+  }
 }
 </script>
 

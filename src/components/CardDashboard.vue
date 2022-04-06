@@ -32,11 +32,11 @@
 
 <script setup>
 import { defineProps, ref, onMounted } from 'vue'
-import { useApi, useAuthUser } from 'src/composables'
+import { useApi, useAuth } from 'src/composables'
 
 const count = ref(0)
 const load = ref(true)
-const { user } = useAuthUser()
+const { user } = useAuth()
 const { getCount } = useApi()
 
 const props = defineProps({

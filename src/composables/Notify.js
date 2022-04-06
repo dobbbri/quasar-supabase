@@ -10,6 +10,17 @@ export default function useNotify() {
     })
   }
 
+  const notifyInfo = (message, caption) => {
+    Notify.create({
+      message: message,
+      caption: caption,
+      icon: 'info',
+      iconColor: 'blue',
+      timeout: 200000,
+      actions: [{ label: 'Fechar', color: 'white' }]
+    })
+  }
+
   const notifyError = (message, error = null) => {
     if (process.env.DEV) console.info(`${message} - error: ${error.code} - ${error.message}`)
     Notify.create({
@@ -24,6 +35,7 @@ export default function useNotify() {
 
   return {
     notifySuccess,
+    notifyInfo,
     notifyError
   }
 }

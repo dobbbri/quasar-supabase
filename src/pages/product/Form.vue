@@ -76,7 +76,7 @@
 <script>
 import { defineComponent, ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useApi, useNotify, useAuthUser } from 'src/composables'
+import { useApi, useNotify, useAuth } from 'src/composables'
 
 export default defineComponent({
   name: 'PageFormCategory',
@@ -86,7 +86,7 @@ export default defineComponent({
     const route = useRoute()
     const { post, getById, update, listPublic, uploadImg } = useApi()
     const { notifyError, notifySuccess } = useNotify()
-    const { user } = useAuthUser()
+    const { user } = useAuth()
 
     const isUpdate = computed(() => route.params.id)
 

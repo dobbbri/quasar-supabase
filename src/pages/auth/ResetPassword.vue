@@ -1,23 +1,24 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAuthUser, useNotify } from 'src/composables'
+import { useAuth, useNotify } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
-const { resetPassword } = useAuthUser()
+
+const { loading, resetPassword } = useAuth()
 const { notifyError, notifySuccess } = useNotify()
 
-const token = route.query.token
+const token = route.params.token
 const password = ref('')
 
 const handlePasswordReset = async () => {
   try {
     await resetPassword(token, password.value)
-    notifySuccess('Senha alterada')
+    notifySuccess('Senha alterada.')
     router.push({ name: 'login' })
   } catch (error) {
-    notifyError(error.message)
+    notifyError('Erro ao trocar a senha.', error)
   }
 }
 </script>
@@ -28,7 +29,7 @@ const handlePasswordReset = async () => {
       class="row justify-center"
       @submit.prevent="handlePasswordReset"
     >
-      <p class="col-12 text-h5 text-center">Reset Password</p>
+      <p class="col-12 text-h5 text-center">Troca de senha</p>
       <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
         <q-input
           label="New Password"
@@ -44,6 +45,8 @@ const handlePasswordReset = async () => {
             class="full-width"
             outline
             rounded
+            :loading="loading"
+            :disable="loading"
             type="submit"
           />
         </div>
