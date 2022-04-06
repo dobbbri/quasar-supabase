@@ -1,8 +1,8 @@
 <script setup>
 const linksList = [
   { title: 'Início', caption: '', icon: 'home', routeName: 'index' },
-  { title: 'Categoria', caption: '', icon: 'category', routeName: 'category' },
-  { title: 'Produto', caption: '', icon: 'inventory', routeName: 'product' },
+  { title: 'Categoria', caption: '', icon: 'category', routeName: 'category-list' },
+  { title: 'Produto', caption: '', icon: 'inventory', routeName: 'product-list' },
   { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' }
 ]
 </script>

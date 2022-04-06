@@ -28,16 +28,24 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '/index', name: 'index', component: () => import('pages/IndexPage.vue') },
-      { path: '/category', name: 'category', component: () => import('pages/category/List.vue') },
       {
-        path: '/form-category/:id?',
-        name: '/form-category',
+        path: '/category-list',
+        name: 'category-list',
+        component: () => import('pages/category/List.vue')
+      },
+      {
+        path: '/category-form/:id?',
+        name: '/category-form',
         component: () => import('pages/category/Form.vue')
       },
-      { path: '/product', name: 'product', component: () => import('pages/product/List.vue') },
       {
-        path: '/form-product/:id?',
-        name: 'form-product',
+        path: '/product-list',
+        name: 'product-list',
+        component: () => import('pages/product/List.vue')
+      },
+      {
+        path: '/product-form/:id?',
+        name: 'product-form',
         component: () => import('pages/product/Form.vue')
       },
       {

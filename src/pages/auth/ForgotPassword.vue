@@ -15,7 +15,7 @@ const handleForgotPassowrd = async () => {
     await sendPasswordResetEmail(email.value)
     notifyInfo(
       'Para finalizar o registro,',
-      `um email de confirmação foi enviado para: ${form.value.email}.`
+      `um email de confirmação foi enviado para: ${email.value}.`
     )
     router.push({ name: 'login' })
   } catch (error) {

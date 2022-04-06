@@ -13,6 +13,7 @@ const $q = useQuasar()
 const router = useRouter()
 const drawerOpen = ref(false)
 const firstName = ref('')
+firstName.value = user.value.user_metadata.name.split(' ')[0]
 
 const handleLogout = async () => {
   $q.dialog({
@@ -30,12 +31,9 @@ const handleLogout = async () => {
   })
 }
 
-const toggleDrawer = () => {
-  drawerOpen.value = !drawerOpen.value
-}
+const toggleDrawer = () => (drawerOpen.value = !drawerOpen.value)
 
 onMounted(() => {
-  firstName.value = user.value.user_metadata.name.split(' ')[0]
   // getBrand()
 })
 </script>
