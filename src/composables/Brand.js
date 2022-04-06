@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 import { setCssVar, Loading } from 'quasar'
 import { useRoute } from 'vue-router'
-import { useQuasar } from 'quasar'
+import { useSupabase } from 'src/boot/supabase'
+import { useAuth } from 'src/composables'
 
 const brand = ref({
   primary: '',
@@ -13,6 +14,8 @@ const brand = ref({
 
 export default function useBrand() {
   const route = useRoute()
+  const { supabase } = useSupabase()
+  const { user } = useAuth()
 
   const setBrand = (primary, secondary) => {
     if (primary) {

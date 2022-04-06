@@ -3,12 +3,11 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useAuth } from 'src/composables'
-// import useApi from 'src/composables/UseApi'
 import SidebarList from 'src/components/SidebarList.vue'
 import DarkModeToggle from 'src/components/DarkModeToggle.vue'
 
 const { user, logout } = useAuth()
-// const { getBrand } = useApi()
+// const { getBrand } = useBrand()
 
 const $q = useQuasar()
 const router = useRouter()
@@ -22,7 +21,11 @@ const handleLogout = async () => {
     cancel: true,
     persistent: true
   }).onOk(async () => {
-    await logout()
+    try {
+      await logout()
+    } catch (error) {
+      console.log('logout error : ', error)
+    }
     router.replace({ name: 'login' })
   })
 }

@@ -16,6 +16,7 @@ export default function useAuthUser() {
     loading.value = true
     const { error } = await supabase.auth.signOut()
     loading.value = false
+    if (error) throw error
   }
 
   const register = async ({ email, password, ...meta }) => {
@@ -34,14 +35,14 @@ export default function useAuthUser() {
 
   const sendPasswordResetEmail = async (email) => {
     loading.value = true
-    const { error: err } = await supabase.auth.api.resetPasswordForEmail(email)
+    const { error } = await supabase.auth.api.resetPasswordForEmail(email)
     loading.value = false
     if (error) throw error
   }
 
   const resetPassword = async (accessToken, newPassword) => {
     loading.value = true
-    const { error: err } = await supabase.auth.api.updateUser(accessToken, {
+    const { error } = await supabase.auth.api.updateUser(accessToken, {
       password: newPassword
     })
     loading.value = false
