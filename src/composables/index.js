@@ -1,6 +1,7 @@
 import useAuth from 'src/composables/Auth'
-import useApi from 'src/composables/Api'
+import useCategories from 'src/composables/Categories'
+import useProducts from 'src/composables/Products'
 import useBrand from 'src/composables/Brand'
 import useNotify from 'src/composables/Notify'
 
-export { useApi, useNotify, useBrand, useAuth }
+export { useCategories, useProducts, useNotify, useBrand, useAuth }
