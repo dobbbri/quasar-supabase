@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 
 export default function useLoading() {
+  // const loading = ref({
   //   add: false,
   //   edit: false,
   //   remove: false,
@@ -18,14 +19,20 @@ export default function useLoading() {
     },
     add: (value) => {
       loadingAdd.value = value
+      loadingEdit.value = false
+      loadingRemove.value = false
       loadingDisable.value = value
     },
     edit: (value) => {
       loadingEdit.value = value
+      loadingAdd.value = false
+      loadingRemove.value = false
       loadingDisable.value = value
     },
     remove: (value) => {
       loadingRemove.value = value
+      loadingAdd.value = false
+      loadingEdit.value = false
       loadingDisable.value = value
     }
   }

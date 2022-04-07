@@ -4,7 +4,7 @@ import { useAuth, useLoading } from 'src/composables'
 export default function useCategories() {
   const { setLoading, loading } = useLoading()
   const { supabase } = useSupabase()
-  const {user} = useAuth()
+  const { user } = useAuth()
 
   const getCategories = async () => {
     setLoading.list(true)
@@ -32,7 +32,9 @@ export default function useCategories() {
 
   const addCategory = async (form) => {
     setLoading.add(true)
-    const { error } = await supabase.from('categories').insert([{ ...form, user_id: user.value.id }])
+    const { error } = await supabase
+      .from('categories')
+      .insert([{ ...form, user_id: user.value.id }])
     setLoading.add(false)
     if (error) throw error
   }
@@ -58,7 +60,7 @@ export default function useCategories() {
     setLoading.list(true)
     const { error, count } = await supabase
       .from('categories')
-      .select('name', { count: 'exact' })
+      .select('id', { count: 'exact' })
       .eq('user_id', user.value.id)
     setLoading.list(false)
     if (error) throw error

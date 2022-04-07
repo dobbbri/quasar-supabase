@@ -30,8 +30,8 @@ const handleEditCategory = (category) => {
 const handleRemoveCategory = async (category) => {
   try {
     $q.dialog({
-      title: 'Confirme',
-      message: `Escluir esta categoria: ${category.name}?`,
+      title: 'Confirmação',
+      message: `Escluir a categoria: ${category.name}?`,
       cancel: true,
       persistent: true
     }).onOk(async () => {
@@ -81,7 +81,7 @@ onMounted(() => handleListCategories())
           >
             <q-btn
               icon="edit"
-              color="info"
+              color="warning"
               dense
               :loading="loading.edit.value"
               :disable="loading.disable.value"
