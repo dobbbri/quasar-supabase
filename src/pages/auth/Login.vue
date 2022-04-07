@@ -6,7 +6,7 @@ import { useAuth, useNotify } from 'src/composables'
 const router = useRouter()
 
 const { loading, login, isLoggedIn } = useAuth()
-const { notifyError } = useNotify()
+const { notify } = useNotify()
 
 const form = ref({
   email: 'sergiodobri@gmail.com',
@@ -18,7 +18,7 @@ const handleLogin = async () => {
     await login(form.value)
     router.push({ name: 'index' })
   } catch (error) {
-    notifyError('Credenciais inbálidas.', error)
+    notify.error('Credenciais inválidas.', error)
   }
 }
 

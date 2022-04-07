@@ -1,6 +1,6 @@
 const columnsCategory = [
-  { name: 'name', align: 'left', label: 'Name', field: 'name', sortable: true },
-  { name: 'actions', align: 'right', label: 'Actions', field: 'actions', sortable: true }
+  { name: 'nome', align: 'left', label: 'Nome', field: 'name', sortable: true },
+  { name: 'actions', align: 'right', label: 'Ações', field: 'actions', sortable: false }
 ]
 
 export { columnsCategory }

@@ -6,20 +6,20 @@ import { useAuth, useNotify } from 'src/composables'
 const router = useRouter()
 
 const { loading, sendPasswordResetEmail } = useAuth()
-const { notifyError, notifyInfo } = useNotify()
+const { notify } = useNotify()
 
 const email = ref('')
 
 const handleForgotPassowrd = async () => {
   try {
     await sendPasswordResetEmail(email.value)
-    notifyInfo(
+    notify.info(
       'Para finalizar o registro,',
       `um email de confirmação foi enviado para: ${email.value}.`
     )
     router.push({ name: 'login' })
   } catch (error) {
-    notifyError('Erro ao enviar email de troca de senha.', error)
+    notify.error('Erro ao enviar email de troca de senha.', error)
   }
 }
 </script>

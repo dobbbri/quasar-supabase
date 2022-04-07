@@ -7,7 +7,7 @@ const router = useRouter()
 const route = useRoute()
 
 const { loading, resetPassword } = useAuth()
-const { notifyError, notifySuccess } = useNotify()
+const { notify } = useNotify()
 
 const token = route.params.token
 const password = ref('')
@@ -15,10 +15,10 @@ const password = ref('')
 const handlePasswordReset = async () => {
   try {
     await resetPassword(token, password.value)
-    notifySuccess('Senha alterada.')
+    notify.success('Senha alterada.')
     router.push({ name: 'login' })
   } catch (error) {
-    notifyError('Erro ao trocar a senha.', error)
+    notify.error('Erro ao trocar a senha.', error)
   }
 }
 </script>

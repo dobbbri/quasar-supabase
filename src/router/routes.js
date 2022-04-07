@@ -35,7 +35,7 @@ const routes = [
       },
       {
         path: '/category-form/:id?',
-        name: '/category-form',
+        name: 'category-form',
         component: () => import('pages/category/Form.vue')
       },
       {

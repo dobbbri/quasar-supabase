@@ -6,7 +6,7 @@ import { useAuth, useNotify } from 'src/composables'
 const router = useRouter()
 
 const { loading, register } = useAuth()
-const { notifyError, notifyInfo } = useNotify()
+const { notify } = useNotify()
 
 const form = ref({
   name: 'Sergio Dobri',
@@ -17,13 +17,13 @@ const form = ref({
 const handleRegister = async () => {
   try {
     await register(form.value)
-    notifyInfo(
+    notify.info(
       'Para finalizar o registro,',
       `um email de confirmação foi enviado para: ${form.value.email}.`
     )
     router.push({ name: 'login' })
   } catch (error) {
-    notifyError('Credenciais inválidas', error)
+    notify.error('Credenciais inválidas', error)
   }
 }
 </script>

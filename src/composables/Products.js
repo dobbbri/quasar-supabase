@@ -1,82 +1,83 @@
-import { ref } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
-import { useAuth } from 'src/composables'
+import { useSupabase } from 'boot/supabase'
+import { useAuth, useLoading } from 'src/composables'
 
 export default function useProducts() {
-  const loading = ref(false)
+  const { setLoading, loading } = useLoading()
+  const { supabase } = useSupabase()
   const { user } = useAuth()
 
   const getProducts = async () => {
-    loading.value = true
+    setLoading.list(true)
     const { error, data } = await supabase
       .from('products')
-      .select('id, name, inactive')
-      .eq('user_id', user.id)
-      .orders('name', 'desc')
-    loading.value = false
+      .select('id, name, categories(name)')
+      .eq('user_id', user.value.id)
+      .order('name', { ascending: false })
+    setLoading.list(false)
     if (error) throw error
     return data
   }
 
   const getProduct = async (id) => {
-    loading.value = true
+    setLoading.list(true)
     const { error, data } = await supabase.from('products').select('id, name').eq('id', id).single()
-    loading.value = false
+    setLoading.list(false)
     if (error) throw error
     return data
   }
 
   const addProduct = async (form) => {
-    loading.value = true
-    const { error } = await supabase.from('products').insert([{ ...form, user_id: user.id }])
-    loading.value = false
+    setLoading.add(true)
+    const { error } = await supabase.from('products').insert([{ ...form, user_id: user.value.id }])
+    setLoading.add(false)
     if (error) throw error
   }
 
   const editProduct = async ({ id, ...form }) => {
-    loading.value = true
+    setLoading.edit(true)
     const { error } = await supabase
       .from('products')
       .update({ ...form })
       .eq('id', id)
-    loading.value = false
+    setLoading.edit(false)
     if (error) throw error
   }
 
   const removeProduct = async (id) => {
-    loading.value = true
+    setLoading.remove(true)
     const { error } = await supabase.from('products').delete().eq('id', id)
-    loading.value = false
+    setLoading.remove(false)
     if (error) throw error
   }
 
   const countProducts = async () => {
-    loading.value = true
+    setLoading.list(true)
     const { error, count } = await supabase
       .from('products')
       .select('name', { count: 'exact' })
-      .eq('user_id', user.id)
-    loading.value = false
+      .eq('user_id', user.value.id)
+    setLoading.list(false)
     if (error) throw error
     return count
   }
 
   const uploadImage = async (file) => {
-    loading.value = true
+    setLoading.list(true)
     const fileName = uuidv4()
     const { error } = supabase.storage
       .from('endless')
       .upload(fileName, file, { cacheControl: '3600', upsert: false })
-    loading.value = false
+    setLoading.list(false)
     if (error) throw error
     const imageUrl = await getImageUrl(fileName)
     return imageUrl
   }
 
   const getImageUrl = async (fileName) => {
-    loading.value = true
+    setLoading.list(true)
     const { imageUrl, error } = supabase.storage.from('endless').getPublicUrl(fileName)
-    loading.value = false
+    setLoading.list(false)
     if (error) throw error
     return imageUrl
   }
