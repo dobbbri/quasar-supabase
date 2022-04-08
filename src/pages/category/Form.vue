@@ -32,7 +32,7 @@ const handleSubmit = async () => {
 
 const handleGetCategory = async () => {
   try {
-    form.value = await getCategory(route.params.id)
+    form.value = await getCategory(route.params.id, 'id, name, inactive')
   } catch (error) {
     notify.error('Erro ao obter a categoria.', error)
   }

@@ -14,7 +14,7 @@ const categories = ref([])
 
 const handleListCategories = async () => {
   try {
-    categories.value = await getCategories()
+    categories.value = await getCategories('id, name, inactive')
   } catch (error) {
     notify.error('Erro ao obter as categorias.', error)
   }
@@ -30,9 +30,9 @@ const handleEditCategory = (category) => {
 const handleRemoveCategory = async (category) => {
   try {
     $q.dialog({
-      title: 'Confirmação',
-      message: `Escluir a categoria: ${category.name}?`,
-      cancel: true,
+      message: `Confirme a exclusão da categoria: ${category.name}?`,
+      ok: { label: 'Excluir', flat: true },
+      cancel: { label: 'Cancelar', flat: true },
       persistent: true
     }).onOk(async () => {
       await removeCategory(category.id)
@@ -103,6 +103,7 @@ onMounted(() => handleListCategories())
         </template>
       </q-table>
     </div>
+
     <q-page-sticky
       position="bottom-right"
       :offset="[18, 18]"
