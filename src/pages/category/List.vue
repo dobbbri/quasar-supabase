@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCategories, useNotify } from 'src/composables'
-import { columnsCategory } from './table'
+import { tableConfig } from './table'
 
 const $q = useQuasar()
 const router = useRouter()
@@ -52,27 +52,23 @@ onMounted(() => handleListCategories())
     <div class="row">
       <q-table
         :rows="categories"
-        :columns="columnsCategory"
-        row-key="id"
-        class="col-12"
-        flat
-        no-data-label="Nenhum dado disponível"
         :loading="loading.list.value"
+        v-bind="tableConfig"
       >
         <template v-slot:top>
           <span class="text-h6">Categorias</span>
           <q-space />
           <q-btn
             v-if="$q.platform.is.desktop"
-            label="Adicionar"
             color="primary"
             icon="add"
             dense
-            class="q-px-sm"
             :loading="loading.add.value"
             :disable="loading.disable.value"
             :to="{ name: 'category-form' }"
-          />
+          >
+            <q-tooltip>Adicionar</q-tooltip>
+          </q-btn>
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td
