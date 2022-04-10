@@ -1,14 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
 import { useCategories, useNotify } from 'src/composables'
 import { tableConfig } from './table'
 
-const $q = useQuasar()
 const router = useRouter()
 
-const { loading, getCategories, removeCategory } = useCategories()
+const { loading, getCategories } = useCategories()
 const { notify } = useNotify()
 const categories = ref([])
 
@@ -27,94 +25,77 @@ const handleEditCategory = (category) => {
   })
 }
 
-const handleRemoveCategory = async (category) => {
-  try {
-    $q.dialog({
-      message: `Confirme a exclusão da categoria: ${category.name}?`,
-      ok: { label: 'Excluir', flat: true },
-      cancel: { label: 'Cancelar', flat: true },
-      persistent: true
-    }).onOk(async () => {
-      await removeCategory(category.id)
-      notify.success('Categoria removida.')
-      handleListCategories()
-    })
-  } catch (error) {
-    notify.error('Erro ao remover a categoria', error)
-  }
-}
-
 onMounted(() => handleListCategories())
 </script>
 
 <template>
   <q-page>
-    <div class="row">
-      <q-table
-        :rows="categories"
-        :loading="loading.list.value"
-        v-bind="tableConfig"
-      >
-        <template v-slot:top>
-          <span class="text-h6">Categorias</span>
-          <q-space />
-          <q-btn
-            v-if="$q.platform.is.desktop"
-            color="primary"
-            icon="add"
-            dense
-            :loading="loading.add.value"
-            :disable="loading.disable.value"
-            :to="{ name: 'category-form' }"
-          >
-            <q-tooltip>Adicionar</q-tooltip>
-          </q-btn>
-        </template>
-        <template v-slot:body-cell-actions="props">
-          <q-td
-            :props="props"
-            class="q-gutter-x-sm"
-          >
+    <div class="row justify-center">
+      <div class="col-md-7 col-xs-12 col-sm-12">
+        <q-table
+          :rows="categories"
+          :loading="loading.list.value"
+          v-bind="tableConfig"
+        >
+          <template v-slot:top>
+            <span class="text-h6">Categorias</span>
+            <q-space />
             <q-btn
-              icon="edit"
-              color="warning"
+              round
               dense
-              :loading="loading.edit.value"
+              v-if="$q.platform.is.desktop"
+              color="primary"
+              icon="add"
+              :loading="loading.add.value"
               :disable="loading.disable.value"
-              @click="handleEditCategory(props.row)"
+              :to="{ name: 'category-form' }"
             >
-              <q-tooltip>Alterar</q-tooltip>
+              <q-tooltip>Adicionar</q-tooltip>
             </q-btn>
-            <q-btn
-              icon="delete_forever"
-              color="negative"
-              dense
-              :loading="loading.remove.value"
-              :disable="loading.disable.value"
-              @click="handleRemoveCategory(props.row)"
+          </template>
+          <template v-slot:body-cell-status="props">
+            <q-td :props="props">
+              <q-badge
+                v-if="props.value"
+                color="negative"
+                :label="props.value"
+              />
+            </q-td>
+          </template>
+          <template v-slot:body-cell-actions="props">
+            <q-td
+              :props="props"
+              class="q-gutter-x-sm"
             >
-              <q-tooltip>Excluir</q-tooltip>
-            </q-btn>
-          </q-td>
-        </template>
-      </q-table>
-    </div>
+              <q-btn
+                icon="chevron_right"
+                round
+                flat
+                @click="handleEditCategory(props.row)"
+              >
+                <q-tooltip>Alterar</q-tooltip>
+              </q-btn>
+            </q-td>
+          </template>
+        </q-table>
+      </div>
 
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
-    >
-      <q-btn
-        v-if="$q.platform.is.mobile"
-        fab
-        icon="add"
-        color="primary"
-        :loading="loading.add.value"
-        :disable="loading.disable.value"
-        :to="{ name: 'category-form' }"
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
       >
-        <q-tooltip>Adicionar</q-tooltip>
-      </q-btn>
-    </q-page-sticky>
+        <q-btn
+          v-if="$q.platform.is.mobile"
+          fab
+          icon="add"
+          color="primary"
+          :loading="loading.add.value"
+          :disable="loading.disable.value"
+          :to="{ name: 'category-form' }"
+        >
+          <q-tooltip>Adicionar</q-tooltip>
+        </q-btn>
+      </q-page-sticky>
+    </div>
   </q-page>
 </template>

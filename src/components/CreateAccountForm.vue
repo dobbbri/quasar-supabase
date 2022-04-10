@@ -26,7 +26,6 @@
             label="Phone"
             v-model="formState.phone"
             mask="(###) ### - ####"
-            hint="(###) ### - ####"
           ></q-input>
           <q-input
             label="Password *"
