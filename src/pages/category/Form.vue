@@ -2,13 +2,16 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useCategories, useNotify } from 'src/composables'
+import { PageHeader } from 'src/components'
+import { useCategories, useNotify, useAttributes } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
 const $q = useQuasar()
+
 const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
 const { notify } = useNotify()
+const { attr } = useAttributes()
 
 const isUpdate = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
@@ -35,7 +38,7 @@ const handleSubmit = async () => {
 const handleRemoveCategory = async (category) => {
   try {
     $q.dialog({
-      message: `Confirme a exclusão da categoria: ${category.name}?`,
+      message: `Confirme a exclusão?`,
       ok: { label: 'Excluir', flat: true },
       cancel: { label: 'Cancelar', flat: true },
       persistent: true
@@ -64,66 +67,62 @@ onMounted(() => {
 
 <template>
   <q-page padding>
-    <div class="row justify-center">
-      <div class="col-md-7 col-xs-12 col-sm-12">
-        <div>
-          <span class="text-h6">{{ title + ' categoria' }}</span>
-          <q-btn
-            v-if="isUpdate"
-            icon="delete_forever"
-            color="negative"
-            round
-            dense
-            class="float-right"
-            :loading="loading.remove.value"
-            :disable="loading.disable.value"
-            @click="handleRemoveCategory(form)"
-          >
-            <q-tooltip>Excluir</q-tooltip>
-          </q-btn>
-        </div>
+  <page-header>
+    <template #title>{{ title + ' categoria' }}</template>
+    <template #buttons-right>
+      <q-btn
+        v-if="isUpdate"
+        v-bind="attr.btn.icon"
+        icon="delete_forever"
+        color="white"
+        :loading="loading.remove.value"
+        :disable="loading.disable.value"
+        @click="handleRemoveCategory(form)"
+      >
+        <q-tooltip>Excluir</q-tooltip>
+      </q-btn>
+    </template>
+  </page-header>
 
-        <q-form
-          class="q-gutter-y-md"
-          @submit.prevent="handleSubmit"
-        >
-          <q-input
-            label="Name"
-            v-model="form.name"
-            :rules="[(val) => (val && val.length > 0) || 'Name is required']"
-          />
+    <q-form
+      class="q-gutter-y-md q-pa-md bg-white rounded-corners"
+      @submit.prevent="handleSubmit"
+    >
+      <q-input
+        label="Name"
+        v-model="form.name"
+        :rules="[(val) => (val && val.length > 0) || 'Name is required']"
+      />
 
-          <q-checkbox
-            label="desativado"
-            color="negative"
-            v-model="form.inactive"
-          />
+      <q-checkbox
+        label="desativado"
+        color="negative"
+        v-model="form.inactive"
+      />
 
-          <div class="row">
-            <q-btn
-              label="Cancelar"
-              color="primary"
-              class="col"
-              rounded
-              flat
-              :disable="loading.disable.value"
-              :to="{ name: 'category-list' }"
-            />
+      <div class="row">
+        <q-btn
+          label="Cancelar"
+          color="primary"
+          class="col"
+          rounded
+          flat
+          :disable="loading.disable.value"
+          :to="{ name: 'category-list' }"
+        />
 
-            <q-space class="q-ml-md" />
+        <q-space class="q-ml-md" />
 
-            <q-btn
-              label="Gravar"
-              color="primary"
-              class="col"
-              rounded
-              :loading="isUpdate ? loading.edit.value : loading.add.value"
-              :disable="loading.disable.value"
-              type="submit"
-            />
-          </div>
-        </q-form>
+        <q-btn
+          label="Gravar"
+          color="primary"
+          class="col"
+          rounded
+          :loading="isUpdate ? loading.edit.value : loading.add.value"
+          :disable="loading.disable.value"
+          type="submit"
+        />
       </div>
-    </div>
+    </q-form>
   </q-page>
 </template>

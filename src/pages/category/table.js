@@ -2,7 +2,7 @@ import { formatInactive } from 'src/utils'
 
 const tableConfig = {
   rowsPerPageLabel: 'registros por página',
-  noDataLabel: 'Nenhum dado disponível',
+  noDataLabel: 'Nenhum registrto disponível',
   class: 'col-12',
   flat: true,
   pagination: { rowsPerPage: '10' },

@@ -1,14 +1,15 @@
-import { v4 as uuidv4 } from 'uuid'
+import { uid } from 'quasar'
 import { useApi } from 'src/composables'
 
 export default function useProducts() {
   const { supabase, setLoading, loading, list, get, add, edit, remove, count } = useApi('products')
+  const storage = process.env.SUPABASE_STORAGE
 
   const uploadImage = async (file) => {
     setLoading.list(true)
-    const fileName = uuidv4()
+    const fileName = uid()
     const { error } = supabase.storage
-      .from('endless')
+      .from(storage)
       .upload(fileName, file, { cacheControl: '3600', upsert: false })
     setLoading.list(false)
     if (error) throw error
@@ -18,7 +19,7 @@ export default function useProducts() {
 
   const getImageUrl = async (fileName) => {
     setLoading.list(true)
-    const { imageUrl, error } = supabase.storage.from('endless').getPublicUrl(fileName)
+    const { imageUrl, error } = supabase.storage.from(storage).getPublicUrl(fileName)
     setLoading.list(false)
     if (error) throw error
     return imageUrl

@@ -1,13 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useCategories, useNotify } from 'src/composables'
+import { useCategories, useNotify, useAttributes } from 'src/composables'
 import { tableConfig } from './table'
+import PageHeader from 'src/components/PageHeader.vue'
 
 const router = useRouter()
 
 const { loading, getCategories } = useCategories()
 const { notify } = useNotify()
+const { attr } = useAttributes()
+
 const categories = ref([])
 
 const handleListCategories = async () => {
@@ -29,30 +32,33 @@ onMounted(() => handleListCategories())
 </script>
 
 <template>
-  <q-page>
+  <q-page
+    padding
+  >
+    <page-header>
+      <template #title>Categorias</template>
+      <template #buttons-right>
+        <q-btn
+          v-if="$q.platform.is.desktop"
+          v-bind="attr.btn.icon"
+          color="white"
+          icon="add"
+          :loading="loading.add.value"
+          :disable="loading.disable.value"
+          :to="{ name: 'category-form' }"
+        >
+          <q-tooltip>Adicionar</q-tooltip>
+        </q-btn>
+      </template>
+    </page-header>
+
     <div class="row justify-center">
-      <div class="col-md-7 col-xs-12 col-sm-12">
+      <div class="col-12">
         <q-table
           :rows="categories"
           :loading="loading.list.value"
           v-bind="tableConfig"
         >
-          <template v-slot:top>
-            <span class="text-h6">Categorias</span>
-            <q-space />
-            <q-btn
-              round
-              dense
-              v-if="$q.platform.is.desktop"
-              color="primary"
-              icon="add"
-              :loading="loading.add.value"
-              :disable="loading.disable.value"
-              :to="{ name: 'category-form' }"
-            >
-              <q-tooltip>Adicionar</q-tooltip>
-            </q-btn>
-          </template>
           <template v-slot:body-cell-status="props">
             <q-td :props="props">
               <q-badge

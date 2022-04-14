@@ -1,3 +1,4 @@
+import useAttributes from 'src/composables/Attributes'
 import useApi from 'src/composables/Api'
 import useAuth from 'src/composables/Auth'
 import useCategories from 'src/composables/Categories'
@@ -6,4 +7,13 @@ import useBrand from 'src/composables/Brand'
 import useNotify from 'src/composables/Notify'
 import useLoading from 'src/composables/Loading'
 
-export { useBrand, useCategories, useProducts, useNotify, useLoading, useAuth, useApi }
+export {
+  useBrand,
+  useCategories,
+  useProducts,
+  useNotify,
+  useLoading,
+  useAuth,
+  useApi,
+  useAttributes
+}

@@ -13,7 +13,7 @@ const { configure } = require('quasar/wrappers')
 module.exports = configure(function (/* ctx */) {
   return {
     eslint: {
-      // fix: true,
+      fix: true,
       // include = [],
       // exclude = [],
       // rawOptions = {},
@@ -100,9 +100,8 @@ module.exports = configure(function (/* ctx */) {
       plugins: ['Dialog', 'Notify', 'Loading', 'LocalStorage']
     },
 
-    // animations: 'all', // --- includes all animations
+    // animations: ['slideInRight', 'slideOutRight'],
     // https://v2.quasar.dev/options/animations
-    animations: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
     // sourceFiles: {

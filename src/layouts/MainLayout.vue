@@ -1,97 +1,69 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-import { useAuth } from 'src/composables'
-import SidebarList from 'src/components/SidebarList.vue'
-import DarkModeToggle from 'src/components/DarkModeToggle.vue'
-
-const { user, logout } = useAuth()
+// import { onMounted } from 'vue'
+import { Sidebar } from 'src/components'
+// import { useBrand } from 'src/composables'
 // const { getBrand } = useBrand()
-
-const $q = useQuasar()
-const router = useRouter()
-const drawerOpen = ref(false)
-const firstName = ref('')
-
-const handleLogout = async () => {
-  $q.dialog({
-    title: 'Sair',
-    message: 'Você realmente quer ir embora?',
-    cancel: true,
-    persistent: true
-  }).onOk(async () => {
-    try {
-      await logout()
-    } catch (error) {
-      console.log('logout error : ', error)
-    }
-    router.replace({ name: 'login' })
-  })
-}
-
-const toggleDrawer = () => (drawerOpen.value = !drawerOpen.value)
-
-onMounted(() => {
-  firstName.value = user.value.user_metadata.name.split(' ')[0]
-  // getBrand()
-})
+// onMounted(() =>  getBrand())
 </script>
 
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleDrawer"
-        />
-
-        <q-toolbar-title class="text-weight-bold text-h6">EndlesS</q-toolbar-title>
-
-        <dark-mode-toggle />
-
-        <q-btn-dropdown
-          :label="firstName"
-          flat
-          color="white"
-        >
-          <q-list>
-            <q-item
-              clickable
-              v-close-popup
-              @click="handleLogout"
-            >
-              <q-item-section>
-                <q-item-label class="text-red text-body1">Sair</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="drawerOpen"
-      show-if-above
-      bordered
+  <div
+    class="WAL position-relative bg-grey-4"
+    :style="'height: ' + $q.screen.height + 'px'"
+  >
+    <q-layout
+      view="lHh Lpr lFf"
+      class="WAL__layout shadow-3"
+      container
     >
-      <sidebar-list />
-    </q-drawer>
+      <sidebar />
 
-    <q-page-container>
-      <router-view
-        :key="$route.fullPath"
-        v-slot="{ Component }"
-      >
-        <keep-alive>
-          <component :is="Component" />
-        </keep-alive>
-      </router-view>
-    </q-page-container>
-  </q-layout>
+      <q-page-container class="bg-grey-2">
+        <router-view
+          :key="$route.fullPath"
+          v-slot="{ Component }"
+          style="overflow: hidden"
+        >
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
+      </q-page-container>
+    </q-layout>
+  </div>
 </template>
+
+<style lang="sass">
+.WAL
+  width: 100%
+  height: 100%
+  padding-top: 5px
+  padding-bottom: 5px
+  &:before
+    content: ''
+    height: 127px
+    position: fixed
+    top: 0
+    width: 100%
+    background-color: #009688
+  &__layout
+    margin: 0 auto
+    z-index: 4000
+    height: 100%
+    width: 90%
+    max-width: 950px
+    border-radius: 5px
+  .q-drawer--standard
+    .WAL__drawer-close
+      display: none
+@media (max-width: 850px)
+  .WAL
+    padding: 0
+    &__layout
+      width: 100%
+      border-radius: 0
+@media (min-width: 691px)
+  .WAL
+    &__drawer-open
+      display: none
+</style>
