@@ -1,6 +1,10 @@
 <script setup>
 import { useMenuStore } from 'src/stores/menuStore'
+import { PageHeader } from 'src/components'
+import { useDefaults } from 'src/composables'
+
 const store = useMenuStore()
+const { attr } = useDefaults()
 
 const linksList = [
   { title: 'Início', caption: '', icon: 'home', routeName: 'index' },
@@ -14,24 +18,23 @@ const linksList = [
   <q-drawer
     v-model="store.isSidebarOpen"
     side="left"
+    bordered
     show-if-above
     :breakpoint="690"
     style="z-index: 50000"
   >
-    <q-toolbar>
-      <q-toolbar-title class="text-weight-bold text-h6 text-center full-width"
-        >EndlesS</q-toolbar-title
-      >
-    </q-toolbar>
+    <page-header>
+      <template #title>EndlesS</template>
+      <template #buttons-right>
+        <q-btn
+          v-bind="attr.btn.icon"
+          icon="close"
+          @click="store.toggleSidebar()"
+        />
+      </template>
+    </page-header>
 
-    <q-list>
-      <q-item-label
-        header
-        class="text-weight-bold text-h6 text-primary"
-      >
-        Menu
-      </q-item-label>
-
+    <q-list style="margin-top: 66px">
       <q-item
         v-for="(link, index) in linksList"
         :key="index"

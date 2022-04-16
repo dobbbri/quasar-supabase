@@ -36,11 +36,10 @@ const handleSubmit = async () => {
 }
 
 const handleRemoveCategory = async (category) => {
-  cfg.dialog.delete.message = `Confirme a exclusão da categoria: ${category.name}?`
   try {
-    $q.dialog(cfg.dialog.delete).onOk(async () => {
+    $q.dialog(cfg.confirm.delete(`da categoria: ${category.name}`)).onOk(async () => {
       await removeCategory(category.id)
-      notify.success('Categoria removida.')
+      notify.success('Categoria excluida.')
       router.push({ name: 'category-list' })
     })
   } catch (error) {
@@ -82,7 +81,7 @@ onMounted(() => {
 
     <q-form
       style="margin-top: 51px"
-      class="q-gutter-y-md q-pa-md bg-white rounded-borders"
+      class="q-gutter-y-md q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
       @submit.prevent="handleSubmit"
     >
       <q-input
@@ -99,11 +98,11 @@ onMounted(() => {
 
       <div class="row">
         <q-btn
-          label="Cancelar"
-          color="primary"
-          class="col"
-          rounded
           flat
+          v-bind="attr.btn.basic"
+          color="dark"
+          label="Cancelar"
+          class="col"
           :disable="loading.disable.value"
           :to="{ name: 'category-list' }"
         />
@@ -111,10 +110,10 @@ onMounted(() => {
         <q-space class="q-ml-md" />
 
         <q-btn
+          unelevated
+          v-bind="attr.btn.basic"
           label="Gravar"
-          color="primary"
           class="col"
-          rounded
           :loading="isUpdate ? loading.edit.value : loading.add.value"
           :disable="loading.disable.value"
           type="submit"

@@ -1,21 +1,36 @@
 export default function useDefaults() {
   const attr = {
     btn: {
-      basic: { unelevated: true, dense: true, color: 'primary', class: 'text-weight-bold' },
+      basic: {
+        rounded: true,
+        dense: true,
+        color: 'primary',
+        class: 'text-weight-bold'
+      },
       icon: { flat: true, round: true, size: 'md', dense: true }
     }
   }
 
   const cfg = {
-    dialog: {
-      delete: {
-        title: 'Excluir',
-        message: '',
-        ok: { label: 'Excluir', flat: true, color: 'negative' },
-        cancel: { label: 'Cancelar', flat: true },
-        persistent: true
+    confirm: {
+      delete(message) {
+        return {
+          title: 'Excluir',
+          message: `Confirme a exclusão ${message}?`,
+          ok: { label: 'Excluir', flat: true, color: 'negative' },
+          cancel: { label: 'Cancelar', flat: true },
+          persistent: true
+        }
       },
-      exit: {}
+      exit() {
+        return {
+          title: 'Sair',
+          message: 'Você realmente quer ir embora?',
+          ok: { label: 'Sair', flat: true, color: 'negative' },
+          cancel: { label: 'Cancelar', flat: true },
+          persistent: true
+        }
+      }
     }
   }
 

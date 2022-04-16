@@ -39,7 +39,7 @@ onMounted(() => handleListCategories())
         <q-btn
           v-if="$q.platform.is.desktop"
           v-bind="attr.btn.icon"
-          color="white"
+          class="bg-white text-blue"
           icon="add"
           :loading="loading.add.value"
           :disable="loading.disable.value"
@@ -51,6 +51,7 @@ onMounted(() => handleListCategories())
     </page-header>
 
     <q-table
+      bordered
       style="margin-top: 51px"
       :rows="categories"
       :loading="loading.list.value"
