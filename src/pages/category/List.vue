@@ -32,9 +32,7 @@ onMounted(() => handleListCategories())
 </script>
 
 <template>
-  <q-page
-    padding
-  >
+  <q-page padding>
     <page-header>
       <template #title>Categorias</template>
       <template #buttons-right>
@@ -52,56 +50,53 @@ onMounted(() => handleListCategories())
       </template>
     </page-header>
 
-    <div class="row justify-center">
-      <div class="col-12">
-        <q-table
-          :rows="categories"
-          :loading="loading.list.value"
-          v-bind="tableConfig"
+    <q-table
+      style="margin-top: 51px"
+      :rows="categories"
+      :loading="loading.list.value"
+      v-bind="tableConfig"
+    >
+      <template v-slot:body-cell-status="props">
+        <q-td :props="props">
+          <q-badge
+            v-if="props.value"
+            color="negative"
+            :label="props.value"
+          />
+        </q-td>
+      </template>
+      <template v-slot:body-cell-actions="props">
+        <q-td
+          :props="props"
+          class="q-gutter-x-sm"
         >
-          <template v-slot:body-cell-status="props">
-            <q-td :props="props">
-              <q-badge
-                v-if="props.value"
-                color="negative"
-                :label="props.value"
-              />
-            </q-td>
-          </template>
-          <template v-slot:body-cell-actions="props">
-            <q-td
-              :props="props"
-              class="q-gutter-x-sm"
-            >
-              <q-btn
-                icon="chevron_right"
-                round
-                flat
-                @click="handleEditCategory(props.row)"
-              >
-                <q-tooltip>Alterar</q-tooltip>
-              </q-btn>
-            </q-td>
-          </template>
-        </q-table>
-      </div>
+          <q-btn
+            icon="chevron_right"
+            round
+            flat
+            @click="handleEditCategory(props.row)"
+          >
+            <q-tooltip>Alterar</q-tooltip>
+          </q-btn>
+        </q-td>
+      </template>
+    </q-table>
 
-      <q-page-sticky
-        position="bottom-right"
-        :offset="[18, 18]"
+    <q-page-sticky
+      position="bottom-right"
+      :offset="[18, 18]"
+    >
+      <q-btn
+        v-if="$q.platform.is.mobile"
+        fab
+        icon="add"
+        color="primary"
+        :loading="loading.add.value"
+        :disable="loading.disable.value"
+        :to="{ name: 'category-form' }"
       >
-        <q-btn
-          v-if="$q.platform.is.mobile"
-          fab
-          icon="add"
-          color="primary"
-          :loading="loading.add.value"
-          :disable="loading.disable.value"
-          :to="{ name: 'category-form' }"
-        >
-          <q-tooltip>Adicionar</q-tooltip>
-        </q-btn>
-      </q-page-sticky>
-    </div>
+        <q-tooltip>Adicionar</q-tooltip>
+      </q-btn>
+    </q-page-sticky>
   </q-page>
 </template>

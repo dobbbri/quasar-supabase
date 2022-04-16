@@ -36,13 +36,16 @@ const handleSubmit = async () => {
 }
 
 const handleRemoveCategory = async (category) => {
+  let dialogDelete = {
+    title: 'Excluir',
+    message: '',
+    ok: { label: 'Excluir', flat: true, color: 'negative' },
+    cancel: { label: 'Cancelar', flat: true },
+    persistent: true
+  }
+  dialogDelete.message = `Confirme a exclusão da categoria: ${category.name}?`
   try {
-    $q.dialog({
-      message: `Confirme a exclusão?`,
-      ok: { label: 'Excluir', flat: true },
-      cancel: { label: 'Cancelar', flat: true },
-      persistent: true
-    }).onOk(async () => {
+    $q.dialog(dialogDelete).onOk(async () => {
       await removeCategory(category.id)
       notify.success('Categoria removida.')
       router.push({ name: 'category-list' })
@@ -67,25 +70,26 @@ onMounted(() => {
 
 <template>
   <q-page padding>
-  <page-header>
-    <template #title>{{ title + ' categoria' }}</template>
-    <template #buttons-right>
-      <q-btn
-        v-if="isUpdate"
-        v-bind="attr.btn.icon"
-        icon="delete_forever"
-        color="white"
-        :loading="loading.remove.value"
-        :disable="loading.disable.value"
-        @click="handleRemoveCategory(form)"
-      >
-        <q-tooltip>Excluir</q-tooltip>
-      </q-btn>
-    </template>
-  </page-header>
+    <page-header>
+      <template #title>{{ title + ' categoria' }}</template>
+      <template #buttons-right>
+        <q-btn
+          v-if="isUpdate"
+          v-bind="attr.btn.icon"
+          icon="delete_forever"
+          class="bg-white text-red"
+          :loading="loading.remove.value"
+          :disable="loading.disable.value"
+          @click="handleRemoveCategory(form)"
+        >
+          <q-tooltip>Excluir</q-tooltip>
+        </q-btn>
+      </template>
+    </page-header>
 
     <q-form
-      class="q-gutter-y-md q-pa-md bg-white rounded-corners"
+      style="margin-top: 51px"
+      class="q-gutter-y-md q-pa-md bg-white rounded-borders"
       @submit.prevent="handleSubmit"
     >
       <q-input
