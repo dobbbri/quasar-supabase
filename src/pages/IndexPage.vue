@@ -1,9 +1,9 @@
 <script setup>
-import { useAttributes } from 'src/composables'
+import { useDefaults } from 'src/composables'
 import { MenuUser, PageHeader } from 'src/components'
 import { useMenuStore } from 'src/stores/menuStore'
 
-const { attr } = useAttributes()
+const { attr } = useDefaults()
 const store = useMenuStore()
 </script>
 

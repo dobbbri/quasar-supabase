@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { PageHeader } from 'src/components'
-import { useCategories, useNotify, useAttributes } from 'src/composables'
+import { useCategories, useNotify, useDefaults } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
@@ -11,7 +11,7 @@ const $q = useQuasar()
 
 const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
 const { notify } = useNotify()
-const { attr } = useAttributes()
+const { attr, cfg } = useDefaults()
 
 const isUpdate = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
@@ -36,16 +36,9 @@ const handleSubmit = async () => {
 }
 
 const handleRemoveCategory = async (category) => {
-  let dialogDelete = {
-    title: 'Excluir',
-    message: '',
-    ok: { label: 'Excluir', flat: true, color: 'negative' },
-    cancel: { label: 'Cancelar', flat: true },
-    persistent: true
-  }
-  dialogDelete.message = `Confirme a exclusão da categoria: ${category.name}?`
+  cfg.dialog.delete.message = `Confirme a exclusão da categoria: ${category.name}?`
   try {
-    $q.dialog(dialogDelete).onOk(async () => {
+    $q.dialog(cfg.dialog.delete).onOk(async () => {
       await removeCategory(category.id)
       notify.success('Categoria removida.')
       router.push({ name: 'category-list' })

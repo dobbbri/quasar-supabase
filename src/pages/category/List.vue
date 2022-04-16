@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useCategories, useNotify, useAttributes } from 'src/composables'
+import { useCategories, useNotify, useDefaults } from 'src/composables'
 import { tableConfig } from './table'
 import PageHeader from 'src/components/PageHeader.vue'
 
@@ -9,7 +9,7 @@ const router = useRouter()
 
 const { loading, getCategories } = useCategories()
 const { notify } = useNotify()
-const { attr } = useAttributes()
+const { attr } = useDefaults()
 
 const categories = ref([])
 
