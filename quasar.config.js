@@ -13,7 +13,7 @@ const { configure } = require('quasar/wrappers')
 module.exports = configure(function (/* ctx */) {
   return {
     eslint: {
-      fix: true,
+      // fix: true,
       // include = [],
       // exclude = [],
       // rawOptions = {},

@@ -1,15 +1,17 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import { useCategories, useNotify, useDefaults } from 'src/composables'
-import { tableConfig } from './table'
-import PageHeader from 'src/components/PageHeader.vue'
+import { PageHeader } from 'src/components'
+import { formatInactive } from 'src/utils'
 
 const router = useRouter()
+const $q = useQuasar()
 
 const { loading, getCategories } = useCategories()
 const { notify } = useNotify()
-const { attr } = useDefaults()
+const { attr, cfg } = useDefaults()
 
 const categories = ref([])
 
@@ -29,6 +31,19 @@ const handleEditCategory = (category) => {
 }
 
 onMounted(() => handleListCategories())
+
+const columns = [
+  { name: 'nome', align: 'left', label: 'NOME', field: 'name', sortable: true },
+  {
+    name: 'status',
+    align: 'center',
+    label: 'STATUS',
+    field: 'inactive',
+    format: (val) => formatInactive(val),
+    sortable: true
+  },
+  { name: 'actions', align: 'right', label: 'AÇÕES', field: 'actions', sortable: false }
+]
 </script>
 
 <template>
@@ -37,7 +52,7 @@ onMounted(() => handleListCategories())
       <template #title>Categorias</template>
       <template #buttons-right>
         <q-btn
-          v-if="$q.platform.is.desktop"
+          v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
           class="bg-white text-blue"
           icon="add"
@@ -52,10 +67,11 @@ onMounted(() => handleListCategories())
 
     <q-table
       bordered
-      style="margin-top: 51px"
+      v-bind="cfg.table"
       :rows="categories"
+      :columns="columns"
       :loading="loading.list.value"
-      v-bind="tableConfig"
+      style="margin-top: 51px"
     >
       <template v-slot:body-cell-status="props">
         <q-td :props="props">
@@ -66,6 +82,7 @@ onMounted(() => handleListCategories())
           />
         </q-td>
       </template>
+
       <template v-slot:body-cell-actions="props">
         <q-td
           :props="props"

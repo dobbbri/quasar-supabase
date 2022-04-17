@@ -11,7 +11,16 @@ export default function useDefaults() {
     }
   }
 
-  const cfg = {}
+  const cfg = {
+    table: {
+      rowsPerPageLabel: 'registros por página',
+      noDataLabel: 'Nenhum registrto disponível',
+      class: 'col-12',
+      flat: true,
+      pagination: { rowsPerPage: '9' },
+      rowKey: 'id'
+    }
+  }
 
   return { attr, cfg }
 }
