@@ -1,13 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-// import { useQuasar } from 'quasar'
 import { PageHeader } from 'src/components'
 import { useCategories, useNotify, useConfirm, useDefaults } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
-// const $q = useQuasar()
 
 const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
 const { notify } = useNotify()
