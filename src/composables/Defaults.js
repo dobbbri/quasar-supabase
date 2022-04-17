@@ -11,28 +11,7 @@ export default function useDefaults() {
     }
   }
 
-  const cfg = {
-    confirm: {
-      delete(message) {
-        return {
-          title: 'Excluir',
-          message: `Confirme a exclusão ${message}?`,
-          ok: { label: 'Excluir', flat: true, color: 'negative' },
-          cancel: { label: 'Cancelar', flat: true },
-          persistent: true
-        }
-      },
-      exit() {
-        return {
-          title: 'Sair',
-          message: 'Você realmente quer ir embora?',
-          ok: { label: 'Sair', flat: true, color: 'negative' },
-          cancel: { label: 'Cancelar', flat: true },
-          persistent: true
-        }
-      }
-    }
-  }
+  const cfg = {}
 
   return { attr, cfg }
 }

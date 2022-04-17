@@ -1,17 +1,18 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useQuasar } from 'quasar'
+// import { useQuasar } from 'quasar'
 import { PageHeader } from 'src/components'
-import { useCategories, useNotify, useDefaults } from 'src/composables'
+import { useCategories, useNotify, useConfirm, useDefaults } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
-const $q = useQuasar()
+// const $q = useQuasar()
 
 const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
 const { notify } = useNotify()
-const { attr, cfg } = useDefaults()
+const { confirm } = useConfirm()
+const { attr } = useDefaults()
 
 const isUpdate = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
@@ -37,7 +38,7 @@ const handleSubmit = async () => {
 
 const handleRemoveCategory = async (category) => {
   try {
-    $q.dialog(cfg.confirm.delete(`da categoria: ${category.name}`)).onOk(async () => {
+    confirm.delete(`da categoria: ${category.name}`).onOk(async () => {
       await removeCategory(category.id)
       notify.success('Categoria excluida.')
       router.push({ name: 'category-list' })

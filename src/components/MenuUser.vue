@@ -1,18 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-import { useAuth, useDefaults } from 'src/composables'
+import { useAuth, useConfirm } from 'src/composables'
 
 const router = useRouter()
 const { user, logout } = useAuth()
-const { cfg } = useDefaults()
+const { confirm } = useConfirm()
 
-const $q = useQuasar()
 const firstName = ref('')
 
 const handleLogout = async () => {
-  $q.dialog(cfg.confirm.exit()).onOk(async () => {
+  confirm.exit().onOk(async () => {
     try {
       await logout()
       router.replace({ name: 'login' })
