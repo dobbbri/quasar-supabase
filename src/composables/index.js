@@ -6,7 +6,7 @@ import useProducts from 'src/composables/Products'
 import useBrand from 'src/composables/Brand'
 import useNotify from 'src/composables/Notify'
 import useConfirm from 'src/composables/Confirm'
-import useLoading from 'src/composables/Loading'
+import useBtnLoading from 'src/composables/BtnLoading'
 
 export {
   useBrand,
@@ -14,7 +14,7 @@ export {
   useProducts,
   useNotify,
   useConfirm,
-  useLoading,
+  useBtnLoading,
   useAuth,
   useApi,
   useDefaults
