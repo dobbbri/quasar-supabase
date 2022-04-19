@@ -2,22 +2,21 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useCategories, useNotify, useDefaults } from 'src/composables'
+import { useCategories, useNameSearch, useNotify, useDefaults } from 'src/composables'
 import { PageHeader } from 'src/components'
-import { formatInactive } from 'src/utils'
 
 const router = useRouter()
 const $q = useQuasar()
 
+const documents = ref([])
+const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents)
 const { loading, getCategories } = useCategories()
 const { notify } = useNotify()
-const { attr, cfg } = useDefaults()
-
-const categories = ref([])
+const { attr } = useDefaults()
 
 const handleListCategories = async () => {
   try {
-    categories.value = await getCategories('id, name, inactive')
+    documents.value = await getCategories('id, name, inactive')
   } catch (error) {
     notify.error('Erro ao obter as categorias.', error)
   }
@@ -31,19 +30,6 @@ const handleEditCategory = (category) => {
 }
 
 onMounted(() => handleListCategories())
-
-const columns = [
-  { name: 'nome', align: 'left', label: 'NOME', field: 'name', sortable: true },
-  {
-    name: 'status',
-    align: 'center',
-    label: 'STATUS',
-    field: 'inactive',
-    format: (val) => formatInactive(val),
-    sortable: true
-  },
-  { name: 'actions', align: 'right', label: 'AÇÕES', field: 'actions', sortable: false }
-]
 </script>
 
 <template>
@@ -65,40 +51,60 @@ const columns = [
       </template>
     </page-header>
 
-    <q-table
-      bordered
-      v-bind="cfg.table"
-      :rows="categories"
-      :columns="columns"
-      :loading="loading.list.value"
+    <q-input
+      v-model="searchQuery"
+      placeholder="Digite para pesquisar"
+      clearable
+      dense
+      rounded
+      autofocus
+      outlined
+      bg-color="white"
+      color="primary"
+      type="search"
+      class="q-px-md"
       style="margin-top: 51px"
     >
-      <template v-slot:body-cell-status="props">
-        <q-td :props="props">
-          <q-badge
-            v-if="props.value"
-            color="negative"
-            :label="props.value"
-          />
-        </q-td>
+      <template v-slot:prepend>
+        <q-icon name="search" />
       </template>
+    </q-input>
 
-      <template v-slot:body-cell-actions="props">
-        <q-td
-          :props="props"
-          class="q-gutter-x-sm"
-        >
-          <q-btn
-            icon="chevron_right"
-            round
-            flat
-            @click="handleEditCategory(props.row)"
-          >
-            <q-tooltip>Alterar</q-tooltip>
-          </q-btn>
-        </q-td>
-      </template>
-    </q-table>
+    <q-inner-loading
+      :showing="loading.list.value"
+      color="primary"
+      label="obtendo registros..."
+    />
+
+    <q-list
+      v-if="!loading.list.value"
+      bordered
+      separator
+      class="bg-white rounded-borders q-mt-sm"
+    >
+      <q-item
+        v-for="(category, index) in categories"
+        :key="index"
+        @click="handleEditCategory(category)"
+        clickable
+        v-ripple
+      >
+        <q-item-section>
+          <q-item-label>
+            {{ category.name }}
+            <q-badge
+              v-if="category.inactive"
+              color="negative"
+              label="desativado"
+            />
+          </q-item-label>
+        </q-item-section>
+        <q-btn
+          v-bind="attr.btn.icon"
+          icon="chevron_right"
+        />
+      </q-item>
+    </q-list>
 
     <q-page-sticky
       position="bottom-right"

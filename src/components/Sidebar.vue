@@ -1,8 +1,10 @@
 <script setup>
+import { useQuasar } from 'quasar'
 import { useMenuStore } from 'src/stores/menuStore'
 import { PageHeader } from 'src/components'
 import { useDefaults } from 'src/composables'
 
+const $q = useQuasar()
 const store = useMenuStore()
 const { attr } = useDefaults()
 
@@ -27,6 +29,7 @@ const linksList = [
       <template #title>EndlesS</template>
       <template #buttons-right>
         <q-btn
+          v-if="$q.platform.is.mobile"
           v-bind="attr.btn.icon"
           icon="close"
           @click="store.toggleSidebar()"
