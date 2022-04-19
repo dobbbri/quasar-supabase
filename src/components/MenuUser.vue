@@ -29,7 +29,7 @@ onMounted(() => {
   <q-btn-dropdown
     :label="firstName"
     flat
-    color="white"
+    color="primary"
   >
     <q-list>
       <q-item

@@ -68,7 +68,7 @@ onMounted(() => {
           v-if="isUpdate"
           v-bind="attr.btn.icon"
           icon="delete_forever"
-          class="bg-white text-red"
+          color="negative"
           :loading="loading.remove.value"
           :disable="loading.disable.value"
           @click="handleRemoveCategory(form)"
@@ -79,8 +79,7 @@ onMounted(() => {
     </page-header>
 
     <q-form
-      style="margin-top: 51px"
-      class="q-gutter-y-md q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+      class="q-gutter-y-md q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
       @submit.prevent="handleSubmit"
     >
       <q-input
@@ -95,29 +94,28 @@ onMounted(() => {
         v-model="form.inactive"
       />
 
-      <div class="row">
-        <q-btn
-          flat
-          v-bind="attr.btn.basic"
-          color="dark"
-          label="Cancelar"
-          class="col"
-          :disable="loading.disable.value"
-          :to="{ name: 'category-list' }"
-        />
+      <q-footer class="bg-transparent q-px-md q-py-sm">
+        <div class="row">
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Cancelar"
+            class="col-4 bg-white"
+            :disable="loading.disable.value"
+            :to="{ name: 'category-list' }"
+          />
 
-        <q-space class="q-ml-md" />
+          <q-space />
 
-        <q-btn
-          unelevated
-          v-bind="attr.btn.basic"
-          label="Gravar"
-          class="col"
-          :loading="isUpdate ? loading.edit.value : loading.add.value"
-          :disable="loading.disable.value"
-          type="submit"
-        />
-      </div>
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Gravar"
+            class="col-4 bg-white"
+            :loading="isUpdate ? loading.edit.value : loading.add.value"
+            :disable="loading.disable.value"
+            type="submit"
+          />
+        </div>
+      </q-footer>
     </q-form>
   </q-page>
 </template>

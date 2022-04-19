@@ -40,7 +40,7 @@ onMounted(() => handleListCategories())
         <q-btn
           v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
-          class="bg-white text-blue"
+          color="primary"
           icon="add"
           :loading="loading.add.value"
           :disable="loading.disable.value"
@@ -63,7 +63,6 @@ onMounted(() => handleListCategories())
       color="primary"
       type="search"
       class="q-px-md"
-      style="margin-top: 51px"
     >
       <template v-slot:prepend>
         <q-icon name="search" />
@@ -99,10 +98,6 @@ onMounted(() => handleListCategories())
             />
           </q-item-label>
         </q-item-section>
-        <q-btn
-          v-bind="attr.btn.icon"
-          icon="chevron_right"
-        />
       </q-item>
     </q-list>
 

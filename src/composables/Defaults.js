@@ -2,10 +2,12 @@ export default function useDefaults() {
   const attr = {
     btn: {
       basic: {
+        outline: true,
         rounded: true,
         dense: true,
+        bordered: true,
         color: 'primary',
-        class: 'text-weight-bold'
+        class: 'text-weight-medium'
       },
       icon: { flat: true, round: true, size: 'md', dense: true }
     }

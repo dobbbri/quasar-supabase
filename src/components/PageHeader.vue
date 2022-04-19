@@ -1,18 +1,15 @@
 <template>
-  <header
-    style="position: absolute; top: 0; right: 0; left: 0"
-    class="q-header q-layout__section--marginal"
-  >
-    <div class="q-toolbar row no-wrap items-center justify-between">
+  <q-header class="bg-transparent text-primary">
+    <q-toolbar>
       <div>
         <slot name="buttons-left" />
       </div>
-      <div class="page-header-title q-toolbar__title ellipsis text-h6">
+      <q-toolbar-title class="text-center">
         <slot name="title" />
-      </div>
+      </q-toolbar-title>
       <div>
         <slot name="buttons-right" />
       </div>
-    </div>
-  </header>
+    </q-toolbar>
+  </q-header>
 </template>
