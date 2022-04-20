@@ -42,6 +42,7 @@ onMounted(() => handleListCategories())
           v-bind="attr.btn.icon"
           color="primary"
           icon="add"
+          unelevated
           :loading="loading.add.value"
           :disable="loading.disable.value"
           :to="{ name: 'category-form' }"

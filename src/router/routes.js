@@ -15,11 +15,6 @@ const routes = [
         path: '/reset-password',
         name: 'reset-password',
         component: () => import('pages/auth/ResetPassword.vue')
-      },
-      {
-        path: '/product-public/:id',
-        name: 'product-public',
-        component: () => import('pages/product/Public.vue')
       }
     ]
   },
@@ -47,11 +42,6 @@ const routes = [
         path: '/product-form/:id?',
         name: 'product-form',
         component: () => import('pages/product/Form.vue')
-      },
-      {
-        path: '/form-config/:id?',
-        name: 'form-config',
-        component: () => import('pages/config/Form.vue')
       }
     ],
     meta: {

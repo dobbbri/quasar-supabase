@@ -14,6 +14,7 @@ const store = useMenuStore()
         <q-btn
           v-bind="attr.btn.icon"
           icon="menu"
+          flat
           @click="store.toggleSidebar()"
         />
       </template>

@@ -69,6 +69,7 @@ onMounted(() => {
           v-bind="attr.btn.icon"
           icon="delete_forever"
           color="negative"
+          unelevated
           :loading="loading.remove.value"
           :disable="loading.disable.value"
           @click="handleRemoveCategory(form)"
@@ -94,11 +95,12 @@ onMounted(() => {
         v-model="form.inactive"
       />
 
-      <q-footer class="bg-transparent q-px-md q-py-sm">
+      <q-footer class="bg-transparent q-pa-md">
         <div class="row">
           <q-btn
             v-bind="attr.btn.basic"
             label="Cancelar"
+            outline
             class="col-4 bg-white"
             :disable="loading.disable.value"
             :to="{ name: 'category-list' }"
@@ -109,7 +111,8 @@ onMounted(() => {
           <q-btn
             v-bind="attr.btn.basic"
             label="Gravar"
-            class="col-4 bg-white"
+            unelevated
+            class="col-4"
             :loading="isUpdate ? loading.edit.value : loading.add.value"
             :disable="loading.disable.value"
             type="submit"

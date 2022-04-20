@@ -1,153 +1,124 @@
-<template>
-  <q-page padding>
-    <div class="row justify-center">
-      <div class="col-12 text-center">
-        <p class="text-h6">Form Product</p>
-      </div>
-      <q-form
-        class="col-md-7 col-xs-12 col-sm-12 q-gutter-y-md"
-        @submit.prevent="handleSubmit"
-      >
-        <q-input
-          label="Image"
-          stack-label
-          v-model="img"
-          type="file"
-          accept="image/*"
-        />
-
-        <q-input
-          label="Name"
-          v-model="form.name"
-          :rules="[(val) => (val && val.length > 0) || 'Name is required']"
-        />
-
-        <q-editor
-          v-model="form.description"
-          min-height="5rem"
-        />
-
-        <q-input
-          label="Amount"
-          v-model="form.amount"
-          :rules="[(val) => !!val || 'Amount is required']"
-          type="number"
-        />
-
-        <q-input
-          label="Price"
-          v-model="form.price"
-          :rules="[(val) => !!val || 'Price is required']"
-          prefix="R$"
-        />
-
-        <q-select
-          v-model="form.category_id"
-          :options="optionsCategory"
-          label="Category"
-          option-value="id"
-          option-label="name"
-          map-options
-          emit-value
-          :rules="[(val) => !!val || 'Category is required']"
-        />
-
-        <q-btn
-          :label="isUpdate ? 'Update' : 'Save'"
-          color="primary"
-          class="full-width"
-          rounded
-          type="submit"
-        />
-
-        <q-btn
-          label="Cancel"
-          color="primary"
-          class="full-width"
-          rounded
-          flat
-          :to="{ name: 'product' }"
-        />
-      </q-form>
-    </div>
-  </q-page>
-</template>
-
-<script>
-import { defineComponent, ref, onMounted, computed } from 'vue'
+<script setup>
+import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useApi, useNotify, useAuth } from 'src/composables'
+import { PageHeader } from 'src/components'
+import { useCategories, useNotify, useConfirm, useDefaults } from 'src/composables'
 
-export default defineComponent({
-  name: 'PageFormCategory',
-  setup() {
-    const table = 'product'
-    const router = useRouter()
-    const route = useRoute()
-    const { post, getById, update, listPublic, uploadImg } = useApi()
-    const { notifyError, notifySuccess } = useNotify()
-    const { user } = useAuth()
+const router = useRouter()
+const route = useRoute()
 
-    const isUpdate = computed(() => route.params.id)
+const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
+const { notify } = useNotify()
+const { confirm } = useConfirm()
+const { attr } = useDefaults()
 
-    let product = {}
-    const optionsCategory = ref([])
-    const form = ref({
-      name: '',
-      description: '',
-      amount: 0,
-      price: 0,
-      category_id: '',
-      img_url: ''
-    })
-    const img = ref([])
+const isUpdate = computed(() => (route.params.id ? true : false))
+const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
 
-    onMounted(() => {
-      handleListCategories()
-      if (isUpdate.value) {
-        handleGetProduct(isUpdate.value)
-      }
-    })
+const form = ref({
+  name: '',
+  inactive: false
+})
 
-    const handleListCategories = async () => {
-      optionsCategory.value = await listPublic('category', user.value.id)
+const handleSubmit = async () => {
+  try {
+    if (isUpdate.value) {
+      await editCategory(form.value)
+    } else {
+      await addCategory(form.value)
     }
-
-    const handleSubmit = async () => {
-      try {
-        if (img.value.length > 0) {
-          const imgUrl = await uploadImg(img.value[0], 'products')
-          form.value.img_url = imgUrl
-        }
-        if (isUpdate.value) {
-          await update(table, form.value)
-          notifySuccess('Update Successfully')
-        } else {
-          await post(table, form.value)
-          notifySuccess('Saved Successfully')
-        }
-        router.push({ name: 'product' })
-      } catch (error) {
-        notifyError(error.message)
-      }
-    }
-
-    const handleGetProduct = async (id) => {
-      try {
-        product = await getById(table, id)
-        form.value = product
-      } catch (error) {
-        notifyError(error.message)
-      }
-    }
-
-    return {
-      handleSubmit,
-      form,
-      isUpdate,
-      optionsCategory,
-      img
-    }
+    notify.success(`Categoria ${isUpdate.value ? 'alterada' : 'adicionada'}.`)
+    router.push({ name: 'category-list' })
+  } catch (error) {
+    notify.error(`Erro ao ${title.value.toLowerCase()} a categoria.`, error)
   }
+}
+
+const handleRemoveCategory = async (category) => {
+  try {
+    confirm.delete(`da categoria: ${category.name}`).onOk(async () => {
+      await removeCategory(category.id)
+      notify.success('Categoria excluida.')
+      router.push({ name: 'category-list' })
+    })
+  } catch (error) {
+    notify.error('Erro ao remover a categoria', error)
+  }
+}
+
+const handleGetCategory = async () => {
+  try {
+    form.value = await getCategory(route.params.id, 'id, name, inactive')
+  } catch (error) {
+    notify.error('Erro ao obter a categoria.', error)
+  }
+}
+
+onMounted(() => {
+  if (isUpdate.value) handleGetCategory()
 })
 </script>
+
+<template>
+  <q-page padding>
+    <page-header>
+      <template #title>{{ title + ' categoria' }}</template>
+      <template #buttons-right>
+        <q-btn
+          v-if="isUpdate"
+          v-bind="attr.btn.icon"
+          icon="delete_forever"
+          color="negative"
+          unelevated
+          :loading="loading.remove.value"
+          :disable="loading.disable.value"
+          @click="handleRemoveCategory(form)"
+        >
+          <q-tooltip>Excluir</q-tooltip>
+        </q-btn>
+      </template>
+    </page-header>
+
+    <q-form
+      class="q-gutter-y-md q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+      @submit.prevent="handleSubmit"
+    >
+      <q-input
+        label="Name"
+        v-model="form.name"
+        :rules="[(val) => (val && val.length > 0) || 'Name is required']"
+      />
+
+      <q-checkbox
+        label="desativado"
+        color="negative"
+        v-model="form.inactive"
+      />
+
+      <q-footer class="bg-transparent q-pa-md">
+        <div class="row">
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Cancelar"
+            outline
+            class="col-4 bg-white"
+            :disable="loading.disable.value"
+            :to="{ name: 'category-list' }"
+          />
+
+          <q-space />
+
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Gravar"
+            unelevated
+            class="col-4"
+            :loading="isUpdate ? loading.edit.value : loading.add.value"
+            :disable="loading.disable.value"
+            type="submit"
+          />
+        </div>
+      </q-footer>
+    </q-form>
+  </q-page>
+</template>
