@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 
-export default function useBtnLoading() {
+export default function useLoading() {
   // const loading = ref({
   //   add: false,
   //   edit: false,

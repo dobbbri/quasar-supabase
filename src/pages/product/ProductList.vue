@@ -2,41 +2,43 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useCategories, useNameSearch, useNotify, useDefaults } from 'src/composables'
+import { useProducts, useNameSearch, useNotify, useDefaults } from 'src/composables'
 import { PageHeader } from 'src/components'
 
 const router = useRouter()
 const $q = useQuasar()
 
 const documents = ref([])
-const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents)
-const { loading, getCategories } = useCategories()
+const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
+const { loading, getProducts } = useProducts()
 const { notify } = useNotify()
-const { attr } = useDefaults()
+const { attr, fmt } = useDefaults()
 
-const handleListCategories = async () => {
+const handleListProducts = async () => {
   try {
-    documents.value = await getCategories('id, name, inactive')
+    documents.value = await getProducts(
+      'id, name, categories:category_id ( name ), stock_is_automatic, stock_quantity, unit_sale_type, price_to_sell'
+    )
   } catch (error) {
-    notify.error('Erro ao obter as categorias.', error)
+    notify.error('Erro ao obter os produtos.', error)
   }
 }
 
-const handleEditCategory = (category) => {
+const handleEditProduct = (product) => {
   router.push({
-    name: 'category-form',
-    params: { id: category.id }
+    name: 'product-form',
+    params: { id: product.id }
   })
 }
 
-onMounted(() => handleListCategories())
+onMounted(() => handleListProducts())
 </script>
 
 <template>
   <q-page padding>
     <page-header>
-      <template #title>Categorias</template>
-      <template #buttons-right>
+      <template #title>Produtos</template>
+      <template #right>
         <q-btn
           v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
@@ -45,7 +47,7 @@ onMounted(() => handleListCategories())
           unelevated
           :loading="loading.add.value"
           :disable="loading.disable.value"
-          :to="{ name: 'category-form' }"
+          :to="{ name: 'product-form' }"
         >
           <q-tooltip>Adicionar</q-tooltip>
         </q-btn>
@@ -54,16 +56,10 @@ onMounted(() => handleListCategories())
 
     <q-input
       v-model="searchQuery"
+      v-bind="attr.input.search"
       placeholder="Digite para pesquisar"
-      clearable
-      dense
-      rounded
       autofocus
-      outlined
-      bg-color="white"
-      color="primary"
       type="search"
-      class="q-px-md"
     >
       <template v-slot:prepend>
         <q-icon name="search" />
@@ -83,20 +79,31 @@ onMounted(() => handleListCategories())
       class="bg-white rounded-borders q-mt-sm"
     >
       <q-item
-        v-for="(category, index) in categories"
+        v-for="(product, index) in products"
         :key="index"
-        @click="handleEditCategory(category)"
+        @click="handleEditProduct(product)"
         clickable
         v-ripple
       >
         <q-item-section>
-          <q-item-label>
-            {{ category.name }}
-            <q-badge
-              v-if="category.inactive"
-              color="negative"
-              label="desativado"
-            />
+          <q-item-label class="text-subtitle2 text-weight-medium">
+            {{ product.name }}
+          </q-item-label>
+          <q-item-label class="row text-body2">
+            <span class="col">
+              <q-badge
+                outline
+                color="grey"
+                :label="product.categories.name.toString().toUpperCase()"
+              />
+            </span>
+            <span
+              v-if="product.stock_is_automatic"
+              class="col"
+            >
+              {{ product.stock_quantity }} {{ product.unit_sale_type }}
+            </span>
+            <span class="col text-right">{{ fmt.currency(product.price_to_sell) }}</span>
           </q-item-label>
         </q-item-section>
       </q-item>
@@ -108,12 +115,12 @@ onMounted(() => handleListCategories())
     >
       <q-btn
         v-if="$q.platform.is.mobile"
-        fab
+        v-bind="attr.btn.icon"
         icon="add"
-        color="primary"
+        fab
         :loading="loading.add.value"
         :disable="loading.disable.value"
-        :to="{ name: 'category-form' }"
+        :to="{ name: 'product-form' }"
       >
         <q-tooltip>Adicionar</q-tooltip>
       </q-btn>

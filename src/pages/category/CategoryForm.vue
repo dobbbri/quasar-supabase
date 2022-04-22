@@ -48,7 +48,7 @@ const handleRemoveCategory = async (category) => {
 
 const handleGetCategory = async () => {
   try {
-    form.value = await getCategory(route.params.id, 'id, name, inactive')
+    form.value = await getCategory(route.params.id)
   } catch (error) {
     notify.error('Erro ao obter a categoria.', error)
   }
@@ -63,7 +63,7 @@ onMounted(() => {
   <q-page padding>
     <page-header>
       <template #title>{{ title + ' categoria' }}</template>
-      <template #buttons-right>
+      <template #right>
         <q-btn
           v-if="isUpdate"
           v-bind="attr.btn.icon"
@@ -90,7 +90,7 @@ onMounted(() => {
       />
 
       <q-checkbox
-        label="desativado"
+        label="Não exibir os produtos desta categoria"
         color="negative"
         v-model="form.inactive"
       />

@@ -26,22 +26,22 @@ const routes = [
       {
         path: '/category-list',
         name: 'category-list',
-        component: () => import('pages/category/List.vue')
+        component: () => import('pages/category/CategoryList.vue')
       },
       {
         path: '/category-form/:id?',
         name: 'category-form',
-        component: () => import('pages/category/Form.vue')
+        component: () => import('pages/category/CategoryForm.vue')
       },
       {
         path: '/product-list',
         name: 'product-list',
-        component: () => import('pages/product/List.vue')
+        component: () => import('pages/product/ProductList.vue')
       },
       {
         path: '/product-form/:id?',
         name: 'product-form',
-        component: () => import('pages/product/Form.vue')
+        component: () => import('pages/product/ProductForm.vue')
       }
     ],
     meta: {

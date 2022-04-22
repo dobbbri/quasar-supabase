@@ -47,7 +47,8 @@ const handleRegister = async () => {
           label="Email"
           v-model="form.email"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+          :rules="['email']"
+          error-message="O email deve ser válido!"
           type="email"
         />
 

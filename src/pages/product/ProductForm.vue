@@ -2,12 +2,12 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { PageHeader } from 'src/components'
-import { useCategories, useNotify, useConfirm, useDefaults } from 'src/composables'
+import { useProducts, useNotify, useConfirm, useDefaults } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
 
-const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
+const { loading, getProduct, addProduct, editProduct, removeProduct } = useProducts()
 const { notify } = useNotify()
 const { confirm } = useConfirm()
 const { attr } = useDefaults()
@@ -16,54 +16,64 @@ const isUpdate = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
 
 const form = ref({
+  image_url: '',
   name: '',
-  inactive: false
+  category_id: '',
+  stock_is_automatic: false,
+  stock_quantity: 0,
+  stock_quantity_minimum: 0,
+  unit_sale_type: 'UN',
+  price_to_buy: 0,
+  price_to_sell: 0,
+  code_bar: '',
+  code_internal: '',
+  description: ''
 })
 
 const handleSubmit = async () => {
   try {
     if (isUpdate.value) {
-      await editCategory(form.value)
+      await editProduct(form.value)
     } else {
-      await addCategory(form.value)
+      await addProduct(form.value)
     }
-    notify.success(`Categoria ${isUpdate.value ? 'alterada' : 'adicionada'}.`)
-    router.push({ name: 'category-list' })
+    notify.success(`Produto ${isUpdate.value ? 'alterado' : 'adicionado'}.`)
+    router.push({ name: 'product-list' })
   } catch (error) {
-    notify.error(`Erro ao ${title.value.toLowerCase()} a categoria.`, error)
+    notify.error(`Erro ao ${title.value.toLowerCase()} o produto.`, error)
   }
 }
 
-const handleRemoveCategory = async (category) => {
+const handleRemoveProduct = async (product) => {
   try {
-    confirm.delete(`da categoria: ${category.name}`).onOk(async () => {
-      await removeCategory(category.id)
-      notify.success('Categoria excluida.')
-      router.push({ name: 'category-list' })
+    confirm.delete(`do produto: ${product.name}`).onOk(async () => {
+      await removeProduct(product.id)
+      notify.success('Produto excluida.')
+      router.push({ name: 'product-list' })
     })
   } catch (error) {
-    notify.error('Erro ao remover a categoria', error)
+    notify.error('Erro ao remover o produto', error)
   }
 }
 
-const handleGetCategory = async () => {
+const handleGetProduct = async () => {
   try {
-    form.value = await getCategory(route.params.id, 'id, name, inactive')
+    form.value = await getProduct(route.params.id)
   } catch (error) {
-    notify.error('Erro ao obter a categoria.', error)
+    notify.error('Erro ao obter o produto.', error)
   }
 }
 
 onMounted(() => {
-  if (isUpdate.value) handleGetCategory()
+  if (isUpdate.value) handleGetProduct()
 })
 </script>
 
 <template>
   <q-page padding>
     <page-header>
-      <template #title>{{ title + ' categoria' }}</template>
-      <template #buttons-right>
+      <template #title>{{ title + ' produto' }}</template>
+      <template #right>
         <q-btn
           v-if="isUpdate"
           v-bind="attr.btn.icon"
@@ -72,7 +82,7 @@ onMounted(() => {
           unelevated
           :loading="loading.remove.value"
           :disable="loading.disable.value"
-          @click="handleRemoveCategory(form)"
+          @click="handleRemoveProduct(form)"
         >
           <q-tooltip>Excluir</q-tooltip>
         </q-btn>
@@ -103,7 +113,7 @@ onMounted(() => {
             outline
             class="col-4 bg-white"
             :disable="loading.disable.value"
-            :to="{ name: 'category-list' }"
+            :to="{ name: 'product-list' }"
           />
 
           <q-space />

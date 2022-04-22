@@ -7,7 +7,27 @@ export default function useDefaults() {
         color: 'primary',
         class: 'text-weight-medium'
       },
-      icon: { round: true, size: 'md', dense: true }
+      icon: { round: true, size: 'md', color: 'primary', dense: true }
+    },
+    input: {
+      search: {
+        clearable: true,
+        dense: true,
+        rounded: true,
+        outlined: true,
+        bgColor: 'white',
+        color: 'primary',
+        class: 'q-px-md'
+      }
+    }
+  }
+
+  const fmt = {
+    inactive(value) {
+      return value ? 'NÃO EXIBIR' : ''
+    },
+    currency(value) {
+      return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
     }
   }
 
@@ -22,5 +42,5 @@ export default function useDefaults() {
     }
   }
 
-  return { attr, cfg }
+  return { attr, cfg, fmt }
 }

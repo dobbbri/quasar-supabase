@@ -28,7 +28,7 @@ const linksList = [
     </q-toolbar>
     <!-- <page-header> -->
     <!--   <template #title>EndlesS</template> -->
-    <!--   <template #buttons-right> -->
+    <!--   <template #right> -->
     <!--     <q-btn -->
     <!--       v-if="$q.platform.is.mobile" -->
     <!--       v-bind="attr.btn.icon" -->

@@ -1,14 +1,14 @@
 <template>
   <q-header class="bg-transparent text-primary">
-    <q-toolbar>
+    <q-toolbar class="justify-between">
       <div>
-        <slot name="buttons-left" />
+        <slot name="left" />
       </div>
-      <q-toolbar-title class="text-center">
+      <q-toolbar-title class="absolute-center">
         <slot name="title" />
       </q-toolbar-title>
       <div>
-        <slot name="buttons-right" />
+        <slot name="right" />
       </div>
     </q-toolbar>
   </q-header>

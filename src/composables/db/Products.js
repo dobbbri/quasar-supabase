@@ -27,12 +27,12 @@ export default function useProducts() {
 
   return {
     loading,
-    getCategories: list,
-    getCategory: get,
-    addCategory: add,
-    editCategory: edit,
-    removeCategory: remove,
-    countCategory: count,
+    getProducts: list,
+    getProduct: get,
+    addProduct: add,
+    editProduct: edit,
+    removeProduct: remove,
+    countProduct: count,
     uploadImage,
     getImageUrl
   }

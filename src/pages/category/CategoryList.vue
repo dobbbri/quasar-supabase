@@ -12,7 +12,7 @@ const documents = ref([])
 const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents)
 const { loading, getCategories } = useCategories()
 const { notify } = useNotify()
-const { attr } = useDefaults()
+const { attr, fmt } = useDefaults()
 
 const handleListCategories = async () => {
   try {
@@ -36,11 +36,10 @@ onMounted(() => handleListCategories())
   <q-page padding>
     <page-header>
       <template #title>Categorias</template>
-      <template #buttons-right>
+      <template #right>
         <q-btn
           v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
-          color="primary"
           icon="add"
           unelevated
           :loading="loading.add.value"
@@ -54,16 +53,10 @@ onMounted(() => handleListCategories())
 
     <q-input
       v-model="searchQuery"
+      v-bind="attr.input.search"
       placeholder="Digite para pesquisar"
-      clearable
-      dense
-      rounded
       autofocus
-      outlined
-      bg-color="white"
-      color="primary"
       type="search"
-      class="q-px-md"
     >
       <template v-slot:prepend>
         <q-icon name="search" />
@@ -95,7 +88,7 @@ onMounted(() => handleListCategories())
             <q-badge
               v-if="category.inactive"
               color="negative"
-              label="desativado"
+              :label="fmt.inactive(category.inactive)"
             />
           </q-item-label>
         </q-item-section>
@@ -108,9 +101,9 @@ onMounted(() => handleListCategories())
     >
       <q-btn
         v-if="$q.platform.is.mobile"
-        fab
+        v-bind="attr.btn.icon"
         icon="add"
-        color="primary"
+        fab
         :loading="loading.add.value"
         :disable="loading.disable.value"
         :to="{ name: 'category-form' }"

@@ -10,7 +10,7 @@ const store = useMenuStore()
 <template>
   <q-page padding>
     <page-header>
-      <template #buttons-left>
+      <template #left>
         <q-btn
           v-bind="attr.btn.icon"
           icon="menu"
@@ -19,7 +19,7 @@ const store = useMenuStore()
         />
       </template>
       <template #title>EndlesS</template>
-      <template #buttons-right>
+      <template #right>
         <menu-user />
       </template>
     </page-header>
