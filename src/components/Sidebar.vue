@@ -1,12 +1,7 @@
 <script setup>
-// import { useQuasar } from 'quasar'
 import { useMenuStore } from 'src/stores/menuStore'
-// import { PageHeader } from 'src/components'
-// import { useDefaults } from 'src/composables'
 
-// const $q = useQuasar()
 const store = useMenuStore()
-// const { attr } = useDefaults()
 
 const linksList = [
   { title: 'Início', caption: '', icon: 'home', routeName: 'index' },
@@ -24,19 +19,8 @@ const linksList = [
     :breakpoint="690"
   >
     <q-toolbar>
-      <q-toolbar-title class="text-center"> Menu </q-toolbar-title>
+      <q-toolbar-title class="q-ml-xs"> Menu </q-toolbar-title>
     </q-toolbar>
-    <!-- <page-header> -->
-    <!--   <template #title>EndlesS</template> -->
-    <!--   <template #right> -->
-    <!--     <q-btn -->
-    <!--       v-if="$q.platform.is.mobile" -->
-    <!--       v-bind="attr.btn.icon" -->
-    <!--       icon="close" -->
-    <!--       @click="store.toggleSidebar()" -->
-    <!--     /> -->
-    <!--   </template> -->
-    <!-- </page-header> -->
 
     <q-list>
       <q-item

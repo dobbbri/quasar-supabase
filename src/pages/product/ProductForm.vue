@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { PageHeader } from 'src/components'
 import { useProducts, useTools, useDefaults } from 'src/composables'
+import { PageHeader, PageFooter, Btn } from 'src/components'
 
 const router = useRouter()
 const route = useRoute()
@@ -72,7 +72,7 @@ onMounted(() => {
   <q-page padding>
     <page-header>
       <template #left>
-        <q-btn
+        <btn
           v-bind="attr.btn.icon"
           color="primary"
           icon="chevron_left"
@@ -82,18 +82,17 @@ onMounted(() => {
       </template>
       <template #title>{{ title + ' produto' }}</template>
       <template #right>
-        <q-btn
+        <btn
           v-if="isUpdate"
           v-bind="attr.btn.icon"
           icon="delete_forever"
           color="negative"
           unelevated
+          tooltip="Excluir"
           :loading="loading.remove.value"
           :disable="loading.disable.value"
           @click="handleRemoveProduct(form)"
-        >
-          <q-tooltip>Excluir</q-tooltip>
-        </q-btn>
+        />
       </template>
     </page-header>
 
@@ -102,41 +101,40 @@ onMounted(() => {
       @submit.prevent="handleSubmit"
     >
       <q-input
-        label="Name"
+        label="Nome"
         v-model="form.name"
-        :rules="[(val) => (val && val.length > 0) || 'Name is required']"
+        :rules="[(val) => (val && val.length > 3)]"
+        error-message="O nome do produto deve ser preenchido!"
       />
 
       <q-checkbox
-        label="desativado"
+        label="Utilizar estoque automático"
         color="negative"
-        v-model="form.inactive"
+        v-model="form.stock_is_automatic"
       />
 
-      <q-footer class="bg-transparent q-pa-md">
-        <div class="row">
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Cancelar"
-            outline
-            class="col-4 bg-white"
-            :disable="loading.disable.value"
-            :to="{ name: 'product-list' }"
-          />
+      <page-footer>
+        <btn
+          v-bind="attr.btn.basic"
+          label="Cancelar"
+          outline
+          class="col-4 bg-white"
+          :disable="loading.disable.value"
+          :to="{ name: 'product-list' }"
+        />
 
-          <q-space />
+        <q-space />
 
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            unelevated
-            class="col-4"
-            :loading="isUpdate ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
-        </div>
-      </q-footer>
+        <btn
+          v-bind="attr.btn.basic"
+          label="Gravar"
+          unelevated
+          class="col-4"
+          :loading="isUpdate ? loading.edit.value : loading.add.value"
+          :disable="loading.disable.value"
+          type="submit"
+        />
+      </page-footer>
     </q-form>
   </q-page>
 </template>

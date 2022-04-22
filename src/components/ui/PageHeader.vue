@@ -1,7 +1,10 @@
 <script setup>
+import { useQuasar } from 'quasar'
 import { useDefaults } from 'src/composables'
 import { useMenuStore } from 'src/stores/menuStore'
+import { Btn } from 'src/components'
 
+const $q = useQuasar()
 const { attr } = useDefaults()
 const store = useMenuStore()
 </script>
@@ -11,15 +14,17 @@ const store = useMenuStore()
     <q-toolbar class="justify-between">
       <div>
         <slot name="left">
-          <q-btn
+          <btn
+            v-if="$q.platform.is.mobile"
             v-bind="attr.btn.icon"
             icon="menu"
             flat
+            tooltip="Exibir menu"
             @click="store.toggleSidebar()"
           />
         </slot>
       </div>
-      <q-toolbar-title class="absolute-center">
+      <q-toolbar-title>
         <slot name="title" />
       </q-toolbar-title>
       <div>

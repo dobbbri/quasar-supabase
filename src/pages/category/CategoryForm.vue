@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { PageHeader } from 'src/components'
 import { useCategories, useTools, useDefaults } from 'src/composables'
+import { PageHeader, PageFooter, Btn } from 'src/components'
 
 const router = useRouter()
 const route = useRoute()
@@ -62,28 +62,28 @@ onMounted(() => {
   <q-page padding>
     <page-header>
       <template #left>
-        <q-btn
+        <btn
           v-bind="attr.btn.icon"
           color="primary"
           icon="chevron_left"
           flat
+          tooltip="Voltar"
           :to="{ name: 'category-list' }"
         />
       </template>
       <template #title>{{ title + ' categoria' }}</template>
       <template #right>
-        <q-btn
+        <btn
           v-if="isUpdate"
           v-bind="attr.btn.icon"
           icon="delete_forever"
           color="negative"
           unelevated
+          tooltip="Excluir"
           :loading="loading.remove.value"
           :disable="loading.disable.value"
           @click="handleRemoveCategory(form)"
-        >
-          <q-tooltip>Excluir</q-tooltip>
-        </q-btn>
+        />
       </template>
     </page-header>
 
@@ -92,41 +92,41 @@ onMounted(() => {
       @submit.prevent="handleSubmit"
     >
       <q-input
-        label="Name"
+        label="Nome"
         v-model="form.name"
-        :rules="[(val) => (val && val.length > 0) || 'Name is required']"
+        :rules="[(val) => val && val.length > 3]"
+        error-message="O nome da categoria deve ser preenchido!"
       />
 
       <q-checkbox
         label="Não exibir os produtos desta categoria"
         color="negative"
+        style=""
         v-model="form.inactive"
       />
 
-      <q-footer class="bg-transparent q-pa-md">
-        <div class="row">
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Cancelar"
-            outline
-            class="col-4 bg-white"
-            :disable="loading.disable.value"
-            :to="{ name: 'category-list' }"
-          />
+      <page-footer>
+        <btn
+          v-bind="attr.btn.basic"
+          label="Cancelar"
+          outline
+          class="col-4 bg-white"
+          :disable="loading.disable.value"
+          :to="{ name: 'category-list' }"
+        />
 
-          <q-space />
+        <q-space />
 
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            unelevated
-            class="col-4"
-            :loading="isUpdate ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
-        </div>
-      </q-footer>
+        <btn
+          v-bind="attr.btn.basic"
+          label="Gravar"
+          unelevated
+          class="col-4"
+          :loading="isUpdate ? loading.edit.value : loading.add.value"
+          :disable="loading.disable.value"
+          type="submit"
+        />
+      </page-footer>
     </q-form>
   </q-page>
 </template>

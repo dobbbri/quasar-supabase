@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCategories, useNameSearch, useTools, useDefaults } from 'src/composables'
-import { PageHeader } from 'src/components'
+import { PageHeader, Btn } from 'src/components'
 
 const router = useRouter()
 const $q = useQuasar()
@@ -38,17 +38,16 @@ onMounted(() => handleListCategories())
     <page-header>
       <template #title>Categorias</template>
       <template #right>
-        <q-btn
+        <btn
           v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
           icon="add"
           unelevated
+          tooltip="Adicionar"
           :loading="loading.add.value"
           :disable="loading.disable.value"
           :to="{ name: 'category-form' }"
-        >
-          <q-tooltip>Adicionar</q-tooltip>
-        </q-btn>
+        />
       </template>
     </page-header>
 
@@ -100,17 +99,16 @@ onMounted(() => handleListCategories())
       position="bottom-right"
       :offset="[18, 18]"
     >
-      <q-btn
+      <btn
         v-if="$q.platform.is.mobile"
         v-bind="attr.btn.icon"
         icon="add"
         fab
+        tooltip="Adicionar"
         :loading="loading.add.value"
         :disable="loading.disable.value"
         :to="{ name: 'category-form' }"
-      >
-        <q-tooltip>Adicionar</q-tooltip>
-      </q-btn>
+      />
     </q-page-sticky>
   </q-page>
 </template>
