@@ -1,4 +1,4 @@
-export default function useFormatters() {
+export default function useFormatter() {
   const formatter = {
     inactive(value) {
       return value ? 'NÃO EXIBIR' : ''

@@ -2,14 +2,13 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { PageHeader } from 'src/components'
-import { useProducts, useNotify, useConfirm, useDefaults } from 'src/composables'
+import { useProducts, useTools, useDefaults } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
 
 const { loading, getProduct, addProduct, editProduct, removeProduct } = useProducts()
-const { notify } = useNotify()
-const { confirm } = useConfirm()
+const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
 const isUpdate = computed(() => (route.params.id ? true : false))

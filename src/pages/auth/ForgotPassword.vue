@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useNotify } from 'src/composables'
+import { useAuth, useTools } from 'src/composables'
 
 const router = useRouter()
 
 const { loading, sendPasswordResetEmail } = useAuth()
-const { notify } = useNotify()
+const { notify } = useTools()
 
 const email = ref('')
 

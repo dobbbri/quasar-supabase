@@ -1,46 +1,15 @@
-export default function useDefaults() {
-  const attr = {
-    btn: {
-      basic: {
-        rounded: true,
-        dense: false,
-        color: 'primary',
-        class: 'text-weight-medium'
-      },
-      icon: { round: true, size: 'md', color: 'primary', dense: true }
-    },
-    input: {
-      search: {
-        clearable: true,
-        dense: true,
-        rounded: true,
-        outlined: true,
-        bgColor: 'white',
-        color: 'primary',
-        class: 'q-px-md'
-      }
-    }
-  }
+import useConfig from 'src/composables/defaults/Config'
+import useAttribute from 'src/composables/defaults/Attribute'
+import useFormatter from 'src/composables/defaults/Formatter'
 
-  const fmt = {
-    inactive(value) {
-      return value ? 'NÃO EXIBIR' : ''
-    },
-    currency(value) {
-      return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })
-    }
-  }
+export default function useDefauts() {
+  const { config } = useConfig()
+  const { attribute } = useAttribute()
+  const { formatter } = useFormatter()
 
-  const cfg = {
-    table: {
-      rowsPerPageLabel: 'registros por página',
-      noDataLabel: 'Nenhum registrto disponível',
-      class: 'col-12',
-      flat: true,
-      pagination: { rowsPerPage: '9' },
-      rowKey: 'id'
-    }
+  return {
+    cfg: config,
+    attr: attribute,
+    fmt: formatter
   }
-
-  return { attr, cfg, fmt }
 }

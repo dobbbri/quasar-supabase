@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAuth, useNotify } from 'src/composables'
+import { useAuth, useTools } from 'src/composables'
 
 const router = useRouter()
 const route = useRoute()
 
 const { loading, resetPassword } = useAuth()
-const { notify } = useNotify()
+const { notify } = useTools()
 
 const token = route.params.token
 const password = ref('')

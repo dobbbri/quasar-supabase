@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useProducts, useNameSearch, useNotify, useDefaults } from 'src/composables'
+import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables'
 import { PageHeader } from 'src/components'
 
 const router = useRouter()
@@ -11,7 +11,7 @@ const $q = useQuasar()
 const documents = ref([])
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
 const { loading, getProducts } = useProducts()
-const { notify } = useNotify()
+const { notify } = useTools()
 const { attr, fmt } = useDefaults()
 
 const handleListProducts = async () => {

@@ -1,5 +1,5 @@
 export default function useAttribute() {
-  const attributes = {
+  const attribute = {
     btn: {
       basic: {
         rounded: true,
@@ -9,6 +9,7 @@ export default function useAttribute() {
       },
       icon: { round: true, size: 'md', color: 'primary', dense: true }
     },
+
     input: {
       search: {
         clearable: true,
@@ -22,5 +23,5 @@ export default function useAttribute() {
     }
   }
 
-  return { attributes }
+  return { attribute }
 }

@@ -1,8 +1,8 @@
 import { useSupabase } from 'boot/supabase'
-import { useAuth, useLoading } from 'src/composables'
+import { useAuth, useTools } from 'src/composables'
 
 export default function useApi(table) {
-  const { setLoading, loading } = useLoading()
+  const { setLoading, loading } = useTools()
   const { supabase } = useSupabase()
   const { user } = useAuth()
 

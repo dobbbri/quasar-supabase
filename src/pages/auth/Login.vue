@@ -1,12 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useNotify } from 'src/composables'
+import { useAuth, useTools } from 'src/composables'
 
 const router = useRouter()
 
 const { loading, login, isLoggedIn } = useAuth()
-const { notify } = useNotify()
+const { notify } = useTools()
 
 const form = ref({
   email: 'sergiodobri@gmail.com',

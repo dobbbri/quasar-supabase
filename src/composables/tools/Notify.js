@@ -1,6 +1,6 @@
 import { Notify } from 'quasar'
 
-export default function useNotify() {
+export default function useNoyify() {
   const notify = {
     success: (message) => {
       Notify.create({

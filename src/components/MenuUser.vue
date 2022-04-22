@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useConfirm } from 'src/composables'
+import { useAuth, useTools } from 'src/composables'
 
 const router = useRouter()
 const { user, logout } = useAuth()
-const { confirm } = useConfirm()
+const { confirm } = useTools()
 
 const firstName = ref('')
 

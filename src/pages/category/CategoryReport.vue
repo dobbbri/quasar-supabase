@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useCategories, useNotify, useDefaults } from 'src/composables'
+import { useCategories, useTools, useDefaults } from 'src/composables'
 
 const { loading, getCategories } = useCategories()
-const { notify } = useNotify()
+const { notify } = useTools()
 const { cfg } = useDefaults()
 
 const categories = ref([])
