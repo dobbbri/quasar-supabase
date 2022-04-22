@@ -1,23 +1,10 @@
 <script setup>
-import { useDefaults } from 'src/composables'
 import { MenuUser, PageHeader } from 'src/components'
-import { useMenuStore } from 'src/stores/menuStore'
-
-const { attr } = useDefaults()
-const store = useMenuStore()
 </script>
 
 <template>
   <q-page padding>
     <page-header>
-      <template #left>
-        <q-btn
-          v-bind="attr.btn.icon"
-          icon="menu"
-          flat
-          @click="store.toggleSidebar()"
-        />
-      </template>
       <template #title>EndlesS</template>
       <template #right>
         <menu-user />

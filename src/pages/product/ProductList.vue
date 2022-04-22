@@ -9,8 +9,9 @@ const router = useRouter()
 const $q = useQuasar()
 
 const documents = ref([])
-const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
+
 const { loading, getProducts } = useProducts()
+const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
 const { notify } = useTools()
 const { attr, fmt } = useDefaults()
 

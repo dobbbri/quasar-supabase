@@ -9,8 +9,9 @@ const router = useRouter()
 const $q = useQuasar()
 
 const documents = ref([])
-const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents)
+
 const { loading, getCategories } = useCategories()
+const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents)
 const { notify } = useTools()
 const { attr, fmt } = useDefaults()
 

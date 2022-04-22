@@ -71,6 +71,15 @@ onMounted(() => {
 <template>
   <q-page padding>
     <page-header>
+      <template #left>
+        <q-btn
+          v-bind="attr.btn.icon"
+          color="primary"
+          icon="chevron_left"
+          flat
+          :to="{ name: 'product-list' }"
+        />
+      </template>
       <template #title>{{ title + ' produto' }}</template>
       <template #right>
         <q-btn
