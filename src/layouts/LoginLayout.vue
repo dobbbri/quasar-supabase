@@ -12,7 +12,7 @@
 <template>
   <q-layout
     view="lHh Lpr lFf"
-    color="grey-2"
+    class="bg-grey-4"
   >
     <q-header>
       <q-toolbar>

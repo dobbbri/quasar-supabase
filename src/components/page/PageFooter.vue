@@ -7,7 +7,7 @@ const $q = useQuasar()
 <template>
   <div
     v-if="!$q.platform.is.mobile"
-    class="row q-pa-md"
+    class="row q-pb-xs q-pt-sm"
   >
     <slot></slot>
   </div>

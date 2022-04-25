@@ -1,21 +1,23 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useTools } from 'src/composables'
+import { useAuth, useTools, useDefaults } from 'src/composables'
+import { PageFooter } from 'src/components'
 
 const router = useRouter()
 
 const { loading, sendPasswordResetEmail } = useAuth()
 const { notify } = useTools()
+const { attr } = useDefaults()
 
 const email = ref('')
 
-const handleForgotPassowrd = async () => {
+const handleSubmit = async () => {
   try {
     await sendPasswordResetEmail(email.value)
     notify.info(
       'Para finalizar o registro,',
-      `um email de confirmação foi enviado para: ${email.value}.`
+      `foi enviado um email de confirmação para: ${email.value}.`
     )
     router.push({ name: 'login' })
   } catch (error) {
@@ -26,42 +28,46 @@ const handleForgotPassowrd = async () => {
 
 <template>
   <q-page padding>
-    <q-form
-      class="row justify-center"
-      @submit.prevent="handleForgotPassowrd"
-    >
-      <p class="col-12 text-h5 text-center">Redefinir senha</p>
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <q-input
-          label="Email"
-          v-model="email"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Email is required']"
-          type="email"
-        />
+    <div class="row justify-center">
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <q-form
+          class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+          @submit.prevent="handleSubmit"
+        >
+          <p class="text-h5 text-center">Redefinir senha</p>
 
-        <div class="full-width q-pt-md q-gutter-y-sm">
-          <q-btn
-            label="Enviar email"
-            color="primary"
-            class="full-width"
-            outline
-            rounded
-            :loading="loading"
-            :disable="loading"
-            type="submit"
+          <q-input
+            label="Email"
+            v-model="email"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+            type="email"
           />
 
-          <q-btn
-            label="Voltar"
-            color="dark"
-            class="full-width"
-            rounded
-            flat
-            :to="{ name: 'login' }"
-          />
-        </div>
+          <page-footer>
+            <q-btn
+              v-bind="attr.btn.basic"
+              label="Cancelar"
+              outline
+              class="col-4 bg-white"
+              :disable="loading"
+              :to="{ name: 'login' }"
+            />
+
+            <q-space />
+
+            <q-btn
+              v-bind="attr.btn.basic"
+              label="Enviar email"
+              unelevated
+              class="col-4"
+              :loading="loading"
+              :disable="loading"
+              type="submit"
+            />
+          </page-footer>
+        </q-form>
       </div>
-    </q-form>
+    </div>
   </q-page>
 </template>

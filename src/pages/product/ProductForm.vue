@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useProducts, useTools, useDefaults } from 'src/composables'
-import { PageHeader, PageFooter, Btn } from 'src/components'
+import { PageHeader, PageFooter } from 'src/components'
 
 const router = useRouter()
 const route = useRoute()
@@ -72,38 +72,41 @@ onMounted(() => {
   <q-page padding>
     <page-header>
       <template #left>
-        <btn
+        <q-btn
           v-bind="attr.btn.icon"
           color="primary"
           icon="chevron_left"
           flat
           :to="{ name: 'product-list' }"
-        />
+        >
+          <q-tooltip>Voltar</q-tooltip>
+        </q-btn>
       </template>
       <template #title>{{ title + ' produto' }}</template>
       <template #right>
-        <btn
+        <q-btn
           v-if="isUpdate"
           v-bind="attr.btn.icon"
           icon="delete_forever"
           color="negative"
           unelevated
-          tooltip="Excluir"
           :loading="loading.remove.value"
           :disable="loading.disable.value"
           @click="handleRemoveProduct(form)"
-        />
+        >
+          <q-tooltip>Excluir</q-tooltip>
+        </q-btn>
       </template>
     </page-header>
 
     <q-form
-      class="q-gutter-y-md q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+      class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
       @submit.prevent="handleSubmit"
     >
       <q-input
         label="Nome"
         v-model="form.name"
-        :rules="[(val) => (val && val.length > 3)]"
+        :rules="[(val) => val && val.length > 3]"
         error-message="O nome do produto deve ser preenchido!"
       />
 
@@ -114,7 +117,7 @@ onMounted(() => {
       />
 
       <page-footer>
-        <btn
+        <q-btn
           v-bind="attr.btn.basic"
           label="Cancelar"
           outline
@@ -125,7 +128,7 @@ onMounted(() => {
 
         <q-space />
 
-        <btn
+        <q-btn
           v-bind="attr.btn.basic"
           label="Gravar"
           unelevated

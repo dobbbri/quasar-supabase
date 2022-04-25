@@ -1,12 +1,14 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useTools } from 'src/composables'
+import { useAuth, useTools, useDefaults } from 'src/composables'
+import { PageFooter } from 'src/components'
 
 const router = useRouter()
 
 const { loading, register } = useAuth()
 const { notify } = useTools()
+const { attr } = useDefaults()
 
 const form = ref({
   name: 'Sergio Dobri',
@@ -14,7 +16,7 @@ const form = ref({
   password: '123456'
 })
 
-const handleRegister = async () => {
+const handleSubmit = async () => {
   try {
     await register(form.value)
     notify.info(
@@ -30,57 +32,63 @@ const handleRegister = async () => {
 
 <template>
   <q-page padding>
-    <q-form
-      class="row justify-center"
-      @submit.prevent="handleRegister"
-    >
-      <p class="col-12 text-h5 text-center">Register</p>
-      <div class="col-md-4 col-sm-6 col-xs-10 q-gutter-y-md">
-        <q-input
-          label="Name"
-          v-model="form.name"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Name is required']"
-        />
+    <div class="row justify-center">
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <q-form
+          class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+          @submit.prevent="handleSubmit"
+        >
+          <p class="text-h5 text-center">Registro</p>
 
-        <q-input
-          label="Email"
-          v-model="form.email"
-          lazy-rules
-          :rules="['email']"
-          error-message="O email deve ser válido!"
-          type="email"
-        />
-
-        <q-input
-          label="Password"
-          v-model="form.password"
-          lazy-rules
-          :rules="[(val) => (val && val.length >= 6) || 'Password is required and 6 characters']"
-        />
-
-        <div class="full-width q-pt-md q-gutter-y-sm">
-          <q-btn
-            label="Register"
-            color="primary"
-            class="full-width"
-            outline
-            rounded
-            :loading="loading"
-            :disable="loading"
-            type="submit"
+          <q-input
+            label="Nome"
+            v-model="form.name"
+            lazy-rules
+            :rules="[(val) => val && val.length > 0]"
+            error-message="O nome deve ser informado!"
           />
 
-          <q-btn
-            label="Login"
-            color="dark"
-            class="full-width"
-            rounded
-            flat
-            :to="{ name: 'login' }"
+          <q-input
+            label="Email"
+            v-model="form.email"
+            lazy-rules
+            :rules="['email']"
+            error-message="O email deve ser válido!"
+            type="email"
           />
-        </div>
+
+          <q-input
+            label="Senha"
+            v-model="form.password"
+            lazy-rules
+            :rules="[(val) => val && val.length >= 6]"
+            error-message="A senha deve ser possuir 6 ou mais caracteres"
+          />
+
+          <page-footer>
+            <q-btn
+              v-bind="attr.btn.basic"
+              label="Identificação"
+              outline
+              class="col-5 bg-white"
+              :disable="loading"
+              :to="{ name: 'login' }"
+            />
+
+            <q-space />
+
+            <q-btn
+              v-bind="attr.btn.basic"
+              label="registro"
+              unelevated
+              class="col-5"
+              :loading="loading"
+              :disable="loading"
+              type="submit"
+            />
+          </page-footer>
+        </q-form>
       </div>
-    </q-form>
+    </div>
   </q-page>
 </template>

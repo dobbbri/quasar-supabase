@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
 import { useCategories, useNameSearch, useTools, useDefaults } from 'src/composables'
-import { PageHeader, Btn } from 'src/components'
+import { PageHeader } from 'src/components'
 
 const router = useRouter()
 const $q = useQuasar()
@@ -38,16 +38,17 @@ onMounted(() => handleListCategories())
     <page-header>
       <template #title>Categorias</template>
       <template #right>
-        <btn
+        <q-btn
           v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
           icon="add"
           unelevated
-          tooltip="Adicionar"
           :loading="loading.add.value"
           :disable="loading.disable.value"
           :to="{ name: 'category-form' }"
-        />
+        >
+          <q-tooltip>Adicionar</q-tooltip>
+        </q-btn>
       </template>
     </page-header>
 
@@ -56,7 +57,8 @@ onMounted(() => handleListCategories())
       v-bind="attr.input.search"
       placeholder="Digite para pesquisar"
       autofocus
-      type="search"
+      class="q-px-none"
+      type="text"
     >
       <template v-slot:prepend>
         <q-icon name="search" />
@@ -99,16 +101,17 @@ onMounted(() => handleListCategories())
       position="bottom-right"
       :offset="[18, 18]"
     >
-      <btn
+      <q-btn
         v-if="$q.platform.is.mobile"
         v-bind="attr.btn.icon"
         icon="add"
         fab
-        tooltip="Adicionar"
         :loading="loading.add.value"
         :disable="loading.disable.value"
         :to="{ name: 'category-form' }"
-      />
+      >
+        <q-tooltip>Adicionar</q-tooltip>
+      </q-btn>
     </q-page-sticky>
   </q-page>
 </template>
