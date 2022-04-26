@@ -61,6 +61,27 @@ export default function useApi(table) {
     return count
   }
 
+  const uploadImage = async (file, folder, storage) => {
+    setLoading.list(true)
+    const fileName = `${folder}/${user.value.id}/${file.name}`
+    const { error } = supabase.storage.from(storage).upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    })
+    setLoading.list(false)
+    if (error) throw error
+    const imageUrl = await getImageUrl(fileName, storage)
+    return imageUrl
+  }
+
+  const getImageUrl = async (fileName, storage) => {
+    setLoading.list(true)
+    const { imageUrl, error } = supabase.storage.from(storage).getPublicUrl(fileName)
+    setLoading.list(false)
+    if (error) throw error
+    return imageUrl
+  }
+
   return {
     supabase,
     user,
@@ -71,6 +92,8 @@ export default function useApi(table) {
     add,
     edit,
     remove,
-    count
+    count,
+    uploadImage,
+    getImageUrl
   }
 }

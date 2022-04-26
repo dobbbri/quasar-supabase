@@ -7,17 +7,18 @@ import { PageHeader, PageFooter } from 'src/components'
 const router = useRouter()
 const route = useRoute()
 
-const { loading, getProduct, addProduct, editProduct, removeProduct } = useProducts()
+const { loading, getProduct, uploadProduct, addProduct, editProduct, removeProduct } = useProducts()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
 const isUpdate = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
 
+const image = ref([])
 const form = ref({
   image_url: '',
   name: '',
-  category_id: '',
+  category_id: 1,
   stock_is_automatic: false,
   stock_quantity: 0,
   stock_quantity_minimum: 0,
@@ -31,6 +32,10 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
+    if (image.value.length > 0 && image.value !== form.value.image_url) {
+      const imgUrl = await uploadProduct(image.value[0], 'products', 'storage')
+      form.value.image_url = imgUrl
+    }
     if (isUpdate.value) {
       await editProduct(form.value)
     } else {
@@ -58,6 +63,7 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id)
+    image.value = form.value.image_url
   } catch (error) {
     notify.error('Erro ao obter o produto.', error)
   }
@@ -103,6 +109,14 @@ onMounted(() => {
       class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
       @submit.prevent="handleSubmit"
     >
+      <q-input
+        label="Imagem"
+        stack-label
+        v-model="image"
+        type="file"
+        accept="image/*"
+      />
+
       <q-input
         label="Nome"
         v-model="form.name"
