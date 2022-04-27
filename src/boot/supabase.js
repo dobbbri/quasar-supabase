@@ -7,9 +7,9 @@ export function useSupabase() {
 
   const supabaseStorage = process.env.SUPABASE_STORAGE
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (process.env.DEV) console.info(event, session)
-  })
+  // supabase.auth.onAuthStateChange((event, session) => {
+  //   if (process.env.DEV) console.info(event, session)
+  // })
 
   return { supabase, supabaseStorage }
 }

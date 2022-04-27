@@ -12,7 +12,7 @@ export default function useProducts() {
     editProduct: edit,
     removeProduct: remove,
     countProduct: count,
-    uploadProduct: uploadImage,
-    getProductUrl: getImageUrl
+    uploadProductImage: uploadImage,
+    getProductImageUrl: getImageUrl
   }
 }

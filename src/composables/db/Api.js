@@ -1,3 +1,4 @@
+import { uid } from 'quasar'
 import { useSupabase } from 'boot/supabase'
 import { useAuth, useTools } from 'src/composables'
 
@@ -63,23 +64,23 @@ export default function useApi(table) {
 
   const uploadImage = async (file, folder) => {
     setLoading.list(true)
-    const fileName = `${folder}/${user.value.id}/${file.name}`
+    const ext = file.name.split('.').pop()
+    const fileName = `${folder}/${user.value.id}/${uid()}.${ext}`
     const { error } = supabase.storage.from(supabaseStorage).upload(fileName, file, {
       cacheControl: '3600',
       upsert: false
     })
     setLoading.list(false)
     if (error) throw error
-    const imageUrl = await getImageUrl(fileName)
-    return imageUrl
+    return fileName
   }
 
   const getImageUrl = async (fileName) => {
     setLoading.list(true)
-    const { imageUrl, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
+    const { publicURL, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
     setLoading.list(false)
     if (error) throw error
-    return imageUrl
+    return publicURL
   }
 
   return {

@@ -7,7 +7,15 @@ import { PageHeader, PageFooter } from 'src/components'
 const router = useRouter()
 const route = useRoute()
 
-const { loading, getProduct, uploadProduct, addProduct, editProduct, removeProduct } = useProducts()
+const {
+  loading,
+  getProduct,
+  addProduct,
+  editProduct,
+  removeProduct,
+  uploadProductImage,
+  getProductImageUrl
+} = useProducts()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
@@ -33,8 +41,11 @@ const form = ref({
 const handleSubmit = async () => {
   try {
     if (image.value.length > 0 && image.value !== form.value.image_url) {
-      const imgUrl = await uploadProduct(image.value[0], 'products', 'storage')
-      form.value.image_url = imgUrl
+      const fileName = await uploadProductImage(image.value[0], 'products')
+      console.log(' [DEBUG] fileName: ', fileName)
+      const publicURL = await getProductImageUrl(fileName)
+      console.log(' [DEBUG] publicURL : ', publicURL)
+      form.value.image_url = publicURL
     }
     if (isUpdate.value) {
       await editProduct(form.value)
