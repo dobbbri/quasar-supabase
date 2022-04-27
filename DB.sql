@@ -2,6 +2,9 @@ ALTER TABLE categories ALTER COLUMN name TYPE citext;
 ALTER TABLE customers ALTER COLUMN name TYPE citext;
 ALTER TABLE products ALTER COLUMN name TYPE citext;
 
+CREATE POLICY "Enable access to all users" ON storage.objects FOR SELECT USING (true);
+CREATE POLICY "Enable insert for authenticated users only" ON storage.objects FOR INSERT WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Enable insert for authenticated users only" ON storage.buckets FOR INSERT WITH CHECK (auth.role() = 'authenticated');
 
 
 CREATE TABLE public.categories (

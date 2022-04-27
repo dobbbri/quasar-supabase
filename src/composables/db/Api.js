@@ -3,7 +3,7 @@ import { useAuth, useTools } from 'src/composables'
 
 export default function useApi(table) {
   const { setLoading, loading } = useTools()
-  const { supabase } = useSupabase()
+  const { supabase, supabaseStorage } = useSupabase()
   const { user } = useAuth()
 
   const list = async (fields = '*') => {
@@ -61,22 +61,22 @@ export default function useApi(table) {
     return count
   }
 
-  const uploadImage = async (file, folder, storage) => {
+  const uploadImage = async (file, folder) => {
     setLoading.list(true)
     const fileName = `${folder}/${user.value.id}/${file.name}`
-    const { error } = supabase.storage.from(storage).upload(fileName, file, {
+    const { error } = supabase.storage.from(supabaseStorage).upload(fileName, file, {
       cacheControl: '3600',
       upsert: false
     })
     setLoading.list(false)
     if (error) throw error
-    const imageUrl = await getImageUrl(fileName, storage)
+    const imageUrl = await getImageUrl(fileName)
     return imageUrl
   }
 
-  const getImageUrl = async (fileName, storage) => {
+  const getImageUrl = async (fileName) => {
     setLoading.list(true)
-    const { imageUrl, error } = supabase.storage.from(storage).getPublicUrl(fileName)
+    const { imageUrl, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
     setLoading.list(false)
     if (error) throw error
     return imageUrl
