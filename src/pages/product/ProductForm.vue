@@ -24,7 +24,7 @@ const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
 
 const image = ref(null)
 const form = ref({
-  image_url: '',
+  image_url: null,
   name: '',
   category_id: 1,
   stock_is_automatic: false,
@@ -40,9 +40,11 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
-    if (image.value.length > 0 && image.value !== form.value.image_url) {
-      const fileName = await uploadProductImage(image.value[0], 'products')
+    console.log(' [DEBUG] image : ', image.value)
+    if (image.value) {
+      const fileName = await uploadProductImage(image.value, 'products')
       const publicURL = await getProductImageUrl(fileName)
+      console.log(' [DEBUG] publicURL : ', publicURL)
       form.value.image_url = publicURL
     }
     if (isUpdate.value) {
@@ -117,44 +119,44 @@ onMounted(() => {
       class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
       @submit.prevent="handleSubmit"
     >
+      <q-input
+        label="Nome"
+        v-model="form.name"
+        :rules="[(val) => val && val.length > 3]"
+        error-message="O nome do produto deve ser informado!"
+      />
+
+      <q-checkbox
+        label="Utilizar estoque automático"
+        color="primary"
+        v-model="form.stock_is_automatic"
+        class="checkbox-fix"
+      />
+
       <q-img
         :src="form.image_url"
         spinner-color="white"
         class="q-mt-md"
         v-if="form.image_url && !image"
-        style="height: 150px"
+        style="height: 150px; max-height: 150px"
         :ratio="4 / 3"
-        fit="contain"
       />
 
       <q-banner
         v-if="image"
         rounded
-        class="bg-orange text-white q-mt-md"
+        class="bg-warning text-dark q-my-sm"
       >
         A nova imagem selecionada sera exibida após gravar o produto.
       </q-banner>
 
       <q-file
-        label="Selecionar imagem"
+        :label="isUpdate ? 'Selecionar nova imagem' : 'Selecionar imagem'"
         v-model="image"
         type="file"
         accept="image/*"
         class="q-mb-md"
         clearable
-      />
-
-      <q-input
-        label="Nome"
-        v-model="form.name"
-        :rules="[(val) => val && val.length > 3]"
-        error-message="O nome do produto deve ser preenchido!"
-      />
-
-      <q-checkbox
-        label="Utilizar estoque automático"
-        color="negative"
-        v-model="form.stock_is_automatic"
       />
 
       <page-footer>

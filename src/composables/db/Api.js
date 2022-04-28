@@ -63,6 +63,7 @@ export default function useApi(table) {
   }
 
   const uploadImage = async (file, folder) => {
+    console.log(' [DEBUG] file : ', file)
     setLoading.list(true)
     const ext = file.name.split('.').pop()
     const fileName = `${folder}/${user.value.id}/${uid()}.${ext}`
@@ -78,6 +79,14 @@ export default function useApi(table) {
   const getImageUrl = async (fileName) => {
     setLoading.list(true)
     const { publicURL, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
+    setLoading.list(false)
+    if (error) throw error
+    return publicURL
+  }
+
+  const removeImageUrl = async (fileName) => {
+    setLoading.list(true)
+    const { publicURL, error } = supabase.storage.from(supabaseStorage).remove([fileName])
     setLoading.list(false)
     if (error) throw error
     return publicURL

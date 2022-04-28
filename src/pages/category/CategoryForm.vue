@@ -97,14 +97,14 @@ onMounted(() => {
         label="Nome"
         v-model="form.name"
         :rules="[(val) => val && val.length > 3]"
-        error-message="O nome da categoria deve ser preenchido!"
+        error-message="O nome da categoria deve ser informado!"
       />
 
       <q-checkbox
         label="Não exibir os produtos desta categoria"
         color="negative"
-        style=""
         v-model="form.inactive"
+        class="checkbox-fix"
       />
 
       <page-footer>
