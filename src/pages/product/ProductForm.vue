@@ -42,9 +42,7 @@ const handleSubmit = async () => {
   try {
     if (image.value.length > 0 && image.value !== form.value.image_url) {
       const fileName = await uploadProductImage(image.value[0], 'products')
-      console.log(' [DEBUG] fileName: ', fileName)
       const publicURL = await getProductImageUrl(fileName)
-      console.log(' [DEBUG] publicURL : ', publicURL)
       form.value.image_url = publicURL
     }
     if (isUpdate.value) {
@@ -74,7 +72,6 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id)
-    image.value = form.value.image_url
   } catch (error) {
     notify.error('Erro ao obter o produto.', error)
   }
@@ -120,12 +117,30 @@ onMounted(() => {
       class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
       @submit.prevent="handleSubmit"
     >
-      <q-input
-        label="Imagem"
-        stack-label
+      <q-img
+        :src="form.image_url"
+        spinner-color="white"
+        class="q-mt-md"
+        v-if="form.image_url && !image"
+        style="height: 150px"
+        :ratio="4 / 3"
+        fit="contain"
+      />
+
+      <q-banner
+        v-if="image"
+        rounded
+        class="bg-orange text-white q-mt-md"
+      >
+        A nova imagem selecionada sera exibida após gravar o produto.
+      </q-banner>
+      <q-file
+        label="Selecionar uma imagem"
         v-model="image"
         type="file"
         accept="image/*"
+        class="q-mb-md"
+        clearable
       />
 
       <q-input
