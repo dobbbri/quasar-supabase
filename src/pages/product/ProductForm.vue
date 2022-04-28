@@ -22,7 +22,7 @@ const { attr } = useDefaults()
 const isUpdate = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
 
-const image = ref([])
+const image = ref(null)
 const form = ref({
   image_url: '',
   name: '',
@@ -134,8 +134,9 @@ onMounted(() => {
       >
         A nova imagem selecionada sera exibida após gravar o produto.
       </q-banner>
+
       <q-file
-        label="Selecionar uma imagem"
+        label="Selecionar imagem"
         v-model="image"
         type="file"
         accept="image/*"
