@@ -1,7 +1,7 @@
 export default function useFormatter() {
   const formatter = {
     inactive(value) {
-      return value ? 'NÃO EXIBIR' : ''
+      return value ? 'Não exibir os produtos desta categoria' : ''
     },
     currency(value) {
       return value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })

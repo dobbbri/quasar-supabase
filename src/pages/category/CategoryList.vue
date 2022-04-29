@@ -87,9 +87,12 @@ onMounted(() => handleListCategories())
         <q-item-section>
           <q-item-label>
             {{ category.name }}
+          </q-item-label>
+          <q-item-label>
             <q-badge
+              outline
               v-if="category.inactive"
-              color="negative"
+              class="bg-red text-white text-body2"
               :label="fmt.inactive(category.inactive)"
             />
           </q-item-label>
