@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth, useTools, useDefaults } from 'src/composables'
-import { PageFooter } from 'src/components'
 
 const router = useRouter()
 
@@ -44,28 +43,24 @@ const handleSubmit = async () => {
             type="email"
           />
 
-          <page-footer>
-            <q-btn
-              v-bind="attr.btn.basic"
-              label="Cancelar"
-              outline
-              class="col-4 bg-white"
-              :disable="loading"
-              :to="{ name: 'login' }"
-            />
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Enviar email"
+            unelevated
+            class="full-width q-mt-lg"
+            :loading="loading"
+            :disable="loading"
+            type="submit"
+          />
 
-            <q-space />
-
-            <q-btn
-              v-bind="attr.btn.basic"
-              label="Enviar email"
-              unelevated
-              class="col-4"
-              :loading="loading"
-              :disable="loading"
-              type="submit"
-            />
-          </page-footer>
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Cancelar"
+            flat
+            class="full-width q-mt-sm"
+            :disable="loading"
+            :to="{ name: 'login' }"
+          />
         </q-form>
       </div>
     </div>

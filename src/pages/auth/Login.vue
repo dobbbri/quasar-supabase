@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth, useTools, useDefaults } from 'src/composables'
-import { PageFooter } from 'src/components'
 
 const router = useRouter()
 
@@ -68,28 +67,24 @@ onMounted(() => {
             />
           </div>
 
-          <page-footer>
-            <q-btn
-              v-bind="attr.btn.basic"
-              label="Registro"
-              outline
-              class="col-5 bg-white"
-              :disable="loading"
-              :to="{ name: 'register' }"
-            />
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Entrar"
+            unelevated
+            class="full-width q-mt-lg"
+            :loading="loading"
+            :disable="loading"
+            type="submit"
+          />
 
-            <q-space />
-
-            <q-btn
-              v-bind="attr.btn.basic"
-              label="Entrar"
-              unelevated
-              class="col-5"
-              :loading="loading"
-              :disable="loading"
-              type="submit"
-            />
-          </page-footer>
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Cadastrar"
+            flat
+            class="full-width q-mt-sm"
+            :disable="loading"
+            :to="{ name: 'register' }"
+          />
         </q-form>
       </div>
     </div>

@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuth, useTools, useDefaults } from 'src/composables'
-import { PageFooter } from 'src/components'
 
 const router = useRouter()
 const route = useRoute()
@@ -43,28 +42,24 @@ const handleSubmit = async () => {
             error-message="A senha deve ser possuir 6 ou mais caracteres"
           />
 
-          <page-footer>
-            <q-btn
-              v-bind="attr.btn.basic"
-              label="Voltar"
-              outline
-              class="col-5 bg-white"
-              :disable="loading"
-              :to="{ name: 'login' }"
-            />
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Gravar"
+            unelevated
+            class="full-width q-mt-lg"
+            :loading="loading"
+            :disable="loading"
+            type="submit"
+          />
 
-            <q-space />
-
-            <q-btn
-              v-bind="attr.btn.basic"
-              label="Gravar"
-              unelevated
-              class="col-5"
-              :loading="loading"
-              :disable="loading"
-              type="submit"
-            />
-          </page-footer>
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Cancelar"
+            flat
+            class="full-width q-mt-sm"
+            :disable="loading"
+            :to="{ name: 'login' }"
+          />
         </q-form>
       </div>
     </div>
