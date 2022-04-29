@@ -63,40 +63,40 @@ export default function useApi(table) {
   }
 
   const getImage = async (fileName) => {
-    setLoading.list(true)
+    setLoading.add(true)
     const { publicURL, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
-    setLoading.list(false)
+    setLoading.add(false)
     if (error) throw error
     return publicURL
   }
 
   const addImage = async (folder, file) => {
-    setLoading.list(true)
+    setLoading.add(true)
     const ext = file.name.split('.').pop()
     const fileName = `${folder}/${user.value.id}/${uid()}.${ext}`
     const { error } = await supabase.storage.from(supabaseStorage).upload(fileName, file, {
       cacheControl: '3600',
       upsert: false
     })
-    setLoading.list(false)
+    setLoading.add(false)
     if (error) throw error
     return fileName
   }
 
   const editImage = async (fileName, file) => {
-    setLoading.list(true)
+    setLoading.edit(true)
     const { error } = await supabase.storage.from(supabaseStorage).update(fileName, file, {
       cacheControl: '3600',
       upsert: false
     })
-    setLoading.list(false)
+    setLoading.edit(false)
     if (error) throw error
   }
 
   const removeImage = async (fileName) => {
-    setLoading.list(true)
+    setLoading.remove(true)
     const { error } = await supabase.storage.from(supabaseStorage).remove(fileName)
-    setLoading.list(false)
+    setLoading.remove(false)
     if (error) throw error
   }
 
