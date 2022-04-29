@@ -142,7 +142,7 @@ onMounted(() => {
       <q-img
         :src="form.image_url + '?t=' + new Date().getTime()"
         spinner-color="white"
-        class="q-mt-md"
+        class="q-mt-md rounded-borders"
         v-if="form.image_url && !image"
         style="height: 150px; max-height: 150px"
         :ratio="4 / 3"
@@ -151,9 +151,9 @@ onMounted(() => {
       <q-banner
         v-if="image"
         rounded
-        class="bg-warning text-dark q-my-sm"
+        class="text-body1 bg-blue-grey-2 q-pa-xs q-my-sm"
       >
-        A nova imagem selecionada sera exibida após gravar o produto.
+        A nova imagem selecionada sera exibida após gravar o produto!
       </q-banner>
 
       <q-file

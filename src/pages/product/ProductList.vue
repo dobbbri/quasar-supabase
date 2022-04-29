@@ -93,8 +93,7 @@ onMounted(() => handleListProducts())
           <q-item-label class="row text-body2">
             <span class="col">
               <q-badge
-                outline
-                color="grey"
+                class="bg-blue-grey-2 text-body2 text-dark"
                 :label="product.categories.name.toString().toUpperCase()"
               />
             </span>
