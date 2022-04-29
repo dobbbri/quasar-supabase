@@ -140,15 +140,14 @@ onMounted(() => {
       />
 
       <q-img
-        :src="form.image_url"
+        :src="form.image_url + '?t=' + new Date().getTime()"
         spinner-color="white"
         class="q-mt-md"
         v-if="form.image_url && !image"
         style="height: 150px; max-height: 150px"
         :ratio="4 / 3"
       />
-      url: {{ form.image_url }} <br />
-      key: {{ form.image_key }}
+
       <q-banner
         v-if="image"
         rounded
