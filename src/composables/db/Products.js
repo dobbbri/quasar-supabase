@@ -1,8 +1,19 @@
 import { useApi } from 'src/composables'
 
 export default function useProducts() {
-  const { loading, list, get, add, edit, remove, count, uploadImage, getImageUrl } =
-    useApi('products')
+  const {
+    loading,
+    list,
+    get,
+    add,
+    edit,
+    remove,
+    count,
+    getImage,
+    addImage,
+    editImage,
+    removeImage
+  } = useApi('products')
 
   return {
     loading,
@@ -12,7 +23,9 @@ export default function useProducts() {
     editProduct: edit,
     removeProduct: remove,
     countProduct: count,
-    uploadProductImage: uploadImage,
-    getProductImageUrl: getImageUrl
+    getProductImage: getImage,
+    addProductImage: addImage,
+    editProductImage: editImage,
+    removeProductImage: removeImage
   }
 }

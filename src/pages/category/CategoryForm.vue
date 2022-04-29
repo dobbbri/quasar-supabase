@@ -11,8 +11,8 @@ const { loading, getCategory, addCategory, editCategory, removeCategory } = useC
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
-const isUpdate = computed(() => (route.params.id ? true : false))
-const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
+const isEditMode= computed(() => (route.params.id ? true : false))
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const form = ref({
   name: '',
@@ -21,12 +21,12 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
-    if (isUpdate.value) {
+    if (isEditMode.value) {
       await editCategory(form.value)
     } else {
       await addCategory(form.value)
     }
-    notify.success(`Categoria ${isUpdate.value ? 'alterada' : 'adicionada'}.`)
+    notify.success(`Categoria ${isEditMode.value ? 'alterada' : 'adicionada'}.`)
     router.push({ name: 'category-list' })
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} a categoria.`, error)
@@ -41,7 +41,7 @@ const handleRemoveCategory = async (category) => {
       router.push({ name: 'category-list' })
     })
   } catch (error) {
-    notify.error('Erro ao remover a categoria', error)
+    notify.error('Erro ao excluir a categoria', error)
   }
 }
 
@@ -54,7 +54,7 @@ const handleGetCategory = async () => {
 }
 
 onMounted(() => {
-  if (isUpdate.value) handleGetCategory()
+  if (isEditMode.value) handleGetCategory()
 })
 </script>
 
@@ -75,7 +75,7 @@ onMounted(() => {
       <template #title>{{ title + ' categoria' }}</template>
       <template #right>
         <q-btn
-          v-if="isUpdate"
+          v-if="isEditMode"
           v-bind="attr.btn.icon"
           icon="delete_forever"
           color="negative"
@@ -124,7 +124,7 @@ onMounted(() => {
           label="Gravar"
           unelevated
           class="col-4"
-          :loading="isUpdate ? loading.edit.value : loading.add.value"
+          :loading="isEditMode? loading.edit.value : loading.add.value"
           :disable="loading.disable.value"
           type="submit"
         />

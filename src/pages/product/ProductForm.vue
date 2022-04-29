@@ -13,18 +13,21 @@ const {
   addProduct,
   editProduct,
   removeProduct,
-  uploadProductImage,
-  getProductImageUrl
+  getProductImage,
+  addProductImage,
+  editProductImage,
+  removeProductImage
 } = useProducts()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
-const isUpdate = computed(() => (route.params.id ? true : false))
-const title = computed(() => (isUpdate.value ? 'Alterar' : 'Adicionar'))
+const isEditMode = computed(() => (route.params.id ? true : false))
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const image = ref(null)
 const form = ref({
   image_url: null,
+  image_key: '',
   name: '',
   category_id: 1,
   stock_is_automatic: false,
@@ -40,19 +43,19 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
-    console.log(' [DEBUG] image : ', image.value)
-    if (image.value) {
-      const fileName = await uploadProductImage(image.value, 'products')
-      const publicURL = await getProductImageUrl(fileName)
-      console.log(' [DEBUG] publicURL : ', publicURL)
-      form.value.image_url = publicURL
-    }
-    if (isUpdate.value) {
+    if (isEditMode.value) {
+      if (form.value.image_key) {
+        await editProductImage(form.value.image_key, image.value)
+      }
       await editProduct(form.value)
     } else {
+      const fileName = await addProductImage('products', image.value)
+      const publicURL = await getProductImage(fileName)
+      form.value.image_key = fileName
+      form.value.image_url = publicURL
       await addProduct(form.value)
     }
-    notify.success(`Produto ${isUpdate.value ? 'alterado' : 'adicionado'}.`)
+    notify.success(`Produto ${isEditMode.value ? 'alterado' : 'adicionado'}.`)
     router.push({ name: 'product-list' })
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} o produto.`, error)
@@ -62,12 +65,15 @@ const handleSubmit = async () => {
 const handleRemoveProduct = async (product) => {
   try {
     confirm.delete(`do produto: ${product.name}`).onOk(async () => {
+      if (form.value.image_key) {
+        await removeProductImage([form.value.image_key])
+      }
       await removeProduct(product.id)
-      notify.success('Produto excluida.')
+      notify.success('Produto excluido.')
       router.push({ name: 'product-list' })
     })
   } catch (error) {
-    notify.error('Erro ao remover o produto', error)
+    notify.error('Erro ao excluir o produto', error)
   }
 }
 
@@ -80,7 +86,7 @@ const handleGetProduct = async () => {
 }
 
 onMounted(() => {
-  if (isUpdate.value) handleGetProduct()
+  if (isEditMode.value) handleGetProduct()
 })
 </script>
 
@@ -101,7 +107,7 @@ onMounted(() => {
       <template #title>{{ title + ' produto' }}</template>
       <template #right>
         <q-btn
-          v-if="isUpdate"
+          v-if="isEditMode"
           v-bind="attr.btn.icon"
           icon="delete_forever"
           color="negative"
@@ -141,7 +147,8 @@ onMounted(() => {
         style="height: 150px; max-height: 150px"
         :ratio="4 / 3"
       />
-
+      url: {{ form.image_url }} <br />
+      key: {{ form.image_key }}
       <q-banner
         v-if="image"
         rounded
@@ -151,7 +158,7 @@ onMounted(() => {
       </q-banner>
 
       <q-file
-        :label="isUpdate ? 'Selecionar nova imagem' : 'Selecionar imagem'"
+        :label="isEditMode ? 'Selecionar nova imagem' : 'Selecionar imagem'"
         v-model="image"
         type="file"
         accept="image/*"
@@ -176,7 +183,7 @@ onMounted(() => {
           label="Gravar"
           unelevated
           class="col-4"
-          :loading="isUpdate ? loading.edit.value : loading.add.value"
+          :loading="isEditMode ? loading.edit.value : loading.add.value"
           :disable="loading.disable.value"
           type="submit"
         />

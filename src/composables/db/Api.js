@@ -62,12 +62,19 @@ export default function useApi(table) {
     return count
   }
 
-  const uploadImage = async (file, folder) => {
-    console.log(' [DEBUG] file : ', file)
+  const getImage = async (fileName) => {
+    setLoading.list(true)
+    const { publicURL, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
+    setLoading.list(false)
+    if (error) throw error
+    return publicURL
+  }
+
+  const addImage = async (folder, file) => {
     setLoading.list(true)
     const ext = file.name.split('.').pop()
     const fileName = `${folder}/${user.value.id}/${uid()}.${ext}`
-    const { error } = supabase.storage.from(supabaseStorage).upload(fileName, file, {
+    const { error } = await supabase.storage.from(supabaseStorage).upload(fileName, file, {
       cacheControl: '3600',
       upsert: false
     })
@@ -76,20 +83,21 @@ export default function useApi(table) {
     return fileName
   }
 
-  const getImageUrl = async (fileName) => {
+  const editImage = async (fileName, file) => {
     setLoading.list(true)
-    const { publicURL, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
+    const { error } = await supabase.storage.from(supabaseStorage).update(fileName, file, {
+      cacheControl: '3600',
+      upsert: false
+    })
     setLoading.list(false)
     if (error) throw error
-    return publicURL
   }
 
-  const removeImageUrl = async (fileName) => {
+  const removeImage = async (fileName) => {
     setLoading.list(true)
-    const { publicURL, error } = supabase.storage.from(supabaseStorage).remove([fileName])
+    const { error } = await supabase.storage.from(supabaseStorage).remove(fileName)
     setLoading.list(false)
     if (error) throw error
-    return publicURL
   }
 
   return {
@@ -103,7 +111,9 @@ export default function useApi(table) {
     edit,
     remove,
     count,
-    uploadImage,
-    getImageUrl
+    getImage,
+    addImage,
+    editImage,
+    removeImage
   }
 }
