@@ -13,7 +13,7 @@ const {
   addProduct,
   editProduct,
   removeProduct,
-  getProductImage,
+  getProductImageURL,
   addProductImage,
   editProductImage,
   removeProductImage
@@ -23,11 +23,14 @@ const { attr } = useDefaults()
 
 const isEditMode = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
+const loadImage = computed((imageName) => {
+  if (imageName) {
+    return getProductImageURL(imageName) + '?t=' + new Date().getTime()
+  }
+})
 
 const image = ref(null)
 const form = ref({
-  image_url: null,
-  image_key: '',
   name: '',
   category_id: 1,
   stock_is_automatic: false,
@@ -38,21 +41,21 @@ const form = ref({
   price_to_sell: 0,
   code_bar: '',
   code_internal: '',
-  description: ''
+  description: '',
+  image_name: null
 })
 
 const handleSubmit = async () => {
   try {
+    if (form.value.image_name) {
+      await editProductImage(form.value.image_name, image.value)
+    } else {
+      const imageName = await addProductImage('products', image.value)
+      form.value.image_name = imageName
+    }
     if (isEditMode.value) {
-      if (form.value.image_key) {
-        await editProductImage(form.value.image_key, image.value)
-      }
       await editProduct(form.value)
     } else {
-      const fileName = await addProductImage('products', image.value)
-      const publicURL = await getProductImage(fileName)
-      form.value.image_key = fileName
-      form.value.image_url = publicURL
       await addProduct(form.value)
     }
     notify.success(`Produto ${isEditMode.value ? 'alterado' : 'adicionado'}.`)
@@ -65,8 +68,8 @@ const handleSubmit = async () => {
 const handleRemoveProduct = async (product) => {
   try {
     confirm.delete(`do produto: ${product.name}`).onOk(async () => {
-      if (form.value.image_key) {
-        await removeProductImage([form.value.image_key])
+      if (form.value.image_name) {
+        await removeProductImage([form.value.image_name])
       }
       await removeProduct(product.id)
       notify.success('Produto excluido.')
@@ -140,7 +143,7 @@ onMounted(() => {
       />
 
       <q-img
-        :src="form.image_url + '?t=' + new Date().getTime()"
+        :src="loadImage(form.image_name)"
         spinner-color="white"
         class="q-mt-md rounded-borders"
         v-if="form.image_url && !image"

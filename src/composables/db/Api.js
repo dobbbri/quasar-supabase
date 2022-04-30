@@ -4,7 +4,7 @@ import { useAuth, useTools } from 'src/composables'
 
 export default function useApi(table) {
   const { setLoading, loading } = useTools()
-  const { supabase, supabaseStorage } = useSupabase()
+  const { supabase, supabaseUrl, supabaseBucket } = useSupabase()
   const { user } = useAuth()
 
   const list = async (fields = '*') => {
@@ -62,40 +62,51 @@ export default function useApi(table) {
     return count
   }
 
-  const getImage = async (fileName) => {
-    setLoading.add(true)
-    const { publicURL, error } = supabase.storage.from(supabaseStorage).getPublicUrl(fileName)
-    setLoading.add(false)
-    if (error) throw error
-    return publicURL
-  }
-
   const addImage = async (folder, file) => {
     setLoading.add(true)
-    const ext = file.name.split('.').pop()
-    const fileName = `${folder}/${user.value.id}/${uid()}.${ext}`
-    const { error } = await supabase.storage.from(supabaseStorage).upload(fileName, file, {
-      cacheControl: '3600',
-      upsert: false
-    })
+    const extension = file.name.split('.').pop()
+    const imageName = `${folder}/${uid()}.${extension}`
+    const { error } = await supabase.storage
+      .from(supabaseBucket)
+      .upload(`${user.value.id}/${imageName}`, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
     setLoading.add(false)
     if (error) throw error
-    return fileName
+    return imageName
   }
 
-  const editImage = async (fileName, file) => {
+  const getImageURL = (imageName) => {
+    const imageUrl = `${supabaseUrl}/storage/v1/object/public/${supabaseBucket}/${user.value.id}/${imageName}`
+    return imageUrl
+  }
+
+  // const getImage = async (fileName) => {
+  //   setLoading.add(true)
+  //   const { publicURL, error } = supabase.storage.from(supabaseBucket).getPublicUrl(fileName)
+  //   setLoading.add(false)
+  //   if (error) throw error
+  //   return publicURL
+  // }
+
+  const editImage = async (imageName, file) => {
     setLoading.edit(true)
-    const { error } = await supabase.storage.from(supabaseStorage).update(fileName, file, {
-      cacheControl: '3600',
-      upsert: false
-    })
+    const { error } = await supabase.storage
+      .from(supabaseBucket)
+      .update(`${user.value.id}/${imageName}`, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
     setLoading.edit(false)
     if (error) throw error
   }
 
-  const removeImage = async (fileName) => {
+  const removeImage = async (imageName) => {
     setLoading.remove(true)
-    const { error } = await supabase.storage.from(supabaseStorage).remove(fileName)
+    const { error } = await supabase.storage
+      .from(supabaseBucket)
+      .remove(`${user.value.id}/${imageName}`)
     setLoading.remove(false)
     if (error) throw error
   }
@@ -111,9 +122,9 @@ export default function useApi(table) {
     edit,
     remove,
     count,
-    getImage,
     addImage,
     editImage,
-    removeImage
+    removeImage,
+    getImageURL
   }
 }

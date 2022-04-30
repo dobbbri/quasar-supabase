@@ -9,7 +9,7 @@ export default function useProducts() {
     edit,
     remove,
     count,
-    getImage,
+    getImageURL,
     addImage,
     editImage,
     removeImage
@@ -17,13 +17,14 @@ export default function useProducts() {
 
   return {
     loading,
+    productFolder,
     getProducts: list,
     getProduct: get,
     addProduct: add,
     editProduct: edit,
     removeProduct: remove,
     countProduct: count,
-    getProductImage: getImage,
+    getProductImageURL: getImageURL,
     addProductImage: addImage,
     editProductImage: editImage,
     removeProductImage: removeImage
