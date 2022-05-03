@@ -1,18 +1,29 @@
 <script setup>
 // import { onMounted } from 'vue'
-import { Sidebar } from 'src/components'
+import { LeftSidebar } from 'src/components'
 // import { useBrand } from 'src/composables'
 // const { getBrand } = useBrand()
 // onMounted(() =>  getBrand())
 </script>
 
 <template>
-  <div class="WAL position-relative bg-grey-4" :style="'height: ' + $q.screen.height + 'px'">
-    <q-layout view="lHh Lpr lFf" class="WAL__layout shadow-3" container>
-      <sidebar />
+  <div
+    class="WAL position-relative bg-grey-4"
+    :style="'height: ' + $q.screen.height + 'px'"
+  >
+    <q-layout
+      view="lHh Lpr lFf"
+      class="WAL__layout shadow-3"
+      container
+    >
+      <left-sidebar />
 
       <q-page-container class="bg-grey-2">
-        <router-view :key="$route.fullPath" v-slot="{ Component }" style="overflow: hidden">
+        <router-view
+          :key="$route.fullPath"
+          v-slot="{ Component }"
+          style="overflow: hidden"
+        >
           <keep-alive>
             <component :is="Component" />
           </keep-alive>

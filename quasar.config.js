@@ -62,7 +62,7 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      env: require('dotenv').config().parsed,
+      env: require('dotenv').config().parsed
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,
@@ -72,9 +72,9 @@ module.exports = configure(function (/* ctx */) {
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
 
-      vitePlugins: [
-        // ['', {}]
-      ]
+      // vitePlugins: [
+      //   [ 'package-name', { ..options.. } ]
+      // ]
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
@@ -86,6 +86,7 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {},
+
       // iconSet: 'material-icons', // Quasar icon set
       // lang: 'en-US', // Quasar language pack
 
@@ -100,8 +101,9 @@ module.exports = configure(function (/* ctx */) {
       plugins: ['Dialog', 'Notify', 'Loading', 'LocalStorage']
     },
 
-    // animations: ['slideInRight', 'slideOutRight'],
+    // animations: 'all', // --- includes all animations
     // https://v2.quasar.dev/options/animations
+    animations: [],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#property-sourcefiles
     // sourceFiles: {
@@ -119,13 +121,18 @@ module.exports = configure(function (/* ctx */) {
     ssr: {
       // ssrPwaHtmlFilename: 'offline.html', // do NOT use index.html as name!
       // will mess up SSR
+
       // extendSSRWebserverConf (esbuildConf) {},
       // extendPackageJson (json) {},
+
       pwa: false,
+
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
+
       prodPort: 3000, // The default port that the production server should use
       // (gets superseded if process.env.PORT is specified at runtime)
+
       middlewares: [
         'render' // keep this as last one
       ]
@@ -158,8 +165,11 @@ module.exports = configure(function (/* ctx */) {
     electron: {
       // extendElectronMainConf (esbuildConf)
       // extendElectronPreloadConf (esbuildConf)
+
       inspectPort: 5858,
+
       bundler: 'packager', // 'packager' or 'builder'
+
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
         // OS X / Mac App Store
@@ -173,6 +183,7 @@ module.exports = configure(function (/* ctx */) {
 
       builder: {
         // https://www.electron.build/configuration/configuration
+
         appId: 'endless-supabase'
       }
     },
@@ -180,6 +191,7 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/developing-browser-extensions/configuring-bex
     bex: {
       contentScripts: ['my-content-script']
+
       // extendBexScriptsConf (esbuildConf) {}
       // extendBexManifestJson (json) {}
     }

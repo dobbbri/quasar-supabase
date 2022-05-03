@@ -20,7 +20,8 @@ const handleClose = () => {
 
 const handleSendWpp = () => {
   const link = encodeURI(
-    `https://api.whatsapp.com/send?phone=55${brand.value.phone}&text=${msg} - ${props.product.name
+    `https://api.whatsapp.com/send?phone=55${brand.value.phone}&text=${msg} - ${
+      props.product.name
     } - ${formatCurrency(props.product.price_to_sell)}`
   )
   openURL(link)
@@ -52,7 +53,13 @@ const handleSendWpp = () => {
 
       <q-card-actions align="right">
         <q-btn v-close-popup label="Cancel" color="primary" outline />
-        <q-btn v-if="brand.phone" label="Buy on whatsapp" icon="whatsapp" color="green-7" @click="handleSendWpp" />
+        <q-btn
+          v-if="brand.phone"
+          label="Buy on whatsapp"
+          icon="whatsapp"
+          color="green-7"
+          @click="handleSendWpp"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>

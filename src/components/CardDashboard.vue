@@ -31,14 +31,32 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-card v-ripple:primary class="my-card" bordered>
-    <q-skeleton v-if="load" height="50px" />
+  <q-card
+    v-ripple:primary
+    class="my-card"
+    bordered
+  >
+    <q-skeleton
+      v-if="load"
+      height="50px"
+    />
 
-    <q-card-section v-else horizontal>
+    <q-card-section
+      v-else
+      horizontal
+    >
       <div class="col flex flex-center text-h5">{{ count }} - {{ label }}</div>
 
-      <q-card-actions vertical class="justify-around q-px-md">
-        <q-btn flat round color="primary" :icon="icon" />
+      <q-card-actions
+        vertical
+        class="justify-around q-px-md"
+      >
+        <q-btn
+          flat
+          round
+          color="primary"
+          :icon="icon"
+        />
       </q-card-actions>
     </q-card-section>
   </q-card>
