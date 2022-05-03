@@ -35,8 +35,8 @@ const handleSubmit = async () => {
           <p class="text-h5 text-center">Troca de senha</p>
 
           <q-input
-            label="Nova senha"
             v-model="password"
+            label="Nova senha"
             lazy-rules
             :rules="[(val) => val && val.length >= 6]"
             error-message="A senha deve ser possuir 6 ou mais caracteres"

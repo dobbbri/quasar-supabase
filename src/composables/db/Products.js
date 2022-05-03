@@ -17,7 +17,6 @@ export default function useProducts() {
 
   return {
     loading,
-    productFolder,
     getProducts: list,
     getProduct: get,
     addProduct: add,

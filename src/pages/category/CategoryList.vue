@@ -60,29 +60,19 @@ onMounted(() => handleListCategories())
       class="q-px-none"
       type="text"
     >
-      <template v-slot:prepend>
+      <template #prepend>
         <q-icon name="search" />
       </template>
     </q-input>
 
-    <q-inner-loading
-      :showing="loading.list.value"
-      color="primary"
-      label="obtendo registros..."
-    />
+    <q-inner-loading :showing="loading.list.value" color="primary" label="obtendo registros..." />
 
-    <q-list
-      v-if="!loading.list.value"
-      bordered
-      separator
-      class="bg-white rounded-borders q-mt-sm"
-    >
+    <q-list v-if="!loading.list.value" bordered separator class="bg-white rounded-borders q-mt-sm">
       <q-item
         v-for="(category, index) in categories"
         :key="index"
-        @click="handleEditCategory(category)"
         clickable
-        v-ripple
+        @click="handleEditCategory(category)"
       >
         <q-item-section>
           <q-item-label>
@@ -90,8 +80,8 @@ onMounted(() => handleListCategories())
           </q-item-label>
           <q-item-label>
             <q-badge
-              outline
               v-if="category.inactive"
+              outline
               class="bg-red text-white text-body2"
               :label="fmt.inactive(category.inactive)"
             />
@@ -100,10 +90,7 @@ onMounted(() => handleListCategories())
       </q-item>
     </q-list>
 
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
-    >
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         v-if="$q.platform.is.mobile"
         v-bind="attr.btn.icon"

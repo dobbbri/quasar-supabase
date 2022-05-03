@@ -39,8 +39,8 @@ onMounted(() => {
           <p class="text-h5 text-center">Identificação</p>
 
           <q-input
-            label="Email"
             v-model="form.email"
+            label="Email"
             lazy-rules
             :rules="['email']"
             error-message="O email deve ser válido!"
@@ -49,8 +49,8 @@ onMounted(() => {
 
           <div class="row">
             <q-input
-              label="Senha"
               v-model="form.password"
+              label="Senha"
               class="col-12"
               lazy-rules
               :rules="[(val) => val && val.length > 0]"

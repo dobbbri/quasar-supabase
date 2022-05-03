@@ -11,7 +11,7 @@ const { loading, getCategory, addCategory, editCategory, removeCategory } = useC
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
-const isEditMode= computed(() => (route.params.id ? true : false))
+const isEditMode = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const form = ref({
@@ -94,16 +94,16 @@ onMounted(() => {
       @submit.prevent="handleSubmit"
     >
       <q-input
-        label="Nome"
         v-model="form.name"
+        label="Nome"
         :rules="[(val) => val && val.length > 3]"
         error-message="O nome da categoria deve ser informado!"
       />
 
       <q-checkbox
+        v-model="form.inactive"
         label="Não exibir os produtos desta categoria"
         color="negative"
-        v-model="form.inactive"
         class="checkbox-fix"
       />
 
@@ -124,7 +124,7 @@ onMounted(() => {
           label="Gravar"
           unelevated
           class="col-4"
-          :loading="isEditMode? loading.edit.value : loading.add.value"
+          :loading="isEditMode ? loading.edit.value : loading.add.value"
           :disable="loading.disable.value"
           type="submit"
         />

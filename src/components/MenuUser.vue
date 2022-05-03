@@ -26,17 +26,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-btn-dropdown
-    :label="firstName"
-    flat
-    color="primary"
-  >
+  <q-btn-dropdown :label="firstName" flat color="primary">
     <q-list>
-      <q-item
-        clickable
-        v-close-popup
-        @click="handleLogout"
-      >
+      <q-item v-close-popup clickable @click="handleLogout">
         <q-item-section>
           <q-item-label class="text-red text-body1">Sair</q-item-label>
         </q-item-section>

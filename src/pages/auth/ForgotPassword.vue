@@ -36,10 +36,11 @@ const handleSubmit = async () => {
           <p class="text-h5 text-center">Redefinir senha</p>
 
           <q-input
-            label="Email"
             v-model="email"
+            label="Email"
             lazy-rules
-            :rules="[(val) => (val && val.length > 0) || 'Email is required']"
+            :rules="[(val) => val && val.length > 0]"
+            error-message="O email deve ser válido!"
             type="email"
           />
 

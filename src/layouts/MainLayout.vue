@@ -7,23 +7,12 @@ import { Sidebar } from 'src/components'
 </script>
 
 <template>
-  <div
-    class="WAL position-relative bg-grey-4"
-    :style="'height: ' + $q.screen.height + 'px'"
-  >
-    <q-layout
-      view="lHh Lpr lFf"
-      class="WAL__layout shadow-3"
-      container
-    >
+  <div class="WAL position-relative bg-grey-4" :style="'height: ' + $q.screen.height + 'px'">
+    <q-layout view="lHh Lpr lFf" class="WAL__layout shadow-3" container>
       <sidebar />
 
       <q-page-container class="bg-grey-2">
-        <router-view
-          :key="$route.fullPath"
-          v-slot="{ Component }"
-          style="overflow: hidden"
-        >
+        <router-view :key="$route.fullPath" v-slot="{ Component }" style="overflow: hidden">
           <keep-alive>
             <component :is="Component" />
           </keep-alive>

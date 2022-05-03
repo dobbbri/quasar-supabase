@@ -1,35 +1,3 @@
-<template>
-  <q-card
-    class="my-card"
-    bordered
-    v-ripple:primary
-  >
-    <q-skeleton
-      height="50px"
-      v-if="load"
-    />
-
-    <q-card-section
-      horizontal
-      v-else
-    >
-      <div class="col flex flex-center text-h5">{{ count }} - {{ label }}</div>
-
-      <q-card-actions
-        vertical
-        class="justify-around q-px-md"
-      >
-        <q-btn
-          flat
-          round
-          color="primary"
-          :icon="icon"
-        />
-      </q-card-actions>
-    </q-card-section>
-  </q-card>
-</template>
-
 <script setup>
 import { defineProps, ref, onMounted } from 'vue'
 import { useApi, useAuth } from 'src/composables'
@@ -46,7 +14,7 @@ const props = defineProps({
   },
   label: {
     type: String,
-    required: true
+    default: ''
   },
   icon: {
     type: String,
@@ -61,3 +29,17 @@ onMounted(async () => {
   load.value = false
 })
 </script>
+
+<template>
+  <q-card v-ripple:primary class="my-card" bordered>
+    <q-skeleton v-if="load" height="50px" />
+
+    <q-card-section v-else horizontal>
+      <div class="col flex flex-center text-h5">{{ count }} - {{ label }}</div>
+
+      <q-card-actions vertical class="justify-around q-px-md">
+        <q-btn flat round color="primary" :icon="icon" />
+      </q-card-actions>
+    </q-card-section>
+  </q-card>
+</template>

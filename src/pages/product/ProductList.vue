@@ -62,29 +62,19 @@ onMounted(() => handleListProducts())
       autofocus
       type="search"
     >
-      <template v-slot:prepend>
+      <template #prepend>
         <q-icon name="search" />
       </template>
     </q-input>
 
-    <q-inner-loading
-      :showing="loading.list.value"
-      color="primary"
-      label="obtendo registros..."
-    />
+    <q-inner-loading :showing="loading.list.value" color="primary" label="obtendo registros..." />
 
-    <q-list
-      v-if="!loading.list.value"
-      bordered
-      separator
-      class="bg-white rounded-borders q-mt-sm"
-    >
+    <q-list v-if="!loading.list.value" bordered separator class="bg-white rounded-borders q-mt-sm">
       <q-item
         v-for="(product, index) in products"
         :key="index"
-        @click="handleEditProduct(product)"
         clickable
-        v-ripple
+        @click="handleEditProduct(product)"
       >
         <q-item-section>
           <q-item-label class="text-subtitle2 text-weight-medium">
@@ -97,10 +87,7 @@ onMounted(() => handleListProducts())
                 :label="product.categories.name.toString().toUpperCase()"
               />
             </span>
-            <span
-              v-if="product.stock_is_automatic"
-              class="col"
-            >
+            <span v-if="product.stock_is_automatic" class="col">
               {{ product.stock_quantity }} {{ product.unit_sale_type }}
             </span>
             <span class="col text-right">{{ fmt.currency(product.price_to_sell) }}</span>
@@ -109,10 +96,7 @@ onMounted(() => handleListProducts())
       </q-item>
     </q-list>
 
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
-    >
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         v-if="$q.platform.is.mobile"
         v-bind="attr.btn.icon"

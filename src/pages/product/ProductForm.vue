@@ -24,9 +24,7 @@ const { attr } = useDefaults()
 const isEditMode = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 const loadImage = computed((imageName) => {
-  if (imageName) {
-    return getProductImageURL(imageName) + '?t=' + new Date().getTime()
-  }
+  return getProductImageURL(imageName) + '?t=' + new Date().getTime()
 })
 
 const image = ref(null)
@@ -129,39 +127,35 @@ onMounted(() => {
       @submit.prevent="handleSubmit"
     >
       <q-input
-        label="Nome"
         v-model="form.name"
+        label="Nome"
         :rules="[(val) => val && val.length > 3]"
         error-message="O nome do produto deve ser informado!"
       />
 
       <q-checkbox
+        v-model="form.stock_is_automatic"
         label="Utilizar estoque automático"
         color="primary"
-        v-model="form.stock_is_automatic"
         class="checkbox-fix"
       />
 
       <q-img
+        v-if="form.image_url && !image"
         :src="loadImage(form.image_name)"
         spinner-color="white"
         class="q-mt-md rounded-borders"
-        v-if="form.image_url && !image"
         style="height: 150px; max-height: 150px"
         :ratio="4 / 3"
       />
 
-      <q-banner
-        v-if="image"
-        rounded
-        class="text-body1 bg-blue-grey-2 q-pa-xs q-my-sm"
-      >
+      <q-banner v-if="image" rounded class="text-body1 bg-blue-grey-2 q-pa-xs q-my-sm">
         A nova imagem selecionada sera exibida após gravar o produto!
       </q-banner>
 
       <q-file
-        :label="isEditMode ? 'Selecionar nova imagem' : 'Selecionar imagem'"
         v-model="image"
+        :label="isEditMode ? 'Selecionar nova imagem' : 'Selecionar imagem'"
         type="file"
         accept="image/*"
         class="q-mb-md"

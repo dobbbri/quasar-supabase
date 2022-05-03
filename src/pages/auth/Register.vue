@@ -40,16 +40,16 @@ const handleSubmit = async () => {
           <p class="text-h5 text-center">Registro</p>
 
           <q-input
-            label="Nome"
             v-model="form.name"
+            label="Nome"
             lazy-rules
             :rules="[(val) => val && val.length > 0]"
             error-message="O nome deve ser informado!"
           />
 
           <q-input
-            label="Email"
             v-model="form.email"
+            label="Email"
             lazy-rules
             :rules="['email']"
             error-message="O email deve ser válido!"
@@ -57,8 +57,8 @@ const handleSubmit = async () => {
           />
 
           <q-input
-            label="Senha"
             v-model="form.password"
+            label="Senha"
             lazy-rules
             :rules="[(val) => val && val.length >= 6]"
             error-message="A senha deve ser possuir 6 ou mais caracteres"

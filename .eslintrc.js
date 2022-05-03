@@ -15,7 +15,7 @@ module.exports = {
   },
 
   // Rules order is important, please avoid shuffling them
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended'],
+  extends: ['plugin:vue/vue3-recommended', 'eslint:recommended'],
 
   plugins: [
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-files
@@ -42,6 +42,9 @@ module.exports = {
 
   // add your custom rules here
   rules: {
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/multi-word-component-names': 'off',
     'prefer-promise-reject-errors': 'off',
 
     // allow debugger during development only

@@ -12,43 +12,20 @@ const linksList = [
 </script>
 
 <template>
-  <q-drawer
-    bordered
-    v-model="store.isSidebarOpen"
-    show-if-above
-    :breakpoint="690"
-  >
+  <q-drawer v-model="store.isSidebarOpen" bordered show-if-above :breakpoint="690">
     <q-toolbar>
       <q-toolbar-title class="q-ml-xs"> Menu </q-toolbar-title>
     </q-toolbar>
 
     <q-list>
-      <q-item
-        v-for="(link, index) in linksList"
-        :key="index"
-        clickable
-        :to="{ name: link.routeName }"
-        exact
-      >
-        <q-item-section
-          v-if="link.icon"
-          avatar
-        >
-          <q-icon
-            :name="link.icon"
-            color="primary"
-            size="sm"
-            class="q-mr-md"
-          />
+      <q-item v-for="(link, index) in linksList" :key="index" clickable :to="{ name: link.routeName }" exact>
+        <q-item-section v-if="link.icon" avatar>
+          <q-icon :name="link.icon" color="primary" size="sm" class="q-mr-md" />
         </q-item-section>
 
         <q-item-section>
           <q-item-label class="text-body1">{{ link.title }}</q-item-label>
-          <q-item-label
-            v-if="link.caption"
-            caption
-            >{{ link.caption }}</q-item-label
-          >
+          <q-item-label v-if="link.caption" caption>{{ link.caption }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
