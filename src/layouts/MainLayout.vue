@@ -52,7 +52,7 @@ import { LeftSidebar } from 'src/components'
     height: 100%
     width: 90%
     max-width: 950px
-    border-radius: 5px
+    border-radius: $generic-border-radius
   .q-drawer--standard
     .WAL__drawer-close
       display: none

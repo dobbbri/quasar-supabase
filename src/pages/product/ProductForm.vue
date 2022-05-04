@@ -23,9 +23,7 @@ const { attr } = useDefaults()
 
 const isEditMode = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
-const loadImage = computed((imageName) => {
-  return getProductImageURL(imageName) + '?t=' + new Date().getTime()
-})
+const loadImage = (imageName) => getProductImageURL(imageName) + '?t=' + new Date().getTime()
 
 const image = ref(null)
 const form = ref({
@@ -66,8 +64,8 @@ const handleSubmit = async () => {
 const handleRemoveProduct = async (product) => {
   try {
     confirm.delete(`do produto: ${product.name}`).onOk(async () => {
-      if (form.value.image_name) {
-        await removeProductImage([form.value.image_name])
+      if (product.image_name) {
+        await removeProductImage(product.image_name)
       }
       await removeProduct(product.id)
       notify.success('Produto excluido.')
@@ -140,18 +138,22 @@ onMounted(() => {
         class="checkbox-fix"
       />
 
-      <q-img
-        v-if="form.image_url && !image"
-        :src="loadImage(form.image_name)"
-        spinner-color="white"
-        class="q-mt-md rounded-borders"
-        style="height: 150px; max-height: 150px"
-        :ratio="4 / 3"
-      />
-
-      <q-banner v-if="image" rounded class="text-body1 bg-blue-grey-2 q-pa-xs q-my-sm">
+      <q-banner
+        v-if="image"
+        rounded
+        class="text-body1 bg-blue-grey-2 q-pa-xs q-my-sm"
+      >
         A nova imagem selecionada sera exibida após gravar o produto!
       </q-banner>
+
+      <q-img
+        v-else-if="form.image_name"
+        :src="loadImage(form.image_name)"
+        spinner-color="primary"
+        class="q-mt-md rounded-borders q-table--bordered bg-grey-3"
+        style="height: 150px; max-height: 150px"
+        :ratio="1"
+      />
 
       <q-file
         v-model="image"

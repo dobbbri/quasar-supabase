@@ -78,8 +78,11 @@ export default function useApi(table) {
   }
 
   const getImageURL = (imageName) => {
-    const imageUrl = `${supabaseUrl}/storage/v1/object/public/${supabaseBucket}/${user.value.id}/${imageName}`
-    return imageUrl
+    if (imageName) {
+      const imageUrl = `${supabaseUrl}/storage/v1/object/public/${supabaseBucket}/${user.value.id}/${imageName}`
+      return imageUrl
+    }
+    return
   }
 
   // const getImage = async (fileName) => {
@@ -106,7 +109,7 @@ export default function useApi(table) {
     setLoading.remove(true)
     const { error } = await supabase.storage
       .from(supabaseBucket)
-      .remove(`${user.value.id}/${imageName}`)
+      .remove([`${user.value.id}/${imageName}`])
     setLoading.remove(false)
     if (error) throw error
   }
