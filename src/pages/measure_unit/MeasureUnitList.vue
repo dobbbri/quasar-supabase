@@ -84,12 +84,12 @@ onMounted(() => handleGetMeasureUnits())
         @click="handleEditMeasureUnit(measureUnit)"
       >
         <q-item-section>
-          <q-item-label>
+          <q-item-label class="text-subtitle2">
             {{ measureUnit.name }} - {{ measureUnit.abbreviation }}
             <q-badge
               v-if="measureUnit.inactive"
               outline
-              class="bg-red text-white text-body2"
+              class="bg-red text-white text-weight-bold"
               :label="fmt.inactive(measureUnit.inactive)"
             />
           </q-item-label>

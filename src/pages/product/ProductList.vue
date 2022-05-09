@@ -86,13 +86,13 @@ onMounted(() => handleGetProducts())
         @click="handleEditProduct(product)"
       >
         <q-item-section>
-          <q-item-label class="text-subtitle2 text-weight-medium">
+          <q-item-label class="text-subtitle2">
             {{ product.name }}
           </q-item-label>
           <q-item-label class="row text-body2">
             <span class="col">
               <q-badge
-                class="bg-blue-grey-2 text-body2 text-dark"
+                class="bg-blue-grey-2 text-dark text-weight-bold"
                 :label="product.categories.name.toString().toUpperCase()"
               />
             </span>
@@ -100,9 +100,13 @@ onMounted(() => handleGetProducts())
               v-if="product.stock_is_automatic"
               class="col"
             >
-              {{ product.stock_quantity }} {{ product.measure_units.abbreviation }}
+              {{ product.stock_amount }} {{ product.measure_units.abbreviation }}
             </span>
-            <span class="col text-right">{{ fmt.currency(product.price_to_sell) }}</span>
+            <span class="col text-right"
+              >{{ fmt.currency(product.price_to_sell) }}/{{
+                product.measure_units.abbreviation
+              }}</span
+            >
           </q-item-label>
         </q-item-section>
       </q-item>

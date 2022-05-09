@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useProducts, useCategories, useTools, useDefaults } from 'src/composables'
+import { useProducts, useCategories, useMeasureUnits, useTools, useDefaults } from 'src/composables'
 import { PageHeader, PageFooter } from 'src/components'
 
 const router = useRouter()
@@ -19,6 +19,7 @@ const {
   removeProductImage
 } = useProducts()
 const { getCategories } = useCategories()
+const { getMeasureUnits } = useMeasureUnits()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
@@ -27,6 +28,7 @@ const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 const loadImage = (imageName) => getProductImageURL(imageName) + '?t=' + new Date().getTime()
 
 const optionsCategories = ref([])
+const optionsMeasureUnits = ref([])
 const image = ref(null)
 const form = ref({
   name: '',
@@ -34,7 +36,7 @@ const form = ref({
   stock_is_automatic: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
-  measure_units_id: '1',
+  measure_unit_id: '1',
   price_to_buy: 0,
   price_to_sell: 0,
   code_bar: '',
@@ -94,8 +96,17 @@ const handleGetCategories = async () => {
   }
 }
 
+const handleGetMeasureUnits = async () => {
+  try {
+    optionsMeasureUnits.value = await getMeasureUnits('id, name, abbreviation, inactive')
+  } catch (error) {
+    notify.error('Erro ao obter as unidade de medidas.', error)
+  }
+}
+
 onMounted(() => {
   handleGetCategories()
+  handleGetMeasureUnits()
   if (isEditMode.value) handleGetProduct()
 })
 </script>
@@ -185,7 +196,7 @@ onMounted(() => {
 
       <q-input
         v-if="form.stock_is_automatic"
-        v-model="form.amount"
+        v-model="form.stock_amount"
         label="Quantidade"
         mask="#"
         fill-mask="0"
@@ -207,7 +218,7 @@ onMounted(() => {
 
       <q-select
         v-if="form.stock_is_automatic"
-        v-model="form.measure_units_id"
+        v-model="form.measure_unit_id"
         label="Unidade de medida"
         :options="optionsMeasureUnits"
         option-value="id"

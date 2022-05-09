@@ -84,12 +84,12 @@ onMounted(() => handleGetCategories())
         @click="handleEditCategory(category)"
       >
         <q-item-section>
-          <q-item-label>
+          <q-item-label class="text-subtitle2">
             {{ category.name }}
             <q-badge
               v-if="category.inactive"
               outline
-              class="bg-red text-white text-body2"
+              class="bg-red text-white text-weight-bold"
               :label="fmt.hideProducts(category.inactive)"
             />
           </q-item-label>
