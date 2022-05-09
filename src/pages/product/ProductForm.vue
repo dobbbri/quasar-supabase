@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useProducts, useTools, useDefaults } from 'src/composables'
+import { useProducts, useCategories, useTools, useDefaults } from 'src/composables'
 import { PageHeader, PageFooter } from 'src/components'
 
 const router = useRouter()
@@ -18,6 +18,7 @@ const {
   editProductImage,
   removeProductImage
 } = useProducts()
+const { getCategories } = useCategories()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
@@ -25,14 +26,15 @@ const isEditMode = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 const loadImage = (imageName) => getProductImageURL(imageName) + '?t=' + new Date().getTime()
 
+const optionsCategories = ref([])
 const image = ref(null)
 const form = ref({
   name: '',
   category_id: 1,
   stock_is_automatic: false,
-  stock_quantity: 0,
-  stock_quantity_minimum: 0,
-  unit_sale_type: 'UN',
+  stock_amount: 0,
+  stock_minimum_amount: 0,
+  measure_units_id: '1',
   price_to_buy: 0,
   price_to_sell: 0,
   code_bar: '',
@@ -84,7 +86,16 @@ const handleGetProduct = async () => {
   }
 }
 
+const handleGetCategories = async () => {
+  try {
+    optionsCategories.value = await getCategories('id, name, inactive')
+  } catch (error) {
+    notify.error('Erro ao obter as categorias.', error)
+  }
+}
+
 onMounted(() => {
+  handleGetCategories()
   if (isEditMode.value) handleGetProduct()
 })
 </script>
@@ -131,11 +142,95 @@ onMounted(() => {
         error-message="O nome do produto deve ser informado!"
       />
 
+      <q-select
+        v-model="form.category_id"
+        label="Categoria"
+        :options="optionsCategories"
+        option-value="id"
+        option-label="name"
+        map-options
+        emit-value
+        :rules="[(val) => !!val]"
+        error-message="Uma categoria deve ser selecionada"
+      />
+
+      <q-input
+        v-model="form.price_to_buy"
+        label="Preço de compra"
+        prefix="R$"
+        mask="#.##"
+        fill-mask="0"
+        reverse-fill-mask
+        :rules="[(val) => !!val]"
+        error-message="O preço de compra do produto deve ser informado"
+      />
+
+      <q-input
+        v-model="form.price_to_sell"
+        label="Preço de venda"
+        prefix="R$"
+        mask="#.##"
+        fill-mask="0"
+        reverse-fill-mask
+        :rules="[(val) => !!val]"
+        error-message="O preço de venda do produto deve ser informado"
+      />
+
       <q-checkbox
         v-model="form.stock_is_automatic"
         label="Utilizar estoque automático"
         color="primary"
         class="checkbox-fix"
+      />
+
+      <q-input
+        v-if="form.stock_is_automatic"
+        v-model="form.amount"
+        label="Quantidade"
+        mask="#"
+        fill-mask="0"
+        reverse-fill-mask
+        :rules="[(val) => !!val && val > 0]"
+        error-message="A quantidade do produto deve ser informada"
+      />
+
+      <q-input
+        v-if="form.stock_is_automatic"
+        v-model="form.stock_minimum_amount"
+        label="Quantidade mínima"
+        mask="#"
+        fill-mask="0"
+        reverse-fill-mask
+        :rules="[(val) => !!val && val > 0]"
+        error-message="A quantidade mínima do produto deve ser informada"
+      />
+
+      <q-select
+        v-if="form.stock_is_automatic"
+        v-model="form.measure_units_id"
+        label="Unidade de medida"
+        :options="optionsMeasureUnits"
+        option-value="id"
+        option-label="name"
+        map-options
+        emit-value
+        :rules="[(val) => !!val]"
+        error-message="Uma unidade de medida deve ser selecionada"
+      />
+
+      <q-input
+        v-model="form.code_bar"
+        label="Código de barras"
+      />
+
+      <q-input
+        v-model="form.code_internal"
+        label="Código interno"
+      />
+
+      <q-editor
+        v-model="form.description"
+        min-height="5rem"
       />
 
       <q-banner

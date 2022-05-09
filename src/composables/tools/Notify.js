@@ -6,6 +6,7 @@ export default function useNoyify() {
       Notify.create({
         message: message || 'Gravado.',
         icon: 'check_circle',
+        iconSize: 'lg',
         iconColor: 'green',
         timeout: 2000
       })
@@ -16,6 +17,7 @@ export default function useNoyify() {
         message: message,
         caption: caption,
         icon: 'info',
+        iconSize: 'lg',
         iconColor: 'blue',
         timeout: 200000,
         actions: [{ label: 'Fechar', color: 'white' }]
@@ -28,6 +30,7 @@ export default function useNoyify() {
         message: message,
         caption: `${error.message} (${error.code || ''})`,
         icon: 'error',
+        iconSize: 'lg',
         iconColor: 'red',
         timeout: 200000,
         actions: [{ label: 'Fechar', color: 'white' }]

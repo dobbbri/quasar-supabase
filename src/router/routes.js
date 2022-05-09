@@ -45,6 +45,16 @@ const routes = [
         path: '/product-form/:id?',
         name: 'product-form',
         component: () => import('pages/product/ProductForm.vue')
+      },
+      {
+        path: '/measure-unit-list',
+        name: 'measure-unit-list',
+        component: () => import('pages/measure_unit/MeasureUnitList.vue')
+      },
+      {
+        path: '/measure-unit-form/:id?',
+        name: 'measure-unit-form',
+        component: () => import('pages/measure_unit/MeasureUnitForm.vue')
       }
     ],
     meta: {

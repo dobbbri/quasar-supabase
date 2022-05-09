@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { useCategories, useNameSearch, useTools, useDefaults } from 'src/composables'
+import { useMeasureUnits, useNameSearch, useTools, useDefaults } from 'src/composables'
 import { PageHeader } from 'src/components'
 
 const router = useRouter()
@@ -10,33 +10,33 @@ const $q = useQuasar()
 
 const documents = ref([])
 
-const { loading, getCategories } = useCategories()
-const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents)
+const { loading, getMeasureUnits } = useMeasureUnits()
+const { searchQuery, matchingSearchQuery: measureUnits } = useNameSearch(documents)
 const { notify } = useTools()
 const { attr, fmt } = useDefaults()
 
-const handleEditCategory = (category) => {
+const handleEditMeasureUnit = (measureUnit) => {
   router.push({
-    name: 'category-form',
-    params: { id: category.id }
+    name: 'measure-unit-form',
+    params: { id: measureUnit.id }
   })
 }
 
-const handleGetCategories = async () => {
+const handleGetMeasureUnits = async () => {
   try {
-    documents.value = await getCategories('id, name, inactive')
+    documents.value = await getMeasureUnits('id, name, abbreviation, inactive')
   } catch (error) {
-    notify.error('Erro ao obter as categorias.', error)
+    notify.error('Erro ao obter as unidade de medidas.', error)
   }
 }
 
-onMounted(() => handleGetCategories())
+onMounted(() => handleGetMeasureUnits())
 </script>
 
 <template>
   <q-page padding>
     <page-header>
-      <template #title>Categorias</template>
+      <template #title>Unidade de medidas</template>
       <template #right>
         <q-btn
           v-if="!$q.platform.is.mobile"
@@ -45,7 +45,7 @@ onMounted(() => handleGetCategories())
           unelevated
           :loading="loading.add.value"
           :disable="loading.disable.value"
-          :to="{ name: 'category-form' }"
+          :to="{ name: 'measure-unit-form' }"
         >
           <q-tooltip>Adicionar</q-tooltip>
         </q-btn>
@@ -78,19 +78,19 @@ onMounted(() => handleGetCategories())
       class="bg-white rounded-borders q-mt-sm"
     >
       <q-item
-        v-for="(category, index) in categories"
+        v-for="(measureUnit, index) in measureUnits"
         :key="index"
         clickable
-        @click="handleEditCategory(category)"
+        @click="handleEditMeasureUnit(measureUnit)"
       >
         <q-item-section>
           <q-item-label>
-            {{ category.name }}
+            {{ measureUnit.name }} - {{ measureUnit.abbreviation }}
             <q-badge
-              v-if="category.inactive"
+              v-if="measureUnit.inactive"
               outline
               class="bg-red text-white text-body2"
-              :label="fmt.hideProducts(category.inactive)"
+              :label="fmt.inactive(measureUnit.inactive)"
             />
           </q-item-label>
         </q-item-section>
@@ -108,7 +108,7 @@ onMounted(() => handleGetCategories())
         fab
         :loading="loading.add.value"
         :disable="loading.disable.value"
-        :to="{ name: 'category-form' }"
+        :to="{ name: 'measure-unit-form' }"
       >
         <q-tooltip>Adicionar</q-tooltip>
       </q-btn>

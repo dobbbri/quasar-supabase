@@ -15,16 +15,6 @@ const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
 const { notify } = useTools()
 const { attr, fmt } = useDefaults()
 
-const handleListProducts = async () => {
-  try {
-    documents.value = await getProducts(
-      'id, name, categories:category_id ( name ), stock_is_automatic, stock_quantity, unit_sale_type, price_to_sell'
-    )
-  } catch (error) {
-    notify.error('Erro ao obter os produtos.', error)
-  }
-}
-
 const handleEditProduct = (product) => {
   router.push({
     name: 'product-form',
@@ -32,7 +22,17 @@ const handleEditProduct = (product) => {
   })
 }
 
-onMounted(() => handleListProducts())
+const handleGetProducts = async () => {
+  try {
+    documents.value = await getProducts(
+      'id, name, categories:category_id ( name ), stock_is_automatic, stock_amount, measure_units:measure_unit_id (abbreviation), price_to_sell'
+    )
+  } catch (error) {
+    notify.error('Erro ao obter os produtos.', error)
+  }
+}
+
+onMounted(() => handleGetProducts())
 </script>
 
 <template>
@@ -67,9 +67,18 @@ onMounted(() => handleListProducts())
       </template>
     </q-input>
 
-    <q-inner-loading :showing="loading.list.value" color="primary" label="obtendo registros..." />
+    <q-inner-loading
+      :showing="loading.list.value"
+      color="primary"
+      label="obtendo registros..."
+    />
 
-    <q-list v-if="!loading.list.value" bordered separator class="bg-white rounded-borders q-mt-sm">
+    <q-list
+      v-if="!loading.list.value"
+      bordered
+      separator
+      class="bg-white rounded-borders q-mt-sm"
+    >
       <q-item
         v-for="(product, index) in products"
         :key="index"
@@ -87,8 +96,11 @@ onMounted(() => handleListProducts())
                 :label="product.categories.name.toString().toUpperCase()"
               />
             </span>
-            <span v-if="product.stock_is_automatic" class="col">
-              {{ product.stock_quantity }} {{ product.unit_sale_type }}
+            <span
+              v-if="product.stock_is_automatic"
+              class="col"
+            >
+              {{ product.stock_quantity }} {{ product.measure_units.abbreviation }}
             </span>
             <span class="col text-right">{{ fmt.currency(product.price_to_sell) }}</span>
           </q-item-label>
@@ -96,7 +108,10 @@ onMounted(() => handleListProducts())
       </q-item>
     </q-list>
 
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky
+      position="bottom-right"
+      :offset="[18, 18]"
+    >
       <q-btn
         v-if="$q.platform.is.mobile"
         v-bind="attr.btn.icon"
