@@ -194,6 +194,19 @@ onMounted(() => {
         class="checkbox-fix"
       />
 
+      <q-select
+        v-if="form.stock_is_automatic"
+        v-model="form.measure_unit_id"
+        label="Unidade de medida"
+        :options="optionsMeasureUnits"
+        option-value="id"
+        option-label="name"
+        map-options
+        emit-value
+        :rules="[(val) => !!val]"
+        error-message="Uma unidade de medida deve ser selecionada"
+      />
+
       <q-input
         v-if="form.stock_is_automatic"
         v-model="form.stock_amount"
@@ -214,19 +227,6 @@ onMounted(() => {
         reverse-fill-mask
         :rules="[(val) => !!val && val > 0]"
         error-message="A quantidade mínima do produto deve ser informada"
-      />
-
-      <q-select
-        v-if="form.stock_is_automatic"
-        v-model="form.measure_unit_id"
-        label="Unidade de medida"
-        :options="optionsMeasureUnits"
-        option-value="id"
-        option-label="name"
-        map-options
-        emit-value
-        :rules="[(val) => !!val]"
-        error-message="Uma unidade de medida deve ser selecionada"
       />
 
       <q-input

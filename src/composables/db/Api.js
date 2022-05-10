@@ -29,7 +29,10 @@ export default function useApi(table) {
 
   const add = async (form) => {
     setLoading.add(true)
-    const { error } = await supabase.from(table).insert([{ ...form, user_id: user.value.id }])
+    const { error } = await supabase
+      .from(table)
+      .insert([{ ...form, user_id: user.value.id }])
+      .single()
     setLoading.add(false)
     if (error) throw error
   }
@@ -40,6 +43,7 @@ export default function useApi(table) {
       .from(table)
       .update({ ...form })
       .eq('id', id)
+      .single()
     setLoading.edit(false)
     if (error) throw error
   }

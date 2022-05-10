@@ -8,7 +8,7 @@ const linksList = [
   { title: 'Categorias', caption: '', icon: 'category', routeName: 'category-list' },
   { title: 'Produtos', caption: '', icon: 'inventory', routeName: 'product-list' },
   { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' },
-  { title: 'Unidade de Medida', caption: '', icon: 'inventory', routeName: 'measure-unit-list' }
+  { title: 'Unidade de Medida', caption: '', icon: 'scale', routeName: 'measure-unit-list' }
 ]
 </script>
 
