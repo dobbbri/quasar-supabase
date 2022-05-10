@@ -1,22 +1,13 @@
-import { useApi } from 'src/composables'
+import { useApi, useImageBucket } from 'src/composables'
 
 export default function useProducts() {
-  const {
-    loading,
-    list,
-    get,
-    add,
-    edit,
-    remove,
-    count,
-    getImageURL,
-    addImage,
-    editImage,
-    removeImage
-  } = useApi('products')
+  const { loading, list, get, add, edit, remove, count } = useApi('products')
+  const { getImageURL, addImage, editImage, removeImage } = useImageBucket()
+  const productFolder = 'products'
 
   return {
     loading,
+    productFolder,
     getProducts: list,
     getProduct: get,
     addProduct: add,

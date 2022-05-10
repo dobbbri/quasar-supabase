@@ -9,6 +9,7 @@ const route = useRoute()
 
 const {
   loading,
+  productFolder,
   getProduct,
   addProduct,
   editProduct,
@@ -47,11 +48,13 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
-    if (form.value.image_name) {
-      await editProductImage(form.value.image_name, image.value)
-    } else {
-      const imageName = await addProductImage('products', image.value)
-      form.value.image_name = imageName
+    if (image.value) {
+      if (form.value.image_name) {
+        await editProductImage(form.value.image_name, image.value)
+      } else {
+        const imageName = await addProductImage(productFolder, image.value)
+        form.value.image_name = imageName
+      }
     }
     if (isEditMode.value) {
       await editProduct(form.value)
@@ -83,6 +86,8 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id)
+    console.log('form.value.image_name: ', form.value.image_name)
+    console.log('loadImage: ', loadImage(form.value.image_name))
   } catch (error) {
     notify.error('Erro ao obter o produto.', error)
   }
