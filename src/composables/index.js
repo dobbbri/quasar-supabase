@@ -1,4 +1,5 @@
 import useBrand from 'src/composables/db/Brand'
+import useCustomers from 'src/composables/db/Customers'
 import useProducts from 'src/composables/db/Products'
 import useCategories from 'src/composables/db/Categories'
 import useMeasureUnits from 'src/composables/db/MeasureUnits'
@@ -11,6 +12,7 @@ import useDefaults from 'src/composables/Defaults'
 
 export {
   useBrand,
+  useCustomers,
   useProducts,
   useCategories,
   useMeasureUnits,

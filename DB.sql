@@ -43,7 +43,7 @@ CREATE TABLE public.customers (
 	document_type varchar NULL,
 	document_number varchar NULL,
 	email varchar NULL,
-	"comments" text NULL,
+	"notes" text NULL,
 	CONSTRAINT customers_pkey PRIMARY KEY (id)
 );
 
