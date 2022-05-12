@@ -1,15 +1,13 @@
 <script setup>
-import { MenuUser, PageHeader } from 'src/components'
+import { PageHeader } from 'src/components'
 </script>
 
 <template>
   <q-page padding>
     <page-header>
-      <template #title>EndlesS</template>
-      <template #right>
-        <menu-user />
-      </template>
+      <template #title>Endless</template>
     </page-header>
+
     <div class="row">
       <div class="q-mx-auto">
         <img

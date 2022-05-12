@@ -31,6 +31,7 @@ const routes = [
         component: () => import('pages/InitialRoutines.vue')
       },
       { path: '/index', name: 'index', component: () => import('pages/IndexPage.vue') },
+      { path: '/exit', name: 'exit', component: () => import('pages/ExitPage.vue') },
       {
         path: '/category-list',
         name: 'category-list',
@@ -55,6 +56,16 @@ const routes = [
         path: '/measure-unit-form/:id?',
         name: 'measure-unit-form',
         component: () => import('pages/measure_unit/MeasureUnitForm.vue')
+      },
+      {
+        path: '/document-type-form/:id?',
+        name: 'document-type-form',
+        component: () => import('pages/document_type/DocumentTypeForm.vue')
+      },
+      {
+        path: '/payment-method-form/:id?',
+        name: 'payment-method-form',
+        component: () => import('pages/payment_method/PaymentMethodForm.vue')
       }
     ],
     meta: {

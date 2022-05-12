@@ -4,11 +4,14 @@ import { useMenuStore } from 'src/stores/menuStore'
 const store = useMenuStore()
 
 const linksList = [
-  { title: 'Início', caption: '', icon: 'home', routeName: 'index' },
-  { title: 'Categorias', caption: '', icon: 'category', routeName: 'category-list' },
-  { title: 'Produtos', caption: '', icon: 'inventory', routeName: 'product-list' },
-  { title: 'Configuracões', caption: '', icon: 'tune', routeName: 'config' },
-  { title: 'Unidade de Medidas', caption: '', icon: 'scale', routeName: 'measure-unit-form' }
+  { title: 'Início', icon: 'home', routeName: 'index' },
+  { title: 'Categorias', icon: 'category', routeName: 'category-list' },
+  { title: 'Produtos', icon: 'inventory', routeName: 'product-list' },
+  { title: 'Configuracões', icon: 'tune', routeName: 'config' },
+  { title: 'Unidade de Medidas', icon: 'scale', routeName: 'measure-unit-form' },
+  { title: 'Tipos de Documentos', icon: 'article', routeName: 'document-type-form' },
+  { title: 'Formas de Pagamento', icon: 'local_atm', routeName: 'payment-method-form' },
+  { title: 'Sair', icon: 'logout', iconColor: 'red', routeName: 'exit' }
 ]
 </script>
 
@@ -45,12 +48,6 @@ const linksList = [
         <q-item-section>
           <q-item-label class="text-body1 text-weight-medium">
             {{ link.title }}
-          </q-item-label>
-          <q-item-label
-            v-if="link.caption"
-            caption
-          >
-            {{ link.caption }}
           </q-item-label>
         </q-item-section>
       </q-item>

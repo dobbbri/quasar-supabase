@@ -73,9 +73,8 @@ onMounted(() => handleGetCategories())
 
     <q-list
       v-if="!loading.list.value"
-      bordered
       separator
-      class="bg-white rounded-borders q-mt-sm"
+      class="q-mt-sm"
     >
       <q-item
         v-for="(category, index) in categories"
