@@ -1,20 +1,20 @@
 <script setup>
-import { useQuasar } from 'quasar'
 import { useDefaults } from 'src/composables'
 import { useMenuStore } from 'src/stores/menuStore'
 
-const $q = useQuasar()
 const { attr } = useDefaults()
 const store = useMenuStore()
 </script>
 
 <template>
-  <q-header class="bg-transparent text-primary">
+  <q-header
+    class="bg-primary text-white"
+    style="z-index: 1000"
+  >
     <q-toolbar class="justify-between">
-      <div>
+      <div style="margin-left: -10px">
         <slot name="left">
           <q-btn
-            v-if="$q.platform.is.mobile"
             v-bind="attr.btn.icon"
             icon="menu"
             flat

@@ -25,6 +25,11 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
+      {
+        path: '/initial-routines',
+        name: 'initial-routines',
+        component: () => import('pages/InitialRoutines.vue')
+      },
       { path: '/index', name: 'index', component: () => import('pages/IndexPage.vue') },
       {
         path: '/category-list',
@@ -45,11 +50,6 @@ const routes = [
         path: '/product-form/:id?',
         name: 'product-form',
         component: () => import('pages/product/ProductForm.vue')
-      },
-      {
-        path: '/measure-unit-list',
-        name: 'measure-unit-list',
-        component: () => import('pages/measure_unit/MeasureUnitList.vue')
       },
       {
         path: '/measure-unit-form/:id?',

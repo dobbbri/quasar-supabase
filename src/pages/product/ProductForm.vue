@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useProducts, useCategories, useMeasureUnits, useTools, useDefaults } from 'src/composables'
+import { useProducts, useCategories, useTools, useDefaults } from 'src/composables'
 import { PageHeader, PageFooter } from 'src/components'
+import { useSettingsStore } from 'src/stores/settingsStore'
 
 const router = useRouter()
 const route = useRoute()
+const store = useSettingsStore()
 
 const {
   loading,
@@ -20,13 +22,12 @@ const {
   removeProductImage
 } = useProducts()
 const { getCategories } = useCategories()
-const { getMeasureUnits } = useMeasureUnits()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
 const isEditMode = computed(() => (route.params.id ? true : false))
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
-const loadImage = (imageName) => getProductImageURL(imageName) + '?t=' + new Date().getTime()
+const loadImage = (filePath) => getProductImageURL(filePath) + '?t=' + new Date().getTime()
 
 const optionsCategories = ref([])
 const optionsMeasureUnits = ref([])
@@ -37,7 +38,7 @@ const form = ref({
   stock_is_automatic: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
-  measure_unit_id: '1',
+  measure_unit: 'un',
   price_to_buy: 0,
   price_to_sell: 0,
   code_bar: '',
@@ -52,8 +53,8 @@ const handleSubmit = async () => {
       if (form.value.image_name) {
         await editProductImage(form.value.image_name, image.value)
       } else {
-        const imageName = await addProductImage(productFolder, image.value)
-        form.value.image_name = imageName
+        const filePath = await addProductImage(productFolder, image.value)
+        form.value.image_name = filePath
       }
     }
     if (isEditMode.value) {
@@ -101,17 +102,9 @@ const handleGetCategories = async () => {
   }
 }
 
-const handleGetMeasureUnits = async () => {
-  try {
-    optionsMeasureUnits.value = await getMeasureUnits('id, name, abbreviation, inactive')
-  } catch (error) {
-    notify.error('Erro ao obter as unidade de medidas.', error)
-  }
-}
-
 onMounted(() => {
+  optionsMeasureUnits.value = store.measureUnits
   handleGetCategories()
-  handleGetMeasureUnits()
   if (isEditMode.value) handleGetProduct()
 })
 </script>
@@ -122,8 +115,7 @@ onMounted(() => {
       <template #left>
         <q-btn
           v-bind="attr.btn.icon"
-          color="primary"
-          icon="chevron_left"
+          icon="arrow_back_ios_new"
           flat
           :to="{ name: 'product-list' }"
         >
@@ -148,7 +140,7 @@ onMounted(() => {
     </page-header>
 
     <q-form
-      class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+      class="q-gutter-y-xs q-mt-xs q-pb-md bg-white"
       @submit.prevent="handleSubmit"
     >
       <q-input
@@ -192,24 +184,24 @@ onMounted(() => {
         error-message="O preço de venda do produto deve ser informado"
       />
 
+      <q-select
+        v-model="form.measure_unit"
+        label="Unidade de medida"
+        :options="optionsMeasureUnits"
+        option-value="abbr"
+        option-label="name"
+        option-disable="inactive"
+        emit-value
+        map-options
+        :rules="[(val) => !!val]"
+        error-message="Uma unidade de medida deve ser selecionada"
+      />
+
       <q-checkbox
         v-model="form.stock_is_automatic"
         label="Utilizar estoque automático"
         color="primary"
         class="checkbox-fix"
-      />
-
-      <q-select
-        v-if="form.stock_is_automatic"
-        v-model="form.measure_unit_id"
-        label="Unidade de medida"
-        :options="optionsMeasureUnits"
-        option-value="id"
-        option-label="name"
-        map-options
-        emit-value
-        :rules="[(val) => !!val]"
-        error-message="Uma unidade de medida deve ser selecionada"
       />
 
       <q-input

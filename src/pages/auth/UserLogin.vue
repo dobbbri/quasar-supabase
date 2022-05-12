@@ -17,14 +17,14 @@ const form = ref({
 const handleSubmit = async () => {
   try {
     await login(form.value)
-    router.push({ name: 'index' })
+    router.push({ name: 'initial-routines' })
   } catch (error) {
     notify.error('Credenciais inválidas.', error)
   }
 }
 
 onMounted(() => {
-  if (isLoggedIn()) router.push({ name: 'index' })
+  if (isLoggedIn()) router.push({ name: 'initial-routines' })
 })
 </script>
 

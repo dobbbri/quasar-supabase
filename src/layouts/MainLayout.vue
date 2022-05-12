@@ -8,7 +8,7 @@ import { LeftSidebar } from 'src/components'
 
 <template>
   <div
-    class="WAL position-relative bg-grey-4"
+    class="WAL position-relative bg-grey-5"
     :style="'height: ' + $q.screen.height + 'px'"
   >
     <q-layout
@@ -18,7 +18,7 @@ import { LeftSidebar } from 'src/components'
     >
       <left-sidebar />
 
-      <q-page-container class="bg-grey-2">
+      <q-page-container class="bg-white">
         <router-view
           :key="$route.fullPath"
           v-slot="{ Component }"

@@ -25,7 +25,7 @@ const handleEditProduct = (product) => {
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      'id, name, categories:category_id ( name ), stock_is_automatic, stock_amount, measure_units:measure_unit_id (abbreviation), price_to_sell'
+      'id, name, categories:category_id ( name ), stock_is_automatic, stock_amount, measure_unit, price_to_sell'
     )
   } catch (error) {
     notify.error('Erro ao obter os produtos.', error)
@@ -60,7 +60,6 @@ onMounted(() => handleGetProducts())
       v-bind="attr.input.search"
       placeholder="Digite para pesquisar"
       autofocus
-      type="search"
     >
       <template #prepend>
         <q-icon name="search" />
@@ -75,9 +74,8 @@ onMounted(() => handleGetProducts())
 
     <q-list
       v-if="!loading.list.value"
-      bordered
       separator
-      class="bg-white rounded-borders q-mt-sm"
+      class="q-mt-sm"
     >
       <q-item
         v-for="(product, index) in products"
@@ -86,28 +84,25 @@ onMounted(() => handleGetProducts())
         @click="handleEditProduct(product)"
       >
         <q-item-section>
-          <q-item-label class="text-subtitle2">
-            {{ product.name }}
-          </q-item-label>
-          <q-item-label class="row text-body2">
+          <div class="row">
+            <span class="col">
+              {{ product.name }}
+            </span>
+            <span class="col-2 text-right">
+              {{ product.stock_amount }} {{ product.measure_unit_abbr }}
+            </span>
+          </div>
+          <div class="row text-body2">
             <span class="col">
               <q-badge
                 class="bg-blue-grey-2 text-dark text-weight-bold"
                 :label="product.categories.name.toString().toUpperCase()"
               />
             </span>
-            <span
-              v-if="product.stock_is_automatic"
-              class="col"
-            >
-              {{ product.stock_amount }} {{ product.measure_units.abbreviation }}
+            <span class="col text-right">
+              {{ fmt.currency(product.price_to_sell) }}/{{ product.measure_unit }}
             </span>
-            <span class="col text-right"
-              >{{ fmt.currency(product.price_to_sell) }}/{{
-                product.measure_units.abbreviation
-              }}</span
-            >
-          </q-item-label>
+          </div>
         </q-item-section>
       </q-item>
     </q-list>

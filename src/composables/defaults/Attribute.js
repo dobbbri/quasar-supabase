@@ -7,18 +7,15 @@ export default function useAttribute() {
         color: 'primary',
         class: 'text-weight-medium'
       },
-      icon: { round: true, size: 'md', color: 'primary', dense: true }
+      icon: { round: true, size: 'md', color: 'white', dense: true }
     },
 
     input: {
       search: {
         clearable: true,
         dense: true,
-        rounded: true,
         outlined: true,
-        bgColor: 'white',
-        color: 'primary',
-        class: 'q-px-md'
+        bgColor: 'grey-2'
       }
     }
   }

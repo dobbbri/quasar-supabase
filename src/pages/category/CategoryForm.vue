@@ -64,8 +64,7 @@ onMounted(() => {
       <template #left>
         <q-btn
           v-bind="attr.btn.icon"
-          color="primary"
-          icon="chevron_left"
+          icon="arrow_back_ios_new"
           flat
           :to="{ name: 'category-list' }"
         >

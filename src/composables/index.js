@@ -5,6 +5,7 @@ import useCategories from 'src/composables/db/Categories'
 import useMeasureUnits from 'src/composables/db/MeasureUnits'
 import useAuth from 'src/composables/db/Auth'
 import useApi from 'src/composables/db/Api'
+import useSettings from 'src/composables/db/Settings'
 import useNameSearch from 'src/composables/db/NameSearch'
 import useImageBucket from 'src/composables/db/ImageBucket'
 import useTools from 'src/composables/Tools'
@@ -18,6 +19,7 @@ export {
   useMeasureUnits,
   useAuth,
   useApi,
+  useSettings,
   useNameSearch,
   useImageBucket,
   useTools,
