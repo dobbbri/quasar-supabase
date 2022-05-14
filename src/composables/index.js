@@ -2,7 +2,6 @@ import useBrand from 'src/composables/db/Brand'
 import useCustomers from 'src/composables/db/Customers'
 import useProducts from 'src/composables/db/Products'
 import useCategories from 'src/composables/db/Categories'
-import useMeasureUnits from 'src/composables/db/MeasureUnits'
 import useAuth from 'src/composables/db/Auth'
 import useApi from 'src/composables/db/Api'
 import useSettings from 'src/composables/db/Settings'
@@ -16,7 +15,6 @@ export {
   useCustomers,
   useProducts,
   useCategories,
-  useMeasureUnits,
   useAuth,
   useApi,
   useSettings,

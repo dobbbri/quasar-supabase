@@ -2,38 +2,38 @@ import { defineStore } from 'pinia'
 
 const defaults = {
   documentTypes: [
-    { abbr: 'ci', name: 'ci', inactive: false },
-    { abbr: 'cpf', name: 'cpf', inactive: false },
-    { abbr: 'cnpj', name: 'cnpj', inactive: false }
+    { abbr: 'ci', name: 'ci', active: true },
+    { abbr: 'cpf', name: 'cpf', active: true },
+    { abbr: 'cnpj', name: 'cnpj', active: true }
   ],
   measureUnits: [
-    { abbr: 'un', name: 'unitário', inactive: false },
-    { abbr: 'kg', name: 'kilo', inactive: false },
-    { abbr: 'g', name: 'grama', inactive: false },
-    { abbr: 'l', name: 'litro', inactive: false },
-    { abbr: 'ml', name: 'mililitro', inactive: false },
-    { abbr: 'mm', name: 'milimetro', inactive: false },
-    { abbr: 'cm', name: 'centimetro', inactive: false },
-    { abbr: 'm', name: 'metro', inactive: false },
-    { abbr: 'm2', name: 'metro quadrado', inactive: false },
-    { abbr: 'm3', name: 'metro cubico', inactive: false },
-    { abbr: 'seg', name: 'segundo', inactive: false },
-    { abbr: 'min', name: 'minuto', inactive: false },
-    { abbr: 'h', name: 'hora', inactive: false },
-    { abbr: 'dia', name: 'dia', inactive: false },
-    { abbr: 'semana', name: 'semana', inactive: false },
-    { abbr: 'ano', name: 'ano', inactive: false }
+    { abbr: 'un', name: 'unitário', active: true },
+    { abbr: 'kg', name: 'kilo', active: true },
+    { abbr: 'g', name: 'grama', active: true },
+    { abbr: 'l', name: 'litro', active: true },
+    { abbr: 'ml', name: 'mililitro', active: true },
+    { abbr: 'mm', name: 'milimetro', active: true },
+    { abbr: 'cm', name: 'centimetro', active: true },
+    { abbr: 'm', name: 'metro', active: true },
+    { abbr: 'm2', name: 'metro quadrado', active: true },
+    { abbr: 'm3', name: 'metro cubico', active: true },
+    { abbr: 'seg', name: 'segundo', active: true },
+    { abbr: 'min', name: 'minuto', active: true },
+    { abbr: 'h', name: 'hora', active: true },
+    { abbr: 'dia', name: 'dia', active: true },
+    { abbr: 'semana', name: 'semana', active: true },
+    { abbr: 'ano', name: 'ano', active: true }
   ],
   paymentMethods: [
-    { abbr: 'dinheiro', name: 'dinheiro', inactive: false },
-    { abbr: 'crédito', name: 'cartão de crédito', inactive: false },
-    { abbr: 'débito', name: 'cartão de débito', inactive: false },
-    { abbr: 'pix', name: 'pix', inactive: false },
-    { abbr: 'cheque', name: 'cheque', inactive: false },
-    { abbr: 'boleto', name: 'boleto', inactive: false },
-    { abbr: 'fiado', name: 'fiado', inactive: false },
-    { abbr: 'transferência', name: 'transferência bancária', inactive: false },
-    { abbr: 'outro', name: 'outro', inactive: false }
+    { abbr: 'dinheiro', name: 'dinheiro', active: true },
+    { abbr: 'crédito', name: 'cartão de crédito', active: true },
+    { abbr: 'débito', name: 'cartão de débito', active: true },
+    { abbr: 'pix', name: 'pix', active: true },
+    { abbr: 'cheque', name: 'cheque', active: true },
+    { abbr: 'boleto', name: 'boleto', active: true },
+    { abbr: 'fiado', name: 'fiado', active: true },
+    { abbr: 'transferência', name: 'transferência bancária', active: true },
+    { abbr: 'outro', name: 'outro', active: true }
   ]
 }
 
@@ -48,7 +48,7 @@ function convertToObject(source) {
 
 export const useSettingsStore = defineStore('settingsStore', {
   state: () => ({
-    id: 0,
+    user_id: 0,
     documentTypes: [],
     measureUnits: [],
     paymentMethods: []
@@ -56,7 +56,7 @@ export const useSettingsStore = defineStore('settingsStore', {
   getters: {},
   actions: {
     setSettings(value) {
-      this.id = value.id
+      this.user_id = value.user_id
       this.documentTypes = convertToObject(JSON.parse(value.document_types))
       this.measureUnits = convertToObject(JSON.parse(value.measure_units))
       this.paymentMethods = convertToObject(JSON.parse(value.payment_methods))
@@ -67,11 +67,6 @@ export const useSettingsStore = defineStore('settingsStore', {
         measureUnits: JSON.stringify(defaults.measureUnits),
         paymentMethods: JSON.stringify(defaults.paymentMethods)
       }
-    },
-    addDefaults() {
-      this.documentTypes = defaults.documentTypes
-      this.measureUnits = defaults.measureUnits
-      this.paymentMethods = defaults.paymentMethods
     }
   },
   persist: {

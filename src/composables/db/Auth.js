@@ -5,23 +5,25 @@ export default function useAuthUser() {
   const loading = ref(false)
   const { supabase } = useSupabase()
 
-  const login = async ({ email, password }) => {
+  const register = async ({ email, password, ...meta }) => {
     loading.value = true
-    const { error } = await supabase.auth.signIn({ email, password })
+    const { error, user } = await supabase.auth.signUp({ email, password }, { data: meta })
     loading.value = false
     if (error) throw error
+    return user
+  }
+
+  const login = async ({ email, password }) => {
+    loading.value = true
+    const { error, user } = await supabase.auth.signIn({ email, password })
+    loading.value = false
+    if (error) throw error
+    return user
   }
 
   const logout = async () => {
     loading.value = true
     const { error } = await supabase.auth.signOut()
-    loading.value = false
-    if (error) throw error
-  }
-
-  const register = async ({ email, password, ...meta }) => {
-    loading.value = true
-    const { error } = await supabase.auth.signUp({ email, password }, { data: meta })
     loading.value = false
     if (error) throw error
   }

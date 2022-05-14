@@ -1,0 +1,23 @@
+SMS Message
+Body:
+O seu código de autenticação é {{ .Code }}
+
+--------------------------------------------------------------------------------------------------
+
+Confirm Signup
+Subject: Confirme sua inscrição no Endless
+Body:
+<h2>Confirme sua inscrição</h2>
+
+<p>O link abaixo é utilizado para confirmar seu email:</p>
+<p><a href="{{ .ConfirmationURL }}">Clique aqui para confirmar seu e-mail</a></p>
+
+--------------------------------------------------------------------------------------------------
+
+Reset password
+Subject: Redefinir sua senha
+Body:
+<h2>Redefinir sua senha</h2>
+
+<p>O link abaixo é utilizado para redefinir a senha do seu usuário:</p>
+<p><a href="{{ .ConfirmationURL }}">Clique aqui para redefinir sua senha</a></p>

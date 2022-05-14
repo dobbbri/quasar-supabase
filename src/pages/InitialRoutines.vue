@@ -14,17 +14,17 @@ const settings = ref([])
 
 const handleSettings = async () => {
   try {
-    settings.value = await getSettings()
+    if (store) settings.value = await getSettings()
     if (settings.value) {
       store.setSettings(settings.value)
     } else {
       const { documentTypes, measureUnits, paymentMethods } = store.getDefaults()
-      await addSettings({
+      settings.value = await addSettings({
         measure_units: measureUnits,
         document_types: documentTypes,
         payment_methods: paymentMethods
       })
-      store.addDefaults()
+      store.setSettings(settings.value)
     }
     console.log('store: ', store)
     router.push({ name: 'index' })
