@@ -33,13 +33,12 @@ const handleSubmit = async () => {
     </page-header>
 
     <q-form
-      class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md"
+      v-bind="attr.form"
       @submit.prevent="handleSubmit"
     >
-      <q-list
-        separator
-        class="q-mt-sm"
-      >
+      <q-banner v-bind="attr.banner">Escolha como o cliente pode pagar</q-banner>
+
+      <q-list separator>
         <q-item
           v-for="(paymentMethod, index) in paymentMethods"
           :key="index"
@@ -49,7 +48,7 @@ const handleSubmit = async () => {
             <q-item-label class="text-subtitle2">
               <q-checkbox
                 :id="index"
-                v-model="paymentMethod.inactive"
+                v-model="paymentMethod.active"
                 :label="paymentMethod.name"
                 class="checkbox-fix"
               />

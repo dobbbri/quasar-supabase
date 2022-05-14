@@ -59,7 +59,6 @@ onMounted(() => handleGetProducts())
       v-model="searchQuery"
       v-bind="attr.input.search"
       placeholder="Digite para pesquisar"
-      autofocus
     >
       <template #prepend>
         <q-icon name="search" />
@@ -75,7 +74,6 @@ onMounted(() => handleGetProducts())
     <q-list
       v-if="!loading.list.value"
       separator
-      class="q-mt-sm"
     >
       <q-item
         v-for="(product, index) in products"

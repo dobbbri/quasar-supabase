@@ -1,42 +1,41 @@
 import { useSupabase } from 'boot/supabase'
-import { useTools } from 'src/composables'
+import { useAuth, useTools } from 'src/composables'
 
 export default function useSettings() {
   const { setLoading, loading } = useTools()
   const { supabase } = useSupabase()
+  const { user } = useAuth()
 
-  const getSettings = async (userId, fields = '*') => {
+  const getSettings = async (fields = '*') => {
     setLoading.list(true)
     const { error, data, status } = await supabase
       .from('settings')
       .select(fields)
-      .eq('user_id', userId)
+      .eq('id', user.value.id)
       .limit(1)
       .single()
     setLoading.list(false)
-    if (error && status !== 406) {
-      console.log('error: ', error)
-      console.log('data: ', data)
-      console.log('status: ', status)
-      throw error
-    }
+    if (error && status !== 406) throw error
     return data
   }
 
   const addSettings = async (form) => {
     setLoading.add(true)
-    const { error, data } = await supabase.from('settings').insert([{ ...form }])
+    const { error, data } = await supabase
+      .from('settings')
+      .insert([{ ...form, id: user.value.id }])
+      .single()
     setLoading.add(false)
     if (error) throw error
     return data
   }
 
-  const editSettings = async (userId, form) => {
+  const editSettings = async (form) => {
     setLoading.edit(true)
     const { error } = await supabase
       .from('settings')
       .update({ ...form })
-      .eq('user_id', userId)
+      .eq('id', user.value.id)
     setLoading.edit(false)
     if (error) throw error
   }

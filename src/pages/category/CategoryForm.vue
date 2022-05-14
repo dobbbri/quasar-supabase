@@ -89,7 +89,7 @@ onMounted(() => {
     </page-header>
 
     <q-form
-      class="q-gutter-y-xs q-mt-xs"
+      v-bind="attr.form"
       @submit.prevent="handleSubmit"
     >
       <q-input

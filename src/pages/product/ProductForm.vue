@@ -25,16 +25,13 @@ const { getCategories } = useCategories()
 const { confirm, notify } = useTools()
 const { attr } = useDefaults()
 
-const isEditMode = computed(() => (route.params.id ? true : false))
-const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
-const loadImage = (filePath) => getProductImageURL(filePath) + '?t=' + new Date().getTime()
-
 const optionsCategories = ref([])
 const optionsMeasureUnits = ref([])
 const image = ref(null)
+const imageTmp = ref(null)
 const form = ref({
   name: '',
-  category_id: 1,
+  category_id: '',
   stock_is_automatic: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
@@ -46,6 +43,13 @@ const form = ref({
   description: '',
   image_name: null
 })
+
+const isEditMode = computed(() => (route.params.id ? true : false))
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
+const loadImage = (filePath) => getProductImageURL(filePath) + '?t=' + new Date().getTime()
+const loadSelectedImage = () => {
+  imageTmp.value = image.value ? URL.createObjectURL(image.value) : null
+}
 
 const handleSubmit = async () => {
   try {
@@ -236,35 +240,38 @@ onMounted(() => {
         label="Código interno"
       />
 
-      <q-editor
+      <div class="q-pa-sm q-my-md q-table--bordered rounded-borders">
+        <q-file
+          v-model="image"
+          :label="isEditMode ? 'Selecionar nova imagem' : 'Selecionar imagem'"
+          type="file"
+          accept="image/*"
+          clearable
+          @update:model-value="loadSelectedImage()"
+        />
+        <q-img
+          v-if="imageTmp"
+          :src="imageTmp"
+          spinner-color="primary"
+          class="q-mt-md rounded-borders q-table--bordered bg-grey-3"
+          style="height: 150px; max-height: 150px; margin-top: 5px"
+          :ratio="1"
+        />
+
+        <q-img
+          v-else-if="form.image_name"
+          :src="loadImage(form.image_name)"
+          spinner-color="primary"
+          class="rounded-borders bg-grey-3"
+          style="height: 150px; max-height: 150px; margin-top: 5px"
+          :ratio="1"
+        />
+      </div>
+
+      <q-input
         v-model="form.description"
-        min-height="5rem"
-      />
-
-      <q-banner
-        v-if="image"
-        rounded
-        class="text-body1 bg-blue-grey-2 q-pa-xs q-my-sm"
-      >
-        A nova imagem selecionada sera exibida após gravar o produto!
-      </q-banner>
-
-      <q-img
-        v-else-if="form.image_name"
-        :src="loadImage(form.image_name)"
-        spinner-color="primary"
-        class="q-mt-md rounded-borders q-table--bordered bg-grey-3"
-        style="height: 150px; max-height: 150px"
-        :ratio="1"
-      />
-
-      <q-file
-        v-model="image"
-        :label="isEditMode ? 'Selecionar nova imagem' : 'Selecionar imagem'"
-        type="file"
-        accept="image/*"
-        class="q-mb-md"
-        clearable
+        label="Descrição"
+        autogrow
       />
 
       <page-footer>

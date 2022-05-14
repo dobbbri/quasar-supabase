@@ -1,13 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useSettings, useTools, useDefaults } from 'src/composables'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { useAuth, useTools, useDefaults } from 'src/composables'
 
 const router = useRouter()
-const store = useSettingsStore()
 
-const { addSettings } = useSettings()
 const { loading, register } = useAuth()
 const { notify } = useTools()
 const { attr } = useDefaults()
@@ -20,14 +17,7 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
-    const { documentTypes, measureUnits, paymentMethods } = store.getDefaults()
-    const user = await register(form.value)
-    await addSettings({
-      user_id: user.id,
-      measure_units: measureUnits,
-      document_types: documentTypes,
-      payment_methods: paymentMethods
-    })
+    await register(form.value)
     notify.info(
       'Para finalizar o registro,',
       `um email de confirmação foi enviado para: ${form.value.email}.`

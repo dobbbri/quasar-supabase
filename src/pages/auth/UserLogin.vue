@@ -1,13 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAuth, useSettings, useTools, useDefaults } from 'src/composables'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { useAuth, useTools, useDefaults } from 'src/composables'
 
 const router = useRouter()
-const store = useSettingsStore()
 
-const { getSettings, addSettings } = useSettings()
 const { loading, login } = useAuth()
 const { notify } = useTools()
 const { attr } = useDefaults()
@@ -19,20 +16,8 @@ const form = ref({
 
 const handleSubmit = async () => {
   try {
-    const user = await login(form.value)
-    const settings = await getSettings(user.id)
-    if (!settings.measure_units) {
-      const { documentTypes, measureUnits, paymentMethods } = store.getDefaults()
-      await addSettings({
-        user_id: user.id,
-        measure_units: measureUnits,
-        document_types: documentTypes,
-        payment_methods: paymentMethods
-      })
-    }
-    store.setSettings(settings)
-    console.log('store: ', store)
-    router.push({ name: 'index' })
+    await login(form.value)
+    router.push({ name: 'initial-routines' })
   } catch (error) {
     notify.error('Credenciais inválidas', error)
     throw error

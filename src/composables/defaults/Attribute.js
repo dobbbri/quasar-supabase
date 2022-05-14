@@ -12,11 +12,22 @@ export default function useAttribute() {
 
     input: {
       search: {
+        square: true,
         clearable: true,
         dense: true,
         outlined: true,
-        bgColor: 'grey-2'
+        bgColor: 'blue-grey-1',
+        class: 'q-mb-sm'
       }
+    },
+
+    form: {
+      class: 'q-gutter-y-xs q-mt-xs'
+    },
+
+    banner: {
+      dense: true,
+      class: 'q-px-md bg-blue-grey-1'
     }
   }
 

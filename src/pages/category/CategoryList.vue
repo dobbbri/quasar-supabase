@@ -41,6 +41,7 @@ onMounted(() => handleGetCategories())
         <q-btn
           v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
+          color="primary"
           icon="add"
           unelevated
           :loading="loading.add.value"
@@ -56,9 +57,6 @@ onMounted(() => handleGetCategories())
       v-model="searchQuery"
       v-bind="attr.input.search"
       placeholder="Digite para pesquisar"
-      autofocus
-      class="q-px-none"
-      type="text"
     >
       <template #prepend>
         <q-icon name="search" />
@@ -74,7 +72,6 @@ onMounted(() => handleGetCategories())
     <q-list
       v-if="!loading.list.value"
       separator
-      class="q-mt-sm"
     >
       <q-item
         v-for="(category, index) in categories"

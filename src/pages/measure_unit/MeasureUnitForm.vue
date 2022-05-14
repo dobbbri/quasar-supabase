@@ -33,23 +33,23 @@ const handleSubmit = async () => {
     </page-header>
 
     <q-form
-      class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md"
+      v-bind="attr.form"
       @submit.prevent="handleSubmit"
     >
-      <q-list
-        separator
-        class="q-mt-sm"
-      >
+      <q-banner v-bind="attr.banner">
+        Como você mede os produtos/serviços para definir preço.
+      </q-banner>
+
+      <q-list separator>
         <q-item
           v-for="(measureUnit, index) in measureUnits"
           :key="index"
-          class="q-py-none"
         >
           <q-item-section>
             <q-item-label class="text-subtitle2">
               <q-checkbox
                 :id="index"
-                v-model="measureUnit.inactive"
+                v-model="measureUnit.active"
                 :label="measureUnit.name"
                 class="checkbox-fix"
               />

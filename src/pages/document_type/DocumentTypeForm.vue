@@ -33,13 +33,14 @@ const handleSubmit = async () => {
     </page-header>
 
     <q-form
-      class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md"
+      v-bind="attr.form"
       @submit.prevent="handleSubmit"
     >
-      <q-list
-        separator
-        class="q-mt-sm"
-      >
+      <q-banner v-bind="attr.banner">
+        Quais documentos que voce aceita para cadastar o cliente
+      </q-banner>
+
+      <q-list separator>
         <q-item
           v-for="(documentType, index) in documentTypes"
           :key="index"
@@ -49,7 +50,7 @@ const handleSubmit = async () => {
             <q-item-label class="text-subtitle2">
               <q-checkbox
                 :id="index"
-                v-model="documentType.inactive"
+                v-model="documentType.active"
                 :label="documentType.name"
                 class="checkbox-fix"
               />

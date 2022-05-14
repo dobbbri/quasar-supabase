@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSettings, useTools } from 'src/composables'
 import { useSettingsStore } from 'src/stores/settingsStore'
@@ -10,21 +10,21 @@ const store = useSettingsStore()
 const { getSettings, addSettings } = useSettings()
 const { notify } = useTools()
 
-const settings = ref([])
-
 const handleSettings = async () => {
   try {
-    if (store) settings.value = await getSettings()
-    if (settings.value) {
-      store.setSettings(settings.value)
+    let settings = await getSettings()
+    console.log('set: ', settings)
+    if (settings) {
+      store.setSettings(settings)
     } else {
       const { documentTypes, measureUnits, paymentMethods } = store.getDefaults()
-      settings.value = await addSettings({
+      settings = await addSettings({
         measure_units: measureUnits,
         document_types: documentTypes,
         payment_methods: paymentMethods
       })
-      store.setSettings(settings.value)
+      console.log('set2: ', settings)
+      store.setSettings(settings)
     }
     console.log('store: ', store)
     router.push({ name: 'index' })

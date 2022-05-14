@@ -48,7 +48,7 @@ function convertToObject(source) {
 
 export const useSettingsStore = defineStore('settingsStore', {
   state: () => ({
-    user_id: 0,
+    id: 0,
     documentTypes: [],
     measureUnits: [],
     paymentMethods: []
@@ -56,7 +56,7 @@ export const useSettingsStore = defineStore('settingsStore', {
   getters: {},
   actions: {
     setSettings(value) {
-      this.user_id = value.user_id
+      this.id = value.id
       this.documentTypes = convertToObject(JSON.parse(value.document_types))
       this.measureUnits = convertToObject(JSON.parse(value.measure_units))
       this.paymentMethods = convertToObject(JSON.parse(value.payment_methods))
