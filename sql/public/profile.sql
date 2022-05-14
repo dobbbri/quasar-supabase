@@ -25,6 +25,7 @@ CREATE POLICY
   FOR UPDATE
   USING ( auth.uid() = id );
 
+-- Table Function
 CREATE FUNCTION
   public.create_profile_for_new_user()
   RETURNS TRIGGER AS
@@ -39,10 +40,6 @@ CREATE FUNCTION
   END;
   $$ LANGUAGE plpgsql SECURITY DEFINER;
 
-CREATE TRIGGER
-  create_profile_on_signup
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE PROCEDURE
-    public.create_profile_for_new_user();
-
+-- Table Triggers
+create trigger create_profile_on_signup after
+  insert on auth.users for each row execute function create_profile_for_new_user();
