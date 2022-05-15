@@ -19,7 +19,7 @@ const handleSubmit = async () => {
       id: store.id,
       measure_units: JSON.stringify(measureUnits.value)
     })
-    notify.success('Unidade de medida alterada')
+    notify.success('Unidade de medida gravada.')
   } catch (error) {
     notify.error(`Erro ao alterar a unidade de medida.`, error)
   }
@@ -46,12 +46,17 @@ const handleSubmit = async () => {
           :key="index"
         >
           <q-item-section>
-            <q-item-label class="text-subtitle2">
+            <q-item-label
+              v-if="measureUnit.group"
+              class="text-h6"
+            >
+              {{ measureUnit.group }}
+            </q-item-label>
+            <q-item-label class="text-body2">
               <q-checkbox
                 :id="index"
                 v-model="measureUnit.active"
-                :label="measureUnit.name"
-                class="checkbox-fix"
+                :label="`${measureUnit.abbr} - ${measureUnit.name}`"
               />
             </q-item-label>
           </q-item-section>

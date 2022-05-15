@@ -19,7 +19,7 @@ const handleSubmit = async () => {
       id: store.id,
       document_types: JSON.stringify(documentTypes.value)
     })
-    notify.success('Tipo de documento alterada')
+    notify.success('Tipo de documento gravado.')
   } catch (error) {
     notify.error(`Erro ao alterar a tipo de documento.`, error)
   }

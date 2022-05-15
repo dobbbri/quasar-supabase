@@ -19,7 +19,7 @@ const handleSubmit = async () => {
       id: store.id,
       payment_methods: JSON.stringify(paymentMethods.value)
     })
-    notify.success('Forma de pagamento alterada')
+    notify.success('Forma de pagamento gravado.')
   } catch (error) {
     notify.error(`Erro ao alterar a forma de pagamento.`, error)
   }
@@ -36,7 +36,7 @@ const handleSubmit = async () => {
       v-bind="attr.form"
       @submit.prevent="handleSubmit"
     >
-      <q-banner v-bind="attr.banner">Escolha como o cliente pode pagar</q-banner>
+      <q-banner v-bind="attr.banner">Escolha a forma que o cliente pode pagar</q-banner>
 
       <q-list separator>
         <q-item
