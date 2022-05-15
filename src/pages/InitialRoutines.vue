@@ -15,7 +15,6 @@ const { notify } = useTools()
 const handleSettings = async () => {
   try {
     $q.loading.show()
-
     let settings = await getSettings()
     console.log('set: ', settings)
     if (settings) {
@@ -31,11 +30,11 @@ const handleSettings = async () => {
       store.setSettings(settings)
     }
     console.log('store: ', store)
+    $q.loading.hide()
     router.push({ name: 'index' })
   } catch (error) {
-    notify.error('Erro ao executar as rotinas iniciais.', error)
-  } finally {
     $q.loading.hide()
+    notify.error('Erro ao executar as rotinas iniciais.', error)
   }
 }
 

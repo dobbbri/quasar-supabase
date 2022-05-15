@@ -1,13 +1,13 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useSupabase } from 'boot/supabase'
 
 export default function useAuthUser() {
   const loading = ref(false)
   const { supabase } = useSupabase()
 
-  const register = async ({ email, password, ...meta }) => {
+  const register = async ({ email, password }) => {
     loading.value = true
-    const { error } = await supabase.auth.signUp({ email, password }, { data: meta })
+    const { error } = await supabase.auth.signUp({ email, password })
     loading.value = false
     if (error) throw error
   }
@@ -22,13 +22,6 @@ export default function useAuthUser() {
   const logout = async () => {
     loading.value = true
     const { error } = await supabase.auth.signOut()
-    loading.value = false
-    if (error) throw error
-  }
-
-  const update = async (data) => {
-    loading.value = true
-    const { error } = await supabase.auth.update(data)
     loading.value = false
     if (error) throw error
   }
@@ -50,13 +43,10 @@ export default function useAuthUser() {
   }
 
   return {
-    isLoggedIn: () => !!supabase.auth.user(),
-    user: computed(() => supabase.auth.user()),
     loading,
     login,
     logout,
     register,
-    update,
     sendPasswordResetEmail,
     resetPassword
   }

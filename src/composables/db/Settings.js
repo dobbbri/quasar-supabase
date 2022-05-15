@@ -1,10 +1,11 @@
+import { computed } from 'vue'
 import { useSupabase } from 'boot/supabase'
-import { useAuth, useTools } from 'src/composables'
+import { useTools } from 'src/composables'
 
 export default function useSettings() {
   const { setLoading, loading } = useTools()
   const { supabase } = useSupabase()
-  const { user } = useAuth()
+  const user = computed(() => supabase.auth.user())
 
   const getSettings = async (fields = '*') => {
     setLoading.list(true)

@@ -1,10 +1,11 @@
+import { computed } from 'vue'
 import { useSupabase } from 'boot/supabase'
-import { useAuth, useTools } from 'src/composables'
+import { useTools } from 'src/composables'
 
 export default function useApi(table) {
   const { setLoading, loading } = useTools()
   const { supabase } = useSupabase()
-  const { user } = useAuth()
+  const user = computed(() => supabase.auth.user())
 
   const list = async (fields = '*') => {
     setLoading.list(true)
@@ -63,7 +64,6 @@ export default function useApi(table) {
 
   return {
     supabase,
-    user,
     setLoading,
     loading,
     list,

@@ -6,9 +6,5 @@ export function useSupabase() {
   const supabaseKey = process.env.SUPABASE_KEY
   const supabase = createClient(supabaseUrl, supabaseKey)
 
-  // supabase.auth.onAuthStateChange((event, session) => {
-  //   if (process.env.DEV) console.info(event, session)
-  // })
-
   return { supabase, supabaseUrl, supabaseBucket }
 }

@@ -10,7 +10,6 @@ const { notify } = useTools()
 const { attr } = useDefaults()
 
 const form = ref({
-  name: 'Sergio Dobri',
   email: 'sergiodobri@gmail.com',
   password: '123456'
 })
@@ -39,13 +38,13 @@ const handleSubmit = async () => {
         >
           <p class="text-h5 text-center">Registro</p>
 
-          <q-input
-            v-model="form.name"
-            label="Nome"
-            lazy-rules
-            :rules="[(val) => val && val.length > 0]"
-            error-message="O nome deve ser informado!"
-          />
+          <!-- <q-input -->
+          <!--   v-model="form.name" -->
+          <!--   label="Nome" -->
+          <!--   lazy-rules -->
+          <!--   :rules="[(val) => val && val.length > 0]" -->
+          <!--   error-message="O nome deve ser informado!" -->
+          <!-- /> -->
 
           <q-input
             v-model="form.email"
