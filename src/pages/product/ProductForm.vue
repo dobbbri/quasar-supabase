@@ -35,7 +35,7 @@ const form = ref({
   stock_is_automatic: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
-  measure_unit: 'un',
+  measure_unit: 'un.',
   price_to_buy: 0,
   price_to_sell: 0,
   code_bar: '',
@@ -91,8 +91,8 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id)
-    console.log('form.value.image_name: ', form.value.image_name)
-    console.log('loadImage: ', loadImage(form.value.image_name))
+    // console.log('form.value.image_name: ', form.value.image_name)
+    // console.log('loadImage: ', loadImage(form.value.image_name))
   } catch (error) {
     notify.error('Erro ao obter o produto.', error)
   }
@@ -144,10 +144,11 @@ onMounted(() => {
     </page-header>
 
     <q-form
-      class="q-gutter-y-xs q-mt-xs"
+      v-bind="attr.form"
       @submit.prevent="handleSubmit"
     >
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.name"
         label="Nome"
         :rules="[(val) => val && val.length > 3]"
@@ -155,11 +156,13 @@ onMounted(() => {
       />
 
       <q-select
+        v-bind="attr.input.basic"
         v-model="form.category_id"
         label="Categoria"
         :options="optionsCategories"
         option-value="id"
         option-label="name"
+        option-disable="opt => Object(opt) === opt ? opt.active == false : true"
         map-options
         emit-value
         :rules="[(val) => !!val]"
@@ -167,6 +170,7 @@ onMounted(() => {
       />
 
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.price_to_buy"
         label="Preço de compra"
         prefix="R$"
@@ -178,6 +182,7 @@ onMounted(() => {
       />
 
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.price_to_sell"
         label="Preço de venda"
         prefix="R$"
@@ -189,6 +194,7 @@ onMounted(() => {
       />
 
       <q-select
+        v-bind="attr.input.basic"
         v-model="form.measure_unit"
         label="Unidade de medida"
         :options="optionsMeasureUnits"
@@ -202,14 +208,17 @@ onMounted(() => {
       />
 
       <q-checkbox
+        v-bind="attr.input.basic"
         v-model="form.stock_is_automatic"
         label="Utilizar estoque automático"
         color="primary"
         class="checkbox-fix"
+        style="margin-bottom: -16px"
       />
 
       <q-input
         v-if="form.stock_is_automatic"
+        v-bind="attr.input.basic"
         v-model="form.stock_amount"
         label="Quantidade"
         mask="#"
@@ -221,6 +230,7 @@ onMounted(() => {
 
       <q-input
         v-if="form.stock_is_automatic"
+        v-bind="attr.input.basic"
         v-model="form.stock_minimum_amount"
         label="Quantidade mínima"
         mask="#"
@@ -231,16 +241,18 @@ onMounted(() => {
       />
 
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.code_bar"
         label="Código de barras"
       />
 
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.code_internal"
         label="Código interno"
       />
 
-      <div class="q-pa-sm q-my-md q-table--bordered rounded-borders">
+      <div class="q-pt-none q-my-md">
         <q-file
           v-model="image"
           :label="isEditMode ? 'Selecionar nova imagem' : 'Selecionar imagem'"
@@ -249,6 +261,7 @@ onMounted(() => {
           clearable
           @update:model-value="loadSelectedImage()"
         />
+
         <q-img
           v-if="imageTmp"
           :src="imageTmp"
@@ -269,8 +282,9 @@ onMounted(() => {
       </div>
 
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.description"
-        label="Descrição"
+        label="Descrição do produto"
         autogrow
       />
 

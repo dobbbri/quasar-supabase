@@ -93,6 +93,7 @@ onMounted(() => {
       @submit.prevent="handleSubmit"
     >
       <q-input
+        v-bind="attr.input.basic"
         v-model="form.name"
         label="Nome"
         :rules="[(val) => val && val.length > 3]"
@@ -100,6 +101,7 @@ onMounted(() => {
       />
 
       <q-checkbox
+        v-bind="attr.input.basic"
         v-model="form.inactive"
         label="Não exibir os produtos desta categoria"
         color="negative"

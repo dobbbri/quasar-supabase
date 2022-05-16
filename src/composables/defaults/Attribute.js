@@ -11,18 +11,21 @@ export default function useAttribute() {
     },
 
     input: {
+      basic: {
+        hideBottomSpace: true
+      },
       search: {
         square: true,
         clearable: true,
         dense: true,
         outlined: true,
         bgColor: 'blue-grey-1',
-        class: 'q-mb-sm'
+        class: 'q-mb-sm q-py-sx'
       }
     },
 
     form: {
-      class: 'q-gutter-y-xs q-mt-xs'
+      class: 'q-gutter-y-md q-mt-xs'
     },
 
     banner: {

@@ -30,12 +30,13 @@ const handleSubmit = async () => {
     <div class="row justify-center">
       <div class="col-md-4 col-sm-6 col-xs-12">
         <q-form
-          class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+          v-bind="attr.form"
           @submit.prevent="handleSubmit"
         >
           <p class="text-h5 text-center">Redefinir senha</p>
 
           <q-input
+            v-bind="attr.input.basic"
             v-model="email"
             label="Email"
             lazy-rules
@@ -48,6 +49,7 @@ const handleSubmit = async () => {
             v-bind="attr.btn.basic"
             label="Enviar email"
             unelevated
+            no-caps
             class="full-width q-mt-lg"
             :loading="loading"
             :disable="loading"
@@ -58,6 +60,7 @@ const handleSubmit = async () => {
             v-bind="attr.btn.basic"
             label="Cancelar"
             flat
+            no-caps
             class="full-width q-mt-sm"
             :disable="loading"
             :to="{ name: 'login' }"

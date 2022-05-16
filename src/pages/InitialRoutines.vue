@@ -16,7 +16,6 @@ const handleSettings = async () => {
   try {
     $q.loading.show()
     let settings = await getSettings()
-    console.log('set: ', settings)
     if (settings) {
       store.setSettings(settings)
     } else {
@@ -26,10 +25,8 @@ const handleSettings = async () => {
         document_types: documentTypes,
         payment_methods: paymentMethods
       })
-      console.log('set2: ', settings)
       store.setSettings(settings)
     }
-    console.log('store: ', store)
     $q.loading.hide()
     router.push({ name: 'index' })
   } catch (error) {

@@ -40,20 +40,28 @@ const handleSubmit = async () => {
         Como você mede os produtos/serviços para definir preço.
       </q-banner>
 
-      <q-list separator>
+      <q-list
+        separator
+        style="margin-top: -6px"
+      >
         <q-item
           v-for="(measureUnit, index) in measureUnits"
           :key="index"
+          class="q-pa-none"
         >
           <q-item-section>
             <q-item-label
               v-if="measureUnit.group"
-              class="text-h6"
+              class="text-h6 q-mt-lg"
             >
               {{ measureUnit.group }}
             </q-item-label>
-            <q-item-label class="text-body2">
+            <q-item-label
+              class="text-body2"
+              style="line-height: 12px !important"
+            >
               <q-checkbox
+                v-bind="attr.input.basic"
                 :id="index"
                 v-model="measureUnit.active"
                 :label="`${measureUnit.abbr} - ${measureUnit.name}`"

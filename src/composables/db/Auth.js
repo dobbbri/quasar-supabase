@@ -1,26 +1,31 @@
 import { ref } from 'vue'
 import { useSupabase } from 'boot/supabase'
+import { useUserStore } from 'src/stores/userStore'
 
 export default function useAuthUser() {
   const loading = ref(false)
   const { supabase } = useSupabase()
+  const store = useUserStore()
 
-  const register = async ({ email, password }) => {
+  const register = async ({ email, password, ...meta }) => {
     loading.value = true
-    const { error } = await supabase.auth.signUp({ email, password })
+    const { session, error } = await supabase.auth.signUp({ email, password }, { data: meta })
+    if (session) store.setUser(session.user)
     loading.value = false
     if (error) throw error
   }
 
   const login = async ({ email, password }) => {
     loading.value = true
-    const { error } = await supabase.auth.signIn({ email, password })
+    const { session, error } = await supabase.auth.signIn({ email, password })
+    if (session) store.setUser(session.user)
     loading.value = false
     if (error) throw error
   }
 
   const logout = async () => {
     loading.value = true
+    store.logout()
     const { error } = await supabase.auth.signOut()
     loading.value = false
     if (error) throw error

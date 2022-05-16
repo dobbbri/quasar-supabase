@@ -11,7 +11,9 @@ const { attr } = useDefaults()
 
 const form = ref({
   email: 'sergiodobri@gmail.com',
-  password: '123456'
+  password: '123456',
+  privacy_policy: false,
+  terms_of_use: false
 })
 
 const handleSubmit = async () => {
@@ -33,10 +35,10 @@ const handleSubmit = async () => {
     <div class="row justify-center">
       <div class="col-md-4 col-sm-6 col-xs-12">
         <q-form
-          class="q-gutter-y-xs q-mt-xs q-px-md q-pb-md bg-white rounded-borders q-table--bordered"
+          v-bind="attr.form"
           @submit.prevent="handleSubmit"
         >
-          <p class="text-h5 text-center">Registro</p>
+          <p class="text-h5 text-center">Criar sua conta</p>
 
           <!-- <q-input -->
           <!--   v-model="form.name" -->
@@ -47,6 +49,7 @@ const handleSubmit = async () => {
           <!-- /> -->
 
           <q-input
+            v-bind="attr.input.basic"
             v-model="form.email"
             label="Email"
             lazy-rules
@@ -56,6 +59,7 @@ const handleSubmit = async () => {
           />
 
           <q-input
+            v-bind="attr.input.basic"
             v-model="form.password"
             label="Senha"
             lazy-rules
@@ -63,20 +67,56 @@ const handleSubmit = async () => {
             error-message="A senha deve ser possuir 6 ou mais caracteres"
           />
 
+          <div>
+            <div>
+              <q-checkbox
+                v-bind="attr.input.basic"
+                v-model="form.privacy_policy"
+                label="Concordo com a&nbsp;"
+                color="primary"
+                class="checkbox-fix"
+              />
+              <a
+                href=""
+                class="text-primary"
+              >
+                Politica de Privacidade
+              </a>
+            </div>
+
+            <div>
+              <q-checkbox
+                v-bind="attr.input.basic"
+                v-model="form.terms_of_use"
+                label="Concordo com os&nbsp;"
+                color="primary"
+                class="checkbox-fix"
+              />
+              <a
+                href=""
+                class="text-primary"
+              >
+                Termos de Uso
+              </a>
+            </div>
+          </div>
+
           <q-btn
             v-bind="attr.btn.basic"
-            label="Gravar"
+            label="Criar conta"
             unelevated
+            no-caps
             class="full-width q-mt-lg"
             :loading="loading"
-            :disable="loading"
+            :disable="loading || !form.terms_of_use || !form.privacy_policy"
             type="submit"
           />
 
           <q-btn
             v-bind="attr.btn.basic"
-            label="Entrar"
+            label="Já é usuário? Faça seu login"
             flat
+            no-caps
             class="full-width q-mt-sm"
             :disable="loading"
             :to="{ name: 'login' }"

@@ -49,6 +49,7 @@ const handleSubmit = async () => {
           <q-item-section>
             <q-item-label class="text-subtitle2">
               <q-checkbox
+                v-bind="attr.input.basic"
                 :id="index"
                 v-model="documentType.active"
                 :label="documentType.name"
