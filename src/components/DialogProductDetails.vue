@@ -1,42 +1,50 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
-import { formatCurrency } from 'src/utils/format'
-import { openURL } from 'quasar'
-import { useApi } from 'src/composables'
+import { defineProps, defineEmits } from "vue";
+import { formatCurrency } from "src/utils/format";
+import { openURL } from "quasar";
+import { useApi } from "src/composables";
 
 const props = defineProps({
   show: { type: Boolean, required: true },
-  product: { type: Object, required: true }
-})
+  product: { type: Object, required: true },
+});
 
-const emit = defineEmits(['hideDialog'])
+const emit = defineEmits(["hideDialog"]);
 
-const msg = 'Olá, fiquei interressado no produto: '
-const { brand } = useApi()
+const msg = "Olá, fiquei interressado no produto: ";
+const { brand } = useApi();
 
 const handleClose = () => {
-  emit('hideDialog')
-}
+  emit("hideDialog");
+};
 
 const handleSendWpp = () => {
   const link = encodeURI(
     `https://api.whatsapp.com/send?phone=55${brand.value.phone}&text=${msg} - ${
       props.product.name
     } - ${formatCurrency(props.product.price_to_sell)}`
-  )
-  openURL(link)
-}
+  );
+  openURL(link);
+};
 </script>
 
 <template>
-  <q-dialog :full-width="$q.platform.is.mobile" :model-value="show" @before-hide="handleClose">
+  <q-dialog
+    :full-width="$q.platform.is.mobile"
+    :model-value="show"
+    @before-hide="handleClose"
+  >
     <q-card>
       <q-card-section>
         <div class="text-h6">Details</div>
       </q-card-section>
 
       <q-card-section v-if="product.image_url">
-        <q-img :src="product.image_url" :ratio="4 / 3" style="min-width: 300px" />
+        <q-img
+          :src="product.image_url"
+          :ratio="4 / 3"
+          style="min-width: 300px"
+        />
       </q-card-section>
 
       <q-card-section>

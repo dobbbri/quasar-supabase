@@ -1,6 +1,6 @@
 <script setup>
 // import { onMounted } from 'vue'
-import { LeftSidebar } from 'src/components'
+import { LeftSidebar } from "src/components";
 // import { useBrand } from 'src/composables'
 // const { getBrand } = useBrand()
 // onMounted(() =>  getBrand())
@@ -11,11 +11,7 @@ import { LeftSidebar } from 'src/components'
     class="WAL position-relative bg-grey-5"
     :style="'height: ' + $q.screen.height + 'px'"
   >
-    <q-layout
-      view="lHh Lpr lFf"
-      class="WAL__layout shadow-3"
-      container
-    >
+    <q-layout view="lHh Lpr lFf" class="WAL__layout shadow-3" container>
       <left-sidebar />
 
       <q-page-container class="bg-white">

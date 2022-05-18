@@ -1,29 +1,29 @@
 <script setup>
-import { ref } from 'vue'
-import { useSettings, useTools, useDefaults } from 'src/composables'
-import { PageHeader, PageFooter } from 'src/components'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { ref } from "vue";
+import { useSettings, useTools, useDefaults } from "src/composables";
+import { PageHeader, PageFooter } from "src/components";
+import { useSettingsStore } from "src/stores/settingsStore";
 
-const store = useSettingsStore()
+const store = useSettingsStore();
 
-const { loading, editSettings } = useSettings()
-const { notify } = useTools()
-const { attr } = useDefaults()
+const { loading, editSettings } = useSettings();
+const { notify } = useTools();
+const { attr } = useDefaults();
 
-const documentTypes = ref([])
-documentTypes.value = store.documentTypes
+const documentTypes = ref([]);
+documentTypes.value = store.documentTypes;
 
 const handleSubmit = async () => {
   try {
     await editSettings({
       id: store.id,
-      document_types: JSON.stringify(documentTypes.value)
-    })
-    notify.success('Tipo de documento gravado.')
+      document_types: JSON.stringify(documentTypes.value),
+    });
+    notify.success("Tipo de documento gravado.");
   } catch (error) {
-    notify.error(`Erro ao alterar a tipo de documento.`, error)
+    notify.error(`Erro ao alterar a tipo de documento.`, error);
   }
-}
+};
 </script>
 
 <template>
@@ -32,10 +32,7 @@ const handleSubmit = async () => {
       <template #title>Tipos de Documentos</template>
     </page-header>
 
-    <q-form
-      v-bind="attr.form"
-      @submit.prevent="handleSubmit"
-    >
+    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
       <q-banner v-bind="attr.banner">
         Quais documentos que voce aceita para cadastar o cliente
       </q-banner>

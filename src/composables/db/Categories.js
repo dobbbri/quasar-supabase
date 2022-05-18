@@ -1,7 +1,7 @@
-import { useApi } from 'src/composables'
+import { useApi } from "src/composables";
 
 export default function useCategories() {
-  const { loading, list, get, add, edit, remove, count } = useApi('categories')
+  const { loading, list, get, add, edit, remove, count } = useApi("categories");
 
   return {
     loading,
@@ -10,6 +10,6 @@ export default function useCategories() {
     addCategory: add,
     editCategory: edit,
     removeCategory: remove,
-    countCategory: count
-  }
+    countCategory: count,
+  };
 }

@@ -1,39 +1,39 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useCategories, useTools, useDefaults } from 'src/composables'
+import { ref, onMounted } from "vue";
+import { useCategories, useTools, useDefaults } from "src/composables";
 
-const { loading, getCategories } = useCategories()
-const { notify } = useTools()
-const { cfg } = useDefaults()
+const { loading, getCategories } = useCategories();
+const { notify } = useTools();
+const { cfg } = useDefaults();
 
-const categories = ref([])
+const categories = ref([]);
 
 const handleListCategories = async () => {
   try {
-    categories.value = await getCategories('id, name, inactive')
+    categories.value = await getCategories("id, name, inactive");
   } catch (error) {
-    notify.error('Erro ao obter as categorias.', error)
+    notify.error("Erro ao obter as categorias.", error);
   }
-}
+};
 
 const formatInactive = (value) => {
-  const formatted = value ? 'Desativado' : ''
-  return formatted
-}
+  const formatted = value ? "Desativado" : "";
+  return formatted;
+};
 
 const columns = [
-  { name: 'nome', align: 'left', label: 'NOME', field: 'name', sortable: true },
+  { name: "nome", align: "left", label: "NOME", field: "name", sortable: true },
   {
-    name: 'status',
-    align: 'center',
-    label: 'STATUS',
-    field: 'inactive',
+    name: "status",
+    align: "center",
+    label: "STATUS",
+    field: "inactive",
     format: (val) => formatInactive(val),
-    sortable: true
-  }
-]
+    sortable: true,
+  },
+];
 
-onMounted(() => handleListCategories())
+onMounted(() => handleListCategories());
 </script>
 
 <template>

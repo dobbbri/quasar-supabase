@@ -1,29 +1,29 @@
 <script setup>
-import { ref } from 'vue'
-import { useSettings, useTools, useDefaults } from 'src/composables'
-import { PageHeader, PageFooter } from 'src/components'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { ref } from "vue";
+import { useSettings, useTools, useDefaults } from "src/composables";
+import { PageHeader, PageFooter } from "src/components";
+import { useSettingsStore } from "src/stores/settingsStore";
 
-const store = useSettingsStore()
+const store = useSettingsStore();
 
-const { loading, editSettings } = useSettings()
-const { notify } = useTools()
-const { attr } = useDefaults()
+const { loading, editSettings } = useSettings();
+const { notify } = useTools();
+const { attr } = useDefaults();
 
-const paymentMethods = ref([])
-paymentMethods.value = store.paymentMethods
+const paymentMethods = ref([]);
+paymentMethods.value = store.paymentMethods;
 
 const handleSubmit = async () => {
   try {
     await editSettings({
       id: store.id,
-      payment_methods: JSON.stringify(paymentMethods.value)
-    })
-    notify.success('Forma de pagamento gravado.')
+      payment_methods: JSON.stringify(paymentMethods.value),
+    });
+    notify.success("Forma de pagamento gravado.");
   } catch (error) {
-    notify.error(`Erro ao alterar a forma de pagamento.`, error)
+    notify.error(`Erro ao alterar a forma de pagamento.`, error);
   }
-}
+};
 </script>
 
 <template>
@@ -32,11 +32,10 @@ const handleSubmit = async () => {
       <template #title>Formas de Pagamento</template>
     </page-header>
 
-    <q-form
-      v-bind="attr.form"
-      @submit.prevent="handleSubmit"
-    >
-      <q-banner v-bind="attr.banner">Escolha a forma que o cliente pode pagar</q-banner>
+    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+      <q-banner v-bind="attr.banner"
+        >Escolha a forma que o cliente pode pagar</q-banner
+      >
 
       <q-list separator>
         <q-item

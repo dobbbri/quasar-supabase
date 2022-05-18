@@ -1,61 +1,64 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { useCategories, useTools, useDefaults } from 'src/composables'
-import { PageHeader, PageFooter } from 'src/components'
+import { ref, onMounted, computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useCategories, useTools, useDefaults } from "src/composables";
+import { PageHeader, PageFooter } from "src/components";
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
-const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories()
-const { confirm, notify } = useTools()
-const { attr } = useDefaults()
+const { loading, getCategory, addCategory, editCategory, removeCategory } =
+  useCategories();
+const { confirm, notify } = useTools();
+const { attr } = useDefaults();
 
-const isEditMode = computed(() => (route.params.id ? true : false))
-const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
+const isEditMode = computed(() => (route.params.id ? true : false));
+const title = computed(() => (isEditMode.value ? "Alterar" : "Adicionar"));
 
 const form = ref({
-  name: '',
-  inactive: false
-})
+  name: "",
+  active: true,
+});
 
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editCategory(form.value)
+      await editCategory(form.value);
     } else {
-      await addCategory(form.value)
+      await addCategory(form.value);
     }
-    notify.success(`Categoria ${isEditMode.value ? 'alterada' : 'adicionada'}.`)
-    router.push({ name: 'category-list' })
+    notify.success(
+      `Categoria ${isEditMode.value ? "alterada" : "adicionada"}.`
+    );
+    router.push({ name: "category-list" });
   } catch (error) {
-    notify.error(`Erro ao ${title.value.toLowerCase()} a categoria.`, error)
+    notify.error(`Erro ao ${title.value.toLowerCase()} a categoria.`, error);
   }
-}
+};
 
 const handleRemoveCategory = async (category) => {
   try {
     confirm.delete(`da categoria: ${category.name}`).onOk(async () => {
-      await removeCategory(category.id)
-      notify.success('Categoria excluida.')
-      router.push({ name: 'category-list' })
-    })
+      await removeCategory(category.id);
+      notify.success("Categoria excluida.");
+      router.push({ name: "category-list" });
+    });
   } catch (error) {
-    notify.error('Erro ao excluir a categoria', error)
+    notify.error("Erro ao excluir a categoria", error);
   }
-}
+};
 
 const handleGetCategory = async () => {
   try {
-    form.value = await getCategory(route.params.id)
+    form.value = await getCategory(route.params.id);
   } catch (error) {
-    notify.error('Erro ao obter a categoria.', error)
+    notify.error("Erro ao obter a categoria.", error);
   }
-}
+};
 
 onMounted(() => {
-  if (isEditMode.value) handleGetCategory()
-})
+  if (isEditMode.value) handleGetCategory();
+});
 </script>
 
 <template>
@@ -71,7 +74,7 @@ onMounted(() => {
           <q-tooltip>Voltar</q-tooltip>
         </q-btn>
       </template>
-      <template #title>{{ title + ' categoria' }}</template>
+      <template #title>{{ title + " categoria" }}</template>
       <template #right>
         <q-btn
           v-if="isEditMode"
@@ -88,10 +91,7 @@ onMounted(() => {
       </template>
     </page-header>
 
-    <q-form
-      v-bind="attr.form"
-      @submit.prevent="handleSubmit"
-    >
+    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
       <q-input
         v-bind="attr.input.basic"
         v-model="form.name"
@@ -102,9 +102,8 @@ onMounted(() => {
 
       <q-checkbox
         v-bind="attr.input.basic"
-        v-model="form.inactive"
-        label="Não exibir os produtos desta categoria"
-        color="negative"
+        v-model="form.active"
+        label="Ativo"
         class="checkbox-fix"
       />
 

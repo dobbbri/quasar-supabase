@@ -1,43 +1,40 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuth, useTools, useDefaults } from 'src/composables'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuth, useTools, useDefaults } from "src/composables";
 
-const router = useRouter()
+const router = useRouter();
 
-const { loading, register } = useAuth()
-const { notify } = useTools()
-const { attr } = useDefaults()
+const { loading, register } = useAuth();
+const { notify } = useTools();
+const { attr } = useDefaults();
 
 const form = ref({
-  email: 'sergiodobri@gmail.com',
-  password: '123456',
+  email: "sergiodobri@gmail.com",
+  password: "123456",
   privacy_policy: false,
-  terms_of_use: false
-})
+  terms_of_use: false,
+});
 
 const handleSubmit = async () => {
   try {
-    await register(form.value)
+    await register(form.value);
     notify.info(
-      'Para finalizar o registro,',
+      "Para finalizar o registro,",
       `um email de confirmação foi enviado para: ${form.value.email}.`
-    )
-    router.push({ name: 'login' })
+    );
+    router.push({ name: "login" });
   } catch (error) {
-    notify.error('Credenciais inválidas', error)
+    notify.error("Credenciais inválidas", error);
   }
-}
+};
 </script>
 
 <template>
   <q-page padding>
     <div class="row justify-center">
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <q-form
-          v-bind="attr.form"
-          @submit.prevent="handleSubmit"
-        >
+        <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
           <p class="text-h5 text-center">Criar sua conta</p>
 
           <!-- <q-input -->
@@ -76,12 +73,7 @@ const handleSubmit = async () => {
                 color="primary"
                 class="checkbox-fix"
               />
-              <a
-                href=""
-                class="text-primary"
-              >
-                Politica de Privacidade
-              </a>
+              <a href="" class="text-primary"> Politica de Privacidade </a>
             </div>
 
             <div>
@@ -92,12 +84,7 @@ const handleSubmit = async () => {
                 color="primary"
                 class="checkbox-fix"
               />
-              <a
-                href=""
-                class="text-primary"
-              >
-                Termos de Uso
-              </a>
+              <a href="" class="text-primary"> Termos de Uso </a>
             </div>
           </div>
 

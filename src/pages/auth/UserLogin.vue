@@ -1,38 +1,35 @@
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuth, useTools, useDefaults } from 'src/composables'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuth, useTools, useDefaults } from "src/composables";
 
-const router = useRouter()
+const router = useRouter();
 
-const { loading, login } = useAuth()
-const { notify } = useTools()
-const { attr } = useDefaults()
+const { loading, login } = useAuth();
+const { notify } = useTools();
+const { attr } = useDefaults();
 
 const form = ref({
-  email: 'sergiodobri@gmail.com',
-  password: '123456'
-})
+  email: "sergiodobri@gmail.com",
+  password: "123456",
+});
 
 const handleSubmit = async () => {
   try {
-    await login(form.value)
-    router.push({ name: 'initial-routines' })
+    await login(form.value);
+    router.push({ name: "initial-routines" });
   } catch (error) {
-    notify.error('Credenciais inválidas', error)
-    throw error
+    notify.error("Credenciais inválidas", error);
+    throw error;
   }
-}
+};
 </script>
 
 <template>
   <q-page padding>
     <div class="row justify-center">
       <div class="col-md-4 col-sm-6 col-xs-12">
-        <q-form
-          v-bind="attr.form"
-          @submit.prevent="handleSubmit"
-        >
+        <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
           <p class="text-h5 text-center">Entrar</p>
 
           <q-input

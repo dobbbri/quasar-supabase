@@ -1,5 +1,5 @@
 <script setup>
-import { PageHeader } from 'src/components'
+import { PageHeader } from "src/components";
 </script>
 
 <template>

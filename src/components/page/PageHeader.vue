@@ -1,16 +1,13 @@
 <script setup>
-import { useDefaults } from 'src/composables'
-import { useMenuStore } from 'src/stores/menuStore'
+import { useDefaults } from "src/composables";
+import { useMenuStore } from "src/stores/menuStore";
 
-const { attr } = useDefaults()
-const store = useMenuStore()
+const { attr } = useDefaults();
+const store = useMenuStore();
 </script>
 
 <template>
-  <q-header
-    class="bg-primary text-white"
-    style="z-index: 1000"
-  >
+  <q-header class="bg-primary text-white" style="z-index: 1000">
     <q-toolbar class="justify-between">
       <div style="margin-left: -10px">
         <slot name="left">

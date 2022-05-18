@@ -2,7 +2,9 @@
   <q-layout view="lHh Lpr lFf">
     <q-header>
       <q-toolbar>
-        <q-toolbar-title class="text-weight-bold text-h6 text-center full-width">
+        <q-toolbar-title
+          class="text-weight-bold text-h6 text-center full-width"
+        >
           EndlesS
         </q-toolbar-title>
       </q-toolbar>

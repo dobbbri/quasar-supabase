@@ -1,38 +1,43 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useQuasar } from 'quasar'
-import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables'
-import { PageHeader } from 'src/components'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
+import {
+  useProducts,
+  useNameSearch,
+  useTools,
+  useDefaults,
+} from "src/composables";
+import { PageHeader } from "src/components";
 
-const router = useRouter()
-const $q = useQuasar()
+const router = useRouter();
+const $q = useQuasar();
 
-const documents = ref([])
+const documents = ref([]);
 
-const { loading, getProducts } = useProducts()
-const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
-const { notify } = useTools()
-const { attr, fmt } = useDefaults()
+const { loading, getProducts } = useProducts();
+const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
+const { notify } = useTools();
+const { attr, fmt } = useDefaults();
 
 const handleEditProduct = (product) => {
   router.push({
-    name: 'product-form',
-    params: { id: product.id }
-  })
-}
+    name: "product-form",
+    params: { id: product.id },
+  });
+};
 
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      'id, name, categories:category_id ( name ), stock_is_automatic, stock_amount, measure_unit, price_to_sell'
-    )
+      "id, name, categories:category_id ( name, active ), stock_is_automatic, stock_amount, measure_unit, price_to_sell"
+    );
   } catch (error) {
-    notify.error('Erro ao obter os produtos.', error)
+    notify.error("Erro ao obter os produtos.", error);
   }
-}
+};
 
-onMounted(() => handleGetProducts())
+onMounted(() => handleGetProducts());
 </script>
 
 <template>
@@ -71,44 +76,49 @@ onMounted(() => handleGetProducts())
       label="obtendo registros..."
     />
 
-    <q-list
-      v-if="!loading.list.value"
-      separator
-    >
+    <q-list v-if="!loading.list.value" separator>
       <q-item
         v-for="(product, index) in products"
         :key="index"
         clickable
+        class="q-px-xs"
         @click="handleEditProduct(product)"
       >
         <q-item-section>
-          <div class="row">
+          <q-item-label class="row">
             <span class="col">
               {{ product.name }}
             </span>
             <span class="col-2 text-right">
-              {{ product.stock_amount }} {{ product.measure_unit_abbr }}
+              <span v-if="product.stock_is_automatic">
+                {{ product.stock_amount }}
+              </span>
+              <span style="margin-left: 5px">
+                {{ product.measure_unit }}
+              </span>
             </span>
-          </div>
-          <div class="row text-body2">
+          </q-item-label>
+          <q-item-label class="row" style="margin-top: 4px">
             <span class="col">
               <q-badge
-                class="bg-blue-grey-2 text-dark text-weight-bold"
+                v-if="product.categories.active"
+                outline
+                class="text-dark"
                 :label="product.categories.name.toString().toUpperCase()"
               />
+              <q-badge v-else outline class="text-negative text-strike">
+                {{ product.categories.name.toString().toUpperCase() }}
+              </q-badge>
             </span>
             <span class="col text-right">
-              {{ fmt.currency(product.price_to_sell) }}/{{ product.measure_unit }}
+              {{ fmt.currency(product.price_to_sell) }}
             </span>
-          </div>
+          </q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
 
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
-    >
+    <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn
         v-if="$q.platform.is.mobile"
         v-bind="attr.btn.icon"
