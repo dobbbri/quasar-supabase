@@ -120,7 +120,7 @@ onMounted(() => {
         :mask="mask"
         :rules="[(val) => !!val]"
         error-message="O telefone do cliente deve ser informado!"
-    @keyup="setMask"
+        @keyup="setMask"
       />
 
       <q-input
@@ -128,8 +128,8 @@ onMounted(() => {
         v-model="form.phone_2"
         label="Telefone"
         type="tel"
-   :mask="mask"
-    @keyup="setMask"
+        :mask="mask"
+        @keyup="setMask"
       />
 
       <q-select
