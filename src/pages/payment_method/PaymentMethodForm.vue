@@ -41,7 +41,7 @@ const handleSubmit = async () => {
         <q-item
           v-for="(paymentMethod, index) in paymentMethods"
           :key="index"
-          class="q-py-none"
+          class="q-pa-none"
         >
           <q-item-section>
             <q-item-label class="text-subtitle2">

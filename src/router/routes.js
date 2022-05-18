@@ -65,6 +65,17 @@ const routes = [
         component: () => import("pages/product/ProductForm.vue"),
       },
       {
+        path: "/customer-list",
+        name: "customer-list",
+        component: () => import("pages/customer/CustomerList.vue"),
+      },
+      {
+        path: "/customer-form/:id?",
+        name: "customer-form",
+        component: () => import("pages/customer/CustomerForm.vue"),
+      },
+
+      {
         path: "/measure-unit-form",
         name: "measure-unit-form",
         component: () => import("pages/measure_unit/MeasureUnitForm.vue"),

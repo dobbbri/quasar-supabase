@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 
 const defaults = {
   documentTypes: [
-    { abbr: "ci", name: "ci", active: true },
-    { abbr: "cpf", name: "cpf", active: true },
-    { abbr: "cnpj", name: "cnpj", active: true },
+    { abbr: "CI", name: "Cédula de Identidade", active: true },
+    { abbr: "CPF", name: "C.P.F.", active: true },
+    { abbr: "CNPJ", name: "C.N.P.J.", active: true },
   ],
   measureUnits: [
     { group: "Unidade", abbr: "un.", name: "unidades", active: true },

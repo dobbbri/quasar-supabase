@@ -52,8 +52,11 @@ const form = ref({
 });
 
 const isEditMode = computed(() => (route.params.id ? true : false));
+
 const title = computed(() => (isEditMode.value ? "Alterar" : "Adicionar"));
+
 const handleUploadBtnClick = () => file.value.pickFiles();
+
 const loadImage = () => {
   if (image.value) {
     return URL.createObjectURL(image.value);
@@ -246,7 +249,9 @@ onMounted(() => {
         :options="optionsMeasureUnits"
         option-value="abbr"
         option-label="name"
-        option-disable="inactive"
+        :option-disable="
+          (opt) => (Object(opt) === opt ? opt.active === false : false)
+        "
         emit-value
         map-options
         :rules="[(val) => !!val]"
