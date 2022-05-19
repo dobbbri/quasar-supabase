@@ -8,7 +8,7 @@ import { LeftSidebar } from "src/components";
 
 <template>
   <div
-    class="WAL position-relative bg-grey-5"
+    class="WAL position-relative bg-grey-4"
     :style="'height: ' + $q.screen.height + 'px'"
   >
     <q-layout view="lHh Lpr lFf" class="WAL__layout shadow-3" container>
@@ -41,7 +41,7 @@ import { LeftSidebar } from "src/components";
     position: fixed
     top: 0
     width: 100%
-    background-color: #009688
+    background-color: $grey-10
   &__layout
     margin: 0 auto
     z-index: 4000
