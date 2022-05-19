@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-  export function useSupabase() {
+export function useSupabase() {
   const supabaseBucket = process.env.SUPABASE_BUCKET;
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_KEY;

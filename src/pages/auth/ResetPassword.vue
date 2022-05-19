@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuth, useTools, useDefaults } from "src/composables";
+import { PageHeader } from "src/components";
 
 const router = useRouter();
 const route = useRoute();
@@ -26,42 +27,45 @@ const handleSubmit = async () => {
 
 <template>
   <q-page padding>
+    <page-header class="text-center">
+      <template #title>Alterar a senha</template>
+    </page-header>
+
     <div class="row justify-center">
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-          <p class="text-h5 text-center">Troca de senha</p>
+      <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+        <p class="text-h5 text-center">Troca de senha</p>
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="password"
-            label="Nova senha"
-            lazy-rules
-            :rules="[(val) => val && val.length >= 6]"
-            error-message="A senha deve ser possuir 6 ou mais caracteres"
-          />
+        <q-input
+          v-bind="attr.input.basic"
+          v-model="password"
+          label="Nova senha"
+          lazy-rules
+          :rules="[(val) => val && val.length >= 6]"
+          error-message="A senha deve ser possuir 6 ou mais caracteres"
+        />
 
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            unelevated
-            no-caps
-            class="full-width q-mt-lg"
-            :loading="loading"
-            :disable="loading"
-            type="submit"
-          />
+        <q-btn
+          v-bind="attr.btn.basic"
+          label="Gravar"
+          unelevated
+          no-caps
+          class="full-width q-mt-lg"
+          :loading="loading"
+          :disable="loading"
+          type="submit"
+        />
 
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Cancelar"
-            flat
-            no-caps
-            class="full-width q-mt-sm"
-            :disable="loading"
-            :to="{ name: 'login' }"
-          />
-        </q-form>
-      </div>
+        <q-btn
+          v-bind="attr.btn.basic"
+          label="Cancelar"
+            color="dark"
+          flat
+          no-caps
+          class="full-width q-mt-sm"
+          :disable="loading"
+          :to="{ name: 'login' }"
+        />
+      </q-form>
     </div>
   </q-page>
 </template>

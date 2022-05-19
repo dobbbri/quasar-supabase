@@ -1,9 +1,11 @@
 <script setup>
 import { useDefaults } from "src/composables";
 import { useMenuStore } from "src/stores/menuStore";
+import { useUserStore } from "src/stores/userStore";
 
 const { attr } = useDefaults();
-const store = useMenuStore();
+const menuStore = useMenuStore();
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -12,10 +14,11 @@ const store = useMenuStore();
       <div style="margin-left: -10px">
         <slot name="left">
           <q-btn
+            v-if="userStore.isLoggedIn"
             v-bind="attr.btn.icon"
             icon="menu"
             flat
-            @click="store.toggleSidebar()"
+            @click="menuStore.toggleSidebar()"
           >
             <q-tooltip>Menu</q-tooltip>
           </q-btn>

@@ -1,36 +1,15 @@
 <script setup>
 import { useMenuStore } from "src/stores/menuStore";
+import { useUserStore } from "src/stores/userStore";
 
-const store = useMenuStore();
-
-const linksList = [
-  { title: "Início", icon: "home", routeName: "index" },
-  { title: "Categorias", icon: "category", routeName: "category-list" },
-  { title: "Produtos", icon: "inventory", routeName: "product-list" },
-  { title: "Clientes", icon: "supervisor_account", routeName: "customer-list" },
-  { title: "Configuracões", icon: "tune", routeName: "config" },
-  {
-    title: "Unidade de Medidas",
-    icon: "scale",
-    routeName: "measure-unit-form",
-  },
-  {
-    title: "Tipos de Documentos",
-    icon: "article",
-    routeName: "document-type-form",
-  },
-  {
-    title: "Formas de Pagamento",
-    icon: "local_atm",
-    routeName: "payment-method-form",
-  },
-  { title: "Sair", icon: "logout", routeName: "user-logout" },
-];
+const menuStore = useMenuStore();
+const userStore = useUserStore();
 </script>
 
 <template>
   <q-drawer
-    v-model="store.isSidebarOpen"
+    v-if="userStore.isLoggedIn"
+    v-model="menuStore.isSidebarOpen"
     show-if-above
     :breakpoint="690"
     class="bg-grey-2"
@@ -41,7 +20,7 @@ const linksList = [
 
     <q-list class="text-blue-grey-7">
       <q-item
-        v-for="(link, index) in linksList"
+        v-for="(link, index) in menuStore.menuList"
         :key="index"
         clickable
         :to="{ name: link.routeName }"

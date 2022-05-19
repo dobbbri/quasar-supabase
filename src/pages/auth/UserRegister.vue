@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth, useTools, useDefaults } from "src/composables";
+import { PageHeader } from "src/components";
 
 const router = useRouter();
 
@@ -32,84 +33,77 @@ const handleSubmit = async () => {
 
 <template>
   <q-page padding>
+    <page-header class="text-center">
+      <template #title>Criar sua conta</template>
+    </page-header>
+
     <div class="row justify-center">
-      <div class="col-md-4 col-sm-6 col-xs-12">
-        <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-          <p class="text-h5 text-center">Criar sua conta</p>
+      <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+        <q-input
+          v-bind="attr.input.basic"
+          v-model="form.email"
+          label="Email"
+          lazy-rules
+          :rules="['email']"
+          error-message="O email deve ser válido!"
+          type="email"
+        />
 
-          <!-- <q-input -->
-          <!--   v-model="form.name" -->
-          <!--   label="Nome" -->
-          <!--   lazy-rules -->
-          <!--   :rules="[(val) => val && val.length > 0]" -->
-          <!--   error-message="O nome deve ser informado!" -->
-          <!-- /> -->
+        <q-input
+          v-bind="attr.input.basic"
+          v-model="form.password"
+          label="Senha"
+          lazy-rules
+          :rules="[(val) => val && val.length >= 6]"
+          error-message="A senha deve ser possuir 6 ou mais caracteres"
+        />
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.email"
-            label="Email"
-            lazy-rules
-            :rules="['email']"
-            error-message="O email deve ser válido!"
-            type="email"
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.password"
-            label="Senha"
-            lazy-rules
-            :rules="[(val) => val && val.length >= 6]"
-            error-message="A senha deve ser possuir 6 ou mais caracteres"
-          />
-
+        <div>
           <div>
-            <div>
-              <q-checkbox
-                v-bind="attr.input.basic"
-                v-model="form.privacy_policy"
-                label="Concordo com a&nbsp;"
-                color="primary"
-                class="checkbox-fix"
-              />
-              <a href="" class="text-primary"> Politica de Privacidade </a>
-            </div>
-
-            <div>
-              <q-checkbox
-                v-bind="attr.input.basic"
-                v-model="form.terms_of_use"
-                label="Concordo com os&nbsp;"
-                color="primary"
-                class="checkbox-fix"
-              />
-              <a href="" class="text-primary"> Termos de Uso </a>
-            </div>
+            <q-checkbox
+              v-bind="attr.input.basic"
+              v-model="form.privacy_policy"
+              label="Concordo com a&nbsp;"
+              color="primary"
+              class="checkbox-fix"
+            />
+            <a href="" class="text-primary"> Politica de Privacidade </a>
           </div>
 
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Criar conta"
-            unelevated
-            no-caps
-            class="full-width q-mt-lg"
-            :loading="loading"
-            :disable="loading || !form.terms_of_use || !form.privacy_policy"
-            type="submit"
-          />
+          <div>
+            <q-checkbox
+              v-bind="attr.input.basic"
+              v-model="form.terms_of_use"
+              label="Concordo com os&nbsp;"
+              color="primary"
+              class="checkbox-fix"
+            />
+            <a href="" class="text-primary"> Termos de Uso </a>
+          </div>
+        </div>
 
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Já é usuário? Faça seu login"
-            flat
-            no-caps
-            class="full-width q-mt-sm"
-            :disable="loading"
-            :to="{ name: 'login' }"
-          />
-        </q-form>
-      </div>
+        <q-btn
+          v-bind="attr.btn.basic"
+          label="Criar conta"
+          unelevated
+          no-caps
+          class="full-width q-mt-lg"
+          :loading="loading"
+          :disable="loading || !form.terms_of_use || !form.privacy_policy"
+          type="submit"
+        />
+
+        <q-btn
+          v-bind="attr.btn.basic"
+          label="Já é usuário? Faça seu login"
+            color="dark"
+          flat
+          no-caps
+          class="full-width q-mt-sm"
+          :disable="loading"
+          :to="{ name: 'login' }"
+        />
+      </q-form>
     </div>
   </q-page>
 </template>
