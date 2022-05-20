@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted } from "vue";
-import { useQuasar } from "quasar";
-import { useRouter } from "vue-router";
-import { useSettings, useTools } from "src/composables";
-import { useSettingsStore } from "src/stores/settingsStore";
+import { onMounted } from 'vue';
+import { useQuasar } from 'quasar';
+import { useRouter } from 'vue-router';
+import { useSettings, useTools } from 'src/composables';
+import { useSettingsStore } from 'src/stores/settingsStore';
 
 const $q = useQuasar();
 const router = useRouter();
@@ -19,20 +19,19 @@ const handleSettings = async () => {
     if (settings) {
       store.setSettings(settings);
     } else {
-      const { documentTypes, measureUnits, paymentMethods } =
-        store.getDefaults();
+      const { documentTypes, measureUnits, paymentMethods } = store.getDefaults();
       settings = await addSettings({
         measure_units: measureUnits,
         document_types: documentTypes,
-        payment_methods: paymentMethods,
+        payment_methods: paymentMethods
       });
       store.setSettings(settings);
     }
     $q.loading.hide();
-    router.push({ name: "index" });
+    router.push({ name: 'index' });
   } catch (error) {
     $q.loading.hide();
-    notify.error("Erro ao executar as rotinas iniciais.", error);
+    notify.error('Erro ao executar as rotinas iniciais.', error);
   }
 };
 

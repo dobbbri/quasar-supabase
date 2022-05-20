@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useSettings, useTools, useDefaults } from "src/composables";
-import { PageHeader, PageFooter } from "src/components";
-import { useSettingsStore } from "src/stores/settingsStore";
+import { ref } from 'vue';
+import { useSettings, useTools, useDefaults } from 'src/composables';
+import { PageHeader, PageFooter } from 'src/components';
+import { useSettingsStore } from 'src/stores/settingsStore';
 
 const store = useSettingsStore();
 
@@ -17,9 +17,9 @@ const handleSubmit = async () => {
   try {
     await editSettings({
       id: store.id,
-      measure_units: JSON.stringify(measureUnits.value),
+      measure_units: JSON.stringify(measureUnits.value)
     });
-    notify.success("Unidade de medida gravada.");
+    notify.success('Unidade de medida gravada.');
   } catch (error) {
     notify.error(`Erro ao alterar a unidade de medida.`, error);
   }
@@ -38,19 +38,12 @@ const handleSubmit = async () => {
       </q-banner>
 
       <q-list separator style="margin-top: -6px">
-        <q-item
-          v-for="(measureUnit, index) in measureUnits"
-          :key="index"
-          class="q-pa-none"
-        >
+        <q-item v-for="(measureUnit, index) in measureUnits" :key="index" class="q-pa-none">
           <q-item-section>
             <q-item-label v-if="measureUnit.group" class="text-h6 q-mt-lg">
               {{ measureUnit.group }}
             </q-item-label>
-            <q-item-label
-              class="text-body2"
-              style="line-height: 12px !important"
-            >
+            <q-item-label class="text-body2" style="line-height: 12px !important">
               <q-checkbox
                 v-bind="attr.input.basic"
                 :id="index"

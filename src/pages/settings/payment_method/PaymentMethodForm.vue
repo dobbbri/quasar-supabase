@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useSettings, useTools, useDefaults } from "src/composables";
-import { PageHeader, PageFooter } from "src/components";
-import { useSettingsStore } from "src/stores/settingsStore";
+import { ref } from 'vue';
+import { useSettings, useTools, useDefaults } from 'src/composables';
+import { PageHeader, PageFooter } from 'src/components';
+import { useSettingsStore } from 'src/stores/settingsStore';
 
 const store = useSettingsStore();
 
@@ -17,9 +17,9 @@ const handleSubmit = async () => {
   try {
     await editSettings({
       id: store.id,
-      payment_methods: JSON.stringify(paymentMethods.value),
+      payment_methods: JSON.stringify(paymentMethods.value)
     });
-    notify.success("Forma de pagamento gravado.");
+    notify.success('Forma de pagamento gravado.');
   } catch (error) {
     notify.error(`Erro ao alterar a forma de pagamento.`, error);
   }
@@ -33,16 +33,10 @@ const handleSubmit = async () => {
     </page-header>
 
     <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-      <q-banner v-bind="attr.banner"
-        >Escolha a forma que o cliente pode pagar</q-banner
-      >
+      <q-banner v-bind="attr.banner">Escolha a forma que o cliente pode pagar</q-banner>
 
       <q-list separator>
-        <q-item
-          v-for="(paymentMethod, index) in paymentMethods"
-          :key="index"
-          class="q-pa-none"
-        >
+        <q-item v-for="(paymentMethod, index) in paymentMethods" :key="index" class="q-pa-none">
           <q-item-section>
             <q-item-label class="text-subtitle2">
               <q-checkbox

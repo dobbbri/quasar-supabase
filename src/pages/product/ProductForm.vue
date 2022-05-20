@@ -1,14 +1,9 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import {
-  useProducts,
-  useCategories,
-  useTools,
-  useDefaults,
-} from "src/composables";
-import { PageHeader, PageFooter } from "src/components";
-import { useSettingsStore } from "src/stores/settingsStore";
+import { ref, onMounted, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useProducts, useCategories, useTools, useDefaults } from 'src/composables';
+import { PageHeader, PageFooter } from 'src/components';
+import { useSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
 const route = useRoute();
@@ -24,7 +19,7 @@ const {
   getProductImageURL,
   addProductImage,
   editProductImage,
-  removeProductImage,
+  removeProductImage
 } = useProducts();
 const { getCategories } = useCategories();
 const { confirm, notify } = useTools();
@@ -35,25 +30,25 @@ const optionsMeasureUnits = ref([]);
 const image = ref(null);
 const file = ref(null);
 const form = ref({
-  name: "",
-  category_id: "",
+  name: '',
+  category_id: '',
   stock_is_automatic: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
-  measure_unit: "un.",
+  measure_unit: 'un.',
   price_to_buy: 0,
   price_to_sell: 0,
-  code_bar: "",
-  code_internal: "",
-  description: "",
-  brand: "",
+  code_bar: '',
+  code_internal: '',
+  description: '',
+  brand: '',
   active: true,
-  image_name: null,
+  image_name: null
 });
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 
-const title = computed(() => (isEditMode.value ? "Alterar" : "Adicionar"));
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleUploadBtnClick = () => file.value.pickFiles();
 
@@ -61,11 +56,11 @@ const loadImage = () => {
   if (image.value) {
     return URL.createObjectURL(image.value);
   } else if (form.value.image_name) {
-    const forceUpdate = "?t=" + new Date().getTime();
+    const forceUpdate = '?t=' + new Date().getTime();
     const image = getProductImageURL(form.value.image_name);
     return image + forceUpdate;
   }
-  return "img/unnamed.png";
+  return 'img/unnamed.png';
 };
 
 const handleSubmit = async () => {
@@ -83,8 +78,8 @@ const handleSubmit = async () => {
     } else {
       await addProduct(form.value);
     }
-    notify.success(`Produto ${isEditMode.value ? "alterado" : "adicionado"}.`);
-    router.push({ name: "product-list" });
+    notify.success(`Produto ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
+    router.push({ name: 'product-list' });
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} o produto.`, error);
   }
@@ -97,11 +92,11 @@ const handleRemoveProduct = async (product) => {
         await removeProductImage(product.image_name);
       }
       await removeProduct(product.id);
-      notify.success("Produto excluido.");
-      router.push({ name: "product-list" });
+      notify.success('Produto excluido.');
+      router.push({ name: 'product-list' });
     });
   } catch (error) {
-    notify.error("Erro ao excluir o produto", error);
+    notify.error('Erro ao excluir o produto', error);
   }
 };
 
@@ -109,15 +104,15 @@ const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
   } catch (error) {
-    notify.error("Erro ao obter o produto.", error);
+    notify.error('Erro ao obter o produto.', error);
   }
 };
 
 const handleGetCategories = async () => {
   try {
-    optionsCategories.value = await getCategories("id, name, active");
+    optionsCategories.value = await getCategories('id, name, active');
   } catch (error) {
-    notify.error("Erro ao obter as categorias.", error);
+    notify.error('Erro ao obter as categorias.', error);
   }
 };
 
@@ -132,16 +127,11 @@ onMounted(() => {
   <q-page padding>
     <page-header>
       <template #left>
-        <q-btn
-          v-bind="attr.btn.icon"
-          icon="arrow_back_ios_new"
-          flat
-          :to="{ name: 'product-list' }"
-        >
+        <q-btn v-bind="attr.btn.icon" icon="arrow_back_ios_new" flat :to="{ name: 'product-list' }">
           <q-tooltip>Voltar</q-tooltip>
         </q-btn>
       </template>
-      <template #title>{{ title + " produto" }}</template>
+      <template #title>{{ title + ' produto' }}</template>
       <template #right>
         <q-btn
           v-if="isEditMode"
@@ -163,12 +153,7 @@ onMounted(() => {
         <q-file ref="file" v-model="image" class="hidden" accept="image/*" />
         <div class="q-field__label no-pointer-events">Imagem/Foto</div>
         <q-card flat bordered style="height: 150px; width: 150px">
-          <q-img
-            loading="lazy"
-            :src="loadImage()"
-            fit="cover"
-            spinner-color="primary"
-          >
+          <q-img loading="lazy" :src="loadImage()" fit="cover" spinner-color="primary">
             <div class="absolute-bottom" style="padding: 0">
               <q-btn
                 flat
@@ -197,9 +182,7 @@ onMounted(() => {
         :options="optionsCategories"
         option-value="id"
         option-label="name"
-        :option-disable="
-          (opt) => (Object(opt) === opt ? opt.active === false : false)
-        "
+        :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
         map-options
         emit-value
         :rules="[(val) => !!val]"
@@ -208,9 +191,7 @@ onMounted(() => {
         <template #option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section>
-              <q-item-label
-                :class="{ 'text-negative text-strike': !scope.opt.active }"
-              >
+              <q-item-label :class="{ 'text-negative text-strike': !scope.opt.active }">
                 {{ scope.opt.name }}
               </q-item-label>
             </q-item-section>
@@ -249,9 +230,7 @@ onMounted(() => {
         :options="optionsMeasureUnits"
         option-value="abbr"
         option-label="name"
-        :option-disable="
-          (opt) => (Object(opt) === opt ? opt.active === false : false)
-        "
+        :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
         emit-value
         map-options
         :rules="[(val) => !!val]"
@@ -290,12 +269,7 @@ onMounted(() => {
         error-message="A quantidade mínima do produto deve ser informada"
       />
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.brand"
-        label="Marca"
-        autogrow
-      />
+      <q-input v-bind="attr.input.basic" v-model="form.brand" label="Marca" autogrow />
 
       <q-input
         v-bind="attr.input.basic"
@@ -304,17 +278,9 @@ onMounted(() => {
         autogrow
       />
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.code_bar"
-        label="Código de barras"
-      />
+      <q-input v-bind="attr.input.basic" v-model="form.code_bar" label="Código de barras" />
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.code_internal"
-        label="Código interno"
-      />
+      <q-input v-bind="attr.input.basic" v-model="form.code_internal" label="Código interno" />
 
       <q-checkbox
         v-bind="attr.input.basic"

@@ -1,31 +1,27 @@
-import { computed } from "vue";
-import { useSupabase } from "boot/supabase";
-import { useTools } from "src/composables";
+import { computed } from 'vue';
+import { useSupabase } from 'boot/supabase';
+import { useTools } from 'src/composables';
 
 export default function useApi(table) {
   const { setLoading, loading } = useTools();
   const { supabase } = useSupabase();
   const user = computed(() => supabase.auth.user());
 
-  const list = async (fields = "*") => {
+  const list = async (fields = '*') => {
     setLoading.list(true);
     const { error, data } = await supabase
       .from(table)
       .select(fields)
-      .eq("user_id", user.value.id)
-      .order("name", { ascending: true });
+      .eq('user_id', user.value.id)
+      .order('name', { ascending: true });
     setLoading.list(false);
     if (error) throw error;
     return data;
   };
 
-  const get = async (id, fields = "*") => {
+  const get = async (id, fields = '*') => {
     setLoading.list(true);
-    const { error, data } = await supabase
-      .from(table)
-      .select(fields)
-      .eq("id", id)
-      .single();
+    const { error, data } = await supabase.from(table).select(fields).eq('id', id).single();
     setLoading.list(false);
     if (error) throw error;
     return data;
@@ -33,9 +29,7 @@ export default function useApi(table) {
 
   const add = async (form) => {
     setLoading.add(true);
-    const { error } = await supabase
-      .from(table)
-      .insert([{ ...form, user_id: user.value.id }]);
+    const { error } = await supabase.from(table).insert([{ ...form, user_id: user.value.id }]);
     setLoading.add(false);
     if (error) throw error;
   };
@@ -45,14 +39,14 @@ export default function useApi(table) {
     const { error } = await supabase
       .from(table)
       .update({ ...form })
-      .eq("id", id);
+      .eq('id', id);
     setLoading.edit(false);
     if (error) throw error;
   };
 
   const remove = async (id) => {
     setLoading.remove(true);
-    const { error } = await supabase.from(table).delete().eq("id", id);
+    const { error } = await supabase.from(table).delete().eq('id', id);
     setLoading.remove(false);
     if (error) throw error;
   };
@@ -61,8 +55,8 @@ export default function useApi(table) {
     setLoading.list(true);
     const { error, count } = await supabase
       .from(table)
-      .select("id", { count: "exact" })
-      .eq("user_id", user.value.id);
+      .select('id', { count: 'exact' })
+      .eq('user_id', user.value.id);
     setLoading.list(false);
     if (error) throw error;
     return count;
@@ -77,6 +71,6 @@ export default function useApi(table) {
     add,
     edit,
     remove,
-    count,
+    count
   };
 }

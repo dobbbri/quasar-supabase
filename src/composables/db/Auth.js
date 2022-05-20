@@ -1,6 +1,6 @@
-import { ref } from "vue";
-import { useSupabase } from "boot/supabase";
-import { useUserStore } from "src/stores/userStore";
+import { ref } from 'vue';
+import { useSupabase } from 'boot/supabase';
+import { useUserStore } from 'src/stores/userStore';
 
 export default function useAuthUser() {
   const loading = ref(false);
@@ -9,10 +9,7 @@ export default function useAuthUser() {
 
   const register = async ({ email, password, ...meta }) => {
     loading.value = true;
-    const { session, error } = await supabase.auth.signUp(
-      { email, password },
-      { data: meta }
-    );
+    const { session, error } = await supabase.auth.signUp({ email, password }, { data: meta });
     if (session) store.setUser(session.user);
     loading.value = false;
     if (error) throw error;
@@ -44,7 +41,7 @@ export default function useAuthUser() {
   const resetPassword = async (accessToken, newPassword) => {
     loading.value = true;
     const { error } = await supabase.auth.api.updateUser(accessToken, {
-      password: newPassword,
+      password: newPassword
     });
     loading.value = false;
     if (error) throw error;
@@ -56,6 +53,6 @@ export default function useAuthUser() {
     logout,
     register,
     sendPasswordResetEmail,
-    resetPassword,
+    resetPassword
   };
 }

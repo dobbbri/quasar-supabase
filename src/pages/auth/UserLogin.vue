@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth, useTools, useDefaults } from "src/composables";
-import { PageHeader } from "src/components";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuth, useTools, useDefaults } from 'src/composables';
+import { PageHeader } from 'src/components';
 
 const router = useRouter();
 
@@ -11,16 +11,16 @@ const { notify } = useTools();
 const { attr } = useDefaults();
 
 const form = ref({
-  email: "sergiodobri@gmail.com",
-  password: "123456",
+  email: 'sergiodobri@gmail.com',
+  password: '123456'
 });
 
 const handleSubmit = async () => {
   try {
     await login(form.value);
-    router.push({ name: "initial-routines" });
+    router.push({ name: 'initial-routines' });
   } catch (error) {
-    notify.error("Credenciais inválidas", error);
+    notify.error('Credenciais inválidas', error);
     throw error;
   }
 };

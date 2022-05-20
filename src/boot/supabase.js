@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from '@supabase/supabase-js';
 
 export function useSupabase() {
   const supabaseBucket = process.env.SUPABASE_BUCKET;

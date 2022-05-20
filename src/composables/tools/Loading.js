@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue';
 
 export default function useLoading() {
   // const loading = ref({
@@ -34,7 +34,7 @@ export default function useLoading() {
       loadingAdd.value = false;
       loadingEdit.value = false;
       loadingDisable.value = value;
-    },
+    }
   };
 
   const loading = {
@@ -42,11 +42,11 @@ export default function useLoading() {
     add: computed(() => loadingAdd.value),
     edit: computed(() => loadingEdit.value),
     remove: computed(() => loadingRemove.value),
-    disable: computed(() => loadingDisable.value),
+    disable: computed(() => loadingDisable.value)
   };
 
   return {
     setLoading,
-    loading,
+    loading
   };
 }

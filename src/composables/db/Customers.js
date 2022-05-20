@@ -1,9 +1,9 @@
-import { useApi, useImageBucket } from "src/composables";
+import { useApi, useImageBucket } from 'src/composables';
 
 export default function useCustomers() {
-  const { loading, list, get, add, edit, remove, count } = useApi("customers");
+  const { loading, list, get, add, edit, remove, count } = useApi('customers');
   const { getImageURL, addImage, editImage, removeImage } = useImageBucket();
-  const customerFolder = "customers";
+  const customerFolder = 'customers';
 
   return {
     loading,
@@ -17,6 +17,6 @@ export default function useCustomers() {
     getCustomerImageURL: getImageURL,
     addCustomerImage: addImage,
     editCustomerImage: editImage,
-    removeCustomerImage: removeImage,
+    removeCustomerImage: removeImage
   };
 }

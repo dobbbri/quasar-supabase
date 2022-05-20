@@ -1,18 +1,18 @@
-import { computed } from "vue";
-import { useSupabase } from "boot/supabase";
+import { computed } from 'vue';
+import { useSupabase } from 'boot/supabase';
 
 export default function useImageBucket() {
   const { supabase, supabaseUrl, supabaseBucket } = useSupabase();
   const user = computed(() => supabase.auth.user());
 
   const addImage = async (folder, file) => {
-    const extension = file.name.split(".").pop();
+    const extension = file.name.split('.').pop();
     const filePath = `${folder}/${Math.random()}.${extension}`;
     const { error } = await supabase.storage
       .from(supabaseBucket)
       .upload(`${user.value.id}/${filePath}`, file, {
-        cacheControl: "3600",
-        upsert: false,
+        cacheControl: '3600',
+        upsert: false
       });
     if (error) throw error;
     return filePath;
@@ -38,8 +38,8 @@ export default function useImageBucket() {
     const { error } = await supabase.storage
       .from(supabaseBucket)
       .update(`${user.value.id}/${filePath}`, file, {
-        cacheControl: "3600",
-        upsert: false,
+        cacheControl: '3600',
+        upsert: false
       });
     if (error) throw error;
   };
@@ -55,6 +55,6 @@ export default function useImageBucket() {
     getImageURL,
     addImage,
     editImage,
-    removeImage,
+    removeImage
   };
 }

@@ -1,6 +1,6 @@
-import { store } from "quasar/wrappers";
-import { createPinia } from "pinia";
-import piniaPersist from "pinia-plugin-persist";
+import { store } from 'quasar/wrappers';
+import { createPinia } from 'pinia';
+import piniaPersist from 'pinia-plugin-persist';
 
 /*
  * If not building with SSR mode, you can

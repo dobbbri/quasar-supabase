@@ -1,6 +1,6 @@
-import useConfig from "src/composables/defaults/Config";
-import useAttribute from "src/composables/defaults/Attribute";
-import useFormatter from "src/composables/defaults/Formatter";
+import useConfig from 'src/composables/defaults/Config';
+import useAttribute from 'src/composables/defaults/Attribute';
+import useFormatter from 'src/composables/defaults/Formatter';
 
 export default function useDefauts() {
   const { config } = useConfig();
@@ -10,6 +10,6 @@ export default function useDefauts() {
   return {
     cfg: config,
     attr: attribute,
-    fmt: formatter,
+    fmt: formatter
   };
 }

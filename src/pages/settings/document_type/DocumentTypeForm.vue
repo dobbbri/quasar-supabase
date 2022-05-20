@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useSettings, useTools, useDefaults } from "src/composables";
-import { PageHeader, PageFooter } from "src/components";
-import { useSettingsStore } from "src/stores/settingsStore";
+import { ref } from 'vue';
+import { useSettings, useTools, useDefaults } from 'src/composables';
+import { PageHeader, PageFooter } from 'src/components';
+import { useSettingsStore } from 'src/stores/settingsStore';
 
 const store = useSettingsStore();
 
@@ -17,9 +17,9 @@ const handleSubmit = async () => {
   try {
     await editSettings({
       id: store.id,
-      document_types: JSON.stringify(documentTypes.value),
+      document_types: JSON.stringify(documentTypes.value)
     });
-    notify.success("Tipo de documento gravado.");
+    notify.success('Tipo de documento gravado.');
   } catch (error) {
     notify.error(`Erro ao alterar a tipo de documento.`, error);
   }
@@ -38,11 +38,7 @@ const handleSubmit = async () => {
       </q-banner>
 
       <q-list separator>
-        <q-item
-          v-for="(documentType, index) in documentTypes"
-          :key="index"
-          class="q-py-none"
-        >
+        <q-item v-for="(documentType, index) in documentTypes" :key="index" class="q-py-none">
           <q-item-section>
             <q-item-label class="text-subtitle2">
               <q-checkbox

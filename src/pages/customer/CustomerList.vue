@@ -1,14 +1,9 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
-import {
-  useCustomers,
-  useNameSearch,
-  useTools,
-  useDefaults,
-} from "src/composables";
-import { PageHeader } from "src/components";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import { useCustomers, useNameSearch, useTools, useDefaults } from 'src/composables';
+import { PageHeader } from 'src/components';
 
 const router = useRouter();
 const $q = useQuasar();
@@ -16,23 +11,22 @@ const $q = useQuasar();
 const documents = ref([]);
 
 const { loading, getCustomers } = useCustomers();
-const { searchQuery, matchingSearchQuery: customers } =
-  useNameSearch(documents);
+const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
 const { attr } = useDefaults();
 
 const handleEditCustomer = (customer) => {
   router.push({
-    name: "customer-form",
-    params: { id: customer.id },
+    name: 'customer-form',
+    params: { id: customer.id }
   });
 };
 
 const handleGetCustomers = async () => {
   try {
-    documents.value = await getCustomers("id, name, active");
+    documents.value = await getCustomers('id, name, active');
   } catch (error) {
-    notify.error("Erro ao obter os clientes.", error);
+    notify.error('Erro ao obter os clientes.', error);
   }
 };
 
@@ -59,21 +53,13 @@ onMounted(() => handleGetCustomers());
       </template>
     </page-header>
 
-    <q-input
-      v-model="searchQuery"
-      v-bind="attr.input.search"
-      placeholder="Digite para pesquisar"
-    >
+    <q-input v-model="searchQuery" v-bind="attr.input.search" placeholder="Digite para pesquisar">
       <template #prepend>
         <q-icon name="search" />
       </template>
     </q-input>
 
-    <q-inner-loading
-      :showing="loading.list.value"
-      color="primary"
-      label="obtendo registros..."
-    />
+    <q-inner-loading :showing="loading.list.value" color="primary" label="obtendo registros..." />
 
     <q-list v-if="!loading.list.value" separator>
       <q-item
@@ -84,9 +70,7 @@ onMounted(() => handleGetCustomers());
         @click="handleEditCustomer(customer)"
       >
         <q-item-section>
-          <q-item-label
-            :class="{ 'text-negative text-strike': !customer.active }"
-          >
+          <q-item-label :class="{ 'text-negative text-strike': !customer.active }">
             {{ customer.name }}
           </q-item-label>
         </q-item-section>

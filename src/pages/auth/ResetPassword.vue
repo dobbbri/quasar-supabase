@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import { useAuth, useTools, useDefaults } from "src/composables";
-import { PageHeader } from "src/components";
+import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useAuth, useTools, useDefaults } from 'src/composables';
+import { PageHeader } from 'src/components';
 
 const router = useRouter();
 const route = useRoute();
@@ -12,15 +12,15 @@ const { notify } = useTools();
 const { attr } = useDefaults();
 
 const token = route.params.token;
-const password = ref("");
+const password = ref('');
 
 const handleSubmit = async () => {
   try {
     await resetPassword(token, password.value);
-    notify.success("Senha alterada.");
-    router.push({ name: "login" });
+    notify.success('Senha alterada.');
+    router.push({ name: 'login' });
   } catch (error) {
-    notify.error("Erro ao trocar a senha.", error);
+    notify.error('Erro ao trocar a senha.', error);
   }
 };
 </script>
@@ -58,7 +58,7 @@ const handleSubmit = async () => {
         <q-btn
           v-bind="attr.btn.basic"
           label="Cancelar"
-            color="dark"
+          color="dark"
           flat
           no-caps
           class="full-width q-mt-sm"

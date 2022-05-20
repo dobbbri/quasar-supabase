@@ -1,7 +1,7 @@
 <script setup>
-import { useDefaults } from "src/composables";
-import { useMenuStore } from "src/stores/menuStore";
-import { useUserStore } from "src/stores/userStore";
+import { useDefaults } from 'src/composables';
+import { useMenuStore } from 'src/stores/menuStore';
+import { useUserStore } from 'src/stores/userStore';
 
 const { attr } = useDefaults();
 const menuStore = useMenuStore();

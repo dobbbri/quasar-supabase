@@ -1,14 +1,9 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { useQuasar } from "quasar";
-import {
-  useProducts,
-  useNameSearch,
-  useTools,
-  useDefaults,
-} from "src/composables";
-import { PageHeader } from "src/components";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
+import { PageHeader } from 'src/components';
 
 const router = useRouter();
 const $q = useQuasar();
@@ -22,18 +17,18 @@ const { attr, fmt } = useDefaults();
 
 const handleEditProduct = (product) => {
   router.push({
-    name: "product-form",
-    params: { id: product.id },
+    name: 'product-form',
+    params: { id: product.id }
   });
 };
 
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      "id, name, categories:category_id ( name, active ), stock_is_automatic, stock_amount, measure_unit, price_to_sell"
+      'id, name, categories:category_id ( name, active ), stock_is_automatic, stock_amount, measure_unit, price_to_sell'
     );
   } catch (error) {
-    notify.error("Erro ao obter os produtos.", error);
+    notify.error('Erro ao obter os produtos.', error);
   }
 };
 
@@ -60,21 +55,13 @@ onMounted(() => handleGetProducts());
       </template>
     </page-header>
 
-    <q-input
-      v-model="searchQuery"
-      v-bind="attr.input.search"
-      placeholder="Digite para pesquisar"
-    >
+    <q-input v-model="searchQuery" v-bind="attr.input.search" placeholder="Digite para pesquisar">
       <template #prepend>
         <q-icon name="search" />
       </template>
     </q-input>
 
-    <q-inner-loading
-      :showing="loading.list.value"
-      color="primary"
-      label="obtendo registros..."
-    />
+    <q-inner-loading :showing="loading.list.value" color="primary" label="obtendo registros..." />
 
     <q-list v-if="!loading.list.value" separator>
       <q-item

@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth, useTools, useDefaults } from "src/composables";
-import { PageHeader } from "src/components";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuth, useTools, useDefaults } from 'src/composables';
+import { PageHeader } from 'src/components';
 
 const router = useRouter();
 
@@ -11,22 +11,22 @@ const { notify } = useTools();
 const { attr } = useDefaults();
 
 const form = ref({
-  email: "sergiodobri@gmail.com",
-  password: "123456",
+  email: 'sergiodobri@gmail.com',
+  password: '123456',
   privacy_policy: false,
-  terms_of_use: false,
+  terms_of_use: false
 });
 
 const handleSubmit = async () => {
   try {
     await register(form.value);
     notify.info(
-      "Para finalizar o registro,",
+      'Para finalizar o registro,',
       `um email de confirmação foi enviado para: ${form.value.email}.`
     );
-    router.push({ name: "login" });
+    router.push({ name: 'login' });
   } catch (error) {
-    notify.error("Credenciais inválidas", error);
+    notify.error('Credenciais inválidas', error);
   }
 };
 </script>
@@ -96,7 +96,7 @@ const handleSubmit = async () => {
         <q-btn
           v-bind="attr.btn.basic"
           label="Já é usuário? Faça seu login"
-            color="dark"
+          color="dark"
           flat
           no-caps
           class="full-width q-mt-sm"

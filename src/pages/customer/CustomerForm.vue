@@ -1,36 +1,35 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import { useCustomers, useTools, useDefaults } from "src/composables";
-import { PageHeader, PageFooter } from "src/components";
-import { useSettingsStore } from "src/stores/settingsStore";
+import { ref, onMounted, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useCustomers, useTools, useDefaults } from 'src/composables';
+import { PageHeader, PageFooter } from 'src/components';
+import { useSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
 const route = useRoute();
 const store = useSettingsStore();
 
-const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } =
-  useCustomers();
+const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } = useCustomers();
 const { confirm, notify } = useTools();
 const { attr } = useDefaults();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
-const title = computed(() => (isEditMode.value ? "Alterar" : "Adicionar"));
-const mask = ref("(##)####-#####");
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+const mask = ref('(##)####-#####');
 const setMask = (e) => {
-  mask.value = e.target.value.length > 13 ? "(##)#####-####" : "(##)####-#####";
+  mask.value = e.target.value.length > 13 ? '(##)#####-####' : '(##)####-#####';
 };
 const optionsDocumentTypes = ref([]);
 
 const form = ref({
-  name: "",
-  phone_1: "",
-  phone_2: "",
-  document_type: "CI",
-  document_number: "",
-  email: "",
-  notes: "",
-  active: true,
+  name: '',
+  phone_1: '',
+  phone_2: '',
+  document_type: 'CI',
+  document_number: '',
+  email: '',
+  notes: '',
+  active: true
 });
 
 const handleSubmit = async () => {
@@ -40,8 +39,8 @@ const handleSubmit = async () => {
     } else {
       await addCustomer(form.value);
     }
-    notify.success(`Cliente ${isEditMode.value ? "alterado" : "adicionado"}.`);
-    router.push({ name: "customer-list" });
+    notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
+    router.push({ name: 'customer-list' });
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} o cliente.`, error);
   }
@@ -51,11 +50,11 @@ const handleRemoveCustomer = async (customer) => {
   try {
     confirm.delete(`do cliente: ${customer.name}`).onOk(async () => {
       await removeCustomer(customer.id);
-      notify.success("Cliente excluido.");
-      router.push({ name: "customer-list" });
+      notify.success('Cliente excluido.');
+      router.push({ name: 'customer-list' });
     });
   } catch (error) {
-    notify.error("Erro ao excluir o cliente", error);
+    notify.error('Erro ao excluir o cliente', error);
   }
 };
 
@@ -63,7 +62,7 @@ const handleGetCustomer = async () => {
   try {
     form.value = await getCustomer(route.params.id);
   } catch (error) {
-    notify.error("Erro ao obter o cliente.", error);
+    notify.error('Erro ao obter o cliente.', error);
   }
 };
 
@@ -86,7 +85,7 @@ onMounted(() => {
           <q-tooltip>Voltar</q-tooltip>
         </q-btn>
       </template>
-      <template #title>{{ title + " cliente" }}</template>
+      <template #title>{{ title + ' cliente' }}</template>
       <template #right>
         <q-btn
           v-if="isEditMode"
@@ -139,9 +138,7 @@ onMounted(() => {
         :options="optionsDocumentTypes"
         option-value="abbr"
         option-label="name"
-        :option-disable="
-          (opt) => (Object(opt) === opt ? opt.active === false : false)
-        "
+        :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
         emit-value
         map-options
       />

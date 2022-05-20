@@ -1,14 +1,14 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
-export const useUserStore = defineStore("userStore", {
+export const useUserStore = defineStore('userStore', {
   state: () => ({
     user: null,
-    profile: null,
+    profile: null
   }),
   getters: {
     isLoggedIn() {
       return !!this.user;
-    },
+    }
   },
   actions: {
     setUser(user) {
@@ -16,6 +16,6 @@ export const useUserStore = defineStore("userStore", {
     },
     logout() {
       this.user = null;
-    },
-  },
+    }
+  }
 });

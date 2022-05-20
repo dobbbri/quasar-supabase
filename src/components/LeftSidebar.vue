@@ -1,6 +1,6 @@
 <script setup>
-import { useMenuStore } from "src/stores/menuStore";
-import { useUserStore } from "src/stores/userStore";
+import { useMenuStore } from 'src/stores/menuStore';
+import { useUserStore } from 'src/stores/userStore';
 
 const menuStore = useMenuStore();
 const userStore = useUserStore();

@@ -1,6 +1,6 @@
 <script setup>
-import { defineProps, ref, onMounted } from "vue";
-import { useApi, useAuth } from "src/composables";
+import { defineProps, ref, onMounted } from 'vue';
+import { useApi, useAuth } from 'src/composables';
 
 const count = ref(0);
 const load = ref(true);
@@ -10,17 +10,17 @@ const { getCount } = useApi();
 const props = defineProps({
   table: {
     type: String,
-    required: true,
+    required: true
   },
   label: {
     type: String,
-    default: "",
+    default: ''
   },
   icon: {
     type: String,
     required: false,
-    default: "database-outline",
-  },
+    default: 'database-outline'
+  }
 });
 
 onMounted(async () => {

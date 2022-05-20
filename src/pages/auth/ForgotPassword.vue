@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth, useTools, useDefaults } from "src/composables";
-import { PageHeader } from "src/components";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuth, useTools, useDefaults } from 'src/composables';
+import { PageHeader } from 'src/components';
 
 const router = useRouter();
 
@@ -10,18 +10,18 @@ const { loading, sendPasswordResetEmail } = useAuth();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
-const email = ref("");
+const email = ref('');
 
 const handleSubmit = async () => {
   try {
     await sendPasswordResetEmail(email.value);
     notify.info(
-      "Para finalizar o registro,",
+      'Para finalizar o registro,',
       `foi enviado um email de confirmação para: ${email.value}.`
     );
-    router.push({ name: "login" });
+    router.push({ name: 'login' });
   } catch (error) {
-    notify.error("Erro ao enviar email de troca de senha.", error);
+    notify.error('Erro ao enviar email de troca de senha.', error);
   }
 };
 </script>
@@ -58,7 +58,7 @@ const handleSubmit = async () => {
         <q-btn
           v-bind="attr.btn.basic"
           label="Cancelar"
-            color="dark"
+          color="dark"
           flat
           no-caps
           class="full-width q-mt-sm"

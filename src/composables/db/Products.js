@@ -1,9 +1,9 @@
-import { useApi, useImageBucket } from "src/composables";
+import { useApi, useImageBucket } from 'src/composables';
 
 export default function useProducts() {
-  const { loading, list, get, add, edit, remove, count } = useApi("products");
+  const { loading, list, get, add, edit, remove, count } = useApi('products');
   const { getImageURL, addImage, editImage, removeImage } = useImageBucket();
-  const productFolder = "products";
+  const productFolder = 'products';
 
   return {
     loading,
@@ -17,6 +17,6 @@ export default function useProducts() {
     getProductImageURL: getImageURL,
     addProductImage: addImage,
     editProductImage: editImage,
-    removeProductImage: removeImage,
+    removeProductImage: removeImage
   };
 }
