@@ -33,7 +33,7 @@ const handleSubmit = async () => {
     </page-header>
 
     <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-      <q-banner v-bind="attr.banner">
+      <q-banner v-bind="attr.banner" class="q-mt-none">
         Como você mede os produtos/serviços para definir preço.
       </q-banner>
 

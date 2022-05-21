@@ -11,7 +11,7 @@ const userStore = useUserStore();
 <template>
   <q-header class="bg-primary text-white" style="z-index: 1000">
     <q-toolbar class="justify-between">
-      <div style="margin-left: -10px">
+      <div>
         <slot name="left">
           <q-btn
             v-if="userStore.isLoggedIn"

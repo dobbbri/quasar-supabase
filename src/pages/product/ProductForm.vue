@@ -284,7 +284,7 @@ onMounted(() => {
 
       <q-checkbox
         v-bind="attr.input.basic"
-        v-model="form.stock_is_automatic"
+        v-model="form.active"
         label="Ativo"
         class="checkbox-fix"
       />

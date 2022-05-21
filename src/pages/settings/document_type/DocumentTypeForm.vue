@@ -33,7 +33,7 @@ const handleSubmit = async () => {
     </page-header>
 
     <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-      <q-banner v-bind="attr.banner">
+      <q-banner v-bind="attr.banner" class="q-mt-none">
         Quais documentos que voce aceita para cadastar o cliente
       </q-banner>
 

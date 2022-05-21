@@ -25,7 +25,7 @@ const handleEditProduct = (product) => {
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      'id, name, categories:category_id ( name, active ), stock_is_automatic, stock_amount, measure_unit, price_to_sell'
+      'id, name, categories:category_id ( name, active ), stock_is_automatic, stock_amount, measure_unit, price_to_sell, brand, active'
     );
   } catch (error) {
     notify.error('Erro ao obter os produtos.', error);
@@ -73,7 +73,7 @@ onMounted(() => handleGetProducts());
       >
         <q-item-section>
           <q-item-label class="row">
-            <span class="col">
+            <span class="col" :class="{ 'text-negative text-strike': !product.active }">
               {{ product.name }}
             </span>
             <span class="col-2 text-right">
