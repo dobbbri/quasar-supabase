@@ -27,12 +27,12 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
     <page-header>
       <template #title>Unidade de medidas</template>
     </page-header>
 
-    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+    <q-page padding class="q-gutter-y-sm">
       <q-banner v-bind="attr.banner" class="q-mt-none">
         Como você mede os produtos/serviços para definir preço.
       </q-banner>
@@ -77,6 +77,6 @@ const handleSubmit = async () => {
           type="submit"
         />
       </page-footer>
-    </q-form>
   </q-page>
+  </q-form>
 </template>

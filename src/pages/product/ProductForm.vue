@@ -124,7 +124,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
     <page-header>
       <template #left>
         <q-btn v-bind="attr.btn.icon" icon="arrow_back_ios_new" flat :to="{ name: 'product-list' }">
@@ -148,7 +148,7 @@ onMounted(() => {
       </template>
     </page-header>
 
-    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+    <q-page padding class="q-gutter-y-sm">
       <div>
         <q-file ref="file" v-model="image" class="hidden" accept="image/*" />
         <div class="q-field__label no-pointer-events">Imagem/Foto</div>
@@ -311,6 +311,6 @@ onMounted(() => {
           type="submit"
         />
       </page-footer>
-    </q-form>
-  </q-page>
+    </q-page>
+  </q-form>
 </template>

@@ -73,7 +73,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
     <page-header>
       <template #left>
         <q-btn
@@ -102,7 +102,7 @@ onMounted(() => {
       </template>
     </page-header>
 
-    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+    <q-page padding class="q-gutter-y-sm">
       <q-input
         v-bind="attr.input.basic"
         v-model="form.name"
@@ -185,6 +185,6 @@ onMounted(() => {
           type="submit"
         />
       </page-footer>
-    </q-form>
-  </q-page>
+    </q-page>
+  </q-form>
 </template>

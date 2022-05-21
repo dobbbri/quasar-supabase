@@ -27,15 +27,15 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <q-page padding>
+  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
     <page-header>
       <template #title>Formas de Pagamento</template>
     </page-header>
 
-    <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+    <q-page padding class="q-gutter-y-sm">
       <q-banner v-bind="attr.banner" class="q-mt-none">
-        Escolha a forma que o cliente pode pagar </q-banner
-      >
+        Escolha a forma que o cliente pode pagar
+      </q-banner>
 
       <q-list separator>
         <q-item v-for="(paymentMethod, index) in paymentMethods" :key="index" class="q-pa-none">
@@ -75,6 +75,6 @@ const handleSubmit = async () => {
           type="submit"
         />
       </page-footer>
-    </q-form>
-  </q-page>
+    </q-page>
+  </q-form>
 </template>

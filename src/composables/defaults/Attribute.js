@@ -25,7 +25,7 @@ export default function useAttribute() {
     },
 
     form: {
-      class: 'q-gutter-y-md q-mt-xs q-mx-xs full-width',
+      class: 'q-mt-xs q-mx-xs full-width',
       style: 'max-width: 620px'
     },
 
