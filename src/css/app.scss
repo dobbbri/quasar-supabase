@@ -7,3 +7,22 @@
 .checkbox-fix {
   margin-left: -8px;
 }
+
+.q-toolbar__title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.q-field--float .q-field__label {
+transform: translateY(-35%) scale(0.85);
+}
+
+.q-field__native, .q-field__prefix, .q-field__suffix, .q-field__input {
+  font-weight: 500;
+}
+
+.q-field--labeled .q-field__native, .q-field--labeled .q-field__prefix, .q-field--labeled .q-field__suffix {
+  line-height: 24px;
+  padding-top: 28px;
+  padding-bottom: 4px;
+}

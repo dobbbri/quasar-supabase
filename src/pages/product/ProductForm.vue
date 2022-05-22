@@ -46,6 +46,8 @@ const form = ref({
   image_name: null
 });
 
+const stockExpanded = ref(false);
+
 const isEditMode = computed(() => (route.params.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
@@ -103,6 +105,7 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
+    stockExpanded.value = form.value.stock_is_automatic;
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }
@@ -151,7 +154,7 @@ onMounted(() => {
     <q-page padding class="q-gutter-y-sm">
       <div>
         <q-file ref="file" v-model="image" class="hidden" accept="image/*" />
-        <div class="q-field__label no-pointer-events">Imagem/Foto</div>
+        <div class="q-field--float q-field__label no-pointer-events">Imagem/Foto</div>
         <q-card flat bordered style="height: 150px; width: 150px">
           <q-img loading="lazy" :src="loadImage()" fit="cover" spinner-color="primary">
             <div class="absolute-bottom" style="padding: 0">
@@ -237,37 +240,47 @@ onMounted(() => {
         error-message="Uma unidade de medida deve ser selecionada"
       />
 
-      <q-checkbox
-        v-bind="attr.input.basic"
-        v-model="form.stock_is_automatic"
-        label="Utilizar estoque automático"
-        class="checkbox-fix"
-        style="margin-bottom: -16px"
-      />
+      <q-expansion-item
+        v-model="stockExpanded"
+        class="q-mt-md"
+        label="Controle de estoque"
+        header-class="text-primary text-weight-medium q-px-none"
+        dense
+      >
+        <div class="q-gutter-y-sm q-mt-sm">
+          <q-checkbox
+            v-bind="attr.input.basic"
+            v-model="form.stock_is_automatic"
+            label="Utilizar estoque automático"
+            class="checkbox-fix"
+            style="margin-top: -16px; margin-bottom: -16px"
+          />
 
-      <q-input
-        v-if="form.stock_is_automatic"
-        v-bind="attr.input.basic"
-        v-model="form.stock_amount"
-        label="Quantidade"
-        mask="#"
-        fill-mask="0"
-        reverse-fill-mask
-        :rules="[(val) => !!val && val > 0]"
-        error-message="A quantidade do produto deve ser informada"
-      />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.stock_amount"
+            :disable="!form.stock_is_automatic"
+            label="Quantidade"
+            mask="#"
+            fill-mask="0"
+            reverse-fill-mask
+            :rules="[(val) => !!val && val > 0]"
+            error-message="A quantidade do produto deve ser informada"
+          />
 
-      <q-input
-        v-if="form.stock_is_automatic"
-        v-bind="attr.input.basic"
-        v-model="form.stock_minimum_amount"
-        label="Quantidade mínima"
-        mask="#"
-        fill-mask="0"
-        reverse-fill-mask
-        :rules="[(val) => !!val && val > 0]"
-        error-message="A quantidade mínima do produto deve ser informada"
-      />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.stock_minimum_amount"
+            :disable="!form.stock_is_automatic"
+            label="Quantidade mínima"
+            mask="#"
+            fill-mask="0"
+            reverse-fill-mask
+            :rules="[(val) => !!val && val > 0]"
+            error-message="A quantidade mínima do produto deve ser informada"
+          />
+        </div>
+      </q-expansion-item>
 
       <q-input v-bind="attr.input.basic" v-model="form.brand" label="Marca" autogrow />
 

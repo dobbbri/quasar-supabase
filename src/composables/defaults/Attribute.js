@@ -12,7 +12,8 @@ export default function useAttribute() {
 
     input: {
       basic: {
-        hideBottomSpace: true
+        hideBottomSpace: true,
+        optionsDense: true
       },
       search: {
         square: true,

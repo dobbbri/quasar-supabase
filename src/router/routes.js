@@ -78,17 +78,17 @@ const routes = [
       {
         path: '/measure-unit-form',
         name: 'measure-unit-form',
-        component: () => import('pages/settings/measure_unit/MeasureUnitForm.vue')
+        component: () => import('pages/settings/MeasureUnitForm.vue')
       },
       {
         path: '/document-type-form',
         name: 'document-type-form',
-        component: () => import('pages/settings/document_type/DocumentTypeForm.vue')
+        component: () => import('pages/settings/DocumentTypeForm.vue')
       },
       {
         path: '/payment-method-form',
         name: 'payment-method-form',
-        component: () => import('pages/settings/payment_method/PaymentMethodForm.vue')
+        component: () => import('pages/settings/PaymentMethodForm.vue')
       }
     ],
     meta: {

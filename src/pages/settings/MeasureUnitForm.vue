@@ -77,6 +77,6 @@ const handleSubmit = async () => {
           type="submit"
         />
       </page-footer>
-  </q-page>
+    </q-page>
   </q-form>
 </template>
