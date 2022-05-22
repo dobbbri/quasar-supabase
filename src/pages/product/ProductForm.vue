@@ -27,6 +27,7 @@ const { attr } = useDefaults();
 
 const optionsCategories = ref([]);
 const optionsMeasureUnits = ref([]);
+const newImage = ref(null);
 const image = ref(null);
 const file = ref(null);
 const form = ref({
@@ -47,22 +48,19 @@ const form = ref({
 });
 
 const stockExpanded = ref(false);
+const imageExpanded = ref(false);
+const codesExpanded = ref(false);
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
-const handleUploadBtnClick = () => file.value.pickFiles();
+const handleSelectImage = () => file.value.pickFiles();
 
 const loadImage = () => {
   if (image.value) {
-    return URL.createObjectURL(image.value);
-  } else if (form.value.image_name) {
-    const forceUpdate = '?t=' + new Date().getTime();
-    const image = getProductImageURL(form.value.image_name);
-    return image + forceUpdate;
+    newImage.value = URL.createObjectURL(image.value);
   }
-  return 'img/unnamed.png';
 };
 
 const handleSubmit = async () => {
@@ -105,6 +103,12 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
+    if (form.value.image_name) {
+      const forceUpdate = '?t=' + new Date().getTime();
+      newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
+      imageExpanded.value = true;
+    }
+    if (form.value.code_bar || form.value.code_internal) codesExpanded.value = true;
     stockExpanded.value = form.value.stock_is_automatic;
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
@@ -119,10 +123,10 @@ const handleGetCategories = async () => {
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   optionsMeasureUnits.value = store.measureUnits;
-  handleGetCategories();
-  if (isEditMode.value) handleGetProduct();
+  await handleGetCategories();
+  if (isEditMode.value) await handleGetProduct();
 });
 </script>
 
@@ -152,24 +156,6 @@ onMounted(() => {
     </page-header>
 
     <q-page padding class="q-gutter-y-sm">
-      <div>
-        <q-file ref="file" v-model="image" class="hidden" accept="image/*" />
-        <div class="q-field--float q-field__label no-pointer-events">Imagem/Foto</div>
-        <q-card flat bordered style="height: 150px; width: 150px">
-          <q-img loading="lazy" :src="loadImage()" fit="cover" spinner-color="primary">
-            <div class="absolute-bottom" style="padding: 0">
-              <q-btn
-                flat
-                class="full-width q-py-sm"
-                icon="add_circle"
-                label="Adicionar"
-                @click="handleUploadBtnClick()"
-              />
-            </div>
-          </q-img>
-        </q-card>
-      </div>
-
       <q-input
         v-bind="attr.input.basic"
         v-model="form.name"
@@ -282,18 +268,59 @@ onMounted(() => {
         </div>
       </q-expansion-item>
 
-      <q-input v-bind="attr.input.basic" v-model="form.brand" label="Marca" autogrow />
+      <q-expansion-item
+        v-model="imageExpanded"
+        class="q-mt-md"
+        label="Imagem/Foto"
+        header-class="text-primary text-weight-medium q-px-none"
+        dense
+      >
+        <div class="q-gutter-y-sm q-mt-sm">
+          <q-file
+            ref="file"
+            v-model="image"
+            class="hidden"
+            accept="image/*"
+            @update:model-value="loadImage()"
+          />
+          <q-card flat bordered style="max-height: 150px; max-width: 150px">
+            <q-img loading="lazy" :src="newImage" fit="cover" spinner-color="primary">
+              <div class="absolute-bottom" style="padding: 0">
+                <q-btn
+                  flat
+                  class="full-width q-py-sm"
+                  icon="add_circle"
+                  label="Adicionar"
+                  @click="handleSelectImage()"
+                />
+              </div>
+            </q-img>
+          </q-card>
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.description"
-        label="Descrição do produto"
-        autogrow
-      />
+          <q-input v-bind="attr.input.basic" v-model="form.brand" label="Marca" />
 
-      <q-input v-bind="attr.input.basic" v-model="form.code_bar" label="Código de barras" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.description"
+            label="Descrição do produto"
+            autogrow
+          />
+        </div>
+      </q-expansion-item>
 
-      <q-input v-bind="attr.input.basic" v-model="form.code_internal" label="Código interno" />
+      <q-expansion-item
+        v-model="codesExpanded"
+        class="q-mt-md"
+        label="Códigos"
+        header-class="text-primary text-weight-medium q-px-none"
+        dense
+      >
+        <div class="q-gutter-y-sm q-mt-sm">
+          <q-input v-bind="attr.input.basic" v-model="form.code_bar" label="Código de barras" />
+
+          <q-input v-bind="attr.input.basic" v-model="form.code_internal" label="Código interno" />
+        </div>
+      </q-expansion-item>
 
       <q-checkbox
         v-bind="attr.input.basic"
