@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useTools, useDefaults } from 'src/composables';
 import { PageHeader, PageFooter } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
 
+const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 const store = useSettingsStore();
@@ -20,6 +22,7 @@ const setMask = (e) => {
   mask.value = e.target.value.length > 13 ? '(##)#####-####' : '(##)####-#####';
 };
 const optionsDocumentTypes = ref([]);
+const adressExpanded = ref(false);
 
 const form = ref({
   name: '',
@@ -29,8 +32,37 @@ const form = ref({
   document_number: '',
   email: '',
   notes: '',
+  street: '',
+  district: '',
+  city: '',
+  state: '',
+  zip_code: '',
   active: true
 });
+
+const handleFindCEP = () => {
+  $q.loading.show();
+
+  const url = `https://brasilapi.com.br/api/cep/v1/${form.value.zip_code}`;
+  const options = {
+    method: 'GET',
+    mode: 'cors',
+    headers: { 'content-type': 'application/json;charset=utf-8' },
+    timeout: 30000
+  };
+
+  fetch(url, options)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      form.value.street = data.street;
+      form.value.district = data.neighborhood;
+      form.value.state = data.state;
+      form.value.city = data.city;
+    });
+  $q.loading.hide();
+};
 
 const handleSubmit = async () => {
   try {
@@ -61,6 +93,7 @@ const handleRemoveCustomer = async (customer) => {
 const handleGetCustomer = async () => {
   try {
     form.value = await getCustomer(route.params.id);
+    if (form.value.zip_code) adressExpanded.value = true;
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }
@@ -114,7 +147,7 @@ onMounted(() => {
       <q-input
         v-bind="attr.input.basic"
         v-model="form.phone_1"
-        label="Telefone"
+        label="Celular/Whatsapp"
         type="tel"
         :mask="mask"
         :rules="[(val) => !!val]"
@@ -125,7 +158,7 @@ onMounted(() => {
       <q-input
         v-bind="attr.input.basic"
         v-model="form.phone_2"
-        label="Telefone"
+        label="Celular/Telefone fixo"
         type="tel"
         :mask="mask"
         @keyup="setMask"
@@ -155,6 +188,32 @@ onMounted(() => {
         label="informações do cliente"
         autogrow
       />
+
+      <q-expansion-item
+        v-model="adressExpanded"
+        class="q-mt-md"
+        label="Endereço"
+        header-class="text-primary text-weight-medium q-px-none"
+        dense
+      >
+        <div class="q-gutter-y-sm q-mt-sm">
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.zip_code"
+            mask="#####-###"
+            label="CEP"
+            @blur="handleFindCEP"
+          />
+
+          <q-input v-bind="attr.input.basic" v-model="form.street" label="Endereço, Número" />
+
+          <q-input v-bind="attr.input.basic" v-model="form.district" label="Bairro" />
+
+          <q-input v-bind="attr.input.basic" v-model="form.city" label="Cidade" />
+
+          <q-input v-bind="attr.input.basic" v-model="form.state" mask="AA" label="UF(estado)" />
+        </div>
+      </q-expansion-item>
 
       <q-checkbox
         v-bind="attr.input.basic"
