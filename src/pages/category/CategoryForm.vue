@@ -7,7 +7,8 @@ import { PageHeader, PageFooter } from 'src/components';
 const router = useRouter();
 const route = useRoute();
 
-const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories();
+const { loading, getCategory, addCategory, editCategory, removeCategory } =
+  useCategories();
 const { confirm, notify } = useTools();
 const { attr } = useDefaults();
 
@@ -26,7 +27,9 @@ const handleSubmit = async () => {
     } else {
       await addCategory(form.value);
     }
-    notify.success(`Categoria ${isEditMode.value ? 'alterada' : 'adicionada'}.`);
+    notify.success(
+      `Categoria ${isEditMode.value ? 'alterada' : 'adicionada'}.`
+    );
     router.push({ name: 'category-list' });
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} a categoria.`, error);
@@ -59,12 +62,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+  <q-form
+    v-bind="attr.form"
+    @submit.prevent="handleSubmit"
+  >
     <page-header>
       <template #left>
         <q-btn
           v-bind="attr.btn.icon"
-          icon="arrow_back_ios_new"
+          icon="sym_r_arrow_back_ios_new"
           flat
           :to="{ name: 'category-list' }"
         >
@@ -76,7 +82,7 @@ onMounted(() => {
         <q-btn
           v-if="isEditMode"
           v-bind="attr.btn.icon"
-          icon="delete_forever"
+          icon="sym_r_delete"
           color="negative"
           unelevated
           :loading="loading.remove.value"
@@ -88,7 +94,10 @@ onMounted(() => {
       </template>
     </page-header>
 
-    <q-page padding class="q-gutter-y-sm">
+    <q-page
+      padding
+      class="q-gutter-y-sm"
+    >
       <q-input
         v-bind="attr.input.basic"
         v-model="form.name"

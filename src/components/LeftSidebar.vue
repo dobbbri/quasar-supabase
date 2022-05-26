@@ -15,10 +15,13 @@ const userStore = useUserStore();
     class="bg-grey-2"
   >
     <q-toolbar class="bg-blue-grey-4">
-      <q-toolbar-title class="q-ml-xs text-white">Menu</q-toolbar-title>
+      <q-toolbar-title class="q-ml-xs text-white text-title"
+        >
+        Menu </q-toolbar-title
+      >
     </q-toolbar>
 
-    <q-list class="text-blue-grey-7">
+    <q-list class="text-dark">
       <q-item
         v-for="(link, index) in menuStore.menuList"
         :key="index"
@@ -26,12 +29,18 @@ const userStore = useUserStore();
         :to="{ name: link.routeName }"
         exact
       >
-        <q-item-section v-if="link.icon" avatar>
-          <q-icon :name="link.icon" size="sm" class="q-mr-md" />
+        <q-item-section
+          v-if="link.icon"
+          avatar
+        >
+          <q-icon
+            :name="link.icon"
+            size="md"
+          />
         </q-item-section>
 
         <q-item-section>
-          <q-item-label class="text-body1 text-weight-medium">
+          <q-item-label class="text-title">
             {{ link.title }}
           </q-item-label>
         </q-item-section>

@@ -76,6 +76,11 @@ const routes = [
       },
 
       {
+        path: '/settings-form',
+        name: 'settings-form',
+        component: () => import('pages/settings/SettingsForm.vue')
+      },
+      {
         path: '/measure-unit-form',
         name: 'measure-unit-form',
         component: () => import('pages/settings/MeasureUnitForm.vue')

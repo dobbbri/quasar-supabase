@@ -38,7 +38,10 @@ const handleSubmit = async () => {
     </page-header>
 
     <div class="row justify-center">
-      <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+      <q-form
+        v-bind="attr.form"
+        @submit.prevent="handleSubmit"
+      >
         <q-input
           v-bind="attr.input.basic"
           v-model="form.email"
@@ -67,7 +70,12 @@ const handleSubmit = async () => {
               color="primary"
               class="checkbox-fix"
             />
-            <a href="" class="text-primary"> Politica de Privacidade </a>
+            <a
+              href=""
+              class="text-primary"
+            >
+              Politica de Privacidade
+            </a>
           </div>
 
           <div>
@@ -78,15 +86,20 @@ const handleSubmit = async () => {
               color="primary"
               class="checkbox-fix"
             />
-            <a href="" class="text-primary"> Termos de Uso </a>
+            <a
+              href=""
+              class="text-primary"
+            >
+              Termos de Uso
+            </a>
           </div>
         </div>
 
         <q-btn
           v-bind="attr.btn.basic"
           label="Criar conta"
-          unelevated
-          no-caps
+          color="primary"
+          text-color="white"
           class="full-width q-mt-lg"
           :loading="loading"
           :disable="loading || !form.terms_of_use || !form.privacy_policy"
@@ -98,7 +111,6 @@ const handleSubmit = async () => {
           label="Já é usuário? Faça seu login"
           color="dark"
           flat
-          no-caps
           class="full-width q-mt-sm"
           :disable="loading"
           :to="{ name: 'login' }"

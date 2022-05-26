@@ -1,7 +1,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useCategories, useTools, useDefaults } from 'src/composables';
+import {
+  useProducts,
+  useCategories,
+  useTools,
+  useDefaults
+} from 'src/composables';
 import { PageHeader, PageFooter } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
 
@@ -49,7 +54,7 @@ const form = ref({
 
 const stockExpanded = ref(false);
 const imageExpanded = ref(false);
-const codesExpanded = ref(false);
+const advancedExpanded = ref(false);
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 
@@ -108,7 +113,8 @@ const handleGetProduct = async () => {
       newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
       imageExpanded.value = true;
     }
-    if (form.value.code_bar || form.value.code_internal) codesExpanded.value = true;
+    if (form.value.code_bar || form.value.code_internal)
+      advancedExpanded.value = true;
     stockExpanded.value = form.value.stock_is_automatic;
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
@@ -131,10 +137,18 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+  <q-form
+    v-bind="attr.form"
+    @submit.prevent="handleSubmit"
+  >
     <page-header>
       <template #left>
-        <q-btn v-bind="attr.btn.icon" icon="arrow_back_ios_new" flat :to="{ name: 'product-list' }">
+        <q-btn
+          v-bind="attr.btn.icon"
+          icon="sym_r_arrow_back_ios_new"
+          flat
+          :to="{ name: 'product-list' }"
+        >
           <q-tooltip>Voltar</q-tooltip>
         </q-btn>
       </template>
@@ -143,7 +157,7 @@ onMounted(async () => {
         <q-btn
           v-if="isEditMode"
           v-bind="attr.btn.icon"
-          icon="delete_forever"
+          icon="sym_r_delete"
           color="negative"
           unelevated
           :loading="loading.remove.value"
@@ -155,7 +169,10 @@ onMounted(async () => {
       </template>
     </page-header>
 
-    <q-page padding class="q-gutter-y-sm">
+    <q-page
+      padding
+      class="q-gutter-y-sm"
+    >
       <q-input
         v-bind="attr.input.basic"
         v-model="form.name"
@@ -171,7 +188,9 @@ onMounted(async () => {
         :options="optionsCategories"
         option-value="id"
         option-label="name"
-        :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+        :option-disable="
+          (opt) => (Object(opt) === opt ? opt.active === false : false)
+        "
         map-options
         emit-value
         :rules="[(val) => !!val]"
@@ -180,7 +199,9 @@ onMounted(async () => {
         <template #option="scope">
           <q-item v-bind="scope.itemProps">
             <q-item-section>
-              <q-item-label :class="{ 'text-negative text-strike': !scope.opt.active }">
+              <q-item-label
+                :class="{ 'text-negative text-strike': !scope.opt.active }"
+              >
                 {{ scope.opt.name }}
               </q-item-label>
             </q-item-section>
@@ -219,7 +240,9 @@ onMounted(async () => {
         :options="optionsMeasureUnits"
         option-value="abbr"
         option-label="name"
-        :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+        :option-disable="
+          (opt) => (Object(opt) === opt ? opt.active === false : false)
+        "
         emit-value
         map-options
         :rules="[(val) => !!val]"
@@ -229,11 +252,12 @@ onMounted(async () => {
       <q-expansion-item
         v-model="stockExpanded"
         class="q-mt-md"
-        label="Controle de estoque"
+        label="Estoque"
         header-class="text-primary text-weight-medium q-px-none"
         dense
       >
         <div class="q-gutter-y-sm q-mt-sm">
+
           <q-checkbox
             v-bind="attr.input.basic"
             v-model="form.stock_is_automatic"
@@ -283,13 +307,25 @@ onMounted(async () => {
             accept="image/*"
             @update:model-value="loadImage()"
           />
-          <q-card flat bordered style="max-height: 150px; max-width: 150px">
-            <q-img loading="lazy" :src="newImage" fit="cover" spinner-color="primary">
-              <div class="absolute-bottom" style="padding: 0">
+          <q-card
+            flat
+            bordered
+            style="max-height: 150px; max-width: 150px"
+          >
+            <q-img
+              loading="lazy"
+              :src="newImage"
+              fit="cover"
+              spinner-color="primary"
+            >
+              <div
+                class="absolute-bottom"
+                style="padding: 0"
+              >
                 <q-btn
                   flat
                   class="full-width q-py-sm"
-                  icon="add_circle"
+                  icon="sym_r_add_circle"
                   label="Adicionar"
                   @click="handleSelectImage()"
                 />
@@ -297,7 +333,11 @@ onMounted(async () => {
             </q-img>
           </q-card>
 
-          <q-input v-bind="attr.input.basic" v-model="form.brand" label="Marca" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.brand"
+            label="Marca"
+          />
 
           <q-input
             v-bind="attr.input.basic"
@@ -309,16 +349,24 @@ onMounted(async () => {
       </q-expansion-item>
 
       <q-expansion-item
-        v-model="codesExpanded"
+        v-model="advancedExpanded"
         class="q-mt-md"
-        label="Códigos"
+        label="Avançado"
         header-class="text-primary text-weight-medium q-px-none"
         dense
       >
         <div class="q-gutter-y-sm q-mt-sm">
-          <q-input v-bind="attr.input.basic" v-model="form.code_bar" label="Código de barras" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.code_bar"
+            label="Código de barras"
+          />
 
-          <q-input v-bind="attr.input.basic" v-model="form.code_internal" label="Código interno" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.code_internal"
+            label="Código interno"
+          />
         </div>
       </q-expansion-item>
 

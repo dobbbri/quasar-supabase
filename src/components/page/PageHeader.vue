@@ -9,14 +9,17 @@ const userStore = useUserStore();
 </script>
 
 <template>
-  <q-header class="bg-primary text-white" style="z-index: 1000">
+  <q-header
+    class="bg-primary text-white"
+    style="z-index: 1000"
+  >
     <q-toolbar class="justify-between">
       <div>
         <slot name="left">
           <q-btn
             v-if="userStore.isLoggedIn"
             v-bind="attr.btn.icon"
-            icon="menu"
+            icon="sym_r_menu"
             flat
             @click="menuStore.toggleSidebar()"
           >
@@ -24,7 +27,7 @@ const userStore = useUserStore();
           </q-btn>
         </slot>
       </div>
-      <q-toolbar-title>
+      <q-toolbar-title class="text-title">
         <slot name="title" />
       </q-toolbar-title>
       <div>

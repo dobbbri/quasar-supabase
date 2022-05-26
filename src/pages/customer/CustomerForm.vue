@@ -11,7 +11,8 @@ const router = useRouter();
 const route = useRoute();
 const store = useSettingsStore();
 
-const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } = useCustomers();
+const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } =
+  useCustomers();
 const { confirm, notify } = useTools();
 const { attr } = useDefaults();
 
@@ -106,12 +107,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+  <q-form
+    v-bind="attr.form"
+    @submit.prevent="handleSubmit"
+  >
     <page-header>
       <template #left>
         <q-btn
           v-bind="attr.btn.icon"
-          icon="arrow_back_ios_new"
+          icon="sym_r_arrow_back_ios_new"
           flat
           :to="{ name: 'customer-list' }"
         >
@@ -123,7 +127,7 @@ onMounted(() => {
         <q-btn
           v-if="isEditMode"
           v-bind="attr.btn.icon"
-          icon="delete_forever"
+          icon="sym_r_delete"
           color="negative"
           unelevated
           :loading="loading.remove.value"
@@ -135,7 +139,10 @@ onMounted(() => {
       </template>
     </page-header>
 
-    <q-page padding class="q-gutter-y-sm">
+    <q-page
+      padding
+      class="q-gutter-y-sm"
+    >
       <q-input
         v-bind="attr.input.basic"
         v-model="form.name"
@@ -171,7 +178,9 @@ onMounted(() => {
         :options="optionsDocumentTypes"
         option-value="abbr"
         option-label="name"
-        :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+        :option-disable="
+          (opt) => (Object(opt) === opt ? opt.active === false : false)
+        "
         emit-value
         map-options
       />
@@ -205,13 +214,30 @@ onMounted(() => {
             @blur="handleFindCEP"
           />
 
-          <q-input v-bind="attr.input.basic" v-model="form.street" label="Endereço, Número" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.street"
+            label="Endereço, Número"
+          />
 
-          <q-input v-bind="attr.input.basic" v-model="form.district" label="Bairro" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.district"
+            label="Bairro"
+          />
 
-          <q-input v-bind="attr.input.basic" v-model="form.city" label="Cidade" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.city"
+            label="Cidade"
+          />
 
-          <q-input v-bind="attr.input.basic" v-model="form.state" mask="AA" label="UF(estado)" />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.state"
+            mask="AA"
+            label="UF(estado)"
+          />
         </div>
       </q-expansion-item>
 

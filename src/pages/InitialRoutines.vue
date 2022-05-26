@@ -19,7 +19,8 @@ const handleSettings = async () => {
     if (settings) {
       store.setSettings(settings);
     } else {
-      const { documentTypes, measureUnits, paymentMethods } = store.getDefaults();
+      const { documentTypes, measureUnits, paymentMethods } =
+        store.getDefaults();
       settings = await addSettings({
         measure_units: measureUnits,
         document_types: documentTypes,

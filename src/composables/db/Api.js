@@ -21,7 +21,11 @@ export default function useApi(table) {
 
   const get = async (id, fields = '*') => {
     setLoading.list(true);
-    const { error, data } = await supabase.from(table).select(fields).eq('id', id).single();
+    const { error, data } = await supabase
+      .from(table)
+      .select(fields)
+      .eq('id', id)
+      .single();
     setLoading.list(false);
     if (error) throw error;
     return data;
@@ -29,7 +33,9 @@ export default function useApi(table) {
 
   const add = async (form) => {
     setLoading.add(true);
-    const { error } = await supabase.from(table).insert([{ ...form, user_id: user.value.id }]);
+    const { error } = await supabase
+      .from(table)
+      .insert([{ ...form, user_id: user.value.id }]);
     setLoading.add(false);
     if (error) throw error;
   };

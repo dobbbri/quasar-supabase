@@ -1,27 +1,31 @@
 import { defineStore } from 'pinia';
 
 const menuList = [
-  { title: 'Início', icon: 'home', routeName: 'index' },
-  { title: 'Categorias', icon: 'category', routeName: 'category-list' },
-  { title: 'Produtos', icon: 'inventory', routeName: 'product-list' },
-  { title: 'Clientes', icon: 'supervisor_account', routeName: 'customer-list' },
-  { title: 'Configuracões', icon: 'tune', routeName: 'config' },
+  { title: 'Início', icon: 'sym_r_home', routeName: 'index' },
+  { title: 'Categorias', icon: 'sym_r_category', routeName: 'category-list' },
+  { title: 'Produtos', icon: 'sym_r_inventory', routeName: 'product-list' },
+  {
+    title: 'Clientes',
+    icon: 'sym_r_supervisor_account',
+    routeName: 'customer-list'
+  },
+  { title: 'Configuracões', icon: 'sym_r_tune', routeName: 'settings-form' },
   {
     title: 'Unidade de Medidas',
-    icon: 'scale',
+    icon: 'sym_r_scale',
     routeName: 'measure-unit-form'
   },
   {
     title: 'Tipos de Documentos',
-    icon: 'article',
+    icon: 'sym_r_article',
     routeName: 'document-type-form'
   },
   {
     title: 'Formas de Pagamento',
-    icon: 'local_atm',
+    icon: 'sym_r_local_atm',
     routeName: 'payment-method-form'
   },
-  { title: 'Sair', icon: 'logout', routeName: 'user-logout' }
+  { title: 'Sair', icon: 'sym_r_logout', routeName: 'user-logout' }
 ];
 
 export const useMenuStore = defineStore('menuStore', {

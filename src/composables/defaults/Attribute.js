@@ -2,10 +2,13 @@ export default function useAttribute() {
   const attribute = {
     btn: {
       basic: {
-        rounded: true,
+        rounded: false,
+        unelevated: true,
+        noCaps: true,
         dense: false,
-        color: 'primary',
-        class: 'text-weight-medium'
+        color: 'white',
+        textColor: 'primary',
+        class: 'q-px-sm text-weight-medium'
       },
       icon: { round: true, size: 'md', color: 'white', dense: true }
     },

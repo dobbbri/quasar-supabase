@@ -31,7 +31,10 @@ export default function useBrand() {
     if (id) {
       Loading.show({ backgroundColor: 'dark' });
 
-      const { data, error } = await supabase.from('config').select('*').eq('user_id', id);
+      const { data, error } = await supabase
+        .from('config')
+        .select('*')
+        .eq('user_id', id);
       if (error) throw error;
 
       if (data.length > 0) {

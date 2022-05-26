@@ -21,9 +21,9 @@ onMounted(() => {
 <template>
   <q-toggle
     v-model="darkMode"
-    checked-icon="dark_mode"
+    checked-icon="sym_r_dark_mode"
     color="dark"
-    unchecked-icon="light_mode"
+    unchecked-icon="sym_r_light_mode"
     size="lg"
   />
 </template>

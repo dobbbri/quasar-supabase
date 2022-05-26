@@ -3,11 +3,22 @@ import { LeftSidebar } from 'src/components';
 </script>
 
 <template>
-  <div class="app position-relative" :style="'height: ' + $q.screen.height + 'px'">
-    <q-layout view="lHh Lpr lFf" class="app-layout shadow-5" container>
+  <div
+    class="app position-relative"
+    :style="'height: ' + $q.screen.height + 'px'"
+  >
+    <q-layout
+      view="lHh Lpr lFf"
+      class="app-layout shadow-5"
+      container
+    >
       <left-sidebar />
       <q-page-container class="bg-white">
-        <router-view :key="$route.fullPath" v-slot="{ Component }" style="overflow: hidden">
+        <router-view
+          :key="$route.fullPath"
+          v-slot="{ Component }"
+          style="overflow: hidden"
+        >
           <keep-alive>
             <component :is="Component" />
           </keep-alive>

@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useSettings, useTools, useDefaults } from 'src/composables';
-import { PageHeader, PageFooter } from 'src/components';
+import { PageHeader } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
 
 const store = useSettingsStore();
@@ -27,23 +27,59 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+  <q-form
+    v-bind="attr.form"
+    @submit.prevent="handleSubmit"
+  >
     <page-header>
+      <template #left>
+        <q-btn
+          v-bind="attr.btn.icon"
+          icon="sym_r_arrow_back_ios_new"
+          flat
+          @click="$router.back()"
+        />
+      </template>
       <template #title>Unidade de medidas</template>
+      <template #right>
+        <q-btn
+          v-bind="attr.btn.basic"
+          label="Gravar"
+          :loading="loading.edit.value"
+          :disable="loading.disable.value"
+          type="submit"
+        />
+      </template>
     </page-header>
 
-    <q-page padding class="q-gutter-y-sm">
-      <q-banner v-bind="attr.banner" class="q-mt-none">
+    <q-page
+      padding
+      class="q-gutter-y-sm"
+    >
+      <q-banner v-bind="attr.banner">
         Como você mede os produtos/serviços para definir preço.
       </q-banner>
 
-      <q-list separator style="margin-top: -6px">
-        <q-item v-for="(measureUnit, index) in measureUnits" :key="index" class="q-pa-none">
+      <q-list
+        separator
+        style="margin-top: -10px"
+      >
+        <q-item
+          v-for="(measureUnit, index) in measureUnits"
+          :key="index"
+          class="q-pa-none"
+        >
           <q-item-section>
-            <q-item-label v-if="measureUnit.group" class="text-h6 q-mt-lg">
+            <q-item-label
+              v-if="measureUnit.group"
+              class="text-h6 q-mt-lg"
+            >
               {{ measureUnit.group }}
             </q-item-label>
-            <q-item-label class="text-body2" style="line-height: 12px !important">
+            <q-item-label
+              class="text-body2"
+              style="line-height: 12px !important"
+            >
               <q-checkbox
                 v-bind="attr.input.basic"
                 :id="index"
@@ -54,29 +90,6 @@ const handleSubmit = async () => {
           </q-item-section>
         </q-item>
       </q-list>
-
-      <page-footer>
-        <q-btn
-          v-bind="attr.btn.basic"
-          label="Cancelar"
-          outline
-          class="col-4 bg-white"
-          :disable="loading.disable.value"
-          :to="{ name: 'index' }"
-        />
-
-        <q-space />
-
-        <q-btn
-          v-bind="attr.btn.basic"
-          label="Gravar"
-          unelevated
-          class="col-4"
-          :loading="loading.edit.value"
-          :disable="loading.disable.value"
-          type="submit"
-        />
-      </page-footer>
     </q-page>
   </q-form>
 </template>

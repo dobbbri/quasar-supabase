@@ -33,7 +33,10 @@ const handleSubmit = async () => {
     </page-header>
 
     <div class="row justify-center">
-      <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
+      <q-form
+        v-bind="attr.form"
+        @submit.prevent="handleSubmit"
+      >
         <q-input
           v-bind="attr.input.basic"
           v-model="email"
@@ -47,8 +50,8 @@ const handleSubmit = async () => {
         <q-btn
           v-bind="attr.btn.basic"
           label="Enviar email"
-          unelevated
-          no-caps
+          color="primary"
+          text-color="white"
           class="full-width q-mt-lg"
           :loading="loading"
           :disable="loading"
@@ -60,7 +63,6 @@ const handleSubmit = async () => {
           label="Cancelar"
           color="dark"
           flat
-          no-caps
           class="full-width q-mt-sm"
           :disable="loading"
           :to="{ name: 'login' }"

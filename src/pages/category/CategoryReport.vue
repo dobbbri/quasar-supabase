@@ -48,7 +48,11 @@ onMounted(() => handleListCategories());
     >
       <template #body-cell-status="props">
         <q-td :props="props">
-          <q-badge v-if="props.value" color="negative" :label="props.value" />
+          <q-badge
+            v-if="props.value"
+            color="negative"
+            :label="props.value"
+          />
         </q-td>
       </template>
     </q-table>
