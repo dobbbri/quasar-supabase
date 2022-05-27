@@ -4,14 +4,9 @@
 //   height: 1;
 //   line-height: 1;
 // }
-.rounded-borders-sm {
-  border-radius: $button-border-radius !important;
-}
-.b-b-2px {
-  border-bottom: 2px solid $primary;
-}
 
 .b-1px {
+  border-radius: $generic-border-radius;
   border: 1px solid $primary;
 }
 

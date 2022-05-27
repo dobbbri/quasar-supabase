@@ -68,6 +68,48 @@ const loadImage = () => {
   }
 };
 
+const stockForm = ref({
+  product_id: 0,
+  amount: 0,
+  type: ''
+});
+
+const stockAmountRead = ref(0);
+const showStockForm = ref(false);
+const stockFormTitle = ref('');
+const stockFormAction = ref('');
+const stockFormColor = ref('');
+
+const showStockModal = (action) => {
+  stockForm.value.type = action;
+  if (action == '+') {
+    stockFormTitle.value = 'Entrada de Produtos';
+    stockFormAction.value = 'Adicionar';
+    stockFormColor.value = 'text-positive';
+  } else if (action == '-') {
+    stockFormTitle.value = 'Saida de Produtos';
+    stockFormAction.value = 'Remover';
+    stockFormColor.value = 'text-negative';
+  } else {
+    stockFormTitle.value = 'Corrigir Quantidade';
+    stockFormAction.value = 'Ajustar';
+    stockFormColor.value = 'text-info';
+  }
+  showStockForm.value = true;
+};
+
+const updateStockAmount = () => {
+  if (stockForm.value.type == '+') {
+    form.value.stock_amount =
+      parseInt(stockAmountRead.value) + parseInt(stockForm.value.amount);
+  } else if (stockForm.value.type == '-') {
+    form.value.stock_amount =
+      parseInt(stockAmountRead.value) - parseInt(stockForm.value.amount);
+  } else {
+    form.value.stock_amount = stockForm.value.amount;
+  }
+};
+
 const handleSubmit = async () => {
   try {
     if (image.value) {
@@ -108,6 +150,7 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
+    stockAmountRead.value = form.value.stock_amount;
     if (form.value.image_name) {
       const forceUpdate = '?t=' + new Date().getTime();
       newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
@@ -253,10 +296,10 @@ onMounted(async () => {
         v-model="stockExpanded"
         label="Estoque"
         class="b-1px q-mt-md"
-        header-class="text-primary text-weight-medium"
+        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
         dense
       >
-        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
+        <div class="q-gutter-y-sm q-pa-md">
           <q-checkbox
             v-bind="attr.input.basic"
             v-model="form.stock_is_automatic"
@@ -270,32 +313,64 @@ onMounted(async () => {
             v-bind="attr.banner"
           >
             A quantidade em estoque deste produto será ajustado automáticamente
-            após a venda.
+            após cada venda.
           </q-banner>
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.stock_amount"
-            :disable="!form.stock_is_automatic"
-            label="Quantidade"
-            mask="#"
-            fill-mask="0"
-            reverse-fill-mask
-            :rules="[(val) => !!val && val > 0]"
-            error-message="A quantidade do produto deve ser informada"
-          />
 
           <q-input
             v-bind="attr.input.basic"
             v-model="form.stock_minimum_amount"
             :disable="!form.stock_is_automatic"
-            label="Quantidade mínima"
+            label="Quantidade mínima em estoque"
             mask="#"
             fill-mask="0"
             reverse-fill-mask
-            :rules="[(val) => !!val && val > 0]"
-            error-message="A quantidade mínima do produto deve ser informada"
           />
+
+          <div class="q-px-md q-pb-md bg-indigo-1 rounded-borders">
+            <q-input
+              v-bind="attr.input.basic"
+              v-model="form.stock_amount"
+              :disable="!form.stock_is_automatic"
+              label="Quantidade em estoque"
+              mask="#"
+              fill-mask="0"
+              reverse-fill-mask
+              readonly
+            />
+
+            <div class="q-mt-none row q-gutter-md">
+              <q-btn
+                :disable="!form.stock_is_automatic"
+                v-bind="attr.btn.basic"
+                label="Entrada"
+                unelevated
+                color="positive"
+                text-color="white"
+                class="col"
+                @click="showStockModal('+')"
+              />
+              <q-btn
+                :disable="!form.stock_is_automatic"
+                v-bind="attr.btn.basic"
+                label="Saida"
+                unelevated
+                color="negative"
+                text-color="white"
+                class="col"
+                @click="showStockModal('-')"
+              />
+              <q-btn
+                :disable="!form.stock_is_automatic"
+                v-bind="attr.btn.basic"
+                label="Ajustar"
+                unelevated
+                color="info"
+                text-color="white"
+                class="col"
+                @click="showStockModal('=')"
+              />
+            </div>
+          </div>
         </div>
       </q-expansion-item>
 
@@ -303,10 +378,10 @@ onMounted(async () => {
         v-model="imageExpanded"
         label="Imagem/Foto"
         class="b-1px q-mt-md"
-        header-class="text-primary text-weight-medium"
+        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
         dense
       >
-        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
+        <div class="q-gutter-y-sm q-pb-md q-pa-md">
           <q-file
             ref="file"
             v-model="image"
@@ -346,10 +421,10 @@ onMounted(async () => {
         v-model="advancedExpanded"
         label="Avançado"
         class="b-1px q-mt-md"
-        header-class="text-primary text-weight-medium"
+        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
         dense
       >
-        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
+        <div class="q-gutter-y-sm q-pb-md q-pa-md">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.brand"
@@ -407,5 +482,54 @@ onMounted(async () => {
         />
       </page-footer>
     </q-page>
+  </q-form>
+
+  <q-dialog
+    v-model="showStockForm"
+    persistent
+  >
+    <q-card style="min-width: 350px">
+      <q-card-section class="q-ma-none q-pb-none q-pt-sm q-px-md">
+        <div class="text-h6">{{ stockFormTitle }}</div>
+      </q-card-section>
+
+      <q-card-section class="q-ma-none q-pa-none">
+        <q-input
+          v-bind="attr.input.basic"
+          v-model="stockForm.amount"
+          class="q-pa-md"
+          label="Quantidade"
+          mask="#"
+          fill-mask="0"
+          reverse-fill-mask
+          autofocus
+        />
+      </q-card-section>
+
+      <q-card-actions
+        align="right"
+        class="text-primary"
+      >
+        <q-btn
+          v-close-popup
+          class="text-dark"
+          flat
+          no-caps
+          label="Cancelar"
+        />
+        <q-btn
+          v-close-popup
+          :class="stockFormColor"
+          flat
+          no-caps
+          :label="stockFormAction"
+          @click="updateStockAmount"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
+  <q-form>
+    <div class="shadow-8"></div>
   </q-form>
 </template>

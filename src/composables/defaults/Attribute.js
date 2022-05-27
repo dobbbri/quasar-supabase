@@ -19,7 +19,7 @@ export default function useAttribute() {
         optionsDense: true
       },
       search: {
-        square: true,
+        rounded: false,
         clearable: true,
         dense: true,
         outlined: true,
