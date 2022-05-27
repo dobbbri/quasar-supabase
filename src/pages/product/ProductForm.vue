@@ -251,20 +251,27 @@ onMounted(async () => {
 
       <q-expansion-item
         v-model="stockExpanded"
-        class="q-mt-md"
         label="Estoque"
-        header-class="text-primary text-weight-medium q-px-none"
+        class="b-1px q-mt-md"
+        header-class="text-primary text-weight-medium"
         dense
       >
-        <div class="q-gutter-y-sm q-mt-sm">
-
+        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
           <q-checkbox
             v-bind="attr.input.basic"
             v-model="form.stock_is_automatic"
             label="Utilizar estoque automático"
             class="checkbox-fix"
-            style="margin-top: -16px; margin-bottom: -16px"
+            style="margin-bottom: -16px"
           />
+
+          <q-banner
+            v-if="form.stock_is_automatic"
+            v-bind="attr.banner"
+          >
+            A quantidade em estoque deste produto será ajustado automáticamente
+            após a venda.
+          </q-banner>
 
           <q-input
             v-bind="attr.input.basic"
@@ -294,12 +301,12 @@ onMounted(async () => {
 
       <q-expansion-item
         v-model="imageExpanded"
-        class="q-mt-md"
         label="Imagem/Foto"
-        header-class="text-primary text-weight-medium q-px-none"
+        class="b-1px q-mt-md"
+        header-class="text-primary text-weight-medium"
         dense
       >
-        <div class="q-gutter-y-sm q-mt-sm">
+        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
           <q-file
             ref="file"
             v-model="image"
@@ -332,7 +339,17 @@ onMounted(async () => {
               </div>
             </q-img>
           </q-card>
+        </div>
+      </q-expansion-item>
 
+      <q-expansion-item
+        v-model="advancedExpanded"
+        label="Avançado"
+        class="b-1px q-mt-md"
+        header-class="text-primary text-weight-medium"
+        dense
+      >
+        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.brand"
@@ -345,17 +362,7 @@ onMounted(async () => {
             label="Descrição do produto"
             autogrow
           />
-        </div>
-      </q-expansion-item>
 
-      <q-expansion-item
-        v-model="advancedExpanded"
-        class="q-mt-md"
-        label="Avançado"
-        header-class="text-primary text-weight-medium q-px-none"
-        dense
-      >
-        <div class="q-gutter-y-sm q-mt-sm">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.code_bar"
@@ -373,7 +380,7 @@ onMounted(async () => {
       <q-checkbox
         v-bind="attr.input.basic"
         v-model="form.active"
-        label="Ativo"
+        label="Produto ativo"
         class="checkbox-fix"
       />
 

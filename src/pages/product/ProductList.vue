@@ -95,8 +95,8 @@ onMounted(() => handleGetProducts());
             >
               {{ product.name }}
             </span>
-            <span class="col-2 text-right">
-              <span v-if="product.stock_is_automatic">
+            <span class="col-2 text-right"  v-if="product.stock_is_automatic">
+              <span>
                 {{ product.stock_amount }}
               </span>
               <span style="margin-left: 5px">

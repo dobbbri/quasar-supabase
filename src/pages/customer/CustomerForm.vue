@@ -200,12 +200,12 @@ onMounted(() => {
 
       <q-expansion-item
         v-model="adressExpanded"
-        class="q-mt-md"
         label="Endereço"
-        header-class="text-primary text-weight-medium q-px-none"
+        class="b-1px q-mt-md rounded-borders-sm"
+        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders-sm"
         dense
       >
-        <div class="q-gutter-y-sm q-mt-sm">
+        <div class="q-gutter-y-sm q-pb-sm q-pa-sm">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.zip_code"

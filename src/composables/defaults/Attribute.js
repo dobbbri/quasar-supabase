@@ -24,7 +24,7 @@ export default function useAttribute() {
         dense: true,
         outlined: true,
         bgColor: 'blue-grey-1',
-        class: 'q-mb-sm q-py-sx'
+        class: 'q-mb-sm q-py-sx rounded-borders-sm'
       }
     },
 
