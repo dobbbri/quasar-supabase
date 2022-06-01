@@ -65,6 +65,11 @@ const routes = [
         component: () => import('pages/product/ProductForm.vue')
       },
       {
+        path: '/stock-form',
+        name: 'stock-form',
+        component: () => import('pages/product/stock/StockForm.vue')
+      },
+      {
         path: '/customer-list',
         name: 'customer-list',
         component: () => import('pages/customer/CustomerList.vue')

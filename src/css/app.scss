@@ -4,6 +4,9 @@
 //   height: 1;
 //   line-height: 1;
 // }
+.my-btn .q-btn__content.justify-start {
+  justify-content: space-between;
+}
 
 .b-1px {
   border-radius: $generic-border-radius;

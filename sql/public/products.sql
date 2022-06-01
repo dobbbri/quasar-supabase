@@ -12,7 +12,7 @@ CREATE TABLE public.products (
 	category_id int8 NULL,
 	price_to_buy numeric NULL,
 	price_to_sell numeric NULL,
-	stock_is_automatic bool NULL DEFAULT false,
+	has_stock_control bool NULL DEFAULT false,
 	stock_amount numeric NULL,
 	stock_minimum_amount numeric NULL,
 	measure_unit varchar NULL,

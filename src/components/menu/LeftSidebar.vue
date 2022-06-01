@@ -15,10 +15,9 @@ const userStore = useUserStore();
     class="bg-grey-2"
   >
     <q-toolbar class="bg-blue-grey-4">
-      <q-toolbar-title class="q-ml-xs text-white text-title"
-        >
-        Menu </q-toolbar-title
-      >
+      <q-toolbar-title class="q-ml-xs text-white text-title">
+        Menu
+      </q-toolbar-title>
     </q-toolbar>
 
     <q-list class="text-dark">
@@ -48,3 +47,12 @@ const userStore = useUserStore();
     </q-list>
   </q-drawer>
 </template>
+
+<style
+  lang="scss"
+  scoped
+>
+.material-symbols-rounded {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+}
+</style>

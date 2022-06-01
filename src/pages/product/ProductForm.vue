@@ -9,10 +9,12 @@ import {
 } from 'src/composables';
 import { PageHeader, PageFooter } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
+import { useStockStore } from 'src/stores/stockStore';
 
 const router = useRouter();
 const route = useRoute();
 const store = useSettingsStore();
+const stockStore = useStockStore();
 
 const {
   loading,
@@ -38,7 +40,7 @@ const file = ref(null);
 const form = ref({
   name: '',
   category_id: '',
-  stock_is_automatic: false,
+  has_stock_control: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
   measure_unit: 'un.',
@@ -68,47 +70,11 @@ const loadImage = () => {
   }
 };
 
-const stockForm = ref({
-  product_id: 0,
-  amount: 0,
-  type: ''
-});
-
-const stockAmountRead = ref(0);
-const showStockForm = ref(false);
-const stockFormTitle = ref('');
-const stockFormAction = ref('');
-const stockFormColor = ref('');
-
-const showStockModal = (action) => {
-  stockForm.value.type = action;
-  if (action == '+') {
-    stockFormTitle.value = 'Entrada de Produtos';
-    stockFormAction.value = 'Adicionar';
-    stockFormColor.value = 'text-positive';
-  } else if (action == '-') {
-    stockFormTitle.value = 'Saida de Produtos';
-    stockFormAction.value = 'Remover';
-    stockFormColor.value = 'text-negative';
-  } else {
-    stockFormTitle.value = 'Corrigir Quantidade';
-    stockFormAction.value = 'Ajustar';
-    stockFormColor.value = 'text-info';
-  }
-  showStockForm.value = true;
-};
-
-const updateStockAmount = () => {
-  if (stockForm.value.type == '+') {
-    form.value.stock_amount =
-      parseInt(stockAmountRead.value) + parseInt(stockForm.value.amount);
-  } else if (stockForm.value.type == '-') {
-    form.value.stock_amount =
-      parseInt(stockAmountRead.value) - parseInt(stockForm.value.amount);
-  } else {
-    form.value.stock_amount = stockForm.value.amount;
-  }
-};
+// const updateStock = () => {
+//   form.value.has_stock_control = stockStore.product.isAutomatic;
+//   form.value.stock_amount = stockStore.product.newAmount;
+//   form.value.stock_minimum_amount = stockStore.product.minimumAmount;
+// };
 
 const handleSubmit = async () => {
   try {
@@ -150,15 +116,18 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
-    stockAmountRead.value = form.value.stock_amount;
     if (form.value.image_name) {
       const forceUpdate = '?t=' + new Date().getTime();
       newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
       imageExpanded.value = true;
     }
-    if (form.value.code_bar || form.value.code_internal)
+    if (form.value.code_bar || form.value.code_internal) {
       advancedExpanded.value = true;
-    stockExpanded.value = form.value.stock_is_automatic;
+    }
+    stockExpanded.value = form.value.has_stock_control;
+    //
+    stockStore.productAmount = form.value.stock_amount;
+    stockStore.productMinimumAmount = form.value.stock_minimum_amount;
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }
@@ -299,78 +268,57 @@ onMounted(async () => {
         header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
         dense
       >
-        <div class="q-gutter-y-sm q-pa-md">
+        <div class="q-pa-md q-pt-none">
           <q-checkbox
             v-bind="attr.input.basic"
-            v-model="form.stock_is_automatic"
-            label="Utilizar estoque automático"
+            v-model="form.has_stock_control"
+            label="Contolar quantidade em estoque"
             class="checkbox-fix"
-            style="margin-bottom: -16px"
           />
 
-          <q-banner
-            v-if="form.stock_is_automatic"
-            v-bind="attr.banner"
-          >
-            A quantidade em estoque deste produto será ajustado automáticamente
-            após cada venda.
-          </q-banner>
+          <!-- <q-input -->
+          <!--   v-bind="attr.input.basic" -->
+          <!--   v-model="form.stock_amount" -->
+          <!--   label="Quantidade em Estoque" -->
+          <!--   mask="#" -->
+          <!--   fill-mask="0" -->
+          <!--   reverse-fill-mask -->
+          <!--   readonly -->
+          <!-- /> -->
+          <!--  -->
+          <!-- <q-input -->
+          <!--   v-bind="attr.input.basic" -->
+          <!--   v-model="form.stock_minimum_amount" -->
+          <!--   label="Quantidade mínima em estoque" -->
+          <!--   mask="#" -->
+          <!--   fill-mask="0" -->
+          <!--   reverse-fill-mask -->
+          <!--   readonly -->
+          <!-- /> -->
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.stock_minimum_amount"
-            :disable="!form.stock_is_automatic"
-            label="Quantidade mínima em estoque"
-            mask="#"
-            fill-mask="0"
-            reverse-fill-mask
+          <q-btn
+            v-if="form.has_stock_control"
+            v-bind="attr.btn.basic"
+            label="Controlar Estoque"
+            color="primary"
+            icon-right="sym_r_arrow_forward_ios"
+            flat
+            align="left"
+            class="full-width my-btn"
+            :to="{ name: 'stock-form' }"
           />
 
-          <div class="q-px-md q-pb-md bg-indigo-1 rounded-borders">
-            <q-input
-              v-bind="attr.input.basic"
-              v-model="form.stock_amount"
-              :disable="!form.stock_is_automatic"
-              label="Quantidade em estoque"
-              mask="#"
-              fill-mask="0"
-              reverse-fill-mask
-              readonly
-            />
-
-            <div class="q-mt-none row q-gutter-md">
-              <q-btn
-                :disable="!form.stock_is_automatic"
-                v-bind="attr.btn.basic"
-                label="Entrada"
-                unelevated
-                color="positive"
-                text-color="white"
-                class="col"
-                @click="showStockModal('+')"
-              />
-              <q-btn
-                :disable="!form.stock_is_automatic"
-                v-bind="attr.btn.basic"
-                label="Saida"
-                unelevated
-                color="negative"
-                text-color="white"
-                class="col"
-                @click="showStockModal('-')"
-              />
-              <q-btn
-                :disable="!form.stock_is_automatic"
-                v-bind="attr.btn.basic"
-                label="Ajustar"
-                unelevated
-                color="info"
-                text-color="white"
-                class="col"
-                @click="showStockModal('=')"
-              />
-            </div>
-          </div>
+          <q-btn
+            v-if="form.has_stock_control"
+            v-bind="attr.btn.basic"
+            label="Lista de Movimentação do Estoque"
+            color="primary"
+            icon-right="sym_r_arrow_forward_ios"
+            flat
+            align="left"
+            class="full-width my-btn"
+            :to="{ name: 'stock-form' }"
+          />
         </div>
       </q-expansion-item>
 
@@ -482,54 +430,5 @@ onMounted(async () => {
         />
       </page-footer>
     </q-page>
-  </q-form>
-
-  <q-dialog
-    v-model="showStockForm"
-    persistent
-  >
-    <q-card style="min-width: 350px">
-      <q-card-section class="q-ma-none q-pb-none q-pt-sm q-px-md">
-        <div class="text-h6">{{ stockFormTitle }}</div>
-      </q-card-section>
-
-      <q-card-section class="q-ma-none q-pa-none">
-        <q-input
-          v-bind="attr.input.basic"
-          v-model="stockForm.amount"
-          class="q-pa-md"
-          label="Quantidade"
-          mask="#"
-          fill-mask="0"
-          reverse-fill-mask
-          autofocus
-        />
-      </q-card-section>
-
-      <q-card-actions
-        align="right"
-        class="text-primary"
-      >
-        <q-btn
-          v-close-popup
-          class="text-dark"
-          flat
-          no-caps
-          label="Cancelar"
-        />
-        <q-btn
-          v-close-popup
-          :class="stockFormColor"
-          flat
-          no-caps
-          :label="stockFormAction"
-          @click="updateStockAmount"
-        />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-
-  <q-form>
-    <div class="shadow-8"></div>
   </q-form>
 </template>

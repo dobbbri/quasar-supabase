@@ -30,7 +30,7 @@ const handleEditProduct = (product) => {
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      'id, name, categories:category_id ( name, active ), stock_is_automatic, stock_amount, measure_unit, price_to_sell, brand, active'
+      'id, name, categories:category_id ( name, active ), has_stock_controlk, stock_amount, measure_unit, price_to_sell, brand, active'
     );
   } catch (error) {
     notify.error('Erro ao obter os produtos.', error);
@@ -95,7 +95,10 @@ onMounted(() => handleGetProducts());
             >
               {{ product.name }}
             </span>
-            <span class="col-2 text-right"  v-if="product.stock_is_automatic">
+            <span
+              v-if="product.has_stock_controlk"
+              class="col-2 text-right"
+            >
               <span>
                 {{ product.stock_amount }}
               </span>

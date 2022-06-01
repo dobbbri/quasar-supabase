@@ -5,7 +5,7 @@ import { PageHeader } from 'src/components';
 
 const form = ref({
   dark_mode: false,
-  stock_is_automatic: false
+  has_stock_controlk: false
 });
 const $q = useQuasar();
 
@@ -47,7 +47,7 @@ onMounted(() => {
         </q-item-section>
         <q-item-section avatar>
           <q-toggle
-            v-model="form.stock_is_automatic"
+            v-model="form.has_stock_controlk"
             val="picture"
           />
         </q-item-section>

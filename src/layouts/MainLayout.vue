@@ -16,13 +16,8 @@ import { LeftSidebar } from 'src/components';
       <q-page-container class="bg-white">
         <router-view
           :key="$route.fullPath"
-          v-slot="{ Component }"
           style="overflow: hidden"
-        >
-          <keep-alive>
-            <component :is="Component" />
-          </keep-alive>
-        </router-view>
+        />
       </q-page-container>
     </q-layout>
   </div>

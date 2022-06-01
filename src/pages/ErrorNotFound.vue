@@ -19,7 +19,6 @@
         unelevated
         to="/"
         label="Go Home"
-        
       />
     </div>
   </div>
