@@ -24,20 +24,21 @@ const setMask = (e) => {
 };
 const optionsDocumentTypes = ref([]);
 const adressExpanded = ref(false);
+const detailsExpanded = ref(false);
 
 const form = ref({
   name: '',
   phone_1: '',
   phone_2: '',
-  document_type: 'CI',
-  document_number: '',
   email: '',
-  notes: '',
   street: '',
   district: '',
   city: '',
   state: '',
   zip_code: '',
+  document_type: 'CI',
+  document_number: '',
+  notes: '',
   active: true
 });
 
@@ -171,31 +172,10 @@ onMounted(() => {
         @keyup="setMask"
       />
 
-      <q-select
-        v-bind="attr.input.basic"
-        v-model="form.document_type"
-        label="Tipo de documento"
-        :options="optionsDocumentTypes"
-        option-value="abbr"
-        option-label="name"
-        :option-disable="
-          (opt) => (Object(opt) === opt ? opt.active === false : false)
-        "
-        emit-value
-        map-options
-      />
-
       <q-input
         v-bind="attr.input.basic"
-        v-model="form.document_number"
-        label="Número do documento"
-      />
-
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.notes"
-        label="informações do cliente"
-        autogrow
+        v-model="form.email"
+        label="Email"
       />
 
       <q-expansion-item
@@ -237,6 +217,43 @@ onMounted(() => {
             v-model="form.state"
             mask="AA"
             label="UF(estado)"
+          />
+        </div>
+      </q-expansion-item>
+
+      <q-expansion-item
+        v-model="detailsExpanded"
+        label="Detalhes"
+        class="b-1px q-mt-md"
+        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
+        dense
+      >
+        <div class="q-gutter-y-sm q-pb-md q-pa-md">
+          <q-select
+            v-bind="attr.input.basic"
+            v-model="form.document_type"
+            label="Tipo de documento"
+            :options="optionsDocumentTypes"
+            option-value="abbr"
+            option-label="name"
+            :option-disable="
+              (opt) => (Object(opt) === opt ? opt.active === false : false)
+            "
+            emit-value
+            map-options
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.document_number"
+            label="Número do documento"
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.notes"
+            label="Anotações do cliente"
+            autogrow
           />
         </div>
       </q-expansion-item>
