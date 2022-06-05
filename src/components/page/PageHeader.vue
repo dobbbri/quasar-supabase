@@ -13,7 +13,7 @@ const userStore = useUserStore();
     class="bg-primary text-white"
     style="z-index: 1000"
   >
-    <q-toolbar class="justify-between">
+    <q-toolbar>
       <div>
         <slot name="left">
           <q-btn
@@ -27,10 +27,10 @@ const userStore = useUserStore();
           </q-btn>
         </slot>
       </div>
-      <q-toolbar-title class="text-title">
+      <div class="text-title q-ml-sm">
         <slot name="title" />
-      </q-toolbar-title>
-      <div>
+      </div>
+      <div class="q-ml-auto">
         <slot name="right" />
       </div>
     </q-toolbar>
