@@ -181,11 +181,11 @@ onMounted(() => {
       <q-expansion-item
         v-model="adressExpanded"
         label="Endereço"
-        class="b-1px q-mt-md"
-        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
+        header-class="bb-1px text-title text-primary"
+        class="q-mt-md"
         dense
       >
-        <div class="q-gutter-y-sm q-pb-md q-pa-md">
+        <div class="q-gutter-y-sm q-pb-md">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.zip_code"
@@ -224,11 +224,11 @@ onMounted(() => {
       <q-expansion-item
         v-model="detailsExpanded"
         label="Detalhes"
-        class="b-1px q-mt-md"
-        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
+        header-class="bb-1px text-title text-primary"
+        class="q-mt-md"
         dense
       >
-        <div class="q-gutter-y-sm q-pb-md q-pa-md">
+        <div class="q-gutter-y-sm q-pb-md">
           <q-select
             v-bind="attr.input.basic"
             v-model="form.document_type"

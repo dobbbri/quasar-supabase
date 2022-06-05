@@ -1,29 +1,20 @@
 // app global css in SCSS form
-// row,
-// col {
-//   height: 1;
-//   line-height: 1;
-// }
+
 .my-btn .q-btn__content.justify-start {
   justify-content: space-between;
 }
 
-.b-1px {
-  border-radius: $generic-border-radius;
-  border: 1px solid $primary;
+.bb-1px {
+  border-bottom: 1px solid $primary;
 }
 
 .text-title {
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .checkbox-fix {
   margin-left: -8px;
-}
-
-.q-toolbar__title {
-  font-size: 16px;
-  font-weight: 500;
 }
 
 .q-field--float .q-field__label {
