@@ -23,7 +23,8 @@ onMounted(() => handleLogout());
 <template>
   <q-page padding>
     <page-header>
-      <template #title>Endless</template>
+      <template #left></template>
+      <template #title></template>
     </page-header>
   </q-page>
 </template>

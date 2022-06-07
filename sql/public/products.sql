@@ -12,6 +12,8 @@ CREATE TABLE public.products (
 	category_id int8 NULL,
 	price_to_buy numeric NULL,
 	price_to_sell numeric NULL,
+        price_profit int8 NULL,
+        price_markup int8 NULL,
 	has_stock_control bool NULL DEFAULT false,
 	stock_amount numeric NULL,
 	stock_minimum_amount numeric NULL,
@@ -20,6 +22,7 @@ CREATE TABLE public.products (
 	code_internal varchar NULL,
 	description text NULL,
 	image_name varchar NULL,
+        active bool NULL DEFAULT true,
 	CONSTRAINT products_pkey PRIMARY KEY (id)
 );
 

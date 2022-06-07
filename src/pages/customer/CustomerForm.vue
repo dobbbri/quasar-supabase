@@ -179,11 +179,9 @@ onMounted(() => {
       />
 
       <q-expansion-item
+        v-bind="attr.expansion"
         v-model="adressExpanded"
         label="Endereço"
-        header-class="bb-1px text-title text-primary"
-        class="q-mt-md"
-        dense
       >
         <div class="q-gutter-y-sm q-pb-md">
           <q-input
@@ -222,11 +220,9 @@ onMounted(() => {
       </q-expansion-item>
 
       <q-expansion-item
+        v-bind="attr.expansion"
         v-model="detailsExpanded"
         label="Detalhes"
-        header-class="bb-1px text-title text-primary"
-        class="q-mt-md"
-        dense
       >
         <div class="q-gutter-y-sm q-pb-md">
           <q-select

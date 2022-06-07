@@ -23,26 +23,31 @@ import { LeftSidebar } from 'src/components';
   </div>
 </template>
 
-<style lang="sass">
-.app
-  width: 100%
-  height: 100%
-  padding-top: 5px
-  padding-bottom: 5px
-  background-image: url(../assets/hero-bg.svg)
-  background-position: top center
-  background-repeat: no-repeat
-  &-layout
-    margin: 0 auto
-    z-index: 4000
-    height: 100%
-    width: 90%
-    max-width: 950px
-    border-radius: $generic-border-radius
-@media (max-width: 850px)
-  .app
-    padding: 0
-    &-layout
-      width: 100%
-      border-radius: 0
+<style lang="scss">
+.app {
+  width: 100%;
+  height: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background-image: url(../assets/hero-bg.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  &-layout {
+    margin: 0 auto;
+    z-index: 4000;
+    height: 100%;
+    width: 90%;
+    max-width: 768px;
+    border-radius: $generic-border-radius;
+  }
+}
+@media (max-width: 768px) {
+  .app {
+    padding: 0;
+    &-layout {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+} ;
 </style>

@@ -16,15 +16,16 @@ export default function useAttribute() {
     input: {
       basic: {
         hideBottomSpace: true,
+        outlined: false,
         optionsDense: true
       },
       search: {
         rounded: false,
         clearable: true,
         dense: true,
-        outlined: true,
+        outlined: false,
         bgColor: 'blue-grey-1',
-        class: 'q-mb-sm q-py-sx rounded-borders-sm'
+        class: 'no-borders q-mb-sm q-py-sx rounded-borders-sm'
       }
     },
 
@@ -36,6 +37,13 @@ export default function useAttribute() {
     banner: {
       dense: true,
       class: 'q-px-md bg-blue-grey-1'
+    },
+
+    expansion: {
+      headerClass: 'text-title text-primary bg-indigo-2',
+      headerStyle: 'margin: 0 -16px',
+      class: 'q-mt-lg q-px-md q-pb-sm bg-grey-2',
+      dense: true
     }
   };
 

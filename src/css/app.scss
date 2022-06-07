@@ -5,7 +5,7 @@
 }
 
 .bb-1px {
-  border-bottom: 1px solid $primary;
+  border-top: 1px solid $dark;
 }
 
 .text-title {
@@ -34,4 +34,10 @@
   line-height: 24px;
   padding-top: 28px;
   padding-bottom: 4px;
+}
+
+.q-select__dropdown-icon {
+  margin-top: 22px;
+  cursor: pointer;
+  transition: transform 0.28s;
 }

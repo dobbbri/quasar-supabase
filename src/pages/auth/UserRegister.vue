@@ -34,10 +34,13 @@ const handleSubmit = async () => {
 <template>
   <q-page padding>
     <page-header class="text-center">
-      <template #title>Criar sua conta</template>
+      <template #left></template>
+      <template #title>
+        <div class="absolute-center">Criar sua conta</div>
+      </template>
     </page-header>
 
-    <div class="row justify-center">
+    <div class="row justify-center q-mt-lg">
       <q-form
         v-bind="attr.form"
         @submit.prevent="handleSubmit"

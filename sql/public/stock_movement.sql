@@ -9,8 +9,8 @@ CREATE TABLE public.stock_movement (
 	user_id uuid NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	product_id int8 NULL,
-	quantity numeric NULL,
-	stock_movement_type varchar NULL,
+	amount numeric NULL,
+	type varchar NULL,
 	CONSTRAINT stock_pkey PRIMARY KEY (id)
 );
 

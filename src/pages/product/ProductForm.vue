@@ -38,25 +38,28 @@ const newImage = ref(null);
 const image = ref(null);
 const file = ref(null);
 const form = ref({
-  name: '',
   category_id: '',
+  name: '',
+  description: '',
+  price_to_sell: 0,
+  measure_unit: 'un.',
+  price_to_buy: 0,
+  price_profit: 0,
+  price_markup: 0,
   has_stock_control: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
-  measure_unit: 'un.',
-  price_to_buy: 0,
-  price_to_sell: 0,
+  brand: '',
   code_bar: '',
   code_internal: '',
-  description: '',
-  brand: '',
-  active: true,
-  image_name: null
+  image_name: null,
+  active: true
 });
 
+const priceExpanded = ref(true);
 const stockExpanded = ref(false);
 const imageExpanded = ref(false);
-const advancedExpanded = ref(false);
+const detailExpanded = ref(false);
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 
@@ -121,9 +124,7 @@ const handleGetProduct = async () => {
       newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
       imageExpanded.value = true;
     }
-    if (form.value.code_bar || form.value.code_internal) {
-      advancedExpanded.value = true;
-    }
+    detailExpanded.value = true;
     stockExpanded.value = form.value.has_stock_control;
     //
     stockStore.productAmount = form.value.stock_amount;
@@ -185,14 +186,6 @@ onMounted(async () => {
       padding
       class="q-gutter-y-sm"
     >
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.name"
-        label="Nome"
-        :rules="[(val) => val && val.length > 3]"
-        error-message="O nome do produto deve ser informado!"
-      />
-
       <q-select
         v-bind="attr.input.basic"
         v-model="form.category_id"
@@ -223,14 +216,10 @@ onMounted(async () => {
 
       <q-input
         v-bind="attr.input.basic"
-        v-model="form.price_to_buy"
-        label="Preço de compra"
-        prefix="R$"
-        mask="#.##"
-        fill-mask="0"
-        reverse-fill-mask
-        :rules="[(val) => !!val]"
-        error-message="O preço de compra do produto deve ser informado"
+        v-model="form.name"
+        label="Nome"
+        :rules="[(val) => val && val.length > 3]"
+        error-message="O nome do produto deve ser informado!"
       />
 
       <q-input
@@ -259,16 +248,67 @@ onMounted(async () => {
         map-options
         :rules="[(val) => !!val]"
         error-message="Uma unidade de medida deve ser selecionada"
-      />
+      >
+        <template #option="scope">
+          <q-item v-bind="scope.itemProps">
+            <q-item-section>
+              <q-item-label>{{ scope.opt.abbr }}</q-item-label>
+              <q-item-label
+                style="magin-top: -3px"
+                caption
+                >{{ scope.opt.name }}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+        </template>
+      </q-select>
 
       <q-expansion-item
+        v-bind="attr.expansion"
+        v-model="priceExpanded"
+        label="Custo e lucro"
+      >
+        <div class="q-gutter-y-sm q-pb-md">
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.price_to_buy"
+            label="Preço de custo"
+            prefix="R$"
+            mask="#.##"
+            fill-mask="0"
+            reverse-fill-mask
+            :rules="[(val) => !!val]"
+            error-message="O preço de custo do produto deve ser informado"
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.price_profit"
+            label="lucro"
+            suffix="%"
+            mask="#"
+            fill-mask="0"
+            reverse-fill-mask
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.price_markup"
+            label="Markup"
+            suffix="%"
+            mask="#"
+            fill-mask="0"
+            reverse-fill-mask
+          />
+        </div>
+      </q-expansion-item>
+
+      <q-expansion-item
+        v-bind="attr.expansion"
         v-model="stockExpanded"
         label="Estoque"
-        class="b-1px q-mt-md"
-        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
-        dense
       >
-        <div class="q-pa-md q-pt-none">
+        <div class="q-gutter-y-sm q-pb-md">
           <q-checkbox
             v-bind="attr.input.basic"
             v-model="form.has_stock_control"
@@ -323,13 +363,11 @@ onMounted(async () => {
       </q-expansion-item>
 
       <q-expansion-item
-        v-model="imageExpanded"
-        label="Imagem/Foto"
-        class="b-1px q-mt-md"
-        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
-        dense
+        v-bind="attr.expansion"
+        v-model="detailExpanded"
+        label="Avançado"
       >
-        <div class="q-gutter-y-sm q-pb-md q-pa-md">
+        <div class="q-gutter-y-sm q-pb-md">
           <q-file
             ref="file"
             v-model="image"
@@ -337,53 +375,38 @@ onMounted(async () => {
             accept="image/*"
             @update:model-value="loadImage()"
           />
-          <q-card
-            flat
-            bordered
-            style="max-height: 150px; max-width: 150px"
-          >
+          <div style="max-height: 200px; max-width: 200px">
             <q-img
               loading="lazy"
               :src="newImage"
               fit="cover"
+              style="max-height: 200px; max-width: 200px"
               spinner-color="primary"
             >
-              <div
-                class="absolute-bottom"
-                style="padding: 0"
-              >
+              <div class="absolute-bottom">
                 <q-btn
                   flat
-                  class="full-width q-py-sm"
+                  no-wrap
+                  class="full-width q-pa-xs"
                   icon="sym_r_add_circle"
-                  label="Adicionar"
+                  label="Adicionar Imagem"
                   @click="handleSelectImage()"
                 />
               </div>
             </q-img>
-          </q-card>
-        </div>
-      </q-expansion-item>
-
-      <q-expansion-item
-        v-model="advancedExpanded"
-        label="Avançado"
-        class="b-1px q-mt-md"
-        header-class="text-primary bg-indigo-1 text-weight-medium rounded-borders"
-        dense
-      >
-        <div class="q-gutter-y-sm q-pb-md q-pa-md">
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.brand"
-            label="Marca"
-          />
+          </div>
 
           <q-input
             v-bind="attr.input.basic"
             v-model="form.description"
             label="Descrição do produto"
             autogrow
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.brand"
+            label="Marca"
           />
 
           <q-input

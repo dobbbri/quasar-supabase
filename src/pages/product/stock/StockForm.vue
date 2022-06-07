@@ -93,7 +93,6 @@ const ajustarLabel = (type) => {
       padding
       class="q-gutter-y-sm"
     >
-
       <q-select
         v-bind="attr.input.basic"
         v-model="stockForm.type"

@@ -10,7 +10,7 @@ export const useStockStore = defineStore('stockStore', {
   }),
 
   actions: {
-    setProduct( amount, minimumAmount, newAmount) {
+    setProduct(amount, minimumAmount, newAmount) {
       this.productAmount = amount;
       this.productMinimumAmount = minimumAmount;
       this.productNewAmount = newAmount;
