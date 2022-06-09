@@ -58,7 +58,6 @@ const price_markup = ref(0);
 
 const priceExpanded = ref(false);
 const stockExpanded = ref(false);
-const imageExpanded = ref(false);
 const detailExpanded = ref(false);
 
 const isEditMode = computed(() => (route.params.id ? true : false));
@@ -371,12 +370,20 @@ onMounted(async () => {
             accept="image/*"
             @update:model-value="loadImage()"
           />
-          <div style="max-height: 200px; max-width: 200px">
+          <div
+            style="
+              max-height: 200px;
+              max-width: 200px;
+              border: 1px solid rgba(0, 0, 0, 0.3);
+            "
+            class="rounded-borders"
+          >
             <q-img
               loading="lazy"
               :src="newImage"
               fit="cover"
               style="max-height: 200px; max-width: 200px"
+              class="rounded-borders overflow-hidden"
               spinner-color="primary"
             >
               <div class="absolute-bottom">
