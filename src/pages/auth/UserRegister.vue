@@ -10,6 +10,8 @@ const { loading, register } = useAuth();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
+const isPwd = ref(true);
+
 const form = ref({
   email: 'sergiodobri@gmail.com',
   password: '123456',
@@ -40,38 +42,46 @@ const handleSubmit = async () => {
       </template>
     </page-header>
 
-    <div class="row justify-center q-mt-lg">
+    <div class="line row justify-center q-mt-lg">
       <q-form
         v-bind="attr.form"
         @submit.prevent="handleSubmit"
       >
-        <q-input
-          v-bind="attr.input.basic"
-          v-model="form.email"
-          label="Email"
-          lazy-rules
-          :rules="['email']"
-          error-message="O email deve ser válido!"
-          type="email"
-        />
+        <div v-bind="attr.lineSpacing">
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.email"
+            label="Email"
+            lazy-rules
+            :rules="['email']"
+            error-message="O email deve ser válido!"
+            type="email"
+          />
 
-        <q-input
-          v-bind="attr.input.basic"
-          v-model="form.password"
-          label="Senha"
-          lazy-rules
-          :rules="[(val) => val && val.length >= 6]"
-          error-message="A senha deve ser possuir 6 ou mais caracteres"
-        />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.password"
+            label="Senha"
+            :type="isPwd ? 'password' : 'text'"
+            lazy-rules
+            :rules="[(val) => val && val.length > 0]"
+            error-message="A senha deve ser informada!"
+          >
+            <template #append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
 
-        <div>
           <div>
             <q-checkbox
               v-bind="attr.input.basic"
               v-model="form.privacy_policy"
               label="Concordo com a&nbsp;"
               color="primary"
-              class="checkbox-fix"
             />
             <a
               href=""
@@ -87,7 +97,6 @@ const handleSubmit = async () => {
               v-model="form.terms_of_use"
               label="Concordo com os&nbsp;"
               color="primary"
-              class="checkbox-fix"
             />
             <a
               href=""

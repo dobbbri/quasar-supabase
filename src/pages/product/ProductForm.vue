@@ -44,8 +44,6 @@ const form = ref({
   price_to_sell: 0,
   measure_unit: 'un.',
   price_to_buy: 0,
-  price_profit: 0,
-  price_markup: 0,
   has_stock_control: false,
   stock_amount: 0,
   stock_minimum_amount: 0,
@@ -55,6 +53,9 @@ const form = ref({
   image_name: null,
   active: true
 });
+
+const price_profit = ref(0);
+const price_markup = ref(0);
 
 const priceExpanded = ref(true);
 const stockExpanded = ref(false);
@@ -184,7 +185,7 @@ onMounted(async () => {
 
     <q-page
       padding
-      class="q-gutter-y-sm"
+      v-bind="attr.lineSpacing"
     >
       <q-select
         v-bind="attr.input.basic"
@@ -268,7 +269,7 @@ onMounted(async () => {
         v-model="priceExpanded"
         label="Custo e lucro"
       >
-        <div class="q-gutter-y-sm q-pb-md">
+        <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.price_to_buy"
@@ -283,17 +284,18 @@ onMounted(async () => {
 
           <q-input
             v-bind="attr.input.basic"
-            v-model="form.price_profit"
+            v-model="price_profit"
             label="lucro"
             suffix="%"
             mask="#"
             fill-mask="0"
             reverse-fill-mask
+            @click="calculateProfit()"
           />
 
           <q-input
             v-bind="attr.input.basic"
-            v-model="form.price_markup"
+            v-model="price_markup"
             label="Markup"
             suffix="%"
             mask="#"
@@ -308,12 +310,11 @@ onMounted(async () => {
         v-model="stockExpanded"
         label="Estoque"
       >
-        <div class="q-gutter-y-sm q-pb-md">
+        <div v-bind="attr.lineSpacing">
           <q-checkbox
             v-bind="attr.input.basic"
             v-model="form.has_stock_control"
             label="Contolar quantidade em estoque"
-            class="checkbox-fix"
           />
 
           <!-- <q-input -->
@@ -367,7 +368,7 @@ onMounted(async () => {
         v-model="detailExpanded"
         label="Avançado"
       >
-        <div class="q-gutter-y-sm q-pb-md">
+        <div v-bind="attr.lineSpacing">
           <q-file
             ref="file"
             v-model="image"
@@ -427,7 +428,6 @@ onMounted(async () => {
         v-bind="attr.input.basic"
         v-model="form.active"
         label="Produto ativo"
-        class="checkbox-fix"
       />
 
       <page-footer>

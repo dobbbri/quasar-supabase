@@ -30,7 +30,7 @@ const handleEditProduct = (product) => {
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      'id, name, categories:category_id ( name, active ), has_stock_control, stock_amount, measure_unit, price_to_sell, brand, active'
+      'id, name, categories:category_id ( name, active ), has_stock_control, stock_amount, measure_unit, price_to_sell, active'
     );
   } catch (error) {
     notify.error('Erro ao obter os produtos.', error);

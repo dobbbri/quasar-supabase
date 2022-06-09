@@ -23,12 +23,14 @@ const setMask = (e) => {
   mask.value = e.target.value.length > 13 ? '(##)#####-####' : '(##)####-#####';
 };
 const optionsDocumentTypes = ref([]);
+const emailExpanded = ref(true);
 const adressExpanded = ref(false);
 const detailsExpanded = ref(false);
 
 const form = ref({
   name: '',
   phone_1: '',
+  phone_1_has_whatsapp: false,
   phone_2: '',
   email: '',
   street: '',
@@ -36,7 +38,6 @@ const form = ref({
   city: '',
   state: '',
   zip_code: '',
-  document_type: 'CI',
   document_number: '',
   notes: '',
   active: true
@@ -95,7 +96,6 @@ const handleRemoveCustomer = async (customer) => {
 const handleGetCustomer = async () => {
   try {
     form.value = await getCustomer(route.params.id);
-    if (form.value.zip_code) adressExpanded.value = true;
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }
@@ -142,7 +142,7 @@ onMounted(() => {
 
     <q-page
       padding
-      class="q-gutter-y-sm"
+      v-bind="attr.lineSpacing"
     >
       <q-input
         v-bind="attr.input.basic"
@@ -152,38 +152,61 @@ onMounted(() => {
         error-message="O nome do cliente deve ser informado!"
       />
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.phone_1"
-        label="Celular/Whatsapp"
-        type="tel"
-        :mask="mask"
-        :rules="[(val) => !!val]"
-        error-message="O telefone do cliente deve ser informado!"
-        @keyup="setMask"
-      />
+      <q-expansion-item
+        v-bind="attr.expansion"
+        v-model="emailExpanded"
+        label="Telefones e Email"
+      >
+        <div v-bind="attr.lineSpacing">
+          <div class="line row">
+            <div class="line col">
+              <q-input
+                v-bind="attr.input.basic"
+                v-model="form.phone_1"
+                label="Celular/Whatsapp"
+                type="tel"
+                :mask="mask"
+                :rules="[(val) => !!val]"
+                error-message="O telefone do cliente deve ser informado!"
+                @keyup="setMask"
+              />
+            </div>
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.phone_2"
-        label="Celular/Telefone fixo"
-        type="tel"
-        :mask="mask"
-        @keyup="setMask"
-      />
+            <div class="col-2 text-right">
+              <q-checkbox
+                v-model="form.phone_1_has_whatsapp"
+                checked-icon="whatsapp"
+                unchecked-icon="whatsapp"
+                color="green"
+                class="only-image"
+                size="xl"
+              />
+            </div>
+          </div>
 
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.email"
-        label="Email"
-      />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.phone_2"
+            label="Celular/Telefone fixo"
+            type="tel"
+            :mask="mask"
+            @keyup="setMask"
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.email"
+            label="Email"
+          />
+        </div>
+      </q-expansion-item>
 
       <q-expansion-item
         v-bind="attr.expansion"
         v-model="adressExpanded"
         label="Endereço"
       >
-        <div class="q-gutter-y-sm q-pb-md">
+        <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.zip_code"
@@ -224,21 +247,7 @@ onMounted(() => {
         v-model="detailsExpanded"
         label="Detalhes"
       >
-        <div class="q-gutter-y-sm q-pb-md">
-          <q-select
-            v-bind="attr.input.basic"
-            v-model="form.document_type"
-            label="Tipo de documento"
-            :options="optionsDocumentTypes"
-            option-value="abbr"
-            option-label="name"
-            :option-disable="
-              (opt) => (Object(opt) === opt ? opt.active === false : false)
-            "
-            emit-value
-            map-options
-          />
-
+        <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.document_number"
@@ -258,7 +267,6 @@ onMounted(() => {
         v-bind="attr.input.basic"
         v-model="form.active"
         label="Ativo"
-        class="checkbox-fix"
       />
 
       <page-footer>

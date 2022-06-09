@@ -34,21 +34,23 @@ const handleSubmit = async () => {
       </template>
     </page-header>
 
-    <div class="row justify-center q-mt-lg">
+    <div class="line row justify-center q-mt-lg">
       <q-form
         v-bind="attr.form"
         @submit.prevent="handleSubmit"
       >
-        <p class="text-h5 text-center">Troca de senha</p>
+        <div v-bind="attr.lineSpacing">
+          <p class="text-h5 text-center">Troca de senha</p>
 
-        <q-input
-          v-bind="attr.input.basic"
-          v-model="password"
-          label="Nova senha"
-          lazy-rules
-          :rules="[(val) => val && val.length >= 6]"
-          error-message="A senha deve ser possuir 6 ou mais caracteres"
-        />
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="password"
+            label="Nova senha"
+            lazy-rules
+            :rules="[(val) => val && val.length >= 6]"
+            error-message="A senha deve ser possuir 6 ou mais caracteres"
+          />
+        </div>
 
         <q-btn
           v-bind="attr.btn.basic"

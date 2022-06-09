@@ -16,16 +16,17 @@ export default function useAttribute() {
     input: {
       basic: {
         hideBottomSpace: true,
-        outlined: false,
-        optionsDense: true
+        outlined: true,
+        dense: true,
+        optionsDense: true,
+        color: 'secondary'
       },
       search: {
-        rounded: false,
         clearable: true,
         dense: true,
-        outlined: false,
-        bgColor: 'blue-grey-1',
-        class: 'no-borders q-mb-sm q-py-sx rounded-borders-sm'
+        outlined: true,
+        color: 'secondary',
+        class: 'q-mb-sm q-py-sx'
       }
     },
 
@@ -40,10 +41,11 @@ export default function useAttribute() {
     },
 
     expansion: {
-      headerClass: 'text-title text-primary bg-indigo-2',
-      headerStyle: 'margin: 0 -16px',
-      class: 'q-mt-lg q-px-md q-pb-sm bg-grey-2',
-      dense: true
+      headerClass: 'bg-grey-3 text-title text-primary q-mt-md'
+    },
+
+    lineSpacing: {
+      class: 'q-gutter-y-md q-pt-md'
     }
   };
 

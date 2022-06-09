@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 const menuList = [
   { title: 'Início', icon: 'sym_r_home', routeName: 'index' },
   { title: 'Categorias', icon: 'sym_r_category', routeName: 'category-list' },
-  { title: 'Produtos', icon: 'sym_r_inventory', routeName: 'product-list' },
+  { title: 'Produtos', icon: 'sym_r_inventory_2', routeName: 'product-list' },
   {
     title: 'Clientes',
     icon: 'sym_r_supervisor_account',

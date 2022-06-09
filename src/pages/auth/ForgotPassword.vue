@@ -35,20 +35,22 @@ const handleSubmit = async () => {
       </template>
     </page-header>
 
-    <div class="row justify-center q-mt-lg">
+    <div class="line row justify-center q-mt-lg">
       <q-form
         v-bind="attr.form"
         @submit.prevent="handleSubmit"
       >
-        <q-input
-          v-bind="attr.input.basic"
-          v-model="email"
-          label="Email"
-          lazy-rules
-          :rules="[(val) => val && val.length > 0]"
-          error-message="O email deve ser válido!"
-          type="email"
-        />
+        <div v-bind="attr.lineSpacing">
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="email"
+            label="Email"
+            lazy-rules
+            :rules="[(val) => val && val.length > 0]"
+            error-message="O email deve ser válido!"
+            type="email"
+          />
+        </div>
 
         <q-btn
           v-bind="attr.btn.basic"

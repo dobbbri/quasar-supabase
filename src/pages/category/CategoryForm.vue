@@ -96,7 +96,7 @@ onMounted(() => {
 
     <q-page
       padding
-      class="q-gutter-y-sm"
+      v-bind="attr.lineSpacing"
     >
       <q-input
         v-bind="attr.input.basic"
@@ -109,8 +109,7 @@ onMounted(() => {
       <q-checkbox
         v-bind="attr.input.basic"
         v-model="form.active"
-        label="Ativo"
-        class="checkbox-fix"
+        label="Categoria Ativa"
       />
 
       <page-footer>
