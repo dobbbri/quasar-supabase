@@ -27,6 +27,11 @@ const emailExpanded = ref(true);
 const adressExpanded = ref(false);
 const detailsExpanded = ref(false);
 
+const optionsPerson = ref([
+  { label: 'Pessoa Física', value: true },
+  { label: 'Pessoa Juríca', value: false }
+]);
+
 const form = ref({
   name: '',
   phone_1: '',
@@ -40,6 +45,7 @@ const form = ref({
   zip_code: '',
   document_number: '',
   notes: '',
+  is_legal_entity: false,
   active: true
 });
 
@@ -180,7 +186,9 @@ onMounted(() => {
                 color="green"
                 class="only-image"
                 size="xl"
-              />
+              >
+                <q-tooltip>Possui whatsapp</q-tooltip>
+              </q-checkbox>
             </div>
           </div>
 
@@ -247,11 +255,18 @@ onMounted(() => {
         v-model="detailsExpanded"
         label="Detalhes"
       >
+        <q-option-group
+          v-bind="attr.input.basic"
+          v-model="form.is_legal_entity"
+          :options="optionsPerson"
+          inline
+        />
+
         <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.document_number"
-            label="Número do documento"
+            label="CPF/CNPJ"
           />
 
           <q-input

@@ -49,7 +49,6 @@ const form = ref({
   stock_minimum_amount: 0,
   brand: '',
   code_bar: '',
-  code_internal: '',
   image_name: null,
   active: true
 });
@@ -399,6 +398,12 @@ onMounted(async () => {
 
           <q-input
             v-bind="attr.input.basic"
+            v-model="form.brand"
+            label="Marca"
+          />
+
+          <q-input
+            v-bind="attr.input.basic"
             v-model="form.description"
             label="Descrição do produto"
             autogrow
@@ -406,20 +411,8 @@ onMounted(async () => {
 
           <q-input
             v-bind="attr.input.basic"
-            v-model="form.brand"
-            label="Marca"
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
             v-model="form.code_bar"
             label="Código de barras"
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.code_internal"
-            label="Código interno"
           />
         </div>
       </q-expansion-item>
