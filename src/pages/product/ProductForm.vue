@@ -56,7 +56,7 @@ const form = ref({
 const price_profit = ref(0);
 const price_markup = ref(0);
 
-const priceExpanded = ref(true);
+const priceExpanded = ref(false);
 const stockExpanded = ref(false);
 const imageExpanded = ref(false);
 const detailExpanded = ref(false);
@@ -122,11 +122,7 @@ const handleGetProduct = async () => {
     if (form.value.image_name) {
       const forceUpdate = '?t=' + new Date().getTime();
       newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
-      imageExpanded.value = true;
     }
-    detailExpanded.value = true;
-    stockExpanded.value = form.value.has_stock_control;
-    //
     stockStore.productAmount = form.value.stock_amount;
     stockStore.productMinimumAmount = form.value.stock_minimum_amount;
   } catch (error) {

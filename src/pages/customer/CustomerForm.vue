@@ -18,18 +18,15 @@ const { attr } = useDefaults();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
-const mask = ref('(##)####-#####');
-const setMask = (e) => {
-  mask.value = e.target.value.length > 13 ? '(##)#####-####' : '(##)####-#####';
-};
+
 const optionsDocumentTypes = ref([]);
 const emailExpanded = ref(true);
 const adressExpanded = ref(false);
 const detailsExpanded = ref(false);
 
 const optionsPerson = ref([
-  { label: 'Pessoa Física', value: true },
-  { label: 'Pessoa Juríca', value: false }
+  { label: 'Pessoa Física', value: false },
+  { label: 'Pessoa Juríca', value: true }
 ]);
 
 const form = ref({
@@ -158,6 +155,14 @@ onMounted(() => {
         error-message="O nome do cliente deve ser informado!"
       />
 
+      <q-option-group
+        v-bind="attr.input.basic"
+        v-model="form.is_legal_entity"
+        :options="optionsPerson"
+        class="q-mt-md"
+        inline
+      />
+
       <q-expansion-item
         v-bind="attr.expansion"
         v-model="emailExpanded"
@@ -171,10 +176,11 @@ onMounted(() => {
                 v-model="form.phone_1"
                 label="Celular/Whatsapp"
                 type="tel"
-                :mask="mask"
+                :mask="
+                  form.phone_1.length > 13 ? '(##)#####-####' : '(##)####-#####'
+                "
                 :rules="[(val) => !!val]"
                 error-message="O telefone do cliente deve ser informado!"
-                @keyup="setMask"
               />
             </div>
 
@@ -197,8 +203,9 @@ onMounted(() => {
             v-model="form.phone_2"
             label="Celular/Telefone fixo"
             type="tel"
-            :mask="mask"
-            @keyup="setMask"
+            :mask="
+              form.phone_2.length > 13 ? '(##)#####-####' : '(##)####-####'
+            "
           />
 
           <q-input
@@ -253,20 +260,18 @@ onMounted(() => {
       <q-expansion-item
         v-bind="attr.expansion"
         v-model="detailsExpanded"
-        label="Detalhes"
+        label="Avançado"
       >
-        <q-option-group
-          v-bind="attr.input.basic"
-          v-model="form.is_legal_entity"
-          :options="optionsPerson"
-          inline
-        />
-
         <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"
             v-model="form.document_number"
-            label="CPF/CNPJ"
+            :label="form.is_legal_entity ? 'CNPJ' : 'CPF'"
+            :mask="
+              form.document_number.length > 14
+                ? '##.###.###/####-##'
+                : '###.###.###-#####'
+            "
           />
 
           <q-input

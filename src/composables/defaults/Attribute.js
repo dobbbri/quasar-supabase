@@ -41,7 +41,7 @@ export default function useAttribute() {
     },
 
     expansion: {
-      headerClass: 'bg-grey-3 text-title text-primary q-mt-md'
+      headerClass: 'bt-1px text-title text-primary q-mt-lg'
     },
 
     lineSpacing: {
