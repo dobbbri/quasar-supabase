@@ -3,7 +3,17 @@ import { ref, onMounted, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useTools, useDefaults } from 'src/composables';
-import { PageHeader, PageFooter } from 'src/components';
+import {
+  PageHeader,
+  PageFooter,
+  TextInput,
+  PhoneInput,
+  CheckBox,
+  TextareaInput,
+  RadioOptions,
+  CpfCnpjInput,
+  ExpansionItem
+} from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
 
 const $q = useQuasar();
@@ -147,143 +157,106 @@ onMounted(() => {
       padding
       v-bind="attr.lineSpacing"
     >
-      <q-input
-        v-bind="attr.input.basic"
+      <text-input
         v-model="form.name"
         label="Nome"
         :rules="[(val) => val && val.length > 3]"
         error-message="O nome do cliente deve ser informado!"
       />
 
-      <q-option-group
-        v-bind="attr.input.basic"
+      <radio-options
         v-model="form.is_legal_entity"
         :options="optionsPerson"
-        class="q-mt-md"
-        inline
       />
 
-      <q-expansion-item
-        v-bind="attr.expansion"
+      <expansion-item
         v-model="emailExpanded"
         label="Telefones e Email"
       >
-        <div v-bind="attr.lineSpacing">
-          <div class="line row">
-            <div class="line col">
-              <q-input
-                v-bind="attr.input.basic"
-                v-model="form.phone_1"
-                label="Celular/Whatsapp"
-                type="tel"
-                :mask="
-                  form.phone_1.length > 13 ? '(##)#####-####' : '(##)####-#####'
-                "
-                :rules="[(val) => !!val]"
-                error-message="O telefone do cliente deve ser informado!"
-              />
-            </div>
-
-            <div class="col-2 text-right">
-              <q-checkbox
-                v-model="form.phone_1_has_whatsapp"
-                checked-icon="whatsapp"
-                unchecked-icon="whatsapp"
-                color="green"
-                class="only-image"
-                size="xl"
-              >
-                <q-tooltip>Possui whatsapp</q-tooltip>
-              </q-checkbox>
-            </div>
+        <div class="line row">
+          <div class="line col">
+            <phone-input
+              v-model="form.phone_1"
+              label="Celular/Whatsapp"
+              :rules="[(val) => !!val]"
+              error-message="O telefone do cliente deve ser informado!"
+            />
           </div>
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.phone_2"
-            label="Celular/Telefone fixo"
-            type="tel"
-            :mask="
-              form.phone_2.length > 13 ? '(##)#####-####' : '(##)####-####'
-            "
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.email"
-            label="Email"
-          />
+          <div class="col-2 text-right">
+            <q-checkbox
+              v-model="form.phone_1_has_whatsapp"
+              checked-icon="whatsapp"
+              unchecked-icon="whatsapp"
+              color="green"
+              class="only-image"
+              size="xl"
+            >
+              <q-tooltip>Possui whatsapp</q-tooltip>
+            </q-checkbox>
+          </div>
         </div>
-      </q-expansion-item>
 
-      <q-expansion-item
-        v-bind="attr.expansion"
+        <phone-input
+          v-model="form.phone_2"
+          label="Celular/Telefone fixo"
+        />
+
+        <text-input
+          v-model="form.email"
+          label="Email"
+        />
+      </expansion-item>
+
+      <expansion-item
         v-model="adressExpanded"
         label="Endereço"
       >
-        <div v-bind="attr.lineSpacing">
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.zip_code"
-            mask="#####-###"
-            label="CEP"
-            @blur="handleFindCEP"
-          />
+        <text-input
+          v-model="form.zip_code"
+          mask="#####-###"
+          label="CEP"
+          @blur="handleFindCEP"
+        />
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.street"
-            label="Endereço, Número"
-          />
+        <text-input
+          v-model="form.street"
+          label="Endereço, Número"
+        />
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.district"
-            label="Bairro"
-          />
+        <text-input
+          v-model="form.district"
+          label="Bairro"
+        />
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.city"
-            label="Cidade"
-          />
+        <text-input
+          v-model="form.city"
+          label="Cidade"
+        />
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.state"
-            mask="AA"
-            label="UF(estado)"
-          />
-        </div>
-      </q-expansion-item>
+        <text-input
+          v-model="form.state"
+          mask="AA"
+          label="UF(estado)"
+        />
+      </expansion-item>
 
-      <q-expansion-item
-        v-bind="attr.expansion"
+      <expansion-item
         v-model="detailsExpanded"
         label="Avançado"
       >
-        <div v-bind="attr.lineSpacing">
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.document_number"
-            :label="form.is_legal_entity ? 'CNPJ' : 'CPF'"
-            :mask="
-              form.document_number.length > 14
-                ? '##.###.###/####-##'
-                : '###.###.###-#####'
-            "
-          />
+        <cpf-cnpj-input
+          v-model="form.document_number"
+          :is-legal-entity="form.is_legal_entity"
+        />
 
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.notes"
-            label="Anotações do cliente"
-            autogrow
-          />
-        </div>
-      </q-expansion-item>
+        <textarea-input
+          v-model="form.notes"
+          label="Anotações do cliente"
+        />
+      </expansion-item>
 
-      <q-checkbox
+      <check-box
         v-bind="attr.input.basic"
         v-model="form.active"
         label="Ativo"

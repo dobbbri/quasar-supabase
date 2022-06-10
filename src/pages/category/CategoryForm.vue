@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools, useDefaults } from 'src/composables';
-import { PageHeader, PageFooter } from 'src/components';
+import { PageHeader, PageFooter, TextInput, CheckBox } from 'src/components';
 
 const router = useRouter();
 const route = useRoute();
@@ -98,16 +98,14 @@ onMounted(() => {
       padding
       v-bind="attr.lineSpacing"
     >
-      <q-input
-        v-bind="attr.input.basic"
+      <text-input
         v-model="form.name"
         label="Nome"
         :rules="[(val) => val && val.length > 3]"
         error-message="O nome da categoria deve ser informado!"
       />
 
-      <q-checkbox
-        v-bind="attr.input.basic"
+      <check-box
         v-model="form.active"
         label="Categoria Ativa"
       />

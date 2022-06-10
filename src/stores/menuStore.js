@@ -16,11 +16,6 @@ const menuList = [
     routeName: 'measure-unit-form'
   },
   {
-    title: 'Tipos de Documentos',
-    icon: 'sym_r_article',
-    routeName: 'document-type-form'
-  },
-  {
     title: 'Formas de Pagamento',
     icon: 'sym_r_local_atm',
     routeName: 'payment-method-form'

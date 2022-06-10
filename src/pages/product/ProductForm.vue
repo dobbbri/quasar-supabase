@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import {
   useProducts,
@@ -9,12 +9,10 @@ import {
 } from 'src/composables';
 import { PageHeader, PageFooter } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
-import { useStockStore } from 'src/stores/stockStore';
 
 const router = useRouter();
 const route = useRoute();
 const store = useSettingsStore();
-const stockStore = useStockStore();
 
 const {
   loading,
@@ -53,12 +51,28 @@ const form = ref({
   active: true
 });
 
-const price_profit = ref(0);
-const price_markup = ref(0);
-
 const priceExpanded = ref(false);
 const stockExpanded = ref(false);
 const detailExpanded = ref(false);
+
+const price_profit = ref(0);
+const price_markup = ref(0);
+
+watch(
+  () => (form.value.price_to_sell, form.value.price_to_buy),
+  () => {
+    let profit = 0;
+    let markup = 0;
+    const price_to_sell = parseFloat(form.value.price_to_sell);
+    const price_to_buy = parseFloat(form.value.price_to_buy);
+    if (price_to_sell > 0 && price_to_buy > 0) {
+      profit = ((price_to_sell - price_to_buy) / price_to_sell) * 100;
+      markup = ((price_to_sell - price_to_buy) / price_to_buy) * 100;
+    }
+    price_profit.value = Math.round(profit) + '%';
+    price_markup.value = Math.round(markup) + '%';
+  }
+);
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 
@@ -71,12 +85,6 @@ const loadImage = () => {
     newImage.value = URL.createObjectURL(image.value);
   }
 };
-
-// const updateStock = () => {
-//   form.value.has_stock_control = stockStore.product.isAutomatic;
-//   form.value.stock_amount = stockStore.product.newAmount;
-//   form.value.stock_minimum_amount = stockStore.product.minimumAmount;
-// };
 
 const handleSubmit = async () => {
   try {
@@ -118,12 +126,13 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
+    console.log(' [DEBUG] form : ', form.value);
     if (form.value.image_name) {
-      const forceUpdate = '?t=' + new Date().getTime();
-      newImage.value = getProductImageURL(form.value.image_name) + forceUpdate;
+      newImage.value =
+        getProductImageURL(form.value.image_name) +
+        '?t=' +
+        new Date().getTime();
     }
-    stockStore.productAmount = form.value.stock_amount;
-    stockStore.productMinimumAmount = form.value.stock_minimum_amount;
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }
@@ -272,30 +281,27 @@ onMounted(async () => {
             mask="#.##"
             fill-mask="0"
             reverse-fill-mask
-            :rules="[(val) => !!val]"
-            error-message="O preço de custo do produto deve ser informado"
           />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="price_profit"
-            label="lucro"
-            suffix="%"
-            mask="#"
-            fill-mask="0"
-            reverse-fill-mask
-            @click="calculateProfit()"
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="price_markup"
-            label="Markup"
-            suffix="%"
-            mask="#"
-            fill-mask="0"
-            reverse-fill-mask
-          />
+          <div class="line row q-gutter-x-md">
+            <div class="line col">
+              <q-input
+                v-bind="attr.input.basic"
+                v-model="price_profit"
+                label="lucro"
+                input-class="text-center"
+                readonly
+              />
+            </div>
+            <div class="line col">
+              <q-input
+                v-bind="attr.input.basic"
+                v-model="price_markup"
+                label="Markup"
+                input-class="text-center"
+                readonly
+              />
+            </div>
+          </div>
         </div>
       </q-expansion-item>
 

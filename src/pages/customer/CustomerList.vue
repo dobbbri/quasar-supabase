@@ -8,7 +8,7 @@ import {
   useTools,
   useDefaults
 } from 'src/composables';
-import { PageHeader } from 'src/components';
+import { PageHeader, SearchInput, WaitingLoad } from 'src/components';
 
 const router = useRouter();
 const $q = useQuasar();
@@ -58,25 +58,14 @@ onMounted(() => handleGetCustomers());
       </template>
     </page-header>
 
-    <q-input
-      v-model="searchQuery"
-      v-bind="attr.input.search"
-      placeholder="Digite para pesquisar"
-    >
-      <template #prepend>
-        <q-icon name="sym_r_search" />
-      </template>
-    </q-input>
+    <search-input v-model="searchQuery" />
 
-    <q-inner-loading
-      :showing="loading.list.value"
-      color="primary"
-      label="obtendo registros..."
-    />
+    <waiting-load :showing="loading.list.value" />
 
     <q-list
       v-if="!loading.list.value"
       separator
+      class="q-mt-sm"
     >
       <q-item
         v-for="(customer, index) in customers"
