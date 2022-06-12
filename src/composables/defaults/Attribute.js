@@ -19,7 +19,8 @@ export default function useAttribute() {
         outlined: true,
         dense: true,
         optionsDense: true,
-        color: 'secondary'
+        color: 'secondary',
+        class: 'font-weight: 600'
       },
       search: {
         clearable: true,
@@ -31,18 +32,22 @@ export default function useAttribute() {
     },
 
     form: {
-      class: 'q-mt-xs q-mx-xs full-width',
+      class: 'full-width',
       style: 'max-width: 620px'
     },
 
     banner: {
-      dense: true,
-      class: 'q-px-md bg-blue-grey-1'
+      class: 'q-px-md bg-blue-grey-1',
+      dense: true
     },
 
     expansion: {
-      headerClass: 'bt-1px text-title text-primary q-mt-lg',
+      headerClass: 'text-title text-primary q-mt-lg',
       dense: true
+    },
+
+    pageBodySpacing: {
+      class: 'q-gutter-y-md q-pt-xs'
     },
 
     lineSpacing: {

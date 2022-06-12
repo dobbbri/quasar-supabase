@@ -7,7 +7,14 @@ import {
   useTools,
   useDefaults
 } from 'src/composables';
-import { PageHeader, PageFooter } from 'src/components';
+import {
+  PageHeader,
+  PageFooter,
+  TextInput,
+  CheckBox,
+  TextareaInput,
+  ExpansionItem
+} from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
@@ -218,8 +225,7 @@ onMounted(async () => {
         </template>
       </q-select>
 
-      <q-input
-        v-bind="attr.input.basic"
+      <text-input
         v-model="form.name"
         label="Nome"
         :rules="[(val) => val && val.length > 3]"
@@ -267,167 +273,152 @@ onMounted(async () => {
         </template>
       </q-select>
 
-      <q-expansion-item
-        v-bind="attr.expansion"
+      <expansion-item
         v-model="priceExpanded"
         label="Custo e lucro"
       >
-        <div v-bind="attr.lineSpacing">
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.price_to_buy"
-            label="Preço de custo"
-            prefix="R$"
-            mask="#.##"
-            fill-mask="0"
-            reverse-fill-mask
-          />
-          <div class="line row q-gutter-x-md">
-            <div class="line col">
-              <q-input
-                v-bind="attr.input.basic"
-                v-model="price_profit"
-                label="lucro"
-                input-class="text-center"
-                readonly
-              />
-            </div>
-            <div class="line col">
-              <q-input
-                v-bind="attr.input.basic"
-                v-model="price_markup"
-                label="Markup"
-                input-class="text-center"
-                readonly
-              />
-            </div>
+        <q-input
+          v-bind="attr.input.basic"
+          v-model="form.price_to_buy"
+          label="Preço de custo"
+          prefix="R$"
+          mask="#.##"
+          fill-mask="0"
+          reverse-fill-mask
+        />
+        <div class="line row q-gutter-x-md">
+          <div class="line col">
+            <q-input
+              v-bind="attr.input.basic"
+              v-model="price_profit"
+              label="lucro"
+              input-class="text-center"
+              readonly
+            />
+          </div>
+          <div class="line col">
+            <q-input
+              v-bind="attr.input.basic"
+              v-model="price_markup"
+              label="Markup"
+              input-class="text-center"
+              readonly
+            />
           </div>
         </div>
-      </q-expansion-item>
+      </expansion-item>
 
-      <q-expansion-item
-        v-bind="attr.expansion"
+      <expansion-item
         v-model="stockExpanded"
         label="Estoque"
       >
-        <div v-bind="attr.lineSpacing">
-          <q-checkbox
-            v-bind="attr.input.basic"
-            v-model="form.has_stock_control"
-            label="Contolar quantidade em estoque"
-          />
+        <check-box
+          v-model="form.has_stock_control"
+          label="Contolar quantidade em estoque"
+        />
 
-          <!-- <q-input -->
-          <!--   v-bind="attr.input.basic" -->
-          <!--   v-model="form.stock_amount" -->
-          <!--   label="Quantidade em Estoque" -->
-          <!--   mask="#" -->
-          <!--   fill-mask="0" -->
-          <!--   reverse-fill-mask -->
-          <!--   readonly -->
-          <!-- /> -->
-          <!--  -->
-          <!-- <q-input -->
-          <!--   v-bind="attr.input.basic" -->
-          <!--   v-model="form.stock_minimum_amount" -->
-          <!--   label="Quantidade mínima em estoque" -->
-          <!--   mask="#" -->
-          <!--   fill-mask="0" -->
-          <!--   reverse-fill-mask -->
-          <!--   readonly -->
-          <!-- /> -->
+        <!-- <q-input -->
+        <!--   v-bind="attr.input.basic" -->
+        <!--   v-model="form.stock_amount" -->
+        <!--   label="Quantidade em Estoque" -->
+        <!--   mask="#" -->
+        <!--   fill-mask="0" -->
+        <!--   reverse-fill-mask -->
+        <!--   readonly -->
+        <!-- /> -->
+        <!--  -->
+        <!-- <q-input -->
+        <!--   v-bind="attr.input.basic" -->
+        <!--   v-model="form.stock_minimum_amount" -->
+        <!--   label="Quantidade mínima em estoque" -->
+        <!--   mask="#" -->
+        <!--   fill-mask="0" -->
+        <!--   reverse-fill-mask -->
+        <!--   readonly -->
+        <!-- /> -->
 
-          <q-btn
-            v-if="form.has_stock_control"
-            v-bind="attr.btn.basic"
-            label="Controlar Estoque"
-            color="primary"
-            icon-right="sym_r_arrow_forward_ios"
-            flat
-            align="left"
-            class="full-width my-btn"
-            :to="{ name: 'stock-form' }"
-          />
+        <q-btn
+          v-if="form.has_stock_control"
+          v-bind="attr.btn.basic"
+          label="Controlar Estoque"
+          color="primary"
+          icon-right="sym_r_arrow_forward_ios"
+          flat
+          align="left"
+          class="full-width my-btn"
+          :to="{ name: 'stock-form' }"
+        />
 
-          <q-btn
-            v-if="form.has_stock_control"
-            v-bind="attr.btn.basic"
-            label="Lista de Movimentação do Estoque"
-            color="primary"
-            icon-right="sym_r_arrow_forward_ios"
-            flat
-            align="left"
-            class="full-width my-btn"
-            :to="{ name: 'stock-form' }"
-          />
-        </div>
-      </q-expansion-item>
+        <q-btn
+          v-if="form.has_stock_control"
+          v-bind="attr.btn.basic"
+          label="Lista de Movimentação do Estoque"
+          color="primary"
+          icon-right="sym_r_arrow_forward_ios"
+          flat
+          align="left"
+          class="full-width my-btn"
+          :to="{ name: 'stock-form' }"
+        />
+      </expansion-item>
 
-      <q-expansion-item
-        v-bind="attr.expansion"
+      <expansion-item
         v-model="detailExpanded"
         label="Avançado"
       >
-        <div v-bind="attr.lineSpacing">
-          <q-file
-            ref="file"
-            v-model="image"
-            class="hidden"
-            accept="image/*"
-            @update:model-value="loadImage()"
-          />
-          <div
-            style="
-              max-height: 200px;
-              max-width: 200px;
-              border: 1px solid rgba(0, 0, 0, 0.3);
-            "
-            class="rounded-borders"
+        <q-file
+          ref="file"
+          v-model="image"
+          class="hidden"
+          accept="image/*"
+          @update:model-value="loadImage()"
+        />
+        <div
+          style="
+            max-height: 200px;
+            max-width: 200px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+          "
+          class="rounded-borders"
+        >
+          <q-img
+            loading="lazy"
+            :src="newImage"
+            fit="cover"
+            style="max-height: 200px; max-width: 200px"
+            class="rounded-borders overflow-hidden"
+            spinner-color="primary"
           >
-            <q-img
-              loading="lazy"
-              :src="newImage"
-              fit="cover"
-              style="max-height: 200px; max-width: 200px"
-              class="rounded-borders overflow-hidden"
-              spinner-color="primary"
-            >
-              <div class="absolute-bottom">
-                <q-btn
-                  flat
-                  no-wrap
-                  class="full-width q-pa-xs"
-                  icon="sym_r_add_circle"
-                  label="Adicionar Imagem"
-                  @click="handleSelectImage()"
-                />
-              </div>
-            </q-img>
-          </div>
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.brand"
-            label="Marca"
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.description"
-            label="Descrição do produto"
-            autogrow
-          />
-
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.code_bar"
-            label="Código de barras"
-          />
+            <div class="absolute-bottom">
+              <q-btn
+                flat
+                no-wrap
+                class="full-width q-pa-xs"
+                icon="sym_r_add_circle"
+                label="Adicionar Imagem"
+                @click="handleSelectImage()"
+              />
+            </div>
+          </q-img>
         </div>
-      </q-expansion-item>
 
-      <q-checkbox
-        v-bind="attr.input.basic"
+        <text-input
+          v-model="form.brand"
+          label="Marca"
+        />
+
+        <textarea-input
+          v-model="form.description"
+          label="Descrição do produto"
+        />
+
+        <text-input
+          v-model="form.code_bar"
+          label="Código de barras"
+        />
+      </expansion-item>
+
+      <checkbox
         v-model="form.active"
         label="Produto ativo"
       />

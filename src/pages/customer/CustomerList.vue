@@ -8,7 +8,7 @@ import {
   useTools,
   useDefaults
 } from 'src/composables';
-import { PageHeader, SearchInput, WaitingLoad } from 'src/components';
+import { PageHeader, PageBody, SearchInput, WaitingLoad } from 'src/components';
 
 const router = useRouter();
 const $q = useQuasar();
@@ -58,47 +58,49 @@ onMounted(() => handleGetCustomers());
       </template>
     </page-header>
 
-    <search-input v-model="searchQuery" />
+    <page-body>
+      <search-input v-model="searchQuery" />
 
-    <waiting-load :showing="loading.list.value" />
+      <waiting-load :showing="loading.list.value" />
 
-    <q-list
-      v-if="!loading.list.value"
-      separator
-      class="q-mt-sm"
-    >
-      <q-item
-        v-for="(customer, index) in customers"
-        :key="index"
-        clickable
-        class="q-px-xs"
-        @click="handleEditCustomer(customer)"
+      <q-list
+        v-if="!loading.list.value"
+        separator
+        class="q-mt-sm"
       >
-        <q-item-section>
-          <q-item-label
-            :class="{ 'text-negative text-strike': !customer.active }"
-          >
-            {{ customer.name }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+        <q-item
+          v-for="(customer, index) in customers"
+          :key="index"
+          clickable
+          class="q-px-xs"
+          @click="handleEditCustomer(customer)"
+        >
+          <q-item-section>
+            <q-item-label
+              :class="{ 'text-negative text-strike': !customer.active }"
+            >
+              {{ customer.name }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
 
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
-    >
-      <q-btn
-        v-if="$q.platform.is.mobile"
-        v-bind="attr.btn.icon"
-        icon="sym_r_add"
-        fab
-        :loading="loading.add.value"
-        :disable="loading.disable.value"
-        :to="{ name: 'customer-form' }"
+      <q-page-sticky
+        position="bottom-right"
+        :offset="[18, 18]"
       >
-        <q-tooltip>Adicionar</q-tooltip>
-      </q-btn>
-    </q-page-sticky>
+        <q-btn
+          v-if="$q.platform.is.mobile"
+          v-bind="attr.btn.icon"
+          icon="sym_r_add"
+          fab
+          :loading="loading.add.value"
+          :disable="loading.disable.value"
+          :to="{ name: 'customer-form' }"
+        >
+          <q-tooltip>Adicionar</q-tooltip>
+        </q-btn>
+      </q-page-sticky>
+    </page-body>
   </q-page>
 </template>

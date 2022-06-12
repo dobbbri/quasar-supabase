@@ -1,4 +1,5 @@
 import PageHeader from 'src/components/page/PageHeader.vue';
+import PageBody from 'src/components/page/PageBody.vue';
 import PageFooter from 'src/components/page/PageFooter.vue';
 
 import LeftSidebar from 'src/components/menu/LeftSidebar.vue';
@@ -18,6 +19,7 @@ import WaitingLoad from 'src/components/form/WaitingLoad.vue';
 
 export {
   PageHeader,
+  PageBody,
   PageFooter,
   LeftSidebar,
   TextInput,

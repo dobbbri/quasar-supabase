@@ -18,12 +18,13 @@
 }
 
 .q-field--dense.q-field--float .q-field__label {
-  transform: translateY(-99%);
+  transform: translateY(-101%);
   background: white;
   z-index: 999;
   padding: 0 3px;
   margin-left: -2px;
   font-weight: 500;
+  text-transform: lowercase;
 }
 
 .q-field--labeled.q-field--dense .q-field__native,
@@ -31,6 +32,10 @@
 .q-field--labeled.q-field--dense .q-field__suffix {
   padding-top: 9px;
   padding-bottom: 7px;
+}
+
+.q-field__native, .q-field__prefix, .q-field__suffix, .q-field__input {
+  font-weight: 500;
 }
 
 .q-field--auto-height.q-field--dense.q-field--labeled .q-field__control-container {
