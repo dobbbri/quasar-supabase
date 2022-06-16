@@ -7,20 +7,12 @@ const menuStore = useMenuStore();
 </script>
 
 <template>
-  <q-header
-    class="bg-primary text-white"
-    style="z-index: 1000"
-  >
+  <q-header class="bg-primary text-white" style="z-index: 1000">
     <q-toolbar>
       <div>
         <slot name="left">
           <div class="btn-menu">
-            <q-btn
-              v-bind="attr.btn.icon"
-              icon="sym_r_menu"
-              flat
-              @click="menuStore.toggleSidebar()"
-            >
+            <q-btn v-bind="attr.btn.icon" icon="sym_r_menu" flat @click="menuStore.toggleSidebar()">
               <q-tooltip>Menu</q-tooltip>
             </q-btn>
           </div>
@@ -36,10 +28,7 @@ const menuStore = useMenuStore();
   </q-header>
 </template>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .btn-menu {
   display: none;
 }

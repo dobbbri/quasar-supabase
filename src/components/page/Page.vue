@@ -4,5 +4,7 @@ const { attr } = useDefaults();
 </script>
 
 <template>
-  <q-input v-bind="attr.input.basic" type="textarea" autogrow />
+  <q-page padding v-bind="attr.page">
+    <slot />
+  </q-page>
 </template>

@@ -1,23 +1,15 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useQuasar } from 'quasar';
-import {
-  useCustomers,
-  useNameSearch,
-  useTools,
-  useDefaults
-} from 'src/composables';
-import { PageHeader, PageBody, SearchInput, WaitingLoad } from 'src/components';
+import { useCustomers, useNameSearch, useTools, useDefaults } from 'src/composables';
+import { Page, PageHeader, PageBody, SearchInput, WaitingLoad } from 'src/components';
 
 const router = useRouter();
-const $q = useQuasar();
 
 const documents = ref([]);
 
 const { loading, getCustomers } = useCustomers();
-const { searchQuery, matchingSearchQuery: customers } =
-  useNameSearch(documents);
+const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
 const { attr } = useDefaults();
 
@@ -40,12 +32,11 @@ onMounted(() => handleGetCustomers());
 </script>
 
 <template>
-  <q-page padding>
+  <page padding>
     <page-header>
       <template #title>Clientes</template>
       <template #right>
         <q-btn
-          v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
           color="primary"
           icon="sym_r_add"
@@ -63,11 +54,7 @@ onMounted(() => handleGetCustomers());
 
       <waiting-load :showing="loading.list.value" />
 
-      <q-list
-        v-if="!loading.list.value"
-        separator
-        class="q-mt-sm"
-      >
+      <q-list v-if="!loading.list.value" separator class="q-mt-sm">
         <q-item
           v-for="(customer, index) in customers"
           :key="index"
@@ -76,31 +63,12 @@ onMounted(() => handleGetCustomers());
           @click="handleEditCustomer(customer)"
         >
           <q-item-section>
-            <q-item-label
-              :class="{ 'text-negative text-strike': !customer.active }"
-            >
+            <q-item-label :class="{ 'text-negative text-strike': !customer.active }">
               {{ customer.name }}
             </q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
-
-      <q-page-sticky
-        position="bottom-right"
-        :offset="[18, 18]"
-      >
-        <q-btn
-          v-if="$q.platform.is.mobile"
-          v-bind="attr.btn.icon"
-          icon="sym_r_add"
-          fab
-          :loading="loading.add.value"
-          :disable="loading.disable.value"
-          :to="{ name: 'customer-form' }"
-        >
-          <q-tooltip>Adicionar</q-tooltip>
-        </q-btn>
-      </q-page-sticky>
     </page-body>
-  </q-page>
+  </page>
 </template>

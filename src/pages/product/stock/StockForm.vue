@@ -29,12 +29,10 @@ const stockForm = ref({
 const handleSubmit = () => {
   if (stockForm.value.type == '+') {
     productForm.value.new_amount =
-      parseInt(productForm.value.stock_amount) +
-      parseInt(stockForm.value.amount);
+      parseInt(productForm.value.stock_amount) + parseInt(stockForm.value.amount);
   } else if (stockForm.value.type == '-') {
     productForm.value.new_amount =
-      parseInt(productForm.value.stock_amount) -
-      parseInt(stockForm.value.amount);
+      parseInt(productForm.value.stock_amount) - parseInt(stockForm.value.amount);
   } else {
     productForm.value.new_amount = stockForm.value.amount;
   }
@@ -66,33 +64,18 @@ const ajustarLabel = (type) => {
 </script>
 
 <template>
-  <q-form
-    v-bind="attr.form"
-    @submit.prevent="handleSubmit"
-  >
+  <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
     <page-header>
       <template #left>
-        <q-btn
-          v-bind="attr.btn.icon"
-          icon="sym_r_arrow_back_ios_new"
-          flat
-          @click="router.back()"
-        />
+        <q-btn v-bind="attr.btn.icon" icon="sym_r_arrow_back_ios_new" flat @click="router.back()" />
       </template>
       <template #title>Contolar Estoque</template>
       <template #right>
-        <q-btn
-          v-bind="attr.btn.basic"
-          label="Gravar"
-          type="submit"
-        />
+        <q-btn v-bind="attr.btn.basic" label="Gravar" type="submit" />
       </template>
     </page-header>
 
-    <q-page
-      padding
-      class="q-gutter-y-sm"
-    >
+    <q-page padding class="q-gutter-y-sm">
       <q-select
         v-bind="attr.input.basic"
         v-model="stockForm.type"

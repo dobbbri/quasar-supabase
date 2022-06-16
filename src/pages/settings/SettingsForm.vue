@@ -46,10 +46,7 @@ onMounted(() => {
           <q-item-label>Utilizar estoque automático</q-item-label>
         </q-item-section>
         <q-item-section avatar>
-          <q-toggle
-            v-model="form.has_stock_controlk"
-            val="picture"
-          />
+          <q-toggle v-model="form.has_stock_controlk" val="picture" />
         </q-item-section>
       </q-item>
     </q-list>

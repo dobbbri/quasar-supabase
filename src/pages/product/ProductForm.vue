@@ -1,17 +1,15 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { useProducts, useCategories, useTools, useDefaults } from 'src/composables';
 import {
-  useProducts,
-  useCategories,
-  useTools,
-  useDefaults
-} from 'src/composables';
-import {
+  Page,
   PageHeader,
+  PageBody,
   PageFooter,
   TextInput,
   CheckBox,
+  SelectOptions,
   TextareaInput,
   ExpansionItem
 } from 'src/components';
@@ -57,10 +55,6 @@ const form = ref({
   image_name: null,
   active: true
 });
-
-const priceExpanded = ref(false);
-const stockExpanded = ref(false);
-const detailExpanded = ref(false);
 
 const price_profit = ref(0);
 const price_markup = ref(0);
@@ -135,10 +129,7 @@ const handleGetProduct = async () => {
     form.value = await getProduct(route.params.id);
     console.log(' [DEBUG] form : ', form.value);
     if (form.value.image_name) {
-      newImage.value =
-        getProductImageURL(form.value.image_name) +
-        '?t=' +
-        new Date().getTime();
+      newImage.value = getProductImageURL(form.value.image_name) + '?t=' + new Date().getTime();
     }
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
@@ -161,290 +152,219 @@ onMounted(async () => {
 </script>
 
 <template>
-  <q-form
-    v-bind="attr.form"
-    @submit.prevent="handleSubmit"
-  >
-    <page-header>
-      <template #left>
-        <q-btn
-          v-bind="attr.btn.icon"
-          icon="sym_r_arrow_back_ios_new"
-          flat
-          :to="{ name: 'product-list' }"
-        >
-          <q-tooltip>Voltar</q-tooltip>
-        </q-btn>
-      </template>
-      <template #title>{{ title + ' produto' }}</template>
-      <template #right>
-        <q-btn
-          v-if="isEditMode"
-          v-bind="attr.btn.icon"
-          icon="sym_r_delete"
-          color="negative"
-          unelevated
-          :loading="loading.remove.value"
-          :disable="loading.disable.value"
-          @click="handleRemoveProduct(form)"
-        >
-          <q-tooltip>Excluir</q-tooltip>
-        </q-btn>
-      </template>
-    </page-header>
-
-    <q-page
-      padding
-      v-bind="attr.lineSpacing"
-    >
-      <q-select
-        v-bind="attr.input.basic"
-        v-model="form.category_id"
-        label="Categoria"
-        :options="optionsCategories"
-        option-value="id"
-        option-label="name"
-        :option-disable="
-          (opt) => (Object(opt) === opt ? opt.active === false : false)
-        "
-        map-options
-        emit-value
-        :rules="[(val) => !!val]"
-        error-message="Uma categoria deve ser selecionada"
-      >
-        <template #option="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section>
-              <q-item-label
-                :class="{ 'text-negative text-strike': !scope.opt.active }"
-              >
-                {{ scope.opt.name }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
+  <page>
+    <q-form @submit.prevent="handleSubmit">
+      <page-header>
+        <template #left>
+          <q-btn
+            v-bind="attr.btn.icon"
+            icon="sym_r_arrow_back_ios_new"
+            flat
+            :to="{ name: 'product-list' }"
+          >
+            <q-tooltip>Voltar</q-tooltip>
+          </q-btn>
         </template>
-      </q-select>
-
-      <text-input
-        v-model="form.name"
-        label="Nome"
-        :rules="[(val) => val && val.length > 3]"
-        error-message="O nome do produto deve ser informado!"
-      />
-
-      <q-input
-        v-bind="attr.input.basic"
-        v-model="form.price_to_sell"
-        label="Preço de venda"
-        prefix="R$"
-        mask="#.##"
-        fill-mask="0"
-        reverse-fill-mask
-        :rules="[(val) => !!val]"
-        error-message="O preço de venda do produto deve ser informado"
-      />
-
-      <q-select
-        v-bind="attr.input.basic"
-        v-model="form.measure_unit"
-        label="Unidade de medida"
-        :options="optionsMeasureUnits"
-        option-value="abbr"
-        option-label="name"
-        :option-disable="
-          (opt) => (Object(opt) === opt ? opt.active === false : false)
-        "
-        emit-value
-        map-options
-        :rules="[(val) => !!val]"
-        error-message="Uma unidade de medida deve ser selecionada"
-      >
-        <template #option="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section>
-              <q-item-label>{{ scope.opt.abbr }}</q-item-label>
-              <q-item-label
-                style="magin-top: -3px"
-                caption
-                >{{ scope.opt.name }}</q-item-label
-              >
-            </q-item-section>
-          </q-item>
+        <template #title>{{ title + ' produto' }}</template>
+        <template #right>
+          <q-btn
+            v-if="isEditMode"
+            v-bind="attr.btn.icon"
+            icon="sym_r_delete"
+            color="negative"
+            unelevated
+            :loading="loading.remove.value"
+            :disable="loading.disable.value"
+            @click="handleRemoveProduct(form)"
+          >
+            <q-tooltip>Excluir</q-tooltip>
+          </q-btn>
         </template>
-      </q-select>
+      </page-header>
 
-      <expansion-item
-        v-model="priceExpanded"
-        label="Custo e lucro"
-      >
+      <page-body>
+        <select-options
+          v-model="form.category_id"
+          label="Categoria"
+          :options="optionsCategories"
+          :rules="[(val) => !!val]"
+          error-message="Uma categoria deve ser selecionada"
+        />
+
+        <text-input
+          v-model="form.name"
+          label="Nome"
+          :rules="[(val) => val && val.length > 3]"
+          error-message="O nome do produto deve ser informado!"
+        />
+
         <q-input
           v-bind="attr.input.basic"
-          v-model="form.price_to_buy"
-          label="Preço de custo"
+          v-model="form.price_to_sell"
+          label="Preço de venda"
           prefix="R$"
           mask="#.##"
           fill-mask="0"
           reverse-fill-mask
-        />
-        <div class="line row q-gutter-x-md">
-          <div class="line col">
-            <q-input
-              v-bind="attr.input.basic"
-              v-model="price_profit"
-              label="lucro"
-              input-class="text-center"
-              readonly
-            />
-          </div>
-          <div class="line col">
-            <q-input
-              v-bind="attr.input.basic"
-              v-model="price_markup"
-              label="Markup"
-              input-class="text-center"
-              readonly
-            />
-          </div>
-        </div>
-      </expansion-item>
-
-      <expansion-item
-        v-model="stockExpanded"
-        label="Estoque"
-      >
-        <check-box
-          v-model="form.has_stock_control"
-          label="Contolar quantidade em estoque"
+          :rules="[(val) => !!val]"
+          error-message="O preço de venda do produto deve ser informado"
         />
 
-        <!-- <q-input -->
-        <!--   v-bind="attr.input.basic" -->
-        <!--   v-model="form.stock_amount" -->
-        <!--   label="Quantidade em Estoque" -->
-        <!--   mask="#" -->
-        <!--   fill-mask="0" -->
-        <!--   reverse-fill-mask -->
-        <!--   readonly -->
-        <!-- /> -->
-        <!--  -->
-        <!-- <q-input -->
-        <!--   v-bind="attr.input.basic" -->
-        <!--   v-model="form.stock_minimum_amount" -->
-        <!--   label="Quantidade mínima em estoque" -->
-        <!--   mask="#" -->
-        <!--   fill-mask="0" -->
-        <!--   reverse-fill-mask -->
-        <!--   readonly -->
-        <!-- /> -->
-
-        <q-btn
-          v-if="form.has_stock_control"
-          v-bind="attr.btn.basic"
-          label="Controlar Estoque"
-          color="primary"
-          icon-right="sym_r_arrow_forward_ios"
-          flat
-          align="left"
-          class="full-width my-btn"
-          :to="{ name: 'stock-form' }"
+        <select-options
+          v-model="form.measure_unit"
+          label="Unidade de medida"
+          :options="optionsMeasureUnits"
+          :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+          :rules="[(val) => !!val]"
+          error-message="Uma unidade de medida deve ser selecionada"
+          :use-template="2"
         />
 
-        <q-btn
-          v-if="form.has_stock_control"
-          v-bind="attr.btn.basic"
-          label="Lista de Movimentação do Estoque"
-          color="primary"
-          icon-right="sym_r_arrow_forward_ios"
-          flat
-          align="left"
-          class="full-width my-btn"
-          :to="{ name: 'stock-form' }"
-        />
-      </expansion-item>
-
-      <expansion-item
-        v-model="detailExpanded"
-        label="Avançado"
-      >
-        <q-file
-          ref="file"
-          v-model="image"
-          class="hidden"
-          accept="image/*"
-          @update:model-value="loadImage()"
-        />
-        <div
-          style="
-            max-height: 200px;
-            max-width: 200px;
-            border: 1px solid rgba(0, 0, 0, 0.3);
-          "
-          class="rounded-borders"
-        >
-          <q-img
-            loading="lazy"
-            :src="newImage"
-            fit="cover"
-            style="max-height: 200px; max-width: 200px"
-            class="rounded-borders overflow-hidden"
-            spinner-color="primary"
-          >
-            <div class="absolute-bottom">
-              <q-btn
-                flat
-                no-wrap
-                class="full-width q-pa-xs"
-                icon="sym_r_add_circle"
-                label="Adicionar Imagem"
-                @click="handleSelectImage()"
+        <expansion-item default-opened label="Custo e lucro">
+          <q-input
+            v-bind="attr.input.basic"
+            v-model="form.price_to_buy"
+            label="Preço de custo"
+            prefix="R$"
+            mask="#.##"
+            fill-mask="0"
+            reverse-fill-mask
+          />
+          <div class="line row q-gutter-x-md">
+            <div class="line col">
+              <q-input
+                v-bind="attr.input.basic"
+                v-model="price_profit"
+                label="lucro"
+                input-class="text-center"
+                readonly
               />
             </div>
-          </q-img>
-        </div>
+            <div class="line col">
+              <q-input
+                v-bind="attr.input.basic"
+                v-model="price_markup"
+                label="Markup"
+                input-class="text-center"
+                readonly
+              />
+            </div>
+          </div>
+        </expansion-item>
 
-        <text-input
-          v-model="form.brand"
-          label="Marca"
-        />
+        <expansion-item label="Estoque">
+          <check-box v-model="form.has_stock_control" label="Contolar quantidade em estoque" />
 
-        <textarea-input
-          v-model="form.description"
-          label="Descrição do produto"
-        />
+          <!-- <q-input -->
+          <!--   v-bind="attr.input.basic" -->
+          <!--   v-model="form.stock_amount" -->
+          <!--   label="Quantidade em Estoque" -->
+          <!--   mask="#" -->
+          <!--   fill-mask="0" -->
+          <!--   reverse-fill-mask -->
+          <!--   readonly -->
+          <!-- /> -->
+          <!--  -->
+          <!-- <q-input -->
+          <!--   v-bind="attr.input.basic" -->
+          <!--   v-model="form.stock_minimum_amount" -->
+          <!--   label="Quantidade mínima em estoque" -->
+          <!--   mask="#" -->
+          <!--   fill-mask="0" -->
+          <!--   reverse-fill-mask -->
+          <!--   readonly -->
+          <!-- /> -->
 
-        <text-input
-          v-model="form.code_bar"
-          label="Código de barras"
-        />
-      </expansion-item>
+          <q-btn
+            v-if="form.has_stock_control"
+            v-bind="attr.btn.basic"
+            label="Controlar Estoque"
+            color="primary"
+            icon-right="sym_r_arrow_forward_ios"
+            flat
+            align="left"
+            class="full-width my-btn"
+            :to="{ name: 'stock-form' }"
+          />
 
-      <checkbox
-        v-model="form.active"
-        label="Produto ativo"
-      />
+          <q-btn
+            v-if="form.has_stock_control"
+            v-bind="attr.btn.basic"
+            label="Lista de Movimentação do Estoque"
+            color="primary"
+            icon-right="sym_r_arrow_forward_ios"
+            flat
+            align="left"
+            class="full-width my-btn"
+            :to="{ name: 'stock-form' }"
+          />
+        </expansion-item>
 
-      <page-footer>
-        <q-btn
-          v-bind="attr.btn.basic"
-          label="Cancelar"
-          outline
-          class="col-4 bg-white"
-          :disable="loading.disable.value"
-          :to="{ name: 'product-list' }"
-        />
+        <expansion-item label="Avançado">
+          <q-file
+            ref="file"
+            v-model="image"
+            class="hidden"
+            accept="image/*"
+            @update:model-value="loadImage()"
+          />
+          <div
+            style="max-height: 200px; max-width: 200px; border: 1px solid rgba(0, 0, 0, 0.3)"
+            class="rounded-borders"
+          >
+            <q-img
+              loading="lazy"
+              :src="newImage"
+              fit="cover"
+              style="max-height: 200px; max-width: 200px"
+              class="rounded-borders overflow-hidden"
+              spinner-color="primary"
+            >
+              <div class="absolute-bottom">
+                <q-btn
+                  flat
+                  no-wrap
+                  class="full-width q-pa-xs"
+                  icon="sym_r_add_circle"
+                  label="Adicionar Imagem"
+                  @click="handleSelectImage()"
+                />
+              </div>
+            </q-img>
+          </div>
 
-        <q-space />
+          <text-input v-model="form.brand" label="Marca" />
 
-        <q-btn
-          v-bind="attr.btn.basic"
-          label="Gravar"
-          unelevated
-          class="col-4"
-          :loading="isEditMode ? loading.edit.value : loading.add.value"
-          :disable="loading.disable.value"
-          type="submit"
-        />
-      </page-footer>
-    </q-page>
-  </q-form>
+          <textarea-input v-model="form.description" label="Descrição do produto" />
+
+          <text-input v-model="form.code_bar" label="Código de barras" />
+        </expansion-item>
+
+        <check-box v-model="form.active" label="Produto ativo" />
+
+        <page-footer>
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Cancelar"
+            outline
+            class="col-4 bg-white"
+            :disable="loading.disable.value"
+            :to="{ name: 'product-list' }"
+          />
+
+          <q-space />
+
+          <q-btn
+            v-bind="attr.btn.basic"
+            label="Gravar"
+            unelevated
+            class="col-4"
+            :loading="isEditMode ? loading.edit.value : loading.add.value"
+            :disable="loading.disable.value"
+            type="submit"
+          />
+        </page-footer>
+      </page-body>
+    </q-form>
+  </page>
 </template>

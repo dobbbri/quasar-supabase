@@ -1,3 +1,4 @@
+import Page from 'src/components/page/Page.vue';
 import PageHeader from 'src/components/page/PageHeader.vue';
 import PageBody from 'src/components/page/PageBody.vue';
 import PageFooter from 'src/components/page/PageFooter.vue';
@@ -12,12 +13,14 @@ import CpfCnpjInput from 'src/components/form/CpfCnpjInput.vue';
 import SearchInput from 'src/components/form/SearchInput.vue';
 import ImagePicker from 'src/components/form/ImagePicker.vue';
 import CheckBox from 'src/components/form/CheckBox.vue';
+import CheckboxIcon from 'src/components/form/CheckboxIcon.vue';
 import SelectOptions from 'src/components/form/SelectOptions.vue';
 import RadioOptions from 'src/components/form/RadioOptions.vue';
 import ExpansionItem from 'src/components/form/ExpansionItem.vue';
 import WaitingLoad from 'src/components/form/WaitingLoad.vue';
 
 export {
+  Page,
   PageHeader,
   PageBody,
   PageFooter,
@@ -31,6 +34,7 @@ export {
   SearchInput,
   ImagePicker,
   CheckBox,
+  CheckboxIcon,
   SelectOptions,
   RadioOptions,
   WaitingLoad

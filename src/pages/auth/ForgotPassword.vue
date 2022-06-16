@@ -36,10 +36,7 @@ const handleSubmit = async () => {
     </page-header>
 
     <div class="line row justify-center q-mt-lg">
-      <q-form
-        v-bind="attr.form"
-        @submit.prevent="handleSubmit"
-      >
+      <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"

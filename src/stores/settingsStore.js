@@ -2,34 +2,34 @@ import { defineStore } from 'pinia';
 
 const defaults = {
   measureUnits: [
-    { group: 'Unidade', abbr: 'un.', name: 'unidades', active: true },
-    { group: 'Área', abbr: 'm²', name: 'metros quadrados', active: true },
-    { group: null, abbr: 'km²', name: 'kilometro quadrados', active: true },
-    { group: 'Distância', abbr: 'mm', name: 'milimetros', active: true },
-    { group: null, abbr: 'cm', name: 'centimetros', active: true },
-    { group: null, abbr: 'm', name: 'metros', active: true },
-    { group: null, abbr: 'km', name: 'kilomemetros', active: true },
-    { group: 'Peso', abbr: 'g', name: 'gramas', active: true },
-    { group: null, abbr: 'kg', name: 'kilogramas', active: true },
-    { group: 'Tempo', abbr: 'min', name: 'minutos', active: true },
-    { group: null, abbr: 'h', name: 'horas', active: true },
-    { group: null, abbr: 'dias', name: 'dias', active: true },
-    { group: null, abbr: 'semanas', name: 'semanas', active: true },
-    { group: null, abbr: 'meses', name: 'meses', active: true },
-    { group: 'Volume', abbr: 'ml', name: 'mililitro', active: true },
-    { group: null, abbr: 'l', name: 'litro', active: true },
-    { group: null, abbr: 'm³', name: 'metros cúbicos', active: true }
+    { group: 'Unidade', id: 'un.', name: 'unidades', active: true },
+    { group: 'Área', id: 'm²', name: 'metros quadrados', active: true },
+    { group: null, id: 'km²', name: 'kilometro quadrados', active: true },
+    { group: 'Distância', id: 'mm', name: 'milimetros', active: true },
+    { group: null, id: 'cm', name: 'centimetros', active: true },
+    { group: null, id: 'm', name: 'metros', active: true },
+    { group: null, id: 'km', name: 'kilomemetros', active: true },
+    { group: 'Peso', id: 'g', name: 'gramas', active: true },
+    { group: null, id: 'kg', name: 'kilogramas', active: true },
+    { group: 'Tempo', id: 'min', name: 'minutos', active: true },
+    { group: null, id: 'h', name: 'horas', active: true },
+    { group: null, id: 'dias', name: 'dias', active: true },
+    { group: null, id: 'semanas', name: 'semanas', active: true },
+    { group: null, id: 'meses', name: 'meses', active: true },
+    { group: 'Volume', id: 'ml', name: 'mililitro', active: true },
+    { group: null, id: 'l', name: 'litro', active: true },
+    { group: null, id: 'm³', name: 'metros cúbicos', active: true }
   ],
   paymentMethods: [
-    { abbr: 'dinheiro', name: 'dinheiro', active: true },
-    { abbr: 'crédito', name: 'cartão de crédito', active: true },
-    { abbr: 'débito', name: 'cartão de débito', active: true },
-    { abbr: 'pix', name: 'pix', active: true },
-    { abbr: 'cheque', name: 'cheque', active: true },
-    { abbr: 'boleto', name: 'boleto', active: true },
-    { abbr: 'fiado', name: 'fiado', active: true },
-    { abbr: 'transferência', name: 'transferência bancária', active: true },
-    { abbr: 'outro', name: 'outro', active: true }
+    { id: 'dinheiro', name: 'dinheiro', active: true },
+    { id: 'crédito', name: 'cartão de crédito', active: true },
+    { id: 'débito', name: 'cartão de débito', active: true },
+    { id: 'pix', name: 'pix', active: true },
+    { id: 'cheque', name: 'cheque', active: true },
+    { id: 'boleto', name: 'boleto', active: true },
+    { id: 'fiado', name: 'fiado', active: true },
+    { id: 'transferência', name: 'transferência bancária', active: true },
+    { id: 'outro', name: 'outro', active: true }
   ]
 };
 

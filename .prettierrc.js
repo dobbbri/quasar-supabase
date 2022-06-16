@@ -2,7 +2,7 @@
 module.exports = {
   // We use a larger print width because Prettier's word-wrapping seems to be tuned
   // for plain JavaScript without type annotations
-  printWidth: 80,
+  printWidth: 100,
   // Use .gitattributes to manage newlines
   endOfLine: 'auto',
   // Use single quotes instead of double quotes
@@ -11,5 +11,5 @@ module.exports = {
   // to use them for arrays only
   trailingComma: 'none',
   // For me
-  singleAttributePerLine: true
+  singleAttributePerLine: false
 };

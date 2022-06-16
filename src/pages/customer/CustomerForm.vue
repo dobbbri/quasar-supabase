@@ -4,12 +4,14 @@ import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useTools, useDefaults } from 'src/composables';
 import {
+  Page,
   PageHeader,
   PageBody,
   PageFooter,
   TextInput,
   PhoneInput,
   CheckBox,
+  CheckboxIcon,
   TextareaInput,
   RadioOptions,
   CpfCnpjInput,
@@ -20,17 +22,12 @@ const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 
-const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } =
-  useCustomers();
+const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } = useCustomers();
 const { confirm, notify } = useTools();
 const { attr } = useDefaults();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
-
-const emailExpanded = ref(true);
-const adressExpanded = ref(false);
-const detailsExpanded = ref(false);
 
 const optionsPerson = ref([
   { label: 'Pessoa Física', value: false },
@@ -118,10 +115,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-page
-    padding
-    v-bind="attr.form"
-  >
+  <page>
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
@@ -159,15 +153,9 @@ onMounted(() => {
           error-message="O nome do cliente deve ser informado!"
         />
 
-        <radio-options
-          v-model="form.is_legal_entity"
-          :options="optionsPerson"
-        />
+        <radio-options v-model="form.is_legal_entity" :options="optionsPerson" />
 
-        <expansion-item
-          v-model="emailExpanded"
-          label="Telefones e Email"
-        >
+        <expansion-item default-opened label="Telefones e Email">
           <div class="line row">
             <div class="line col">
               <phone-input
@@ -179,83 +167,34 @@ onMounted(() => {
             </div>
 
             <div class="col-2 text-right">
-              <q-checkbox
+              <checkbox-icon
                 v-model="form.phone_1_has_whatsapp"
-                checked-icon="whatsapp"
-                unchecked-icon="whatsapp"
+                icon="whatsapp"
                 color="green"
-                class="only-image"
-                size="xl"
-              >
-                <q-tooltip>Possui whatsapp</q-tooltip>
-              </q-checkbox>
+                tooltip="Possui whatsapp"
+              />
             </div>
           </div>
 
-          <phone-input
-            v-model="form.phone_2"
-            label="Celular/Telefone fixo"
-          />
+          <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
 
-          <text-input
-            v-model="form.email"
-            label="Email"
-          />
+          <text-input v-model="form.email" label="Email" />
         </expansion-item>
 
-        <expansion-item
-          v-model="adressExpanded"
-          label="Endereço"
-        >
-          <text-input
-            v-model="form.zip_code"
-            mask="#####-###"
-            label="CEP"
-            @blur="handleFindCEP"
-          />
-
-          <text-input
-            v-model="form.street"
-            label="Endereço, Número"
-          />
-
-          <text-input
-            v-model="form.district"
-            label="Bairro"
-          />
-
-          <text-input
-            v-model="form.city"
-            label="Cidade"
-          />
-
-          <text-input
-            v-model="form.state"
-            mask="AA"
-            label="UF(estado)"
-          />
+        <expansion-item label="Endereço">
+          <text-input v-model="form.zip_code" mask="#####-###" label="CEP" @blur="handleFindCEP" />
+          <text-input v-model="form.street" label="Endereço, Número" />
+          <text-input v-model="form.district" label="Bairro" />
+          <text-input v-model="form.city" label="Cidade" />
+          <text-input v-model="form.state" mask="AA" label="UF(estado)" />
         </expansion-item>
 
-        <expansion-item
-          v-model="detailsExpanded"
-          label="Avançado"
-        >
-          <cpf-cnpj-input
-            v-model="form.document_number"
-            :is-legal-entity="form.is_legal_entity"
-          />
-
-          <textarea-input
-            v-model="form.notes"
-            label="Anotações"
-          />
+        <expansion-item label="Avançado">
+          <cpf-cnpj-input v-model="form.document_number" :is-legal-entity="form.is_legal_entity" />
+          <textarea-input v-model="form.notes" label="Anotações" />
         </expansion-item>
 
-        <check-box
-          v-bind="attr.input.basic"
-          v-model="form.active"
-          label="Cliente ativo"
-        />
+        <check-box v-bind="attr.input.basic" v-model="form.active" label="Cliente ativo" />
 
         <page-footer>
           <q-btn
@@ -281,5 +220,5 @@ onMounted(() => {
         </page-footer>
       </page-body>
     </q-form>
-  </q-page>
+  </page>
 </template>

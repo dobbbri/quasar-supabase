@@ -43,10 +43,7 @@ const handleSubmit = async () => {
     </page-header>
 
     <div class="line row justify-center q-mt-lg">
-      <q-form
-        v-bind="attr.form"
-        @submit.prevent="handleSubmit"
-      >
+      <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <div v-bind="attr.lineSpacing">
           <q-input
             v-bind="attr.input.basic"
@@ -83,12 +80,7 @@ const handleSubmit = async () => {
               label="Concordo com a&nbsp;"
               color="primary"
             />
-            <a
-              href=""
-              class="text-primary"
-            >
-              Politica de Privacidade
-            </a>
+            <a href="" class="text-primary"> Politica de Privacidade </a>
           </div>
 
           <div>
@@ -98,12 +90,7 @@ const handleSubmit = async () => {
               label="Concordo com os&nbsp;"
               color="primary"
             />
-            <a
-              href=""
-              class="text-primary"
-            >
-              Termos de Uso
-            </a>
+            <a href="" class="text-primary"> Termos de Uso </a>
           </div>
         </div>
 

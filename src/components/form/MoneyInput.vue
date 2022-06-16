@@ -23,10 +23,5 @@ const { inputRef, formattedValue } = useCurrencyInput({
 </script>
 
 <template>
-  <q-input
-    v-bind="attr.input.basic"
-    ref="inputRef"
-    type="tel"
-    :model-value="formattedValue"
-  />
+  <q-input v-bind="attr.input.basic" ref="inputRef" type="tel" :model-value="formattedValue" />
 </template>

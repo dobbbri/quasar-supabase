@@ -9,10 +9,7 @@ export default function useAuthUser() {
 
   const register = async ({ email, password, ...meta }) => {
     loading.value = true;
-    const { session, error } = await supabase.auth.signUp(
-      { email, password },
-      { data: meta }
-    );
+    const { session, error } = await supabase.auth.signUp({ email, password }, { data: meta });
     if (session) store.setUser(session.user);
     loading.value = false;
     if (error) throw error;

@@ -1,23 +1,15 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useQuasar } from 'quasar';
-import {
-  useCategories,
-  useNameSearch,
-  useTools,
-  useDefaults
-} from 'src/composables';
-import { PageHeader, SearchInput, WaitingLoad } from 'src/components';
+import { useCategories, useNameSearch, useTools, useDefaults } from 'src/composables';
+import { Page, PageHeader, SearchInput, WaitingLoad } from 'src/components';
 
 const router = useRouter();
-const $q = useQuasar();
 
 const documents = ref([]);
 
 const { loading, getCategories } = useCategories();
-const { searchQuery, matchingSearchQuery: categories } =
-  useNameSearch(documents);
+const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents);
 const { notify } = useTools();
 const { attr } = useDefaults();
 
@@ -40,12 +32,11 @@ onMounted(() => handleGetCategories());
 </script>
 
 <template>
-  <q-page padding>
+  <page>
     <page-header>
       <template #title>Categorias</template>
       <template #right>
         <q-btn
-          v-if="!$q.platform.is.mobile"
           v-bind="attr.btn.icon"
           color="primary"
           icon="sym_r_add"
@@ -63,11 +54,7 @@ onMounted(() => handleGetCategories());
 
     <waiting-load :showing="loading.list.value" />
 
-    <q-list
-      v-if="!loading.list.value"
-      separator
-      class="q-mt-sm"
-    >
+    <q-list v-if="!loading.list.value" separator class="q-mt-sm">
       <q-item
         v-for="(category, index) in categories"
         :key="index"
@@ -76,30 +63,11 @@ onMounted(() => handleGetCategories());
         @click="handleEditCategory(category)"
       >
         <q-item-section>
-          <q-item-label
-            :class="{ 'text-negative text-strike': !category.active }"
-          >
+          <q-item-label :class="{ 'text-negative text-strike': !category.active }">
             {{ category.name }}
           </q-item-label>
         </q-item-section>
       </q-item>
     </q-list>
-
-    <q-page-sticky
-      position="bottom-right"
-      :offset="[18, 18]"
-    >
-      <q-btn
-        v-if="$q.platform.is.mobile"
-        v-bind="attr.btn.icon"
-        icon="sym_r_add"
-        fab
-        :loading="loading.add.value"
-        :disable="loading.disable.value"
-        :to="{ name: 'category-form' }"
-      >
-        <q-tooltip>Adicionar</q-tooltip>
-      </q-btn>
-    </q-page-sticky>
-  </q-page>
+  </page>
 </template>

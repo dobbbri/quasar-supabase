@@ -18,9 +18,8 @@ export default function useAttribute() {
         hideBottomSpace: true,
         outlined: true,
         dense: true,
-        optionsDense: true,
-        color: 'secondary',
-        class: 'font-weight: 600'
+        optionsDense: false,
+        color: 'secondary'
       },
       search: {
         clearable: true,
@@ -31,7 +30,7 @@ export default function useAttribute() {
       }
     },
 
-    form: {
+    page: {
       class: 'full-width',
       style: 'max-width: 620px'
     },

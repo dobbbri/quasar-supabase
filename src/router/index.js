@@ -22,8 +22,7 @@ export default route(function (/* { store, ssrContext } */) {
   });
 
   Router.beforeEach((to, from) => {
-    if (process.env.DEV)
-      console.info(`navigating from ${from.path} to ${to.path}`);
+    if (process.env.DEV) console.info(`navigating from ${from.path} to ${to.path}`);
 
     const store = useUserStore();
 
@@ -33,11 +32,7 @@ export default route(function (/* { store, ssrContext } */) {
       return { name: 'reset-password', params: { token } };
     }
 
-    if (
-      !store.isLoggedIn &&
-      to.meta.requiresAuth &&
-      !Object.keys(to.query).includes('fromEmail')
-    ) {
+    if (!store.isLoggedIn && to.meta.requiresAuth && !Object.keys(to.query).includes('fromEmail')) {
       return { name: 'login' };
     }
   });

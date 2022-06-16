@@ -30,9 +30,7 @@ const updateThumbnail = () => {
       @click="$refs.fileInput.pickFiles()"
     >
       <template #error>
-        <div class="absolute-full flex flex-center bg-negative text-white">
-          Erro!
-        </div>
+        <div class="absolute-full flex flex-center bg-negative text-white">Erro!</div>
       </template>
     </q-img>
     <q-file
@@ -46,10 +44,7 @@ const updateThumbnail = () => {
   </div>
 </template>
 
-<style
-  lang="scss"
-  scoped
->
+<style lang="scss" scoped>
 .img-size {
   width: 100%;
   height: 150px;
