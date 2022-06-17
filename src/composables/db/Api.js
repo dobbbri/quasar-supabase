@@ -21,7 +21,12 @@ export default function useApi(table) {
 
   const get = async (id, fields = '*') => {
     setLoading.list(true);
-    const { error, data } = await supabase.from(table).select(fields).eq('id', id).single();
+    const { error, data } = await supabase
+      .from(table)
+      .select(fields)
+      .eq('user_id', user.value.id)
+      .eq('id', id)
+      .single();
     setLoading.list(false);
     if (error) throw error;
     return data;
@@ -39,6 +44,7 @@ export default function useApi(table) {
     const { error } = await supabase
       .from(table)
       .update({ ...form })
+      .eq('user_id', user.value.id)
       .eq('id', id);
     setLoading.edit(false);
     if (error) throw error;
@@ -46,7 +52,7 @@ export default function useApi(table) {
 
   const remove = async (id) => {
     setLoading.remove(true);
-    const { error } = await supabase.from(table).delete().eq('id', id);
+    const { error } = await supabase.from(table).delete().eq('user_id', user.value.id).eq('id', id);
     setLoading.remove(false);
     if (error) throw error;
   };

@@ -97,6 +97,8 @@ const handleSubmit = async () => {
         form.value.image_name = filePath;
       }
     }
+    form.value.price_to_buy = form.value.price_to_buy * 100;
+    form.value.price_to_sell = form.value.price_to_sell * 100;
     if (isEditMode.value) {
       await editProduct(form.value);
     } else {
@@ -127,7 +129,8 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
-    console.log(' [DEBUG] form : ', form.value);
+    form.value.price_to_buy = form.value.price_to_buy / 100;
+    form.value.price_to_sell = form.value.price_to_sell / 100;
     if (form.value.image_name) {
       newImage.value = getProductImageURL(form.value.image_name) + '?t=' + new Date().getTime();
     }
