@@ -1,14 +1,15 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, watch } from 'vue';
 import { useCurrencyInput } from 'vue-currency-input';
 import { useDefaults } from 'src/composables';
+
 const { attr } = useDefaults();
 
-defineProps({
-  modelValue: { type: [Number, String], required: true }
+const props = defineProps({
+  modelValue: { type: [Number, String], default: 0 }
 });
 
-const { inputRef, formattedValue } = useCurrencyInput({
+const { inputRef, formattedValue, setValue } = useCurrencyInput({
   locale: 'pt-BR',
   currency: 'BRL',
   currencyDisplay: 'hidden',
@@ -20,8 +21,15 @@ const { inputRef, formattedValue } = useCurrencyInput({
   useGrouping: true,
   accountingSign: false
 });
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    setValue(value);
+  }
+);
 </script>
 
 <template>
-  <q-input v-bind="attr.input.basic" ref="inputRef" type="tel" :model-value="formattedValue" />
+  <q-input ref="inputRef" type="tel" :model-value="formattedValue" v-bind="attr.input.basic" />
 </template>

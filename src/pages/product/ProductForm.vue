@@ -8,6 +8,7 @@ import {
   PageBody,
   PageFooter,
   TextInput,
+  MoneyInput,
   CheckBox,
   SelectOptions,
   TextareaInput,
@@ -97,8 +98,6 @@ const handleSubmit = async () => {
         form.value.image_name = filePath;
       }
     }
-    form.value.price_to_buy = form.value.price_to_buy * 100;
-    form.value.price_to_sell = form.value.price_to_sell * 100;
     if (isEditMode.value) {
       await editProduct(form.value);
     } else {
@@ -129,8 +128,6 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
-    form.value.price_to_buy = form.value.price_to_buy / 100;
-    form.value.price_to_sell = form.value.price_to_sell / 100;
     if (form.value.image_name) {
       newImage.value = getProductImageURL(form.value.image_name) + '?t=' + new Date().getTime();
     }
@@ -201,14 +198,9 @@ onMounted(async () => {
           error-message="O nome do produto deve ser informado!"
         />
 
-        <q-input
-          v-bind="attr.input.basic"
+        <money-input
           v-model="form.price_to_sell"
           label="Preço de venda"
-          prefix="R$"
-          mask="#.##"
-          fill-mask="0"
-          reverse-fill-mask
           :rules="[(val) => !!val]"
           error-message="O preço de venda do produto deve ser informado"
         />
@@ -224,15 +216,8 @@ onMounted(async () => {
         />
 
         <expansion-item default-opened label="Custo e lucro">
-          <q-input
-            v-bind="attr.input.basic"
-            v-model="form.price_to_buy"
-            label="Preço de custo"
-            prefix="R$"
-            mask="#.##"
-            fill-mask="0"
-            reverse-fill-mask
-          />
+          <money-input v-model="form.price_to_buy" label="Preço de custo" />
+
           <div class="line row q-gutter-x-md">
             <div class="line col">
               <q-input

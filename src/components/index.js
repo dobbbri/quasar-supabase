@@ -6,6 +6,8 @@ import PageFooter from 'src/components/page/PageFooter.vue';
 import LeftSidebar from 'src/components/menu/LeftSidebar.vue';
 
 import TextInput from 'src/components/form/TextInput.vue';
+import MoneyInput from 'src/components/form/MoneyInput.vue';
+import IntegerInput from 'src/components/form/IntegerInput.vue';
 import TextareaInput from 'src/components/form/TextareaInput.vue';
 import PasswordInput from 'src/components/form/PasswordInput.vue';
 import PhoneInput from 'src/components/form/PhoneInput.vue';
@@ -26,6 +28,8 @@ export {
   PageFooter,
   LeftSidebar,
   TextInput,
+  MoneyInput,
+  IntegerInput,
   TextareaInput,
   PasswordInput,
   PhoneInput,
