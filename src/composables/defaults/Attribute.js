@@ -41,7 +41,9 @@ export default function useAttribute() {
     },
 
     expansion: {
-      headerClass: 'text-title text-primary q-mt-lg',
+      expandSeparator: true,
+      headerClass: 'text-title text-primary q-mt-md',
+      denseToggle: true,
       dense: true
     },
 
@@ -50,7 +52,7 @@ export default function useAttribute() {
     },
 
     lineSpacing: {
-      class: 'q-gutter-y-md q-pt-md'
+      class: 'q-gutter-y-md q-py-sm'
     }
   };
 

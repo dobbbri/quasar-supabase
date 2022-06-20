@@ -198,34 +198,24 @@ onMounted(async () => {
           error-message="O nome do produto deve ser informado!"
         />
 
-        <money-input
-          v-model="form.price_to_sell"
-          label="Preço de venda"
-          :rules="[(val) => !!val]"
-          error-message="O preço de venda do produto deve ser informado"
-        />
-
-        <select-options
-          v-model="form.measure_unit"
-          label="Unidade de medida"
-          :options="optionsMeasureUnits"
-          :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
-          :rules="[(val) => !!val]"
-          error-message="Uma unidade de medida deve ser selecionada"
-          :use-template="2"
-        />
-
-        <expansion-item default-opened label="Custo e lucro">
-          <money-input v-model="form.price_to_buy" label="Preço de custo" />
+        <expansion-item default-opened label="Preço, Custo e Lucro">
+          <select-options
+            v-model="form.measure_unit"
+            label="Unidade de medida"
+            :options="optionsMeasureUnits"
+            :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+            :rules="[(val) => !!val]"
+            error-message="Uma unidade de medida deve ser selecionada"
+            :use-template="2"
+          />
 
           <div class="line row q-gutter-x-md">
             <div class="line col">
-              <q-input
-                v-bind="attr.input.basic"
-                v-model="price_profit"
-                label="lucro"
-                input-class="text-center"
-                readonly
+              <money-input
+                v-model="form.price_to_sell"
+                label="Preço de venda"
+                :rules="[(val) => !!val]"
+                error-message="O preço de venda do produto deve ser informado"
               />
             </div>
             <div class="line col">
@@ -233,7 +223,21 @@ onMounted(async () => {
                 v-bind="attr.input.basic"
                 v-model="price_markup"
                 label="Markup"
-                input-class="text-center"
+                input-class="text-center no-pointer-events"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="line row q-gutter-x-md">
+            <div class="line col">
+              <money-input v-model="form.price_to_buy" label="Preço de custo" />
+            </div>
+            <div class="line col">
+              <q-input
+                v-bind="attr.input.basic"
+                v-model="price_profit"
+                label="lucro"
+                input-class="text-center no-pointer-events"
                 readonly
               />
             </div>

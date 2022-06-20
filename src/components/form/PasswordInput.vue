@@ -7,5 +7,5 @@ const isPwd = ref(true);
 </script>
 
 <template>
-  <q-input v-bind="attr.input.basic" :type="isPwd ? 'password' : 'text'" lazy-rules> </q-input>
+  <q-input v-bind="attr.input.basic" :type="isPwd ? 'password' : 'text'" lazy-rules />
 </template>
