@@ -15,7 +15,9 @@ import {
   TextareaInput,
   RadioOptions,
   CpfCnpjInput,
-  ExpansionItem
+  ExpansionItem,
+  BtnBack,
+  BtnDelete
 } from 'src/components';
 
 const $q = useQuasar();
@@ -30,8 +32,8 @@ const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const optionsPerson = ref([
-  { label: 'Pessoa Física', value: false },
-  { label: 'Pessoa Juríca', value: true }
+  { label: 'Pessoa Física', value: true },
+  { label: 'Pessoa Juríca', value: false }
 ]);
 
 const form = ref({
@@ -119,29 +121,16 @@ onMounted(() => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <q-btn
-            v-bind="attr.btn.icon"
-            icon="sym_r_arrow_back_ios_new"
-            flat
-            :to="{ name: 'customer-list' }"
-          >
-            <q-tooltip>Voltar</q-tooltip>
-          </q-btn>
+          <btn-back :to="{ name: 'customer-list' }" />
         </template>
         <template #title>{{ title + ' cliente' }}</template>
         <template #right>
-          <q-btn
+          <btn-delete
             v-if="isEditMode"
-            v-bind="attr.btn.icon"
-            icon="sym_r_delete"
-            color="negative"
-            unelevated
             :loading="loading.remove.value"
             :disable="loading.disable.value"
             @click="handleRemoveCustomer(form)"
-          >
-            <q-tooltip>Excluir</q-tooltip>
-          </q-btn>
+          />
         </template>
       </page-header>
 

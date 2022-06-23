@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, SearchInput, WaitingLoad } from 'src/components';
+import { Page, PageHeader, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
 
 const router = useRouter();
 
@@ -11,7 +11,7 @@ const documents = ref([]);
 const { loading, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify } = useTools();
-const { attr, fmt } = useDefaults();
+const { fmt } = useDefaults();
 
 const handleEditProduct = (product) => {
   router.push({
@@ -38,17 +38,11 @@ onMounted(() => handleGetProducts());
     <page-header>
       <template #title>Produtos</template>
       <template #right>
-        <q-btn
-          v-bind="attr.btn.icon"
-          color="primary"
-          icon="sym_r_add"
-          unelevated
+        <btn-add
           :loading="loading.add.value"
           :disable="loading.disable.value"
           :to="{ name: 'product-form' }"
-        >
-          <q-tooltip>Adicionar</q-tooltip>
-        </q-btn>
+        />
       </template>
     </page-header>
 

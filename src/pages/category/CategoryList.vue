@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCategories, useNameSearch, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, SearchInput, WaitingLoad } from 'src/components';
+import { useCategories, useNameSearch, useTools } from 'src/composables';
+import { Page, PageHeader, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
 
 const router = useRouter();
 
@@ -11,7 +11,6 @@ const documents = ref([]);
 const { loading, getCategories } = useCategories();
 const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents);
 const { notify } = useTools();
-const { attr } = useDefaults();
 
 const handleEditCategory = (category) => {
   router.push({
@@ -36,17 +35,11 @@ onMounted(() => handleGetCategories());
     <page-header>
       <template #title>Categorias</template>
       <template #right>
-        <q-btn
-          v-bind="attr.btn.icon"
-          color="primary"
-          icon="sym_r_add"
-          unelevated
+        <btn-add
           :loading="loading.add.value"
           :disable="loading.disable.value"
           :to="{ name: 'category-form' }"
-        >
-          <q-tooltip>Adicionar</q-tooltip>
-        </q-btn>
+        />
       </template>
     </page-header>
 

@@ -21,6 +21,11 @@ import RadioOptions from 'src/components/form/RadioOptions.vue';
 import ExpansionItem from 'src/components/form/ExpansionItem.vue';
 import WaitingLoad from 'src/components/form/WaitingLoad.vue';
 
+import BtnBack from 'src/components/form/BtnBack.vue';
+import BtnDelete from 'src/components/form/BtnDelete.vue';
+import BtnSave from 'src/components/form/BtnSave.vue';
+import BtnAdd from 'src/components/form/BtnAdd.vue';
+
 export {
   Page,
   PageHeader,
@@ -41,5 +46,9 @@ export {
   CheckboxIcon,
   SelectOptions,
   RadioOptions,
-  WaitingLoad
+  WaitingLoad,
+  BtnBack,
+  BtnDelete,
+  BtnSave,
+  BtnAdd
 };

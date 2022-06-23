@@ -12,7 +12,7 @@ const menuStore = useMenuStore();
       <div>
         <slot name="left">
           <div class="btn-menu">
-            <q-btn v-bind="attr.btn.icon" icon="sym_r_menu" flat @click="menuStore.toggleSidebar()">
+            <q-btn v-bind="attr.btn.icon" icon="sym_o_menu" flat @click="menuStore.toggleSidebar()">
               <q-tooltip>Menu</q-tooltip>
             </q-btn>
           </div>

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useNameSearch, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody, SearchInput, WaitingLoad } from 'src/components';
+import { useCustomers, useNameSearch, useTools } from 'src/composables';
+import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
 
 const router = useRouter();
 
@@ -11,7 +11,6 @@ const documents = ref([]);
 const { loading, getCustomers } = useCustomers();
 const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
-const { attr } = useDefaults();
 
 const handleEditCustomer = (customer) => {
   router.push({
@@ -36,16 +35,11 @@ onMounted(() => handleGetCustomers());
     <page-header>
       <template #title>Clientes</template>
       <template #right>
-        <q-btn
-          v-bind="attr.btn.icon"
-          color="primary"
-          icon="sym_r_add"
-          unelevated
+        <btn-add
           :loading="loading.add.value"
           :disable="loading.disable.value"
           :to="{ name: 'customer-form' }"
-        >
-        </q-btn>
+        />
       </template>
     </page-header>
 

@@ -33,7 +33,7 @@ const handleSubmit = async () => {
         <template #left>
           <q-btn
             v-bind="attr.btn.icon"
-            icon="sym_r_arrow_back_ios_new"
+            icon="sym_o_arrow_back_ios_new"
             flat
             @click="$router.back()"
           />

@@ -4,8 +4,8 @@
   justify-content: space-between;
 }
 
-.bt-1px {
-  border-top: 1px solid $grey-5;
+.bt-2px {
+  border-top: 2px solid $grey-5;
 }
 
 .text-title {
@@ -57,6 +57,10 @@
   height: 40px;
 }
 
+.q-field--outlined .q-field__control::before {
+  border: 2px solid rgba(0, 0, 0, 0.24);
+  transition: border-color 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 // .q-field--float .q-field__label {
 //   transform: translateY(-35%) scale(0.85);

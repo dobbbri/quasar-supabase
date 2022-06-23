@@ -67,7 +67,7 @@ const ajustarLabel = (type) => {
   <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
     <page-header>
       <template #left>
-        <q-btn v-bind="attr.btn.icon" icon="sym_r_arrow_back_ios_new" flat @click="router.back()" />
+        <q-btn v-bind="attr.btn.icon" icon="sym_o_arrow_back_ios_new" flat @click="router.back()" />
       </template>
       <template #title>Contolar Estoque</template>
       <template #right>

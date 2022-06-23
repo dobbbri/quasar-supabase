@@ -35,8 +35,8 @@ onMounted(() => {
         <q-item-section avatar>
           <q-toggle
             v-model="form.dark_mode"
-            checked-icon="sym_r_dark_mode"
-            unchecked-icon="sym_r_light_mode"
+            checked-icon="sym_o_dark_mode"
+            unchecked-icon="sym_o_light_mode"
             val="picture"
           />
         </q-item-section>

@@ -2,7 +2,16 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody, PageFooter, TextInput, CheckBox } from 'src/components';
+import {
+  Page,
+  PageHeader,
+  PageBody,
+  PageFooter,
+  TextInput,
+  CheckBox,
+  BtnBack,
+  BtnDelete
+} from 'src/components';
 
 const router = useRouter();
 const route = useRoute();
@@ -63,29 +72,16 @@ onMounted(() => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <q-btn
-            v-bind="attr.btn.icon"
-            icon="sym_r_arrow_back_ios_new"
-            flat
-            :to="{ name: 'category-list' }"
-          >
-            <q-tooltip>Voltar</q-tooltip>
-          </q-btn>
+          <btn-back :to="{ name: 'category-list' }" />
         </template>
         <template #title>{{ title + ' categoria' }}</template>
         <template #right>
-          <q-btn
+          <btn-delete
             v-if="isEditMode"
-            v-bind="attr.btn.icon"
-            icon="sym_r_delete"
-            color="negative"
-            unelevated
             :loading="loading.remove.value"
             :disable="loading.disable.value"
             @click="handleRemoveCategory(form)"
-          >
-            <q-tooltip>Excluir</q-tooltip>
-          </q-btn>
+          />
         </template>
       </page-header>
 
