@@ -5,7 +5,7 @@ const { attr } = useDefaults();
 </script>
 
 <template>
-  <q-btn v-bind="attr.btn.icon" icon="sym_o_delete" color="negative" unelevated>
-    <q-tooltip>Excluir</q-tooltip>
+  <q-btn v-bind="attr.btn.icon" icon="sym_o_edit" color="warning" unelevated>
+    <q-tooltip>Alterar</q-tooltip>
   </q-btn>
 </template>

@@ -2,12 +2,11 @@
 import { ref, onMounted, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
-import { useCustomers, useTools, useDefaults } from 'src/composables';
+import { useCustomers, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
   PageBody,
-  PageFooter,
   TextInput,
   PhoneInput,
   CheckBox,
@@ -17,7 +16,8 @@ import {
   CpfCnpjInput,
   ExpansionItem,
   BtnBack,
-  BtnDelete
+  BtnDelete,
+  BtnSave
 } from 'src/components';
 
 const $q = useQuasar();
@@ -26,14 +26,13 @@ const route = useRoute();
 
 const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } = useCustomers();
 const { confirm, notify } = useTools();
-const { attr } = useDefaults();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const optionsPerson = ref([
-  { label: 'Pessoa Física', value: true },
-  { label: 'Pessoa Juríca', value: false }
+  { label: 'Pessoa Física', value: false },
+  { label: 'Pessoa Juríca', value: true }
 ]);
 
 const form = ref({
@@ -123,13 +122,18 @@ onMounted(() => {
         <template #left>
           <btn-back :to="{ name: 'customer-list' }" />
         </template>
-        <template #title>{{ title + ' cliente' }}</template>
+        <template #title>{{ title + ' Cliente' }}</template>
         <template #right>
           <btn-delete
             v-if="isEditMode"
             :loading="loading.remove.value"
             :disable="loading.disable.value"
             @click="handleRemoveCustomer(form)"
+          />
+          <btn-save
+            :loading="isEditMode ? loading.edit.value : loading.add.value"
+            :disable="loading.disable.value"
+            type="submit"
           />
         </template>
       </page-header>
@@ -142,7 +146,9 @@ onMounted(() => {
           error-message="O nome do cliente deve ser informado!"
         />
 
-        <radio-options v-model="form.is_legal_entity" :options="optionsPerson" />
+        <expansion-item default-opened group="person" label="Tipo de Pessoa">
+          <radio-options v-model="form.is_legal_entity" :options="optionsPerson" />
+        </expansion-item>
 
         <expansion-item default-opened label="Telefones e Email">
           <div class="line row">
@@ -160,14 +166,14 @@ onMounted(() => {
                 v-model="form.phone_1_has_whatsapp"
                 icon="whatsapp"
                 color="green"
-                tooltip="Possui whatsapp"
+                :tooltip="form.phone_1_has_whatsapp ? 'Possui Whatsapp' : 'Não possui Whatsapp'"
               />
             </div>
           </div>
 
-          <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
-
           <text-input v-model="form.email" label="Email" />
+
+          <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
         </expansion-item>
 
         <expansion-item label="Endereço">
@@ -183,30 +189,10 @@ onMounted(() => {
           <textarea-input v-model="form.notes" label="Anotações" />
         </expansion-item>
 
-        <check-box v-bind="attr.input.basic" v-model="form.active" label="Cliente ativo" />
-
-        <page-footer>
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Cancelar"
-            outline
-            class="col-4 bg-white"
-            :disable="loading.disable.value"
-            :to="{ name: 'customer-list' }"
-          />
-
-          <q-space />
-
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            unelevated
-            class="col-4"
-            :loading="isEditMode ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
-        </page-footer>
+        <check-box
+          v-model="form.active"
+          :label="form.active ? 'Cliente Ativo' : 'Cliente Desativado'"
+        />
       </page-body>
     </q-form>
   </page>

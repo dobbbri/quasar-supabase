@@ -4,6 +4,9 @@
   justify-content: space-between;
 }
 
+.b-2px {
+  border: 2px solid white;
+}
 .bt-2px {
   border-top: 2px solid $grey-5;
 }
@@ -60,6 +63,10 @@
 .q-field--outlined .q-field__control::before {
   border: 2px solid rgba(0, 0, 0, 0.24);
   transition: border-color 0.36s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.q-checkbox__label {
+  font-weight: 500;
 }
 
 // .q-field--float .q-field__label {

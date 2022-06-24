@@ -1,16 +1,16 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useCategories, useTools, useDefaults } from 'src/composables';
+import { useCategories, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
   PageBody,
-  PageFooter,
   TextInput,
   CheckBox,
   BtnBack,
-  BtnDelete
+  BtnDelete,
+  BtnSave
 } from 'src/components';
 
 const router = useRouter();
@@ -18,7 +18,6 @@ const route = useRoute();
 
 const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories();
 const { confirm, notify } = useTools();
-const { attr } = useDefaults();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
@@ -69,18 +68,23 @@ onMounted(() => {
 
 <template>
   <page>
-    <q-form @submit.prevent="handleSubmit">
+    <q-form readonly @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
           <btn-back :to="{ name: 'category-list' }" />
         </template>
-        <template #title>{{ title + ' categoria' }}</template>
+        <template #title>{{ title + ' Categoria' }}</template>
         <template #right>
           <btn-delete
             v-if="isEditMode"
             :loading="loading.remove.value"
             :disable="loading.disable.value"
             @click="handleRemoveCategory(form)"
+          />
+          <btn-save
+            :loading="isEditMode ? loading.edit.value : loading.add.value"
+            :disable="loading.disable.value"
+            type="submit"
           />
         </template>
       </page-header>
@@ -93,30 +97,10 @@ onMounted(() => {
           error-message="O nome da categoria deve ser informado!"
         />
 
-        <check-box v-model="form.active" label="Categoria Ativa" />
-
-        <page-footer>
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Cancelar"
-            outline
-            class="col-4 bg-white"
-            :disable="loading.disable.value"
-            :to="{ name: 'category-list' }"
-          />
-
-          <q-space />
-
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            unelevated
-            class="col-4"
-            :loading="isEditMode ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
-        </page-footer>
+        <check-box
+          v-model="form.active"
+          :label="form.active ? 'Categoria Ativa' : 'Categoria Desativada'"
+        />
       </page-body>
     </q-form>
   </page>

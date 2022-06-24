@@ -5,8 +5,10 @@ export default function useAttribute() {
         rounded: false,
         unelevated: true,
         noCaps: true,
-        dense: true,
-        class: 'q-px-sm text-weight-medium'
+        dense: false,
+        color: 'white',
+        textColor: 'primary',
+        class: 'q-px-sm text-weight-bold'
       },
       icon: { round: true, size: 'md', color: 'white', dense: true }
     },
@@ -39,7 +41,7 @@ export default function useAttribute() {
     },
 
     expansion: {
-      headerClass: 'bt-2px text-title text-primary q-mt-md',
+      headerClass: 'text-title text-primary q-mt-md q-pt-sm',
       denseToggle: true,
       dense: true
     },

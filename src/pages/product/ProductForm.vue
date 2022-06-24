@@ -1,12 +1,11 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useCategories, useTools, useDefaults } from 'src/composables';
+import { useProducts, useCategories, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
   PageBody,
-  PageFooter,
   TextInput,
   MoneyInput,
   CheckBox,
@@ -14,7 +13,8 @@ import {
   TextareaInput,
   ExpansionItem,
   BtnBack,
-  BtnDelete
+  BtnDelete,
+  BtnSave
 } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
 
@@ -36,7 +36,6 @@ const {
 } = useProducts();
 const { getCategories } = useCategories();
 const { confirm, notify } = useTools();
-const { attr } = useDefaults();
 
 const optionsCategories = ref([]);
 const optionsMeasureUnits = ref([]);
@@ -160,13 +159,18 @@ onMounted(async () => {
         <template #left>
           <btn-back :to="{ name: 'product-list' }" />
         </template>
-        <template #title>{{ title + ' produto' }}</template>
+        <template #title>{{ title + ' Produto' }}</template>
         <template #right>
           <btn-delete
             v-if="isEditMode"
             :loading="loading.remove.value"
             :disable="loading.disable.value"
             @click="handleRemoveProduct(form)"
+          />
+          <btn-save
+            :loading="isEditMode ? loading.edit.value : loading.add.value"
+            :disable="loading.disable.value"
+            type="submit"
           />
         </template>
       </page-header>
@@ -187,29 +191,30 @@ onMounted(async () => {
           error-message="Uma categoria deve ser selecionada"
         />
 
-        <money-input
-          v-model="form.price_to_sell"
-          label="Preço de venda"
-          :rules="[(val) => !!val]"
-          error-message="O preço de venda do produto deve ser informado"
-        />
+        <expansion-item default-opened group="price" label="Preço">
+          <money-input
+            v-model="form.price_to_sell"
+            label="Preço de venda"
+            :rules="[(val) => !!val]"
+            error-message="O preço de venda do produto deve ser informado"
+          />
 
-        <select-options
-          v-model="form.measure_unit"
-          label="Unidade de medida"
-          :options="optionsMeasureUnits"
-          :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
-          :rules="[(val) => !!val]"
-          error-message="Uma unidade de medida deve ser selecionada"
-          :use-template="2"
-        />
+          <select-options
+            v-model="form.measure_unit"
+            label="Unidade de medida"
+            :options="optionsMeasureUnits"
+            :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+            :rules="[(val) => !!val]"
+            error-message="Uma unidade de medida deve ser selecionada"
+            :use-template="2"
+          />
+        </expansion-item>
 
         <expansion-item default-opened label="Custo e Lucro">
           <money-input v-model="form.price_to_buy" label="Preço de custo" />
           <div class="line row q-gutter-x-md">
             <div class="line col">
-              <q-input
-                v-bind="attr.input.basic"
+              <text-input
                 v-model="price_profit"
                 label="lucro"
                 input-class="text-center no-pointer-events"
@@ -217,8 +222,7 @@ onMounted(async () => {
               />
             </div>
             <div class="line col">
-              <q-input
-                v-bind="attr.input.basic"
+              <text-input
                 v-model="price_markup"
                 label="Markup"
                 input-class="text-center no-pointer-events"
@@ -295,30 +299,10 @@ onMounted(async () => {
           <text-input v-model="form.code_bar" label="Código de barras" />
         </expansion-item>
 
-        <check-box v-model="form.active" label="Produto ativo" />
-
-        <page-footer>
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Cancelar"
-            outline
-            class="col-4 bg-white"
-            :disable="loading.disable.value"
-            :to="{ name: 'product-list' }"
-          />
-
-          <q-space />
-
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            unelevated
-            class="col-4"
-            :loading="isEditMode ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
-        </page-footer>
+        <check-box
+          v-model="form.active"
+          :label="form.active ? 'Produto Ativo' : 'Produto Desativado'"
+        />
       </page-body>
     </q-form>
   </page>

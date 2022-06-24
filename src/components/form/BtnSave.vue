@@ -5,5 +5,5 @@ const { attr } = useDefaults();
 </script>
 
 <template>
-  <q-btn v-bind="attr.btn.basic" color="success" label="Gravar" type="submit" />
+  <q-btn v-bind="attr.btn.basic" label="Gravar" type="submit" />
 </template>
