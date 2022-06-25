@@ -16,7 +16,7 @@ import {
   CpfCnpjInput,
   ExpansionItem,
   BtnBack,
-  BtnDelete,
+  BtnRemove,
   BtnSave
 } from 'src/components';
 
@@ -124,7 +124,7 @@ onMounted(() => {
         </template>
         <template #title>{{ title + ' Cliente' }}</template>
         <template #right>
-          <btn-delete
+          <btn-remove
             v-if="isEditMode"
             :loading="loading.remove.value"
             :disable="loading.disable.value"

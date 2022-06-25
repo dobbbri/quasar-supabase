@@ -2,22 +2,13 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
-import {
-  Page,
-  PageHeader,
-  PageBody,
-  TextInput,
-  CheckBox,
-  BtnBack,
-  BtnDelete,
-  BtnSave
-} from 'src/components';
+import { Page, PageHeader, PageBody, TextInput, CheckBox, BtnBack, BtnSave } from 'src/components';
 
 const router = useRouter();
 const route = useRoute();
 
-const { loading, getCategory, addCategory, editCategory, removeCategory } = useCategories();
-const { confirm, notify } = useTools();
+const { loading, getCategory, addCategory, editCategory } = useCategories();
+const { notify } = useTools();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
@@ -41,16 +32,8 @@ const handleSubmit = async () => {
   }
 };
 
-const handleRemoveCategory = async (category) => {
-  try {
-    confirm.delete(`da categoria: ${category.name}`).onOk(async () => {
-      await removeCategory(category.id);
-      notify.success('Categoria excluida.');
-      router.push({ name: 'category-list' });
-    });
-  } catch (error) {
-    notify.error('Erro ao excluir a categoria', error);
-  }
+const handleViewCategory = () => {
+  router.push({ name: 'category-view', params: { id: route.params.id } });
 };
 
 const handleGetCategory = async () => {
@@ -68,19 +51,13 @@ onMounted(() => {
 
 <template>
   <page>
-    <q-form readonly @submit.prevent="handleSubmit">
+    <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back :to="{ name: 'category-list' }" />
+          <btn-back @click="handleViewCategory()" />
         </template>
         <template #title>{{ title + ' Categoria' }}</template>
         <template #right>
-          <btn-delete
-            v-if="isEditMode"
-            :loading="loading.remove.value"
-            :disable="loading.disable.value"
-            @click="handleRemoveCategory(form)"
-          />
           <btn-save
             :loading="isEditMode ? loading.edit.value : loading.add.value"
             :disable="loading.disable.value"

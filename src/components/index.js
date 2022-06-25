@@ -18,13 +18,17 @@ import CheckBox from 'src/components/form/CheckBox.vue';
 import CheckboxIcon from 'src/components/form/CheckboxIcon.vue';
 import SelectOptions from 'src/components/form/SelectOptions.vue';
 import RadioOptions from 'src/components/form/RadioOptions.vue';
+
 import ExpansionItem from 'src/components/form/ExpansionItem.vue';
 import WaitingLoad from 'src/components/form/WaitingLoad.vue';
 
+import TextView from 'src/components/form/TextView.vue';
+
 import BtnBack from 'src/components/form/BtnBack.vue';
-import BtnDelete from 'src/components/form/BtnDelete.vue';
 import BtnSave from 'src/components/form/BtnSave.vue';
 import BtnAdd from 'src/components/form/BtnAdd.vue';
+import BtnEdit from 'src/components/form/BtnEdit.vue';
+import BtnRemove from 'src/components/form/BtnRemove.vue';
 
 export {
   Page,
@@ -47,8 +51,10 @@ export {
   SelectOptions,
   RadioOptions,
   WaitingLoad,
+  TextView,
   BtnBack,
-  BtnDelete,
   BtnSave,
-  BtnAdd
+  BtnAdd,
+  BtnEdit,
+  BtnRemove
 };

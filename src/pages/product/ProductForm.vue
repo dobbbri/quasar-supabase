@@ -13,7 +13,7 @@ import {
   TextareaInput,
   ExpansionItem,
   BtnBack,
-  BtnDelete,
+  BtnRemove,
   BtnSave
 } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
@@ -161,7 +161,7 @@ onMounted(async () => {
         </template>
         <template #title>{{ title + ' Produto' }}</template>
         <template #right>
-          <btn-delete
+          <btn-remove
             v-if="isEditMode"
             :loading="loading.remove.value"
             :disable="loading.disable.value"

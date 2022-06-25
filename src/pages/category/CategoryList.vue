@@ -12,9 +12,9 @@ const { loading, getCategories } = useCategories();
 const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents);
 const { notify } = useTools();
 
-const handleEditCategory = (category) => {
+const handleViewCategory = (category) => {
   router.push({
-    name: 'category-form',
+    name: 'category-view',
     params: { id: category.id }
   });
 };
@@ -53,7 +53,7 @@ onMounted(() => handleGetCategories());
         :key="index"
         clickable
         class="q-px-xs"
-        @click="handleEditCategory(category)"
+        @click="handleViewCategory(category)"
       >
         <q-item-section>
           <q-item-label :class="{ 'text-negative text-strike': !category.active }">

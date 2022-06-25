@@ -50,6 +50,11 @@ const routes = [
         component: () => import('pages/category/CategoryList.vue')
       },
       {
+        path: '/category-view/:id?',
+        name: 'category-view',
+        component: () => import('pages/category/CategoryView.vue')
+      },
+      {
         path: '/category-form/:id?',
         name: 'category-form',
         component: () => import('pages/category/CategoryForm.vue')

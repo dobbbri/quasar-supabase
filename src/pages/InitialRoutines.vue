@@ -1,20 +1,21 @@
 <script setup>
-import { onMounted } from 'vue';
-import { useQuasar } from 'quasar';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSettings, useTools } from 'src/composables';
 import { useSettingsStore } from 'src/stores/settingsStore';
+import { Page, PageHeader, WaitingLoad } from 'src/components';
 
-const $q = useQuasar();
 const router = useRouter();
 const store = useSettingsStore();
 
 const { getSettings, addSettings } = useSettings();
 const { notify } = useTools();
 
+const loading = ref(true);
+
 const handleSettings = async () => {
   try {
-    $q.loading.show();
+    loading.value = true;
     let settings = await getSettings();
     if (settings) {
       store.setSettings(settings);
@@ -26,10 +27,10 @@ const handleSettings = async () => {
       });
       store.setSettings(settings);
     }
-    $q.loading.hide();
+    loading.value = false;
     router.push({ name: 'index' });
   } catch (error) {
-    $q.loading.hide();
+    loading.value = false;
     notify.error('Erro ao executar as rotinas iniciais.', error);
   }
 };
@@ -40,5 +41,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <q-page padding></q-page>
+  <page>
+    <page-header>
+      <template #title>Aguarde</template>
+      <template #left>&nbsp;</template>
+    </page-header>
+
+    <waiting-load :showing="loading" />
+  </page>
 </template>
