@@ -27,8 +27,10 @@ import TextView from 'src/components/form/TextView.vue';
 import BtnBack from 'src/components/form/BtnBack.vue';
 import BtnSave from 'src/components/form/BtnSave.vue';
 import BtnAdd from 'src/components/form/BtnAdd.vue';
-import BtnEdit from 'src/components/form/BtnEdit.vue';
-import BtnRemove from 'src/components/form/BtnRemove.vue';
+
+import FabMenu from 'src/components/form/FabMenu.vue';
+import FabEditAction from 'src/components/form/FabEditAction.vue';
+import FabRemoveAction from 'src/components/form/FabRemoveAction.vue';
 
 export {
   Page,
@@ -55,6 +57,7 @@ export {
   BtnBack,
   BtnSave,
   BtnAdd,
-  BtnEdit,
-  BtnRemove
+  FabMenu,
+  FabEditAction,
+  FabRemoveAction
 };

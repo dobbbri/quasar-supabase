@@ -13,10 +13,7 @@ const { searchQuery, matchingSearchQuery: categories } = useNameSearch(documents
 const { notify } = useTools();
 
 const handleViewCategory = (category) => {
-  router.push({
-    name: 'category-view',
-    params: { id: category.id }
-  });
+  router.push({ name: 'category-view', params: { id: category.id } });
 };
 
 const handleGetCategories = async () => {

@@ -52,6 +52,21 @@ export default function useAttribute() {
 
     lineSpacing: {
       class: 'q-gutter-y-md q-py-sm'
+    },
+
+    fab: {
+      menu: {
+        unelevated: true,
+        verticalActionsAlign: 'right',
+        color: 'primary',
+        direction: 'down',
+        padding: 'sm'
+      },
+      action: {
+        labelPosition: 'left',
+        externalLabel: true,
+        textColor: 'white'
+      }
     }
   };
 

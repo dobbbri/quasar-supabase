@@ -16,7 +16,6 @@ import {
   CpfCnpjInput,
   ExpansionItem,
   BtnBack,
-  BtnRemove,
   BtnSave
 } from 'src/components';
 
@@ -24,8 +23,8 @@ const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 
-const { loading, getCustomer, addCustomer, editCustomer, removeCustomer } = useCustomers();
-const { confirm, notify } = useTools();
+const { loading, getCustomer, addCustomer, editCustomer } = useCustomers();
+const { notify } = useTools();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
@@ -37,10 +36,11 @@ const optionsPerson = ref([
 
 const form = ref({
   name: '',
+  is_legal_entity: false,
+  email: '',
   phone_1: '',
   phone_1_has_whatsapp: false,
   phone_2: '',
-  email: '',
   street: '',
   district: '',
   city: '',
@@ -48,7 +48,6 @@ const form = ref({
   zip_code: '',
   document_number: '',
   notes: '',
-  is_legal_entity: false,
   active: true
 });
 
@@ -90,16 +89,8 @@ const handleSubmit = async () => {
   }
 };
 
-const handleRemoveCustomer = async (customer) => {
-  try {
-    confirm.delete(`do cliente: ${customer.name}`).onOk(async () => {
-      await removeCustomer(customer.id);
-      notify.success('Cliente excluido.');
-      router.push({ name: 'customer-list' });
-    });
-  } catch (error) {
-    notify.error('Erro ao excluir o cliente', error);
-  }
+const handleViewCustomer = () => {
+  router.push({ name: 'customer-view', params: { id: route.params.id } });
 };
 
 const handleGetCustomer = async () => {
@@ -120,16 +111,10 @@ onMounted(() => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back :to="{ name: 'customer-list' }" />
+          <btn-back @click="handleViewCustomer()" />
         </template>
         <template #title>{{ title + ' Cliente' }}</template>
         <template #right>
-          <btn-remove
-            v-if="isEditMode"
-            :loading="loading.remove.value"
-            :disable="loading.disable.value"
-            @click="handleRemoveCustomer(form)"
-          />
           <btn-save
             :loading="isEditMode ? loading.edit.value : loading.add.value"
             :disable="loading.disable.value"
@@ -151,6 +136,8 @@ onMounted(() => {
         </expansion-item>
 
         <expansion-item default-opened label="Telefones e Email">
+          <text-input v-model="form.email" label="Email" />
+
           <div class="line row">
             <div class="line col">
               <phone-input
@@ -170,8 +157,6 @@ onMounted(() => {
               />
             </div>
           </div>
-
-          <text-input v-model="form.email" label="Email" />
 
           <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
         </expansion-item>

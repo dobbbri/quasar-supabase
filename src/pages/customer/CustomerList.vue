@@ -12,11 +12,8 @@ const { loading, getCustomers } = useCustomers();
 const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
 
-const handleEditCustomer = (customer) => {
-  router.push({
-    name: 'customer-form',
-    params: { id: customer.id }
-  });
+const handleViewCustomer = (customer) => {
+  router.push({ name: 'customer-view', params: { id: customer.id } });
 };
 
 const handleGetCustomers = async () => {
@@ -54,7 +51,7 @@ onMounted(() => handleGetCustomers());
           :key="index"
           clickable
           class="q-px-xs"
-          @click="handleEditCustomer(customer)"
+          @click="handleViewCustomer(customer)"
         >
           <q-item-section>
             <q-item-label :class="{ 'text-negative text-strike': !customer.active }">

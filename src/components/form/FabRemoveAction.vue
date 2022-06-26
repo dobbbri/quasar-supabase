@@ -5,7 +5,5 @@ const { attr } = useDefaults();
 </script>
 
 <template>
-  <q-btn v-bind="attr.btn.icon" icon="sym_o_edit" color="warning" unelevated>
-    <q-tooltip>Alterar</q-tooltip>
-  </q-btn>
+  <q-fab-action v-bind="attr.fab.action" color="negative" icon="sym_o_delete" label="Remover" />
 </template>

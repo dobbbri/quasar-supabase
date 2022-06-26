@@ -80,6 +80,11 @@ const routes = [
         component: () => import('pages/customer/CustomerList.vue')
       },
       {
+        path: '/customer-view/:id?',
+        name: 'customer-view',
+        component: () => import('pages/customer/CustomerView.vue')
+      },
+      {
         path: '/customer-form/:id?',
         name: 'customer-form',
         component: () => import('pages/customer/CustomerForm.vue')

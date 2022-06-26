@@ -2,7 +2,16 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
-import { Page, PageHeader, PageBody, TextView, BtnBack } from 'src/components';
+import {
+  Page,
+  PageHeader,
+  PageBody,
+  TextView,
+  BtnBack,
+  FabMenu,
+  FabEditAction,
+  FabRemoveAction
+} from 'src/components';
 
 const router = useRouter();
 const route = useRoute();
@@ -55,37 +64,18 @@ onMounted(() => {
         </template>
         <template #title>Categoria</template>
         <template #right>
-          <q-fab
-            v-model="fab2"
-            unelevated
-            vertical-actions-align="right"
-            color="primary"
-            icon="sym_o_more_vert"
-            direction="down"
-            padding="sm"
-          >
-            <q-fab-action
-              color="negative"
-              icon="sym_o_delete"
-              label="Excluir"
-              label-position="left"
-              external-label
+          <fab-menu>
+            <fab-remove-action
               :loading="loading.remove.value"
               :disable="loading.disable.value"
               @click="handleRemoveCategory(form)"
             />
-            <q-fab-action
-              color="warning"
-              text-color="dark"
-              icon="sym_o_edit"
-              label="Alterar"
-              label-position="left"
-              external-label
+            <fab-edit-action
               :loading="loading.edit.value"
               :disable="loading.disable.value"
               @click="handleEditCategory(form)"
             />
-          </q-fab>
+          </fab-menu>
         </template>
       </page-header>
 
