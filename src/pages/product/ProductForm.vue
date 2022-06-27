@@ -13,7 +13,6 @@ import {
   TextareaInput,
   ExpansionItem,
   BtnBack,
-  BtnRemove,
   BtnSave
 } from 'src/components';
 import { useSettingsStore } from 'src/stores/settingsStore';
@@ -28,14 +27,12 @@ const {
   getProduct,
   addProduct,
   editProduct,
-  removeProduct,
   getProductImageURL,
   addProductImage,
-  editProductImage,
-  removeProductImage
+  editProductImage
 } = useProducts();
 const { getCategories } = useCategories();
-const { confirm, notify } = useTools();
+const { notify } = useTools();
 
 const optionsCategories = ref([]);
 const optionsMeasureUnits = ref([]);
@@ -111,20 +108,20 @@ const handleSubmit = async () => {
   }
 };
 
-const handleRemoveProduct = async (product) => {
-  try {
-    confirm.delete(`do produto: ${product.name}`).onOk(async () => {
-      if (product.image_name) {
-        await removeProductImage(product.image_name);
-      }
-      await removeProduct(product.id);
-      notify.success('Produto excluido.');
-      router.push({ name: 'product-list' });
-    });
-  } catch (error) {
-    notify.error('Erro ao excluir o produto', error);
-  }
-};
+// const handleRemoveProduct = async (product) => {
+//   try {
+//     confirm.delete(`do produto: ${product.name}`).onOk(async () => {
+//       if (product.image_name) {
+//         await removeProductImage(product.image_name);
+//       }
+//       await removeProduct(product.id);
+//       notify.success('Produto excluido.');
+//       router.push({ name: 'product-list' });
+//     });
+//   } catch (error) {
+//     notify.error('Erro ao excluir o produto', error);
+//   }
+// };
 
 const handleGetProduct = async () => {
   try {
@@ -161,12 +158,6 @@ onMounted(async () => {
         </template>
         <template #title>{{ title + ' Produto' }}</template>
         <template #right>
-          <btn-remove
-            v-if="isEditMode"
-            :loading="loading.remove.value"
-            :disable="loading.disable.value"
-            @click="handleRemoveProduct(form)"
-          />
           <btn-save
             :loading="isEditMode ? loading.edit.value : loading.add.value"
             :disable="loading.disable.value"

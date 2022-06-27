@@ -1,18 +1,31 @@
 // Quasar SCSS (& Sass) Variables
 
-$primary: #0e4277;
+$primary: rgba(14, 66, 119, 1.00);
 $secondary: #028FF5;
 $accent: #26a69a;
 
-$dark: #1d1d1d;
+$dark: rgba(0, 0, 0, 1);
 
 $positive: #21ba45;
 $negative: #c10015;
 $info: #31ccec;
 $warning: #f2c037;
 
-$body-font-size: 14px !default;
-$input-font-size: 16px !default;
-$generic-border-radius: 8px !default;
-$button-border-radius: 8px !default;
+$field-height: 44px !default;
+
+$body-font-size: 18px !default;
+$body-line-height : 1.8 !default;
+
+$input-font-size: $body-font-size !default;
+$input-text-color: $dark !default;
+$input-label-color : $primary !default;
+
+$button-font-size: $body-font-size !default;
+$button-padding: 4px 16px !default;
+
+$generic-border-radius: 6px !default;
+$button-border-radius: $generic-border-radius !default;
 $menu-max-width: 85vw !default;
+
+$toolbar-title-font-size: 20px !default;
+$toolbar-title-font-weight: normal !default;

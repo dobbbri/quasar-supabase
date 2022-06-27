@@ -5,25 +5,24 @@ export default function useAttribute() {
         rounded: false,
         unelevated: true,
         noCaps: true,
-        dense: false,
         color: 'white',
         textColor: 'primary',
-        class: 'q-px-sm text-weight-bold'
+        class: 'text-weight-bold'
       },
-      icon: { round: true, size: 'md', color: 'white', dense: true }
+      icon: { round: true, size: 'lg', color: 'white' }
     },
 
     input: {
       basic: {
         hideBottomSpace: true,
         outlined: true,
-        dense: true,
+        dense: false,
         optionsDense: false,
         color: 'secondary'
       },
       search: {
         clearable: true,
-        dense: true,
+        dense: false,
         outlined: true,
         color: 'secondary',
         class: 'q-mb-sm q-py-sx'
@@ -31,8 +30,18 @@ export default function useAttribute() {
     },
 
     page: {
-      class: 'full-width',
-      style: 'max-width: 620px'
+      class: 'full-width q-pa-md',
+      style: 'max-width: 620px;'
+    },
+
+    lineSpacing: {
+      class: 'q-gutter-y-lg q-py-md'
+    },
+
+    expansion: {
+      headerClass: 'text-title text-primary q-mt-lg',
+      denseToggle: true,
+      dense: true
     },
 
     banner: {
@@ -40,31 +49,17 @@ export default function useAttribute() {
       dense: true
     },
 
-    expansion: {
-      headerClass: 'text-title text-primary q-mt-md q-pt-sm',
-      denseToggle: true,
-      dense: true
-    },
-
-    pageBodySpacing: {
-      class: 'q-gutter-y-md q-pt-xs'
-    },
-
-    lineSpacing: {
-      class: 'q-gutter-y-md q-py-sm'
-    },
-
     fab: {
       menu: {
         unelevated: true,
         verticalActionsAlign: 'right',
         color: 'primary',
-        direction: 'down',
-        padding: 'sm'
+        direction: 'down'
       },
       action: {
         labelPosition: 'left',
         externalLabel: true,
+        color: 'primary',
         textColor: 'white'
       }
     }

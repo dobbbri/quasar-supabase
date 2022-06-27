@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth, useTools, useDefaults } from 'src/composables';
-import { PageHeader } from 'src/components';
+import { Page, PageHeader, PageBody } from 'src/components';
 
 const router = useRouter();
 
@@ -29,17 +29,17 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <q-page padding>
-    <page-header class="text-center">
-      <template #left></template>
-      <template #title>
-        <div class="absolute-center">Entrar</div>
-      </template>
-    </page-header>
-
-    <div class="line row justify-center q-mt-lg">
+  <div class="row justify-center q-mt-xl">
+    <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-        <div v-bind="attr.lineSpacing">
+        <page-header class="text-center">
+          <template #left></template>
+          <template #title>
+            <div class="absolute-center">Entrar</div>
+          </template>
+        </page-header>
+
+        <page-body>
           <q-input
             v-bind="attr.input.basic"
             v-model="form.email"
@@ -99,8 +99,8 @@ const handleSubmit = async () => {
             :disable="loading"
             :to="{ name: 'register' }"
           />
-        </div>
+        </page-body>
       </q-form>
-    </div>
-  </q-page>
+    </page>
+  </div>
 </template>

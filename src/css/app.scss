@@ -12,7 +12,7 @@
 }
 
 .text-title {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -20,33 +20,66 @@
   margin-left: -8px;
 }
 
-.q-field--dense.q-field--float .q-field__label {
-  transform: translateY(-101%);
-  background: white;
-  z-index: 999;
-  padding: 0 3px;
-  margin-left: -2px;
-  font-weight: 500;
-  text-transform: lowercase;
+.q-field__control,
+.q-field__marginal,
+.q-field--auto-height .q-field__control, .q-field--auto-height .q-field__native {
+  height: $field-height;
+  min-height: $field-height;
 }
 
-.q-field--labeled.q-field--dense .q-field__native,
-.q-field--labeled.q-field--dense .q-field__prefix,
-.q-field--labeled.q-field--dense .q-field__suffix {
-  padding-top: 9px;
-  padding-bottom: 7px;
+.q-textarea .q-field__control {
+  height: auto;
+  min-height: $field-height;
 }
 
-.q-field__native, .q-field__prefix, .q-field__suffix, .q-field__input {
-  font-weight: 500;
+.q-textarea.q-field--labeled .q-field__native {
+    min-height: 44px;
+    padding: 12px 3px;
 }
-
-.q-field--auto-height.q-field--dense.q-field--labeled .q-field__control-container {
+.q-textarea.q-field--labeled .q-field__control-container {
+    padding-top: 0px;
+}
+.q-field--auto-height.q-field--labeled .q-field__control-container {
   padding-top: 0px;
 }
 
+.q-field__label {
+  left: 0;
+  top: 13px;
+  color: $primary;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.q-field--float .q-field__label {
+  transform: translateY(-130%);
+  background: white;
+  z-index: 999;
+  padding: 0 5px;
+  margin-left: -2px;
+  text-transform: lowercase;
+}
+
+.q-field--labeled .q-field__native,
+.q-field--labeled .q-field__prefix,
+.q-field--labeled .q-field__suffix {
+  padding: 0 3px;
+}
+
+.q-field__native, .q-field__prefix, .q-field__suffix, .q-field__input {
+  font-weight: 400;
+}
+
+.q-field--outlined .q-field__control:before {
+    border-color: $primary;
+}
+.q-field--outlined .q-field__control:hover::before {
+    border-color: $primary;
+    border-width: 2px;
+}
+
 .q-expansion-item__container >.q-item {
-  padding: 0 4px;
+  padding: 4px 4px;
   margin-bottom: 2px;
 }
 
@@ -57,20 +90,21 @@
 }
 
 .line.row, .line.col {
-  height: 40px;
+  height: $field-height;
 }
 
-.q-field--outlined .q-field__control::before {
-  border: 2px solid rgba(0, 0, 0, 0.24);
-  transition: border-color 0.36s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.q-checkbox__label {
-  font-weight: 500;
-}
+// .q-checkbox__label {
+//   font-weight: 500;
+// }
 
 .q-fab__label--external {
-  font-size: 13px !important;
+  font-size: 16px !important;
+}
+
+.q-fab__icon-holder {
+  min-width: 38px;
+  min-height: 38px;
+  position: relative;
 }
 
 // .q-field--float .q-field__label {

@@ -4,7 +4,7 @@ const { attr } = useDefaults();
 </script>
 
 <template>
-  <div v-bind="attr.pageBodySpacing">
+  <div v-bind="attr.lineSpacing">
     <slot />
   </div>
 </template>
