@@ -69,7 +69,7 @@ onMounted(() => {
       <page-body>
         <text-input
           v-model="form.name"
-          label="Nome"
+          label="Nome da categoria"
           :rules="[(val) => val && val.length > 3]"
           error-message="O nome da categoria deve ser informado!"
         />

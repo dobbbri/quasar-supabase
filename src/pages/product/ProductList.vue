@@ -13,11 +13,8 @@ const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify } = useTools();
 const { fmt } = useDefaults();
 
-const handleEditProduct = (product) => {
-  router.push({
-    name: 'product-form',
-    params: { id: product.id }
-  });
+const handleViewProduct = (product) => {
+  router.push({ name: 'product-view', params: { id: product.id } });
 };
 
 const handleGetProducts = async () => {
@@ -57,7 +54,7 @@ onMounted(() => handleGetProducts());
           :key="index"
           clickable
           class="q-px-xs"
-          @click="handleEditProduct(product)"
+          @click="handleViewProduct(product)"
         >
           <q-item-section>
             <q-item-label class="row">

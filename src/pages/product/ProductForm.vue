@@ -15,30 +15,16 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
-import { useSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
 const route = useRoute();
-const store = useSettingsStore();
 
-const {
-  loading,
-  productFolder,
-  getProduct,
-  addProduct,
-  editProduct,
-  getProductImageURL,
-  addProductImage,
-  editProductImage
-} = useProducts();
+const { loading, getProduct, addProduct, editProduct } = useProducts();
 const { getCategories } = useCategories();
 const { notify } = useTools();
 
 const optionsCategories = ref([]);
 const optionsMeasureUnits = ref([]);
-const newImage = ref(null);
-const image = ref(null);
-// const file = ref(null);
 const form = ref({
   category_id: '',
   name: '',
@@ -78,24 +64,12 @@ const isEditMode = computed(() => (route.params.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
-// const handleSelectImage = () => file.value.pickFiles();
-//
-// const loadImage = () => {
-//   if (image.value) {
-//     newImage.value = URL.createObjectURL(image.value);
-//   }
-// };
+const handleProductView = () => {
+  router.push({ name: 'product-view', params: { id: route.params.id } });
+};
 
 const handleSubmit = async () => {
   try {
-    if (image.value) {
-      if (form.value.image_name) {
-        await editProductImage(form.value.image_name, image.value);
-      } else {
-        const filePath = await addProductImage(productFolder, image.value);
-        form.value.image_name = filePath;
-      }
-    }
     if (isEditMode.value) {
       await editProduct(form.value);
     } else {
@@ -108,27 +82,9 @@ const handleSubmit = async () => {
   }
 };
 
-// const handleRemoveProduct = async (product) => {
-//   try {
-//     confirm.delete(`do produto: ${product.name}`).onOk(async () => {
-//       if (product.image_name) {
-//         await removeProductImage(product.image_name);
-//       }
-//       await removeProduct(product.id);
-//       notify.success('Produto excluido.');
-//       router.push({ name: 'product-list' });
-//     });
-//   } catch (error) {
-//     notify.error('Erro ao excluir o produto', error);
-//   }
-// };
-
 const handleGetProduct = async () => {
   try {
     form.value = await getProduct(route.params.id);
-    if (form.value.image_name) {
-      newImage.value = getProductImageURL(form.value.image_name) + '?t=' + new Date().getTime();
-    }
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }
@@ -143,7 +99,6 @@ const handleGetCategories = async () => {
 };
 
 onMounted(async () => {
-  optionsMeasureUnits.value = store.measureUnits;
   await handleGetCategories();
   if (isEditMode.value) await handleGetProduct();
 });
@@ -154,7 +109,7 @@ onMounted(async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back :to="{ name: 'product-list' }" />
+          <btn-back @click="handleProductView()" />
         </template>
         <template #title>{{ title + ' Produto' }}</template>
         <template #right>
@@ -169,7 +124,7 @@ onMounted(async () => {
       <page-body>
         <text-input
           v-model="form.name"
-          label="Nome"
+          label="Nome do produto"
           :rules="[(val) => val && val.length > 3]"
           error-message="O nome do produto deve ser informado!"
         />
@@ -223,66 +178,7 @@ onMounted(async () => {
           </div>
         </expansion-item>
 
-        <!-- <expansion-item label="Estoque"> -->
-        <!--   <check-box v-model="form.has_stock_control" label="Contolar quantidade em estoque" /> -->
-        <!--   <q-btn -->
-        <!--     v-if="form.has_stock_control" -->
-        <!--     v-bind="attr.btn.basic" -->
-        <!--     label="Controlar Estoque" -->
-        <!--     color="primary" -->
-        <!--     icon-right="sym_o_arrow_forward_ios" -->
-        <!--     flat -->
-        <!--     align="left" -->
-        <!--     class="full-width my-btn" -->
-        <!--     :to="{ name: 'stock-form' }" -->
-        <!--   /> -->
-        <!--  -->
-        <!--   <q-btn -->
-        <!--     v-if="form.has_stock_control" -->
-        <!--     v-bind="attr.btn.basic" -->
-        <!--     label="Lista de Movimentação do Estoque" -->
-        <!--     color="primary" -->
-        <!--     icon-right="sym_o_arrow_forward_ios" -->
-        <!--     flat -->
-        <!--     align="left" -->
-        <!--     class="full-width my-btn" -->
-        <!--     :to="{ name: 'stock-form' }" -->
-        <!--   /> -->
-        <!-- </expansion-item> -->
-
         <expansion-item label="Avançado">
-          <!-- <q-file -->
-          <!--   ref="file" -->
-          <!--   v-model="image" -->
-          <!--   class="hidden" -->
-          <!--   accept="image/*" -->
-          <!--   @update:model-value="loadImage()" -->
-          <!-- /> -->
-          <!-- <div -->
-          <!--   style="max-height: 200px; max-width: 200px; border: 1px solid rgba(0, 0, 0, 0.3)" -->
-          <!--   class="rounded-borders" -->
-          <!-- > -->
-          <!--   <q-img -->
-          <!--     loading="lazy" -->
-          <!--     :src="newImage" -->
-          <!--     fit="cover" -->
-          <!--     style="max-height: 200px; max-width: 200px" -->
-          <!--     class="rounded-borders overflow-hidden" -->
-          <!--     spinner-color="primary" -->
-          <!--   > -->
-          <!--     <div class="absolute-bottom"> -->
-          <!--       <q-btn -->
-          <!--         flat -->
-          <!--         no-wrap -->
-          <!--         class="full-width q-pa-xs" -->
-          <!--         icon="sym_o_add_circle" -->
-          <!--         label="Adicionar Imagem" -->
-          <!--         @click="handleSelectImage()" -->
-          <!--       /> -->
-          <!--     </div> -->
-          <!--   </q-img> -->
-          <!-- </div> -->
-          <!--  -->
           <text-input v-model="form.brand" label="Marca" />
 
           <textarea-input v-model="form.description" label="Descrição do produto" />

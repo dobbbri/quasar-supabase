@@ -65,14 +65,14 @@ const routes = [
         component: () => import('pages/product/ProductList.vue')
       },
       {
+        path: '/product-view/:id?',
+        name: 'product-view',
+        component: () => import('pages/product/ProductView.vue')
+      },
+      {
         path: '/product-form/:id?',
         name: 'product-form',
         component: () => import('pages/product/ProductForm.vue')
-      },
-      {
-        path: '/stock-form',
-        name: 'stock-form',
-        component: () => import('pages/product/stock/StockForm.vue')
       },
       {
         path: '/customer-list',

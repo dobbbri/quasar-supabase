@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useTools } from 'src/composables';
 import {
@@ -18,8 +18,6 @@ const route = useRoute();
 
 const { loading, getCustomer, removeCustomer } = useCustomers();
 const { confirm, notify } = useTools();
-
-const isEditMode = computed(() => (route.params.id ? true : false));
 
 const form = ref({
   name: '',
@@ -47,14 +45,14 @@ const handleRemoveCustomer = async (customer) => {
 
 const handleGetCustomer = async () => {
   try {
-    form.value = await getCustomer(route.params.id);
+    form.value = await getCustomer(route.params.id, 'name, email, phone_1, phone_2, active');
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }
 };
 
 onMounted(() => {
-  if (isEditMode.value) handleGetCustomer();
+  handleGetCustomer();
 });
 </script>
 
@@ -83,7 +81,7 @@ onMounted(() => {
       </page-header>
 
       <page-body>
-        <text-view :value="form.name" label="Nome" />
+        <text-view :value="form.name" label="Nome do Cliente" />
         <text-view :value="form.email" label="Email" />
         <text-view :value="form.phone_1" label="Celular/Whatsapp" />
         <text-view :value="form.phone_2" label="Celular/Telefone fixo" />

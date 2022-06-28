@@ -89,7 +89,7 @@ const handleSubmit = async () => {
   }
 };
 
-const handleViewCustomer = () => {
+const handleCustomerView = () => {
   router.push({ name: 'customer-view', params: { id: route.params.id } });
 };
 
@@ -111,7 +111,7 @@ onMounted(() => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back @click="handleViewCustomer()" />
+          <btn-back @click="handleCustomerView()" />
         </template>
         <template #title>{{ title + ' Cliente' }}</template>
         <template #right>
@@ -126,7 +126,7 @@ onMounted(() => {
       <page-body>
         <text-input
           v-model="form.name"
-          label="Nome"
+          label="Nome do cliente"
           :rules="[(val) => val && val.length > 3]"
           error-message="O nome do cliente deve ser informado!"
         />

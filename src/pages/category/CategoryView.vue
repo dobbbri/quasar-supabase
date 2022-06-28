@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
 import {
@@ -18,8 +18,6 @@ const route = useRoute();
 
 const { loading, getCategory, removeCategory } = useCategories();
 const { confirm, notify } = useTools();
-
-const isEditMode = computed(() => (route.params.id ? true : false));
 
 const form = ref({
   name: '',
@@ -51,7 +49,7 @@ const handleGetCategory = async () => {
 };
 
 onMounted(() => {
-  if (isEditMode.value) handleGetCategory();
+  handleGetCategory();
 });
 </script>
 
