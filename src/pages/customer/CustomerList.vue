@@ -28,7 +28,7 @@ onMounted(() => handleGetCustomers());
 </script>
 
 <template>
-  <page padding>
+  <page>
     <page-header>
       <template #title>Clientes</template>
       <template #right>

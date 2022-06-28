@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCategories, useNameSearch, useTools } from 'src/composables';
-import { Page, PageHeader, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
+import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
 
 const router = useRouter();
 
@@ -40,24 +40,26 @@ onMounted(() => handleGetCategories());
       </template>
     </page-header>
 
-    <search-input v-model="searchQuery" />
+    <page-body>
+      <search-input v-model="searchQuery" />
 
-    <waiting-load :showing="loading.list.value" />
+      <waiting-load :showing="loading.list.value" />
 
-    <q-list v-if="!loading.list.value" separator class="q-mt-sm">
-      <q-item
-        v-for="(category, index) in categories"
-        :key="index"
-        clickable
-        class="q-px-xs"
-        @click="handleViewCategory(category)"
-      >
-        <q-item-section>
-          <q-item-label :class="{ 'text-negative text-strike': !category.active }">
-            {{ category.name }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+      <q-list v-if="!loading.list.value" separator class="q-mt-sm">
+        <q-item
+          v-for="(category, index) in categories"
+          :key="index"
+          clickable
+          class="q-px-xs"
+          @click="handleViewCategory(category)"
+        >
+          <q-item-section>
+            <q-item-label :class="{ 'text-negative text-strike': !category.active }">
+              {{ category.name }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </page-body>
   </page>
 </template>

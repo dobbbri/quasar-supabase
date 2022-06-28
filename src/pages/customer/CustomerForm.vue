@@ -138,24 +138,22 @@ onMounted(() => {
         <expansion-item default-opened label="Telefones e Email">
           <text-input v-model="form.email" label="Email" />
 
-          <div class="line row">
-            <div class="line col">
-              <phone-input
-                v-model="form.phone_1"
-                label="Celular/Whatsapp"
-                :rules="[(val) => !!val]"
-                error-message="O telefone do cliente deve ser informado!"
-              />
-            </div>
+          <div class="row fit justify-between">
+            <phone-input
+              v-model="form.phone_1"
+              label="Celular/Whatsapp"
+              class="col-10"
+              :rules="[(val) => !!val]"
+              error-message="O telefone do cliente deve ser informado!"
+            />
 
-            <div class="col-2 text-right">
-              <checkbox-icon
-                v-model="form.phone_1_has_whatsapp"
-                icon="whatsapp"
-                color="green"
-                :tooltip="form.phone_1_has_whatsapp ? 'Possui Whatsapp' : 'Não possui Whatsapp'"
-              />
-            </div>
+            <checkbox-icon
+              v-model="form.phone_1_has_whatsapp"
+              icon="whatsapp"
+              color="green"
+              class="col-1"
+              :tooltip="form.phone_1_has_whatsapp ? 'Possui Whatsapp' : 'Não possui Whatsapp'"
+            />
           </div>
 
           <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />

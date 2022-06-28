@@ -25,7 +25,7 @@ export default function useAttribute() {
         dense: false,
         outlined: true,
         color: 'secondary',
-        class: 'q-mb-sm q-py-sx'
+        class: 'q-mb-md q-py-sx'
       }
     },
 
@@ -35,11 +35,11 @@ export default function useAttribute() {
     },
 
     lineSpacing: {
-      class: 'q-gutter-y-lg q-py-md'
+      class: 'q-gutter-y-sm'
     },
 
     expansion: {
-      headerClass: 'text-title text-primary q-mt-lg',
+      headerClass: 'text-grey-9 q-mt-lg q-mb-sm',
       denseToggle: true,
       dense: true
     },

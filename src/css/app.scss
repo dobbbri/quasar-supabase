@@ -4,43 +4,43 @@
   justify-content: space-between;
 }
 
-.b-2px {
-  border: 2px solid white;
-}
-.bt-2px {
-  border-top: 2px solid $grey-5;
-}
 
 .text-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
-.checkbox-fix {
-  margin-left: -8px;
+.q-field__prepend,
+.q-field__append {
+  height: $field-height;
+  min-height: $field-height;
 }
 
 .q-field__control,
-.q-field__marginal,
 .q-field--auto-height .q-field__control, .q-field--auto-height .q-field__native {
   height: $field-height;
   min-height: $field-height;
+  margin-top: 13px;
 }
 
 .q-textarea .q-field__control {
   height: auto;
   min-height: $field-height;
+  margin-top: 13px;
 }
 
 .q-textarea.q-field--labeled .q-field__native {
-    min-height: 44px;
-    padding: 12px 3px;
+  min-height: 44px;
+  padding: 12px 3px;
 }
-.q-textarea.q-field--labeled .q-field__control-container {
-    padding-top: 0px;
-}
+
+.q-textarea.q-field--labeled .q-field__control-container,
 .q-field--auto-height.q-field--labeled .q-field__control-container {
   padding-top: 0px;
+}
+.q-field--auto-height.q-field--labeled .q-field__native,
+.q-field--auto-height.q-field--labeled .q-field__prefix,
+.q-field--auto-height.q-field--labeled .q-field__suffix {
+    margin-top: 0;
 }
 
 .q-field__label {
@@ -73,6 +73,7 @@
 .q-field--outlined .q-field__control:before {
     border-color: $primary;
 }
+
 .q-field--outlined .q-field__control:hover::before {
     border-color: $primary;
     border-width: 2px;
@@ -89,13 +90,10 @@
   height: 0.7em;
 }
 
-.line.row, .line.col {
-  height: $field-height;
+.q-checkbox__icon {
+  font-size: $field-height;
+  margin-top: 13px
 }
-
-// .q-checkbox__label {
-//   font-weight: 500;
-// }
 
 .q-fab__label--external {
   font-size: 16px !important;

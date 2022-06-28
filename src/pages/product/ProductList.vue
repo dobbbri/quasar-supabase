@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
+import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
 
 const router = useRouter();
 
@@ -46,50 +46,52 @@ onMounted(() => handleGetProducts());
       </template>
     </page-header>
 
-    <search-input v-model="searchQuery" />
+    <page-body>
+      <search-input v-model="searchQuery" />
 
-    <waiting-load :showing="loading.list.value" />
+      <waiting-load :showing="loading.list.value" />
 
-    <q-list v-if="!loading.list.value" separator>
-      <q-item
-        v-for="(product, index) in products"
-        :key="index"
-        clickable
-        class="q-px-xs"
-        @click="handleEditProduct(product)"
-      >
-        <q-item-section>
-          <q-item-label class="row">
-            <span class="col" :class="{ 'text-negative text-strike': !product.active }">
-              {{ product.name }}
-            </span>
-            <span v-if="product.has_stock_control" class="col-2 text-right">
-              <span>
-                {{ product.stock_amount }}
+      <q-list v-if="!loading.list.value" separator>
+        <q-item
+          v-for="(product, index) in products"
+          :key="index"
+          clickable
+          class="q-px-xs"
+          @click="handleEditProduct(product)"
+        >
+          <q-item-section>
+            <q-item-label class="row">
+              <span class="col" :class="{ 'text-negative text-strike': !product.active }">
+                {{ product.name }}
               </span>
-              <span style="margin-left: 5px">
-                {{ product.measure_unit }}
+              <span v-if="product.has_stock_control" class="col-2 text-right">
+                <span>
+                  {{ product.stock_amount }}
+                </span>
+                <span style="margin-left: 5px">
+                  {{ product.measure_unit }}
+                </span>
               </span>
-            </span>
-          </q-item-label>
-          <q-item-label class="row" style="margin-top: 4px">
-            <span class="col">
-              <q-badge
-                v-if="product.categories.active"
-                outline
-                class="text-dark"
-                :label="product.categories.name.toString().toUpperCase()"
-              />
-              <q-badge v-else outline class="text-negative text-strike">
-                {{ product.categories.name.toString().toUpperCase() }}
-              </q-badge>
-            </span>
-            <span class="col text-right">
-              {{ fmt.currency(product.price_to_sell) }}
-            </span>
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
+            </q-item-label>
+            <q-item-label class="row" style="margin-top: 4px">
+              <span class="col">
+                <q-badge
+                  v-if="product.categories.active"
+                  outline
+                  class="text-dark"
+                  :label="product.categories.name.toString().toUpperCase()"
+                />
+                <q-badge v-else outline class="text-negative text-strike">
+                  {{ product.categories.name.toString().toUpperCase() }}
+                </q-badge>
+              </span>
+              <span class="col text-right">
+                {{ fmt.currency(product.price_to_sell) }}
+              </span>
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </page-body>
   </page>
 </template>

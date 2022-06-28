@@ -4,8 +4,7 @@ import { defineProps } from 'vue';
 defineProps({
   icon: { type: String, required: true },
   color: { type: String, default: 'primary' },
-  tooltip: { type: String, default: '' },
-  size: { type: String, default: 'xl' }
+  tooltip: { type: String, default: '' }
 });
 </script>
 
@@ -14,7 +13,7 @@ defineProps({
     :checked-icon="icon"
     :unchecked-icon="icon"
     :color="color"
-    :size="size"
+    style="float: right"
     class="only-image"
   >
     <q-tooltip>{{ tooltip }}</q-tooltip>
