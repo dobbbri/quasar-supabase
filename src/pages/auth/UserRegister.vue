@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="row justify-center q-mt-xl">
+  <div class="row justify-center q-mt-lg">
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header class="text-center">
