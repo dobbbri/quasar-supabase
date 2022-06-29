@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { useSupabase } from 'boot/supabase';
 
-export default function useImageBucket() {
+export default function useApiImage() {
   const { supabase, supabaseUrl, supabaseBucket } = useSupabase();
   const user = computed(() => supabase.auth.user());
 

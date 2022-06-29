@@ -1,7 +1,7 @@
 // Quasar SCSS (& Sass) Variables
 
-$primary: rgba(14, 66, 119, 1.00);
-$secondary: #028FF5;
+$primary: rgba(14, 66, 119, 1);
+$secondary: #028ff5;
 $accent: #26a69a;
 
 $dark: rgba(0, 0, 0, 1);
@@ -18,7 +18,7 @@ $body-line-height: 1.6 !default;
 
 $input-font-size: $body-font-size !default;
 $input-text-color: $dark !default;
-$input-label-color : $primary !default;
+$input-label-color: $primary !default;
 
 $button-font-size: $body-font-size !default;
 $button-padding: 4px 16px !default;
