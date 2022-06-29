@@ -1,14 +1,14 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useSettings, useTools } from 'src/composables';
+import { useUsersSettings, useTools } from 'src/composables';
 import { useSettingsStore } from 'src/stores/settingsStore';
 import { Page, PageHeader, WaitingLoad } from 'src/components';
 
 const router = useRouter();
 const store = useSettingsStore();
 
-const { getSettings, addSettings } = useSettings();
+const { getSettings, addSettings } = useUsersSettings();
 const { notify } = useTools();
 
 const loading = ref(true);

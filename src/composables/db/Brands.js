@@ -12,7 +12,7 @@ const brand = ref({
   paralax_url: ''
 });
 
-export default function useBrand() {
+export default function useBrands() {
   const route = useRoute();
   const { supabase } = useSupabase();
   const { user } = useAuth();
