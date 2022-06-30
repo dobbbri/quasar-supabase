@@ -3,7 +3,8 @@ import { defineProps } from 'vue';
 
 defineProps({
   label: { type: String, default: '' },
-  value: { type: String, required: true }
+  value: { type: String, required: true },
+  value2: { type: String, default: '' }
 });
 </script>
 
@@ -11,6 +12,7 @@ defineProps({
   <div class="text-view">
     <div v-if="label" class="label">{{ label }}</div>
     <div class="value">{{ value }}</div>
+    <div v-if="value2" class="value">{{ value2 }}</div>
   </div>
 </template>
 

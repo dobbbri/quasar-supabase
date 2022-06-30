@@ -10,21 +10,28 @@ CREATE TABLE public.products (
 	created_at timestamptz NULL DEFAULT now(),
 	"name" extensions."citext" NULL,
 	category_id int8 NULL,
-	price_to_buy numeric NULL,
-	price_to_sell numeric NULL,
-        price_profit int8 NULL,
-        price_markup int8 NULL,
+	price_to_buy numeric NULL DEFAULT '0'::numeric,
+	price_to_sell numeric NULL DEFAULT '0'::numeric,
 	has_stock_control bool NULL DEFAULT false,
-	stock_amount numeric NULL,
-	stock_minimum_amount numeric NULL,
+	stock_amount int4 NULL DEFAULT 0,
+	stock_minimum_amount int4 NULL DEFAULT 0,
 	measure_unit varchar NULL,
 	code_bar varchar NULL,
-	code_internal varchar NULL,
 	description text NULL,
 	image_name varchar NULL,
-        active bool NULL DEFAULT true,
+	brand varchar NULL,
+	active bool NULL DEFAULT true,
 	CONSTRAINT products_pkey PRIMARY KEY (id)
 );
+
+-- Permissions
+
+ALTER TABLE public.products OWNER TO supabase_admin;
+GRANT ALL ON TABLE public.products TO postgres;
+GRANT ALL ON TABLE public.products TO supabase_admin;
+GRANT ALL ON TABLE public.products TO anon;
+GRANT ALL ON TABLE public.products TO authenticated;
+GRANT ALL ON TABLE public.products TO service_role;
 
 
 -- public.products foreign keys

@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
-import { useCustomers, useTools } from 'src/composables';
+import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -24,6 +24,7 @@ const router = useRouter();
 const route = useRoute();
 
 const { loading, getCustomer, addCustomer, editCustomer } = useCustomers();
+const { getAddresses, addAddresses, editAddresses } = useCustomersAddresses();
 const { notify } = useTools();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
@@ -41,20 +42,26 @@ const form = ref({
   phone_1: '',
   phone_1_has_whatsapp: false,
   phone_2: '',
-  street: '',
-  district: '',
-  city: '',
-  state: '',
-  zip_code: '',
   document_number: '',
   notes: '',
   active: true
 });
 
+const formAddress = ref({
+  id: 0,
+  street: '',
+  number: '',
+  complement: '',
+  district: '',
+  city: '',
+  state: '',
+  zip_code: ''
+});
+
 const handleFindCEP = () => {
   $q.loading.show();
 
-  const url = `https://brasilapi.com.br/api/cep/v1/${form.value.zip_code}`;
+  const url = `https://brasilapi.com.br/api/cep/v1/${formAddress.value.zip_code}`;
   const options = {
     method: 'GET',
     mode: 'cors',
@@ -67,20 +74,40 @@ const handleFindCEP = () => {
       return response.json();
     })
     .then((data) => {
-      form.value.street = data.street;
-      form.value.district = data.neighborhood;
-      form.value.state = data.state;
-      form.value.city = data.city;
+      formAddress.value.street = data.street;
+      formAddress.value.district = data.neighborhood;
+      formAddress.value.state = data.state;
+      formAddress.value.city = data.city;
     });
   $q.loading.hide();
 };
 
+const hasAddress = computed(() => {
+  const ad = formAddress.value;
+  if (ad.street || ad.number || ad.complement || ad.district || ad.state || ad.zip_code) {
+    return true;
+  }
+  return false;
+});
+
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editCustomer(form.value);
+      const data = await editCustomer(form.value);
+      if (hasAddress.value) {
+        if (formAddress.value.id > 0) {
+          await editAddresses(formAddress.value);
+        } else {
+          formAddress.value.id = data.id;
+          await addAddresses(formAddress.value);
+        }
+      }
     } else {
-      await addCustomer(form.value);
+      const data = await addCustomer(form.value);
+      if (hasAddress.value) {
+        formAddress.value.id = data.id;
+        await addAddresses(formAddress.value);
+      }
     }
     notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
     router.push({ name: 'customer-list' });
@@ -101,8 +128,17 @@ const handleGetCustomer = async () => {
   }
 };
 
+const handleGetAddress = async () => {
+  try {
+    formAddress.value = await getAddresses(form.value.id);
+  } catch (error) {
+    notify.error('Erro ao obter o cliente.', error);
+  }
+};
+
 onMounted(() => {
   if (isEditMode.value) handleGetCustomer();
+  if (isEditMode.value && form.value.id) handleGetAddress();
 });
 </script>
 

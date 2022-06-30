@@ -9,9 +9,18 @@ CREATE TABLE public.categories (
 	user_id uuid NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	"name" extensions."citext" NULL,
-	inactive bool NULL DEFAULT false,
+	active bool NULL DEFAULT true,
 	CONSTRAINT categories_pkey PRIMARY KEY (id)
 );
+
+-- Permissions
+
+ALTER TABLE public.categories OWNER TO supabase_admin;
+GRANT ALL ON TABLE public.categories TO postgres;
+GRANT ALL ON TABLE public.categories TO supabase_admin;
+GRANT ALL ON TABLE public.categories TO anon;
+GRANT ALL ON TABLE public.categories TO authenticated;
+GRANT ALL ON TABLE public.categories TO service_role;
 
 
 -- public.categories foreign keys

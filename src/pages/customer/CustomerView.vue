@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useCustomers, useTools } from 'src/composables';
+import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -17,6 +17,7 @@ const router = useRouter();
 const route = useRoute();
 
 const { loading, getCustomer, removeCustomer } = useCustomers();
+const { getAddresses, removeAddresses } = useCustomersAddresses();
 const { confirm, notify } = useTools();
 
 const form = ref({
@@ -27,6 +28,17 @@ const form = ref({
   active: true
 });
 
+const formAddress = ref({
+  id: 0,
+  street: '',
+  number: '',
+  complement: '',
+  district: '',
+  city: '',
+  state: '',
+  zip_code: ''
+});
+
 const handleEditCustomer = (customer) => {
   router.push({ name: 'customer-form', params: { id: customer.id } });
 };
@@ -35,6 +47,9 @@ const handleRemoveCustomer = async (customer) => {
   try {
     confirm.delete(`do cliente: ${customer.name}`).onOk(async () => {
       await removeCustomer(customer.id);
+      if (formAddress.value && formAddress.value.id) {
+        await removeAddresses(formAddress.value.id);
+      }
       notify.success('Cliente excluido.');
       router.push({ name: 'customer-list' });
     });
@@ -45,14 +60,31 @@ const handleRemoveCustomer = async (customer) => {
 
 const handleGetCustomer = async () => {
   try {
-    form.value = await getCustomer(route.params.id, 'name, email, phone_1, phone_2, active');
+    form.value = await getCustomer(route.params.id);
+  } catch (error) {
+    notify.error('Erro a o obter o cliente.', error);
+  }
+};
+
+const handleGetAddress = async () => {
+  try {
+    formAddress.value = await getAddresses(form.value.id);
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }
 };
 
+const addressFormated = computed(() => {
+  const ad = formAddress.value;
+  return [
+    `${ad.street}, ${ad.number}, ${ad.complement},`,
+    `${ad.district} - ${ad.state}, CEP ${ad.zip_code}`
+  ];
+});
+
 onMounted(() => {
   handleGetCustomer();
+  handleGetAddress();
 });
 </script>
 
@@ -86,6 +118,7 @@ onMounted(() => {
         <text-view :value="form.phone_1" label="Celular/Whatsapp" />
         <text-view :value="form.phone_2" label="Celular/Telefone fixo" />
         <text-view :value="form.active ? 'Cliente Ativo' : 'Cliente Desativado'" />
+        <text-view :value="addressFormated[0]" :value2="addressFormated[1]" label="Endereço" />
       </page-body>
     </q-form>
   </page>
