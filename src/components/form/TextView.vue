@@ -33,6 +33,7 @@ defineProps({
   .value {
     font-size: $input-font-size;
     line-height: $body-line-height;
+    color: $grey-8;
   }
 }
 </style>

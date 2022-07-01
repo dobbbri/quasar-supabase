@@ -18,9 +18,9 @@ const menuStore = useMenuStore();
           </div>
         </slot>
       </div>
-      <div class="text-title q-ml-sm">
-        <slot name="title" />
-      </div>
+      <q-toolbar style="height: 60px">
+        <q-toolbar-title class="q-mx-xs text-white"> <slot name="title" /> </q-toolbar-title>
+      </q-toolbar>
       <div class="q-ml-auto">
         <slot name="right" />
       </div>

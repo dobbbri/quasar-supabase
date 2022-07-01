@@ -15,8 +15,8 @@ const userStore = useUserStore();
       :breakpoint="700"
       class="bg-blue-grey-1"
     >
-      <q-toolbar class="bg-blue-grey-10">
-        <q-toolbar-title class="q-ml-xs text-white text-title"> Menu </q-toolbar-title>
+      <q-toolbar class="bg-blue-grey-10" style="height: 60px">
+        <q-toolbar-title class="q-ml-xs text-white"> Menu </q-toolbar-title>
       </q-toolbar>
 
       <q-list class="text-blue-grey-8">
@@ -32,10 +32,8 @@ const userStore = useUserStore();
             <q-icon :name="link.icon" size="md" />
           </q-item-section>
 
-          <q-item-section class="text-title">
-            <q-item-label class="text-weight-regular">
-              {{ link.title }}
-            </q-item-label>
+          <q-item-section class="title">
+            <q-item-label> {{ link.title }} </q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -44,6 +42,9 @@ const userStore = useUserStore();
 </template>
 
 <style lang="scss" scoped>
+.title {
+  font-size: $toolbar-title-font-size;
+}
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
 }
