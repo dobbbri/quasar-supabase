@@ -1,12 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-import { useSettings, useTools, useDefaults } from 'src/composables';
+import { useUsersSettings, useTools, useDefaults } from 'src/composables';
 import { Page, PageHeader, PageBody } from 'src/components';
-import { useSettingsStore } from 'src/stores/settingsStore';
+import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
-const store = useSettingsStore();
+const store = useUsersSettingsStore();
 
-const { loading, editSettings } = useSettings();
+const { loading, editSettings } = useUsersSettings();
 const { notify } = useTools();
 const { attr } = useDefaults();
 

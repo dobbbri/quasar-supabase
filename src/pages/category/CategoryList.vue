@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCategories, useNameSearch, useTools } from 'src/composables';
 import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
@@ -24,7 +24,7 @@ const handleGetCategories = async () => {
   }
 };
 
-onMounted(() => handleGetCategories());
+handleGetCategories();
 </script>
 
 <template>

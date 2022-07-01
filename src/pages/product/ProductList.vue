@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
 import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
@@ -27,7 +27,7 @@ const handleGetProducts = async () => {
   }
 };
 
-onMounted(() => handleGetProducts());
+handleGetProducts();
 </script>
 
 <template>

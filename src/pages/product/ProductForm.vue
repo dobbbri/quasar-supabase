@@ -84,7 +84,8 @@ const handleSubmit = async () => {
 
 const handleGetProduct = async () => {
   try {
-    form.value = await getProduct(route.params.id);
+    const data = await getProduct(route.params.id);
+    form.value = data[0];
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }

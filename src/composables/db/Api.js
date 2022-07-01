@@ -21,14 +21,14 @@ export default function useApi(table) {
 
   const get = async (id, fields = '*') => {
     setLoading.list(true);
-    const { error, data } = await supabase
+    const { error, data, status } = await supabase
       .from(table)
       .select(fields)
       .eq('user_id', user.value.id)
-      .eq('id', id)
-      .single();
+      .eq('id', id);
     setLoading.list(false);
-    if (error) throw error;
+    if (error && status !== 406) throw error;
+    console.log(' [DEBUG] data : ', data);
     return data;
   };
 

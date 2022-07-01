@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
 import {
@@ -33,7 +33,7 @@ const formAddress = ref({
   street: '',
   number: '',
   complement: '',
-  district: '',
+  neighborhood: '',
   city: '',
   state: '',
   zip_code: ''
@@ -60,32 +60,35 @@ const handleRemoveCustomer = async (customer) => {
 
 const handleGetCustomer = async () => {
   try {
-    form.value = await getCustomer(route.params.id);
+    const data = await getCustomer(route.params.id);
+    form.value = data[0];
+    const data2 = await getAddresses(form.value.id);
+    if (data2) formAddress.value = data2[0];
   } catch (error) {
     notify.error('Erro a o obter o cliente.', error);
   }
 };
 
-const handleGetAddress = async () => {
-  try {
-    formAddress.value = await getAddresses(form.value.id);
-  } catch (error) {
-    notify.error('Erro ao obter o cliente.', error);
-  }
-};
-
 const addressFormated = computed(() => {
   const ad = formAddress.value;
-  return [
-    `${ad.street}, ${ad.number}, ${ad.complement},`,
-    `${ad.district} - ${ad.state}, CEP ${ad.zip_code}`
-  ];
+  if (
+    ad.street ||
+    ad.number ||
+    ad.complement ||
+    ad.neighborhood ||
+    ad.city ||
+    ad.state ||
+    ad.zip_code
+  ) {
+    return [
+      `${ad.street}, ${ad.number}, ${ad.complement},`,
+      `${ad.neighborhood}, ${ad.city} - ${ad.state}, CEP ${ad.zip_code}`
+    ];
+  }
+  return null;
 });
 
-onMounted(() => {
-  handleGetCustomer();
-  handleGetAddress();
-});
+handleGetCustomer();
 </script>
 
 <template>
@@ -114,11 +117,24 @@ onMounted(() => {
 
       <page-body>
         <text-view :value="form.name" label="Nome do Cliente" />
-        <text-view :value="form.email" label="Email" />
-        <text-view :value="form.phone_1" label="Celular/Whatsapp" />
-        <text-view :value="form.phone_2" label="Celular/Telefone fixo" />
-        <text-view :value="form.active ? 'Cliente Ativo' : 'Cliente Desativado'" />
-        <text-view :value="addressFormated[0]" :value2="addressFormated[1]" label="Endereço" />
+
+        <text-view v-if="form.email" :value="form.email" label="Email" />
+
+        <text-view
+          v-if="form.phone_1 || form.phone_2"
+          :value="form.phone_1"
+          :value2="form.phone_2"
+          label="Celular/Whatsapp"
+        />
+
+        <text-view
+          v-if="addressFormated"
+          :value="addressFormated[0]"
+          :value2="addressFormated[1]"
+          label="Endereço"
+        />
+
+        <text-view :label="form.active ? 'Cliente Ativo' : 'Cliente Desativado'" />
       </page-body>
     </q-form>
   </page>

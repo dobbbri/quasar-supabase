@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
 import { Page, PageHeader, PageBody, TextInput, CheckBox, BtnBack, BtnSave } from 'src/components';
@@ -38,15 +38,14 @@ const handleViewCategory = () => {
 
 const handleGetCategory = async () => {
   try {
-    form.value = await getCategory(route.params.id);
+    const data = await getCategory(route.params.id);
+    form.value = data[0];
   } catch (error) {
     notify.error('Erro ao obter a categoria.', error);
   }
 };
 
-onMounted(() => {
-  if (isEditMode.value) handleGetCategory();
-});
+if (isEditMode.value) handleGetCategory();
 </script>
 
 <template>

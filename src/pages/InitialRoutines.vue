@@ -2,11 +2,11 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUsersSettings, useTools } from 'src/composables';
-import { useSettingsStore } from 'src/stores/settingsStore';
+import { useUsersSettingsStore } from 'src/stores/settingsStore';
 import { Page, PageHeader, WaitingLoad } from 'src/components';
 
 const router = useRouter();
-const store = useSettingsStore();
+const store = useUsersSettingsStore();
 
 const { getSettings, addSettings } = useUsersSettings();
 const { notify } = useTools();

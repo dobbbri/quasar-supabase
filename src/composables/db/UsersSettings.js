@@ -12,23 +12,22 @@ export default function useUsersSettings() {
     const { error, data, status } = await supabase
       .from('users_settings')
       .select(fields)
-      .eq('id', user.value.id)
-      .limit(1)
-      .single();
+      .eq('id', user.value.id);
     setLoading.list(false);
     if (error && status !== 406) throw error;
-    return data;
+    if (data) return data[0];
+    return null;
   };
 
   const addSettings = async (form) => {
     setLoading.add(true);
     const { error, data } = await supabase
       .from('users_settings')
-      .insert([{ ...form, id: user.value.id }])
-      .single();
+      .insert([{ ...form, id: user.value.id }]);
     setLoading.add(false);
     if (error) throw error;
-    return data;
+    if (data) return data[0];
+    return null;
   };
 
   const editSettings = async (form) => {

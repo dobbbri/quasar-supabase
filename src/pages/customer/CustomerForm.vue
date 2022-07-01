@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
@@ -18,6 +18,10 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
+import { useUsersSettingsStore } from 'src/stores/settingsStore';
+
+const store = useUsersSettingsStore();
+const optionsPerson = store.personTypes;
 
 const $q = useQuasar();
 const router = useRouter();
@@ -29,11 +33,6 @@ const { notify } = useTools();
 
 const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
-
-const optionsPerson = ref([
-  { label: 'Pessoa Física', value: false },
-  { label: 'Pessoa Juríca', value: true }
-]);
 
 const form = ref({
   name: '',
@@ -52,13 +51,14 @@ const formAddress = ref({
   street: '',
   number: '',
   complement: '',
-  district: '',
+  neighborhood: '',
   city: '',
   state: '',
   zip_code: ''
 });
 
 const handleFindCEP = () => {
+  if (!formAddress.value.zip_code) return;
   $q.loading.show();
 
   const url = `https://brasilapi.com.br/api/cep/v1/${formAddress.value.zip_code}`;
@@ -75,7 +75,7 @@ const handleFindCEP = () => {
     })
     .then((data) => {
       formAddress.value.street = data.street;
-      formAddress.value.district = data.neighborhood;
+      formAddress.value.neighborhood = data.neighborhood;
       formAddress.value.state = data.state;
       formAddress.value.city = data.city;
     });
@@ -83,8 +83,15 @@ const handleFindCEP = () => {
 };
 
 const hasAddress = computed(() => {
-  const ad = formAddress.value;
-  if (ad.street || ad.number || ad.complement || ad.district || ad.state || ad.zip_code) {
+  if (
+    formAddress.value.street ||
+    formAddress.value.number ||
+    formAddress.value.complement ||
+    formAddress.value.neighborhood ||
+    formAddress.value.city ||
+    formAddress.value.state ||
+    formAddress.value.zip_code
+  ) {
     return true;
   }
   return false;
@@ -98,14 +105,14 @@ const handleSubmit = async () => {
         if (formAddress.value.id > 0) {
           await editAddresses(formAddress.value);
         } else {
-          formAddress.value.id = data.id;
+          formAddress.value.id = data[0].id;
           await addAddresses(formAddress.value);
         }
       }
     } else {
       const data = await addCustomer(form.value);
       if (hasAddress.value) {
-        formAddress.value.id = data.id;
+        formAddress.value.id = data[0].id;
         await addAddresses(formAddress.value);
       }
     }
@@ -122,24 +129,16 @@ const handleCustomerView = () => {
 
 const handleGetCustomer = async () => {
   try {
-    form.value = await getCustomer(route.params.id);
+    const data = await getCustomer(route.params.id);
+    form.value = data[0];
+    const data2 = await getAddresses(form.value.id);
+    if (data2) formAddress.value = data2[0];
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }
 };
 
-const handleGetAddress = async () => {
-  try {
-    formAddress.value = await getAddresses(form.value.id);
-  } catch (error) {
-    notify.error('Erro ao obter o cliente.', error);
-  }
-};
-
-onMounted(() => {
-  if (isEditMode.value) handleGetCustomer();
-  if (isEditMode.value && form.value.id) handleGetAddress();
-});
+if (isEditMode.value) handleGetCustomer();
 </script>
 
 <template>
@@ -196,11 +195,18 @@ onMounted(() => {
         </expansion-item>
 
         <expansion-item label="Endereço">
-          <text-input v-model="form.zip_code" mask="#####-###" label="CEP" @blur="handleFindCEP" />
-          <text-input v-model="form.street" label="Endereço, Número" />
-          <text-input v-model="form.district" label="Bairro" />
-          <text-input v-model="form.city" label="Cidade" />
-          <text-input v-model="form.state" mask="AA" label="UF(estado)" />
+          <text-input
+            v-model="formAddress.zip_code"
+            mask="#####-###"
+            label="CEP"
+            @blur="handleFindCEP"
+          />
+          <text-input v-model="formAddress.street" label="Endereço" />
+          <text-input v-model="formAddress.number" label="Número" />
+          <text-input v-model="formAddress.complement" label="Complemento" />
+          <text-input v-model="formAddress.neighborhood" label="Bairro" />
+          <text-input v-model="formAddress.city" label="Cidade" />
+          <text-input v-model="formAddress.state" mask="AA" label="UF(estado)" />
         </expansion-item>
 
         <expansion-item label="Avançado">

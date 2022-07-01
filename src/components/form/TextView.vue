@@ -3,7 +3,7 @@ import { defineProps } from 'vue';
 
 defineProps({
   label: { type: String, default: '' },
-  value: { type: String, required: true },
+  value: { type: String, default: '' },
   value2: { type: String, default: '' }
 });
 </script>
@@ -11,35 +11,28 @@ defineProps({
 <template>
   <div class="text-view">
     <div v-if="label" class="label">{{ label }}</div>
-    <div class="value">{{ value }}</div>
-    <div v-if="value2" class="value">{{ value2 }}</div>
+    <div class="value">
+      <div v-if="value">{{ value }}</div>
+      <div v-if="value2">{{ value2 }}</div>
+    </div>
   </div>
 </template>
 
 <style lang="scss">
 .text-view {
-  height: 40px;
-  border-radius: 8px;
-  padding: 0 12px;
   width: 100%;
+  margin-bottom: 15px;
 
   .label {
     width: 100%;
-    font-size: 14px;
     font-weight: 500;
-    text-transform: lowercase;
-    color: rgba(0, 0, 0, 0.3);
-    background: white;
-    z-index: 9;
-    padding: 0 3px;
-    margin: -13px 0 -9px -2px;
+    font-size: $input-font-size;
+    color: $primary;
   }
 
   .value {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 500;
-    padding: 7px 3px 9px 1px;
+    font-size: $input-font-size;
+    line-height: $body-line-height;
   }
 }
 </style>

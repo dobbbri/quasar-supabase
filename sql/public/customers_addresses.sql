@@ -5,17 +5,17 @@
 -- DROP TABLE public.customers_addresses;
 
 CREATE TABLE public.customers_addresses (
+  id int8 NOT NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	zip_code varchar NULL,
 	street varchar NULL,
 	"number" varchar NULL,
 	complement varchar NULL,
-	district varchar NULL,
+	neighborhood varchar NULL,
 	city varchar NULL,
 	state varchar NULL,
-	customer_id int8 NOT NULL,
 	user_id uuid NULL,
-	CONSTRAINT customer_addresses_pkey PRIMARY KEY (customer_id)
+	CONSTRAINT customer_addresses_pkey PRIMARY KEY (id)
 );
 
 -- Permissions

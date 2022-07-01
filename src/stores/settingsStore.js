@@ -42,11 +42,15 @@ function convertToObject(source) {
   return newTarget;
 }
 
-export const useSettingsStore = defineStore('settingsStore', {
+export const useUsersSettingsStore = defineStore('settingsStore', {
   state: () => ({
     id: 0,
     measureUnits: [],
-    paymentMethods: []
+    paymentMethods: [],
+    personTypes: [
+      { label: 'Pessoa Física', value: false },
+      { label: 'Pessoa Juríca', value: true }
+    ]
   }),
   getters: {},
   actions: {

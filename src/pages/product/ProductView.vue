@@ -75,7 +75,8 @@ const handleRemoveProduct = async (product) => {
 
 const handleGetProduct = async () => {
   try {
-    form.value = await getProduct(route.params.id);
+    const data = await getProduct(route.params.id);
+    form.value = data[0];
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }
@@ -121,7 +122,7 @@ onMounted(async () => {
 
       <page-body>
         <text-view :value="form.name" label="Nome do Produto" />
-        <text-view :value="form.active ? 'Produto Ativo' : 'Produto Desativado'" />
+        <text-view :label="form.active ? 'Produto Ativo' : 'Produto Desativado'" />
       </page-body>
     </q-form>
   </page>

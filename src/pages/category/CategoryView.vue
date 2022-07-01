@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
 import {
@@ -42,15 +42,14 @@ const handleRemoveCategory = async (category) => {
 
 const handleGetCategory = async () => {
   try {
-    form.value = await getCategory(route.params.id);
+    const data = await getCategory(route.params.id);
+    form.value = data[0];
   } catch (error) {
     notify.error('Erro ao obter a categoria.', error);
   }
 };
 
-onMounted(() => {
-  handleGetCategory();
-});
+handleGetCategory();
 </script>
 
 <template>
@@ -80,7 +79,7 @@ onMounted(() => {
       <page-body>
         <text-view :value="form.name" label="Nome" />
 
-        <text-view :value="form.active ? 'Categoria Ativa' : 'Categoria Desativada'" />
+        <text-view :label="form.active ? 'Categoria Ativa' : 'Categoria Desativada'" />
       </page-body>
     </q-form>
   </page>
