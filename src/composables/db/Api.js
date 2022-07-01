@@ -1,85 +1,83 @@
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useSupabase } from 'boot/supabase';
-import { useTools } from 'src/composables';
 
 export default function useApi(table) {
-  const { setLoading, loading } = useTools();
+  const loading = ref(false);
   const { supabase } = useSupabase();
   const user = computed(() => supabase.auth.user());
 
   const list = async (fields = '*') => {
-    setLoading.list(true);
+    loading.value = true;
     const { error, data } = await supabase
       .from(table)
       .select(fields)
       .eq('user_id', user.value.id)
       .order('name', { ascending: true });
-    setLoading.list(false);
+    loading.value = false;
     if (error) throw error;
     return data;
   };
 
   const get = async (id, fields = '*') => {
-    setLoading.list(true);
+    loading.value = true;
     const { error, data, status } = await supabase
       .from(table)
       .select(fields)
       .eq('user_id', user.value.id)
       .eq('id', id);
-    setLoading.list(false);
+    loading.value = false;
     if (error && status !== 406) throw error;
     console.log(' [DEBUG] data : ', data);
     return data;
   };
 
   const add = async (form) => {
-    setLoading.add(true);
+    loading.value = true;
     const { error, data } = await supabase
       .from(table)
       .insert([{ ...form, user_id: user.value.id }]);
-    setLoading.add(false);
+    loading.value = false;
     if (error) throw error;
     return data;
   };
 
   const edit = async ({ id, ...form }) => {
-    setLoading.edit(true);
+    loading.value = true;
     const { error, data } = await supabase
       .from(table)
       .update({ ...form })
       .eq('user_id', user.value.id)
       .eq('id', id);
-    setLoading.edit(false);
+    loading.value = false;
     if (error) throw error;
     return data;
   };
 
   const remove = async (id) => {
-    setLoading.remove(true);
+    loading.value = true;
     const { error, data } = await supabase
       .from(table)
       .delete()
       .eq('user_id', user.value.id)
       .eq('id', id);
-    setLoading.remove(false);
+    loading.value = false;
     if (error) throw error;
     return data;
   };
 
   const count = async () => {
-    setLoading.list(true);
+    loading.value = true;
     const { error, count } = await supabase
       .from(table)
       .select('id', { count: 'exact' })
       .eq('user_id', user.value.id);
-    setLoading.list(false);
+    loading.value = false;
     if (error) throw error;
     return count;
   };
 
   return {
     supabase,
-    setLoading,
     loading,
     list,
     get,

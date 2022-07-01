@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
@@ -138,7 +138,9 @@ const handleGetCustomer = async () => {
   }
 };
 
-if (isEditMode.value) handleGetCustomer();
+onMounted(async () => {
+  if (isEditMode.value) await handleGetCustomer();
+});
 </script>
 
 <template>
@@ -150,11 +152,7 @@ if (isEditMode.value) handleGetCustomer();
         </template>
         <template #title>{{ title + ' Cliente' }}</template>
         <template #right>
-          <btn-save
-            :loading="isEditMode ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
+          <btn-save :loading="loading.value" type="submit" />
         </template>
       </page-header>
 

@@ -114,11 +114,7 @@ onMounted(async () => {
         </template>
         <template #title>{{ title + ' Produto' }}</template>
         <template #right>
-          <btn-save
-            :loading="isEditMode ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
+          <btn-save :loading="loading.value" type="submit" />
         </template>
       </page-header>
 

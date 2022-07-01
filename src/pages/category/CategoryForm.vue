@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
 import { Page, PageHeader, PageBody, TextInput, CheckBox, BtnBack, BtnSave } from 'src/components';
@@ -45,7 +45,9 @@ const handleGetCategory = async () => {
   }
 };
 
-if (isEditMode.value) handleGetCategory();
+onMounted(async () => {
+  if (isEditMode.value) await handleGetCategory();
+});
 </script>
 
 <template>
@@ -57,11 +59,7 @@ if (isEditMode.value) handleGetCategory();
         </template>
         <template #title>{{ title + ' Categoria' }}</template>
         <template #right>
-          <btn-save
-            :loading="isEditMode ? loading.edit.value : loading.add.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
+          <btn-save :loading="loading.value" type="submit" />
         </template>
       </page-header>
 

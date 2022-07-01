@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategories, useTools } from 'src/composables';
 import {
@@ -49,7 +49,9 @@ const handleGetCategory = async () => {
   }
 };
 
-handleGetCategory();
+onMounted(async () => {
+  await handleGetCategory();
+});
 </script>
 
 <template>
@@ -62,16 +64,8 @@ handleGetCategory();
         <template #title>Categoria</template>
         <template #right>
           <fab-menu>
-            <fab-remove-action
-              :loading="loading.remove.value"
-              :disable="loading.disable.value"
-              @click="handleRemoveCategory(form)"
-            />
-            <fab-edit-action
-              :loading="loading.edit.value"
-              :disable="loading.disable.value"
-              @click="handleEditCategory(form)"
-            />
+            <fab-remove-action :loading="loading.value" @click="handleRemoveCategory(form)" />
+            <fab-edit-action :loading="loading.value" @click="handleEditCategory(form)" />
           </fab-menu>
         </template>
       </page-header>

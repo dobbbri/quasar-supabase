@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCategories, useNameSearch, useTools } from 'src/composables';
 import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
@@ -24,7 +24,9 @@ const handleGetCategories = async () => {
   }
 };
 
-handleGetCategories();
+onMounted(async () => {
+  await handleGetCategories();
+});
 </script>
 
 <template>
@@ -32,20 +34,16 @@ handleGetCategories();
     <page-header>
       <template #title>Categorias</template>
       <template #right>
-        <btn-add
-          :loading="loading.add.value"
-          :disable="loading.disable.value"
-          :to="{ name: 'category-form' }"
-        />
+        <btn-add :loading="loading.value" :to="{ name: 'category-form' }" />
       </template>
     </page-header>
 
     <page-body>
       <search-input v-model="searchQuery" />
 
-      <waiting-load :showing="loading.list.value" />
+      <waiting-load :showing="loading.value" />
 
-      <q-list v-if="!loading.list.value" separator class="q-mt-sm">
+      <q-list v-if="!loading.value" separator class="q-mt-sm">
         <q-item
           v-for="(category, index) in categories"
           :key="index"

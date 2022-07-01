@@ -33,7 +33,9 @@ const columns = [
   }
 ];
 
-onMounted(() => handleListCategories());
+onMounted(async () => {
+  await handleListCategories();
+});
 </script>
 
 <template>
@@ -44,7 +46,7 @@ onMounted(() => handleListCategories());
       title="Categorias"
       :rows="categories"
       :columns="columns"
-      :loading="loading.list.value"
+      :loading="loading.value"
     >
       <template #body-cell-status="props">
         <q-td :props="props">

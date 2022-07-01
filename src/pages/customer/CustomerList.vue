@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCustomers, useNameSearch, useTools } from 'src/composables';
 import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
@@ -24,7 +24,9 @@ const handleGetCustomers = async () => {
   }
 };
 
-handleGetCustomers();
+onMounted(async () => {
+  await handleGetCustomers();
+});
 </script>
 
 <template>
@@ -32,20 +34,16 @@ handleGetCustomers();
     <page-header>
       <template #title>Clientes</template>
       <template #right>
-        <btn-add
-          :loading="loading.add.value"
-          :disable="loading.disable.value"
-          :to="{ name: 'customer-form' }"
-        />
+        <btn-add :loading="loading.value" :to="{ name: 'customer-form' }" />
       </template>
     </page-header>
 
     <page-body>
       <search-input v-model="searchQuery" />
 
-      <waiting-load :showing="loading.list.value" />
+      <waiting-load :showing="loading.value" />
 
-      <q-list v-if="!loading.list.value" separator class="q-mt-sm">
+      <q-list v-if="!loading.value" separator class="q-mt-sm">
         <q-item
           v-for="(customer, index) in customers"
           :key="index"

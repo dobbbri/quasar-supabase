@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
 import {
@@ -88,7 +88,9 @@ const addressFormated = computed(() => {
   return null;
 });
 
-handleGetCustomer();
+onMounted(async () => {
+  await handleGetCustomer();
+});
 </script>
 
 <template>
@@ -101,16 +103,8 @@ handleGetCustomer();
         <template #title>Cliente</template>
         <template #right>
           <fab-menu>
-            <fab-remove-action
-              :loading="loading.remove.value"
-              :disable="loading.disable.value"
-              @click="handleRemoveCustomer(form)"
-            />
-            <fab-edit-action
-              :loading="loading.edit.value"
-              :disable="loading.disable.value"
-              @click="handleEditCustomer(form)"
-            />
+            <fab-remove-action :loading="loading.value" @click="handleRemoveCustomer(form)" />
+            <fab-edit-action :loading="loading.value" @click="handleEditCustomer(form)" />
           </fab-menu>
         </template>
       </page-header>

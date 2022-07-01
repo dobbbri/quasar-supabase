@@ -47,6 +47,6 @@ onMounted(() => {
       <template #left>&nbsp;</template>
     </page-header>
 
-    <waiting-load :showing="loading" />
+    <waiting-load :showing="loading.value" />
   </page>
 </template>

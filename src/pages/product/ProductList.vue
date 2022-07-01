@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
 import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
@@ -27,7 +27,9 @@ const handleGetProducts = async () => {
   }
 };
 
-handleGetProducts();
+onMounted(async () => {
+  await handleGetProducts();
+});
 </script>
 
 <template>
@@ -35,20 +37,16 @@ handleGetProducts();
     <page-header>
       <template #title>Produtos</template>
       <template #right>
-        <btn-add
-          :loading="loading.add.value"
-          :disable="loading.disable.value"
-          :to="{ name: 'product-form' }"
-        />
+        <btn-add :loading="loading.value" :to="{ name: 'product-form' }" />
       </template>
     </page-header>
 
     <page-body>
       <search-input v-model="searchQuery" />
 
-      <waiting-load :showing="loading.list.value" />
+      <waiting-load :showing="loading.value" />
 
-      <q-list v-if="!loading.list.value" separator>
+      <q-list v-if="!loading.value" separator>
         <q-item
           v-for="(product, index) in products"
           :key="index"
