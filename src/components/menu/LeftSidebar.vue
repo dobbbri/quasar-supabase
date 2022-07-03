@@ -44,6 +44,7 @@ const userStore = useUserStore();
 <style lang="scss" scoped>
 .title {
   font-size: $toolbar-title-font-size;
+  font-weight: calc($toolbar-title-font-weight - 100);
 }
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
