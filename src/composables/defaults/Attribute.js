@@ -9,6 +9,13 @@ export default function useAttribute() {
         textColor: 'primary',
         class: 'text-weight-bold'
       },
+      big: {
+        rounded: false,
+        noCaps: true,
+        color: 'grey-3',
+        textColor: 'grey-10',
+        class: 'text-weight-bold'
+      },
       icon: { round: true, size: 'lg', color: 'white' }
     },
 

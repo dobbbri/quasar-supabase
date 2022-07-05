@@ -1,21 +1,30 @@
 <script setup>
-import { PageHeader } from 'src/components';
+import { Page, PageHeader, PageBody, BtnBig } from 'src/components';
+import { useMenuStore } from 'src/stores/menuStore';
+
+const store = useMenuStore();
 </script>
 
 <template>
-  <q-page padding>
-    <page-header>
-      <template #title>Endless</template>
-    </page-header>
-
-    <div class="row">
-      <div class="q-mx-auto">
-        <img
-          alt="Quasar logo"
-          src="~assets/quasar-logo-vertical.svg"
-          style="width: 200px; height: 200px"
-        />
-      </div>
-    </div>
-  </q-page>
+  <page class="q-pa-md q-pt-none">
+    <q-form>
+      <page-header>
+        <template #title>Endless</template>
+      </page-header>
+      <page-body>
+        <div v-for="(group, idx1) in store.menuPage" :key="idx1" class="row q-gutter-sm">
+          <div class="col-12 text-weight-bold">{{ group.name }}</div>
+          <btn-big
+            v-for="(btn, idx2) in group.btns"
+            :key="idx2"
+            :item="btn"
+            :to="{ name: btn.routeName }"
+            exact
+            style="min-width: 44%"
+            class="col"
+          />
+        </div>
+      </page-body>
+    </q-form>
+  </page>
 </template>

@@ -1,5 +1,105 @@
 import { defineStore } from 'pinia';
 
+const menuPage = [
+  {
+    name: 'Atalhos Principais',
+    btns: [
+      {
+        title: 'Adicionar Pedido',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Consultar Pedidos',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      }
+    ]
+  },
+  {
+    name: 'Financeiro',
+    btns: [
+      {
+        title: 'Adicionar Recebimentos',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Adicionar Custos',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Emitir Recibo',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Financeiro',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      }
+    ]
+  },
+  {
+    name: 'Compromissos',
+    btns: [
+      {
+        title: 'Agendar Compromisso',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Consultar Compromissos',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      }
+    ]
+  },
+  {
+    name: 'Clientes',
+    btns: [
+      {
+        title: 'Adicionar Cliente',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Consultar Clientes',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      }
+    ]
+  },
+  {
+    name: 'Catálogo',
+    btns: [
+      {
+        title: 'Serviços',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      },
+      {
+        title: 'Produtos',
+        icon: 'sym_o_home',
+        iconColor: 'Primary',
+        routeName: 'index'
+      }
+    ]
+  }
+];
+
 const menuList = [
   { title: 'Início', icon: 'sym_o_home', routeName: 'index' },
   { title: 'Categorias', icon: 'sym_o_interests', routeName: 'category-list' },
@@ -30,6 +130,9 @@ export const useMenuStore = defineStore('menuStore', {
   getters: {
     menuList() {
       return menuList;
+    },
+    menuPage() {
+      return menuPage;
     }
   },
   actions: {
