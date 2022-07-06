@@ -7,13 +7,13 @@ const menuPage = [
       {
         title: 'Adicionar Pedido',
         icon: 'sym_o_post_add',
-        iconColor: 'Primary',
+        iconColor: 'blue',
         routeName: 'index'
       },
       {
         title: 'Consultar Pedidos',
         icon: 'sym_o_list_alt',
-        iconColor: 'Primary',
+        iconColor: 'blue',
         routeName: 'index'
       }
     ]
@@ -23,26 +23,26 @@ const menuPage = [
     btns: [
       {
         title: 'Adicionar Recebimentos',
-        icon: 'sym_o_paid',
-        iconColor: 'Primary',
+        icon: 'sym_o_add_circle',
+        iconColor: 'green',
         routeName: 'index'
       },
       {
         title: 'Adicionar Custos',
-        icon: 'sym_o_attach_money',
-        iconColor: 'Primary',
+        icon: 'sym_o_do_not_disturb_on',
+        iconColor: 'red',
         routeName: 'index'
       },
       {
         title: 'Emitir Recibo',
         icon: 'sym_o_receipt_long',
-        iconColor: 'Primary',
+        iconColor: 'grey',
         routeName: 'index'
       },
       {
         title: 'Financeiro',
         icon: 'sym_o_analytics',
-        iconColor: 'Primary',
+        iconColor: 'green',
         routeName: 'index'
       }
     ]
@@ -52,14 +52,14 @@ const menuPage = [
     btns: [
       {
         title: 'Agendar Compromisso',
-        icon: 'sym_o_calendar_add_on',
-        iconColor: 'Primary',
+        icon: 'sym_o_more_time',
+        iconColor: 'red',
         routeName: 'index'
       },
       {
         title: 'Consultar Compromissos',
         icon: 'sym_o_calendar_month',
-        iconColor: 'Primary',
+        iconColor: 'red',
         routeName: 'index'
       }
     ]
@@ -70,13 +70,13 @@ const menuPage = [
       {
         title: 'Adicionar Cliente',
         icon: 'sym_o_person_add',
-        iconColor: 'Primary',
+        iconColor: 'orange',
         routeName: 'index'
       },
       {
         title: 'Consultar Clientes',
         icon: 'sym_o_supervisor_account',
-        iconColor: 'Primary',
+        iconColor: 'orange',
         routeName: 'index'
       }
     ]
@@ -87,13 +87,13 @@ const menuPage = [
       {
         title: 'Serviços',
         icon: 'sym_o_design_services',
-        iconColor: 'Primary',
+        iconColor: 'purple',
         routeName: 'index'
       },
       {
         title: 'Produtos',
         icon: 'sym_o_inventory_2',
-        iconColor: 'Primary',
+        iconColor: 'purple',
         routeName: 'index'
       }
     ]
