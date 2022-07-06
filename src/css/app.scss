@@ -1,5 +1,13 @@
 // app global css in SCSS form
 
+.title {
+  font-family: 'Ubuntu', sans-serif !important;
+  &-expansion {
+     font-size: 18px;
+     font-weight: 600;
+  }
+}
+
 .my-btn .q-btn__content.justify-start {
   justify-content: space-between;
 }
@@ -42,9 +50,10 @@
 .q-field__label {
   left: 0;
   top: 13px;
-  color: $primary;
+  // color: $primary;
   font-size: 17px;
   font-weight: 500;
+  font-family: 'Ubuntu', sans-serif !important;
 }
 
 .q-field--float .q-field__label {
@@ -76,11 +85,6 @@
 .q-field--outlined .q-field__control:hover::before {
   border-color: $primary;
   border-width: 2px;
-}
-
-.q-expansion-item__container > .q-item {
-  padding: 4px 4px;
-  margin-bottom: 2px;
 }
 
 .only-image > .q-checkbox__inner {

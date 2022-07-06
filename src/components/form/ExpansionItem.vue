@@ -10,8 +10,13 @@ defineProps({
 </script>
 
 <template>
-  <q-expansion-item :group="group" v-bind="attr.expansion" :label="label">
-    <div v-bind="attr.lineSpacing">
+  <q-expansion-item
+    :group="group"
+    v-bind="attr.expansion"
+    :label="label"
+    style="margin-left: -16px; margin-right: -16px"
+  >
+    <div v-bind="attr.lineSpacing" class="q-px-md q-py-xs">
       <slot />
     </div>
   </q-expansion-item>

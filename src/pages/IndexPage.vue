@@ -13,7 +13,7 @@ const store = useMenuStore();
       </page-header>
       <page-body>
         <div v-for="(group, idx1) in store.menuPage" :key="idx1" class="row q-gutter-sm">
-          <div class="col-12 text-weight-bold">{{ group.name }}</div>
+          <div class="col-12 title-expansion text-primary q-pt-md">{{ group.name }}</div>
           <btn-big
             v-for="(btn, idx2) in group.btns"
             :key="idx2"

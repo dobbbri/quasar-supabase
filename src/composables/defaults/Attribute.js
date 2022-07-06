@@ -46,9 +46,9 @@ export default function useAttribute() {
     },
 
     expansion: {
-      headerClass: 'text-grey-9 q-mt-lg q-mb-sm',
-      denseToggle: true,
-      dense: true
+      headerClass: 'text-primary title-expansion q-mt-lg',
+      denseToggle: false,
+      dense: false
     },
 
     banner: {
