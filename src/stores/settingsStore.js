@@ -30,6 +30,11 @@ const defaults = {
     { id: 'fiado', name: 'fiado', active: true },
     { id: 'transferência', name: 'transferência bancária', active: true },
     { id: 'outro', name: 'outro', active: true }
+  ],
+  paymentConditions: [
+    { id: 'À vista', name: 'À vista', active: true },
+    { id: 'Sinal', name: 'Sinal', active: true },
+    { id: 'Parcelado', name: 'Parcelado', active: true }
   ]
 };
 
@@ -47,6 +52,7 @@ export const useUsersSettingsStore = defineStore('settingsStore', {
     id: 0,
     measureUnits: [],
     paymentMethods: [],
+    paymentConditions: [],
     personTypes: [
       { label: 'Pessoa Física', value: false },
       { label: 'Pessoa Juríca', value: true }
@@ -58,11 +64,13 @@ export const useUsersSettingsStore = defineStore('settingsStore', {
       this.id = value.id;
       this.measureUnits = convertToObject(JSON.parse(value.measure_units));
       this.paymentMethods = convertToObject(JSON.parse(value.payment_methods));
+      this.paymentConditions = convertToObject(JSON.parse(value.payment_conditions));
     },
     getDefaults() {
       return {
         measureUnits: JSON.stringify(defaults.measureUnits),
-        paymentMethods: JSON.stringify(defaults.paymentMethods)
+        paymentMethods: JSON.stringify(defaults.paymentMethods),
+        paymentConditions: JSON.stringify(defaults.paymentConditions)
       };
     }
   },

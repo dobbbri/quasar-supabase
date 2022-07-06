@@ -1,9 +1,11 @@
 <script setup>
 import { useDefaults } from 'src/composables';
 import { useMenuStore } from 'src/stores/menuStore';
+import { useUserStore } from 'src/stores/userStore';
 
 const { attr } = useDefaults();
 const menuStore = useMenuStore();
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -11,11 +13,15 @@ const menuStore = useMenuStore();
     <q-toolbar>
       <div>
         <slot name="left">
-          <div class="btn-menu">
-            <q-btn v-bind="attr.btn.icon" icon="sym_o_menu" flat @click="menuStore.toggleSidebar()">
-              <q-tooltip>Menu</q-tooltip>
-            </q-btn>
-          </div>
+          <q-btn
+            v-if="userStore.isLoggedIn"
+            v-bind="attr.btn.icon"
+            icon="sym_o_menu"
+            flat
+            @click="menuStore.toggleSidebar()"
+          >
+            <q-tooltip>Menu</q-tooltip>
+          </q-btn>
         </slot>
       </div>
       <q-toolbar style="height: 60px">
@@ -27,14 +33,3 @@ const menuStore = useMenuStore();
     </q-toolbar>
   </q-header>
 </template>
-
-<style lang="scss" scoped>
-.btn-menu {
-  display: none;
-}
-@media (max-width: 700px) {
-  .btn-menu {
-    display: block;
-  }
-} ;
-</style>

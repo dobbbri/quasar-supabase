@@ -16,7 +16,7 @@ defineProps({
     :label="label"
     style="margin-left: -16px; margin-right: -16px"
   >
-    <div v-bind="attr.lineSpacing" class="q-px-md q-py-xs">
+    <div v-bind="attr.lineSpacing" class="q-px-md q-pb-xs">
       <slot />
     </div>
   </q-expansion-item>

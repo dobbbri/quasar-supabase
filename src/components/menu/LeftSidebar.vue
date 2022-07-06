@@ -1,22 +1,21 @@
 <script setup>
+import { useDefaults } from 'src/composables';
 import { useMenuStore } from 'src/stores/menuStore';
-import { useUserStore } from 'src/stores/userStore';
 
+const { attr } = useDefaults();
 const menuStore = useMenuStore();
-const userStore = useUserStore();
 </script>
 
 <template>
   <div style="max-width: 260px">
-    <q-drawer
-      v-if="userStore.isLoggedIn"
-      v-model="menuStore.isSidebarOpen"
-      show-if-above
-      :breakpoint="700"
-      class="bg-blue-grey-1"
-    >
+    <q-drawer v-model="menuStore.isSidebarOpen" class="bg-blue-grey-1">
       <q-toolbar class="bg-blue-grey-10" style="height: 60px">
-        <q-toolbar-title class="q-ml-xs text-white"> Menu </q-toolbar-title>
+        <q-toolbar-title class="q-pl-xs text-white title"> Menu </q-toolbar-title>
+        <div class="q-ml-auto">
+          <q-btn v-bind="attr.btn.icon" icon="sym_o_close" flat @click="menuStore.toggleSidebar()">
+            <q-tooltip>Fechar</q-tooltip>
+          </q-btn>
+        </div>
       </q-toolbar>
 
       <q-list class="text-blue-grey-8">
@@ -47,6 +46,6 @@ const userStore = useUserStore();
   font-weight: calc($toolbar-title-font-weight - 100);
 }
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
 }
 </style>

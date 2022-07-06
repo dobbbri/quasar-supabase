@@ -27,9 +27,4 @@ import { LeftSidebar } from 'src/components';
     max-width: 500px;
   }
 }
-@media (max-width: 768px) {
-  .app-layout {
-    width: 100%;
-  }
-}
 </style>

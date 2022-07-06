@@ -46,7 +46,7 @@ export default function useAttribute() {
     },
 
     expansion: {
-      headerClass: 'text-primary title-expansion q-mt-lg',
+      headerClass: 'text-primary title-expansion q-mt-md',
       denseToggle: false,
       dense: false
     },

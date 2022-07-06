@@ -11,9 +11,9 @@ const store = useMenuStore();
       <page-header>
         <template #title>Endless</template>
       </page-header>
-      <page-body>
+      <page-body style="margin-top: -16px">
         <div v-for="(group, idx1) in store.menuPage" :key="idx1" class="row q-gutter-sm">
-          <div class="col-12 title-expansion text-primary q-pt-md">{{ group.name }}</div>
+          <div class="col-12 title-expansion text-primary q-pt-sm">{{ group.name }}</div>
           <btn-big
             v-for="(btn, idx2) in group.btns"
             :key="idx2"

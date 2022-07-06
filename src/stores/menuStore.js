@@ -6,13 +6,13 @@ const menuPage = [
     btns: [
       {
         title: 'Adicionar Pedido',
-        icon: 'sym_o_home',
+        icon: 'sym_o_post_add',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Consultar Pedidos',
-        icon: 'sym_o_home',
+        icon: 'sym_o_list_alt',
         iconColor: 'Primary',
         routeName: 'index'
       }
@@ -23,25 +23,25 @@ const menuPage = [
     btns: [
       {
         title: 'Adicionar Recebimentos',
-        icon: 'sym_o_home',
+        icon: 'sym_o_paid',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Adicionar Custos',
-        icon: 'sym_o_home',
+        icon: 'sym_o_attach_money',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Emitir Recibo',
-        icon: 'sym_o_home',
+        icon: 'sym_o_receipt_long',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Financeiro',
-        icon: 'sym_o_home',
+        icon: 'sym_o_analytics',
         iconColor: 'Primary',
         routeName: 'index'
       }
@@ -52,13 +52,13 @@ const menuPage = [
     btns: [
       {
         title: 'Agendar Compromisso',
-        icon: 'sym_o_home',
+        icon: 'sym_o_calendar_add_on',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Consultar Compromissos',
-        icon: 'sym_o_home',
+        icon: 'sym_o_calendar_month',
         iconColor: 'Primary',
         routeName: 'index'
       }
@@ -69,13 +69,13 @@ const menuPage = [
     btns: [
       {
         title: 'Adicionar Cliente',
-        icon: 'sym_o_home',
+        icon: 'sym_o_person_add',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Consultar Clientes',
-        icon: 'sym_o_home',
+        icon: 'sym_o_supervisor_account',
         iconColor: 'Primary',
         routeName: 'index'
       }
@@ -86,13 +86,13 @@ const menuPage = [
     btns: [
       {
         title: 'Serviços',
-        icon: 'sym_o_home',
+        icon: 'sym_o_design_services',
         iconColor: 'Primary',
         routeName: 'index'
       },
       {
         title: 'Produtos',
-        icon: 'sym_o_home',
+        icon: 'sym_o_inventory_2',
         iconColor: 'Primary',
         routeName: 'index'
       }
