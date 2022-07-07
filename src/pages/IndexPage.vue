@@ -18,7 +18,7 @@ const store = useMenuStore();
             v-for="(btn, idx2) in group.btns"
             :key="idx2"
             :item="btn"
-            :to="{ name: btn.routeName }"
+            :to="{ name: btn.routeName, params: { backTo: 'index' } }"
             exact
             style="min-width: 44%"
             class="col"

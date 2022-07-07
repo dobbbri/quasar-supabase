@@ -123,8 +123,14 @@ const handleSubmit = async () => {
   }
 };
 
-const handleCustomerView = () => {
-  router.push({ name: 'customer-view', params: { id: route.params.id } });
+const handleBackTo = () => {
+  if (route.params.id) {
+    router.push({ name: 'customer-view', params: { id: route.params.id } });
+  } else if (route.params.backTo) {
+    router.push({ name: 'index' });
+  } else {
+    router.push({ name: 'customer-list' });
+  }
 };
 
 const handleGetCustomer = async () => {
@@ -148,7 +154,7 @@ onMounted(async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back @click="handleCustomerView()" />
+          <btn-back @click="handleBackTo()" />
         </template>
         <template #title>{{ title + ' Cliente' }}</template>
         <template #right>

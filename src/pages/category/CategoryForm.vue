@@ -32,8 +32,12 @@ const handleSubmit = async () => {
   }
 };
 
-const handleViewCategory = () => {
-  router.push({ name: 'category-view', params: { id: route.params.id } });
+const handleBackTo = () => {
+  if (route.params.id) {
+    router.push({ name: 'category-view', params: { id: route.params.id } });
+  } else {
+    router.push({ name: 'category-list' });
+  }
 };
 
 const handleGetCategory = async () => {
@@ -55,7 +59,7 @@ onMounted(async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back @click="handleViewCategory()" />
+          <btn-back @click="handleBackTo()" />
         </template>
         <template #title>{{ title + ' Categoria' }}</template>
         <template #right>

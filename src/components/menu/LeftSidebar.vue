@@ -31,7 +31,7 @@ const menuStore = useMenuStore();
             <q-icon :name="link.icon" size="md" />
           </q-item-section>
 
-          <q-item-section class="title">
+          <q-item-section class="title-sidebar">
             <q-item-label> {{ link.title }} </q-item-label>
           </q-item-section>
         </q-item>
@@ -46,6 +46,6 @@ const menuStore = useMenuStore();
   font-weight: calc($toolbar-title-font-weight - 100);
 }
 .material-symbols-outlined {
-  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
 }
 </style>

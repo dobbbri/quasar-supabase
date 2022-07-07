@@ -8,13 +8,13 @@ const menuPage = [
         title: 'Adicionar Pedido',
         icon: 'sym_o_post_add',
         iconColor: 'blue',
-        routeName: 'index'
+        routeName: 'order-form'
       },
       {
         title: 'Consultar Pedidos',
         icon: 'sym_o_list_alt',
         iconColor: 'blue',
-        routeName: 'index'
+        routeName: 'order-list'
       }
     ]
   },
@@ -25,25 +25,25 @@ const menuPage = [
         title: 'Adicionar Recebimentos',
         icon: 'sym_o_add_circle',
         iconColor: 'green',
-        routeName: 'index'
+        routeName: 'revenue-form'
       },
       {
         title: 'Adicionar Custos',
         icon: 'sym_o_do_not_disturb_on',
         iconColor: 'red',
-        routeName: 'index'
+        routeName: 'cost-form'
       },
       {
         title: 'Emitir Recibo',
         icon: 'sym_o_receipt_long',
         iconColor: 'grey',
-        routeName: 'index'
+        routeName: 'print-receipt'
       },
       {
         title: 'Financeiro',
         icon: 'sym_o_analytics',
         iconColor: 'green',
-        routeName: 'index'
+        routeName: 'finance'
       }
     ]
   },
@@ -54,13 +54,13 @@ const menuPage = [
         title: 'Agendar Compromisso',
         icon: 'sym_o_more_time',
         iconColor: 'red',
-        routeName: 'index'
+        routeName: 'appointment-form'
       },
       {
         title: 'Consultar Compromissos',
         icon: 'sym_o_calendar_month',
         iconColor: 'red',
-        routeName: 'index'
+        routeName: 'appointment-list'
       }
     ]
   },
@@ -71,13 +71,13 @@ const menuPage = [
         title: 'Adicionar Cliente',
         icon: 'sym_o_person_add',
         iconColor: 'orange',
-        routeName: 'index'
+        routeName: 'customer-form'
       },
       {
         title: 'Consultar Clientes',
         icon: 'sym_o_supervisor_account',
         iconColor: 'orange',
-        routeName: 'index'
+        routeName: 'customer-list'
       }
     ]
   },
@@ -88,13 +88,13 @@ const menuPage = [
         title: 'Serviços',
         icon: 'sym_o_design_services',
         iconColor: 'purple',
-        routeName: 'index'
+        routeName: 'service-list'
       },
       {
         title: 'Produtos',
         icon: 'sym_o_inventory_2',
         iconColor: 'purple',
-        routeName: 'index'
+        routeName: 'product-list'
       }
     ]
   }

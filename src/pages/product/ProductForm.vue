@@ -64,8 +64,12 @@ const isEditMode = computed(() => (route.params.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
-const handleProductView = () => {
-  router.push({ name: 'product-view', params: { id: route.params.id } });
+const handleBackTo = () => {
+  if (route.params.id) {
+    router.push({ name: 'product-view', params: { id: route.params.id } });
+  } else {
+    router.push({ name: 'product-list' });
+  }
 };
 
 const handleSubmit = async () => {
@@ -110,7 +114,7 @@ onMounted(async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back @click="handleProductView()" />
+          <btn-back @click="handleBackTo()" />
         </template>
         <template #title>{{ title + ' Produto' }}</template>
         <template #right>
