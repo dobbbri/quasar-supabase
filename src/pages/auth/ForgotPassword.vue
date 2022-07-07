@@ -30,11 +30,8 @@ const handleSubmit = async () => {
   <div class="row justify-center q-mt-lg">
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
-        <page-header class="text-center">
-          <template #left></template>
-          <template #title>
-            <div class="absolute-center">Redefinir a senha</div>
-          </template>
+        <page-header>
+          <template #title>Redefinir a Senha</template>
         </page-header>
 
         <page-body>

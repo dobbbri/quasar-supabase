@@ -37,8 +37,7 @@ export default function useAttribute() {
     },
 
     page: {
-      class: 'full-width q-pa-md',
-      style: 'max-width: 620px;'
+      class: 'full-width q-pa-md'
     },
 
     lineSpacing: {

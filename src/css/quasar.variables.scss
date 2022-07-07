@@ -11,10 +11,11 @@ $negative: #c10015;
 $info: #31ccec;
 $warning: #f2c037;
 
-$field-height: 44px !default;
+$field-height: 40px !default;
 
-$body-font-size: 16px !default;
-$body-line-height: 1.6 !default;
+$body-font-size: 15px !default;
+$body-line-height: 1.5 !default;
+$tooltip-fontsize: 14px !default;
 
 $input-font-size: $body-font-size !default;
 $input-text-color: $dark !default;

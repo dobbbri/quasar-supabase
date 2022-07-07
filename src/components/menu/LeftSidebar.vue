@@ -25,14 +25,14 @@ const menuStore = useMenuStore();
           clickable
           :to="{ name: link.routeName }"
           exact
-          active-class="text-weight-bold bg-primary text-white"
+          active-class="text-weight-bold bg-secondary text-white q-ma-xs rounded-borders"
         >
           <q-item-section v-if="link.icon" avatar>
             <q-icon :name="link.icon" size="md" />
           </q-item-section>
 
           <q-item-section class="title-sidebar">
-            <q-item-label> {{ link.title }} </q-item-label>
+            <q-item-label>{{ link.title }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -41,10 +41,6 @@ const menuStore = useMenuStore();
 </template>
 
 <style lang="scss" scoped>
-.title {
-  font-size: $toolbar-title-font-size;
-  font-weight: calc($toolbar-title-font-weight - 100);
-}
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
 }

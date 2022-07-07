@@ -2,7 +2,7 @@
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from 'src/composables';
-import { PageHeader } from 'src/components';
+import { Page, PageHeader } from 'src/components';
 
 const router = useRouter();
 const { logout } = useAuth();
@@ -21,10 +21,9 @@ onMounted(() => handleLogout());
 </script>
 
 <template>
-  <q-page padding>
+  <page>
     <page-header>
-      <template #left></template>
-      <template #title></template>
+      <template #title>Saindo...</template>
     </page-header>
-  </q-page>
+  </page>
 </template>
