@@ -9,8 +9,8 @@ const userStore = useUserStore();
 </script>
 
 <template>
-  <q-header class="bg-primary text-white" style="z-index: 1000">
-    <q-toolbar>
+  <q-header class="bg-primary text-white">
+    <q-toolbar class="full-width toolbar-height">
       <div>
         <slot name="left">
           <q-btn
@@ -24,9 +24,11 @@ const userStore = useUserStore();
           </q-btn>
         </slot>
       </div>
-      <q-toolbar style="height: 60px">
-        <q-toolbar-title class="q-mx-xs text-white title"> <slot name="title" /> </q-toolbar-title>
-      </q-toolbar>
+      <!-- <q-toolbar style="height: 60px"> -->
+      <q-toolbar-title class="text-white title absolute-center">
+        <slot name="title" />
+      </q-toolbar-title>
+      <!-- </q-toolbar> -->
       <div class="q-ml-auto">
         <slot name="right" />
       </div>

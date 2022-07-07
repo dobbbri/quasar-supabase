@@ -27,6 +27,7 @@ const props = defineProps({
   padding: 13px 10px;
 }
 .btn-text {
+  width: 60px;
   line-height: 16px;
   font-size: 14px;
   font-weight: 500;

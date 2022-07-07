@@ -9,7 +9,7 @@ const menuStore = useMenuStore();
 <template>
   <div style="max-width: 260px">
     <q-drawer v-model="menuStore.isSidebarOpen" class="bg-blue-grey-1">
-      <q-toolbar class="bg-blue-grey-10" style="height: 60px">
+      <q-toolbar class="bg-blue-grey-10 toolbar-height">
         <q-toolbar-title class="q-pl-xs text-white title"> Menu </q-toolbar-title>
         <div class="q-ml-auto">
           <q-btn v-bind="attr.btn.icon" icon="sym_o_close" flat @click="menuStore.toggleSidebar()">

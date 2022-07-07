@@ -61,7 +61,7 @@ onMounted(async () => {
         <template #left>
           <btn-back @click="handleBackTo()" />
         </template>
-        <template #title>{{ title + ' Categoria' }}</template>
+        <template #title>{{ title }}</template>
         <template #right>
           <btn-save :loading="loading.value" type="submit" />
         </template>
