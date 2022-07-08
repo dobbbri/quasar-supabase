@@ -1,5 +1,5 @@
 export default function useAttribute() {
-  const attribute = {
+  const attr = {
     btn: {
       basic: {
         rounded: false,
@@ -62,10 +62,10 @@ export default function useAttribute() {
       action: {
         labelPosition: 'left',
         externalLabel: true,
-        textColor: 'black'
+        textColor: 'white'
       }
     }
   };
 
-  return { attribute };
+  return { attr };
 }

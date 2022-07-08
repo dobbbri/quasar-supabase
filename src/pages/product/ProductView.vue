@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useTools, useDefaults } from 'src/composables';
+import { useProducts, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -18,8 +18,7 @@ const router = useRouter();
 const route = useRoute();
 
 const { loading, getProduct, removeProduct } = useProducts();
-const { confirm, notify } = useTools();
-const { fmt } = useDefaults();
+const { confirm, notify, fmt } = useTools();
 
 const form = ref({
   name: '',

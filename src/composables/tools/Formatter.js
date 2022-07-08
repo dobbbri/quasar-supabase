@@ -1,5 +1,5 @@
 export default function useFormatter() {
-  const formatter = {
+  const fmt = {
     currency(value) {
       return value.toLocaleString('pt-br', {
         style: 'currency',
@@ -8,5 +8,5 @@ export default function useFormatter() {
     }
   };
 
-  return { formatter };
+  return { fmt };
 }

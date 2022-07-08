@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
+import { useProducts, useNameSearch, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -18,8 +18,7 @@ const documents = ref([]);
 
 const { loading, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
-const { notify } = useTools();
-const { fmt } = useDefaults();
+const { notify, fmt } = useTools();
 
 const handleViewProduct = (product) => {
   router.push({ name: 'product-view', params: { id: product.id } });
