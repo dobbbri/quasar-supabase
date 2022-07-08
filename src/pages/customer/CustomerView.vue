@@ -110,6 +110,12 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
+        <text-view
+          :value="form.name"
+          :value2="form.active ? '' : '*** Cliente Desativado ***'"
+          label="Nome do Cliente"
+        />
+
         <text-view :value="form.name" label="Nome do Cliente" />
 
         <text-view v-if="form.email" :value="form.email" label="Email" />
@@ -127,8 +133,6 @@ onMounted(async () => {
           :value2="addressFormated[1]"
           label="Endereço"
         />
-
-        <text-view :label="form.active ? 'Cliente Ativo' : 'Cliente Desativado'" />
       </page-body>
     </q-form>
   </page>

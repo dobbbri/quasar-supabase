@@ -7,12 +7,18 @@ const menuStore = useMenuStore();
 </script>
 
 <template>
-  <div style="max-width: 260px">
+  <div>
     <q-drawer v-model="menuStore.isSidebarOpen" class="bg-blue-grey-1">
-      <q-toolbar class="bg-blue-grey-10 toolbar-height">
-        <q-toolbar-title class="q-pl-xs text-white title"> Menu </q-toolbar-title>
+      <q-toolbar class="toolbar-height">
+        <q-toolbar-title class="q-pl-md text-primary absolute-center title"> Menu </q-toolbar-title>
         <div class="q-ml-auto">
-          <q-btn v-bind="attr.btn.icon" icon="sym_o_close" flat @click="menuStore.toggleSidebar()">
+          <q-btn
+            v-bind="attr.btn.icon"
+            icon="sym_o_close"
+            color="primary"
+            flat
+            @click="menuStore.toggleSidebar()"
+          >
             <q-tooltip>Fechar</q-tooltip>
           </q-btn>
         </div>

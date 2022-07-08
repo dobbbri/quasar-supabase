@@ -5,8 +5,7 @@ export default function useAttribute() {
         rounded: false,
         unelevated: true,
         noCaps: true,
-        color: 'white',
-        textColor: 'primary',
+        textColor: 'white',
         class: 'text-weight-bold'
       },
       big: {
@@ -16,7 +15,7 @@ export default function useAttribute() {
         textColor: 'grey-10',
         class: 'text-weight-bold'
       },
-      icon: { round: true, size: 'lg', color: 'white' }
+      icon: { round: true, size: 'md', color: 'white' }
     },
 
     input: {
@@ -57,16 +56,13 @@ export default function useAttribute() {
 
     fab: {
       menu: {
-        unelevated: true,
-        verticalActionsAlign: 'right',
         color: 'primary',
         direction: 'down'
       },
       action: {
         labelPosition: 'left',
         externalLabel: true,
-        color: 'primary',
-        textColor: 'white'
+        textColor: 'black'
       }
     }
   };

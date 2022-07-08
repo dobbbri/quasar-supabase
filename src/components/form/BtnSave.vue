@@ -14,6 +14,7 @@ defineProps({
     v-bind="attr.btn.basic"
     :loading="loading"
     :disable="loading"
+    color="green"
     label="Gravar"
     type="submit"
   />

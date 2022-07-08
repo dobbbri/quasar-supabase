@@ -10,5 +10,15 @@ defineProps({
 </script>
 
 <template>
-  <q-btn v-bind="attr.btn.basic" :loading="loading" :disable="loading" label="Adicionar" />
+  <q-btn
+    v-bind="attr.btn.icon"
+    icon="sym_o_add"
+    class="bg-info q-pa-sm"
+    text-color="white"
+    flat
+    :loading="loading"
+    :disable="loading"
+  >
+    <q-tooltip>Adicionar</q-tooltip>
+  </q-btn>
 </template>

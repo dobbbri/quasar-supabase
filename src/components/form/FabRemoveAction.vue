@@ -10,9 +10,12 @@ defineProps({
 </script>
 
 <template>
-  <q-fab-action v-bind="attr.fab.action" :loading="loading" :disable="loading" label="Remover">
-    <template #icon>
-      <q-icon name="sym_o_delete" size="md" />
-    </template>
-  </q-fab-action>
+  <q-fab-action
+    v-bind="attr.fab.action"
+    class="bg-red"
+    :loading="loading"
+    :disable="loading"
+    label="Remover"
+    icon="sym_o_delete"
+  />
 </template>

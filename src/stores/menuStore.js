@@ -101,14 +101,6 @@ const menuPage = [
 ];
 
 const menuList = [
-  // { title: 'Início', icon: 'sym_o_home', routeName: 'index' },
-  { title: 'Categorias', icon: 'sym_o_interests', routeName: 'category-list' },
-  // { title: 'Produtos', icon: 'sym_o_inventory_2', routeName: 'product-list' },
-  // {
-  //   title: 'Clientes',
-  //   icon: 'sym_o_supervisor_account',
-  //   routeName: 'customer-list'
-  // },
   { title: 'Configuracões', icon: 'sym_o_tune', routeName: 'settings-form' },
   {
     title: 'Unidade de Medidas',
