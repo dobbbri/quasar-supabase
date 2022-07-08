@@ -28,7 +28,7 @@ const handleViewProduct = (product) => {
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
-      'id, name, categories:category_id ( name, active ), has_stock_control, stock_amount, measure_unit, price_to_sell, active'
+      'id, name, has_stock_control, stock_amount, measure_unit, price_to_sell, active'
     );
   } catch (error) {
     notify.error('Erro ao obter os produtos.', error);
@@ -81,15 +81,7 @@ onMounted(async () => {
             </q-item-label>
             <q-item-label class="row" style="margin-top: 4px">
               <span class="col">
-                <q-badge
-                  v-if="product.categories.active"
-                  outline
-                  class="text-dark"
-                  :label="product.categories.name.toString().toUpperCase()"
-                />
-                <q-badge v-else outline class="text-negative text-strike">
-                  {{ product.categories.name.toString().toUpperCase() }}
-                </q-badge>
+                {{ product.brand }}
               </span>
               <span class="col text-right">
                 {{ fmt.currency(product.price_to_sell) }}

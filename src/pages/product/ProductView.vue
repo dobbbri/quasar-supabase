@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useCategories, useTools, useDefaults } from 'src/composables';
+import { useProducts, useTools, useDefaults } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -18,15 +18,10 @@ const router = useRouter();
 const route = useRoute();
 
 const { loading, getProduct, removeProduct } = useProducts();
-const { getCategories } = useCategories();
 const { confirm, notify } = useTools();
 const { fmt } = useDefaults();
 
-const optionsCategories = ref([]);
-const categoryName = ref('');
-
 const form = ref({
-  category_id: '',
   name: '',
   description: '',
   price_to_sell: 0,
@@ -85,24 +80,8 @@ const handleGetProduct = async () => {
   }
 };
 
-const handleGetCategories = async () => {
-  try {
-    optionsCategories.value = await getCategories('id, name, active');
-  } catch (error) {
-    notify.error('Erro ao obter as categorias.', error);
-  }
-};
-
-const handleGetCategoryNameById = (id) => {
-  const index = optionsCategories.value.findIndex((cat) => cat.id === id);
-  if (index !== -1) return optionsCategories.value[index].name;
-  return '';
-};
-
 onMounted(async () => {
   await handleGetProduct();
-  await handleGetCategories();
-  categoryName.value = handleGetCategoryNameById(form.value.category_id);
 });
 </script>
 
@@ -128,7 +107,6 @@ onMounted(async () => {
           :value2="form.active ? '' : '*** Produto Desativado ***'"
           label="Nome do Produto"
         />
-        <text-view :value="categoryName" label="Categoria" />
         <text-view v-if="form.brand" :value="form.brand" label="Marca" />
         <text-view v-if="form.description" :value="form.description" label="Detalhes" />
         <text-view :value="fmt.currency(form.price_to_sell)" label="Preço de venda" />

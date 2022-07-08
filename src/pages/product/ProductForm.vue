@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useCategories, useTools } from 'src/composables';
+import { useProducts, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -20,13 +20,10 @@ const router = useRouter();
 const route = useRoute();
 
 const { loading, getProduct, addProduct, editProduct } = useProducts();
-const { getCategories } = useCategories();
 const { notify } = useTools();
 
-const optionsCategories = ref([]);
 const optionsMeasureUnits = ref([]);
 const form = ref({
-  category_id: '',
   name: '',
   description: '',
   price_to_sell: 0,
@@ -95,16 +92,7 @@ const handleGetProduct = async () => {
   }
 };
 
-const handleGetCategories = async () => {
-  try {
-    optionsCategories.value = await getCategories('id, name, active');
-  } catch (error) {
-    notify.error('Erro ao obter as categorias.', error);
-  }
-};
-
 onMounted(async () => {
-  await handleGetCategories();
   if (isEditMode.value) await handleGetProduct();
 });
 </script>
@@ -128,14 +116,6 @@ onMounted(async () => {
           label="Nome do produto"
           :rules="[(val) => val && val.length > 3]"
           error-message="O nome do produto deve ser informado!"
-        />
-
-        <select-options
-          v-model="form.category_id"
-          label="Categoria"
-          :options="optionsCategories"
-          :rules="[(val) => !!val]"
-          error-message="Uma categoria deve ser selecionada"
         />
 
         <expansion-item default-opened group="price" label="Preço">

@@ -45,21 +45,6 @@ const routes = [
         component: () => import('pages/InitialRoutines.vue')
       },
       {
-        path: '/category-list',
-        name: 'category-list',
-        component: () => import('pages/category/CategoryList.vue')
-      },
-      {
-        path: '/category-view/:id?',
-        name: 'category-view',
-        component: () => import('pages/category/CategoryView.vue')
-      },
-      {
-        path: '/category-form/:id?',
-        name: 'category-form',
-        component: () => import('pages/category/CategoryForm.vue')
-      },
-      {
         path: '/product-list',
         name: 'product-list',
         component: () => import('pages/product/ProductList.vue')
