@@ -12,9 +12,9 @@ defineProps({
 <template>
   <q-fab-action
     v-bind="attr.fab.action"
-    class="bg-red"
     :loading="loading"
     :disable="loading"
+    class="bg-negative"
     label="Remover"
     icon="sym_o_delete"
   />

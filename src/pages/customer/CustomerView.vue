@@ -10,7 +10,8 @@ import {
   TextView,
   FabMenu,
   FabEditAction,
-  FabRemoveAction
+  FabRemoveAction,
+  ExpansionItem
 } from 'src/components';
 
 const router = useRouter();
@@ -20,24 +21,8 @@ const { loading, getCustomer, removeCustomer } = useCustomers();
 const { getAddresses, removeAddresses } = useCustomersAddresses();
 const { confirm, notify } = useTools();
 
-const form = ref({
-  name: '',
-  email: '',
-  phone_1: '',
-  phone_2: '',
-  active: true
-});
-
-const formAddress = ref({
-  id: 0,
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-  zip_code: ''
-});
+const form = ref({});
+const formAddress = ref({});
 
 const handleEditCustomer = (customer) => {
   router.push({ name: 'customer-form', params: { id: customer.id } });
@@ -110,29 +95,37 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <text-view
-          :value="form.name"
-          :value2="form.active ? '' : '*** Cliente Desativado ***'"
-          label="Nome do Cliente"
-        />
+        <text-view v-if="!form.active" class="disabled-text" label="*** desativado ***" />
 
-        <text-view :value="form.name" label="Nome do Cliente" />
+        <expansion-item default-opened label="Informação do Cliente" style="margin-top: -20px">
+          <text-view :value="form.name" label="Nome do Cliente" />
 
-        <text-view v-if="form.email" :value="form.email" label="Email" />
+          <text-view :value="form.name" label="Nome do Cliente" />
 
-        <text-view
-          v-if="form.phone_1 || form.phone_2"
-          :value="form.phone_1"
-          :value2="form.phone_2"
-          label="Celular/Whatsapp"
-        />
+          <text-view v-if="form.email" :value="form.email" label="Email" />
 
-        <text-view
-          v-if="addressFormated"
-          :value="addressFormated[0]"
-          :value2="addressFormated[1]"
-          label="Endereço"
-        />
+          <text-view
+            v-if="form.phone_1 || form.phone_2"
+            :value="form.phone_1"
+            :value2="form.phone_2"
+            label="Celular/Whatsapp"
+          />
+
+          <text-view
+            v-if="addressFormated"
+            :value="addressFormated[0]"
+            :value2="addressFormated[1]"
+            label="Endereço"
+          />
+
+          <text-view
+            v-if="form.document_number"
+            :value="form.document_number"
+            :label="form.is_legal_entity ? 'CNPJ' : 'CPF'"
+          />
+
+          <text-view v-if="form.notes" :value="form.notes" label="Anotações" />
+        </expansion-item>
       </page-body>
     </q-form>
   </page>

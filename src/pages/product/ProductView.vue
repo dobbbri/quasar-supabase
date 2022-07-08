@@ -21,18 +21,8 @@ const { loading, getProduct, removeProduct } = useProducts();
 const { confirm, notify, fmt } = useTools();
 
 const form = ref({
-  name: '',
-  description: '',
   price_to_sell: 0,
-  measure_unit: 'un.',
-  price_to_buy: 0,
-  has_stock_control: false,
-  stock_amount: 0,
-  stock_minimum_amount: 0,
-  brand: '',
-  code_bar: '',
-  image_name: null,
-  active: true
+  price_to_buy: 0
 });
 
 const price_profit = ref(0);
@@ -101,18 +91,21 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <text-view
-          :value="form.name"
-          :value2="form.active ? '' : '*** Produto Desativado ***'"
-          label="Nome do Produto"
-        />
+        <text-view v-if="!form.active" class="disabled-text" label="*** desativado ***" />
+
+        <text-view :value="form.name" label="Nome do Produto" />
+
         <text-view v-if="form.brand" :value="form.brand" label="Marca" />
+
         <text-view v-if="form.description" :value="form.description" label="Detalhes" />
+
         <text-view :value="fmt.currency(form.price_to_sell)" label="Preço de venda" />
 
         <expansion-item label="Custo e Lucro">
           <text-view :value="fmt.currency(form.price_to_buy)" label="Preço de custo" />
+
           <text-view :value="price_profit" label="lucro" />
+
           <text-view :value="price_markup" label="Markup" />
         </expansion-item>
       </page-body>
