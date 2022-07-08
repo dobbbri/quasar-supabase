@@ -3,7 +3,7 @@ import { defineProps } from 'vue';
 
 defineProps({
   label: { type: String, default: '' },
-  value: { type: String, default: '' },
+  value: { type: [String, Number], default: '' },
   value2: { type: String, default: '' }
 });
 </script>
@@ -27,7 +27,6 @@ defineProps({
     width: 100%;
     font-weight: 500;
     font-size: $input-font-size;
-    color: $primary;
   }
 
   .value {

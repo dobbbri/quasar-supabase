@@ -182,7 +182,7 @@ onMounted(async () => {
         <expansion-item label="Avançado">
           <text-input v-model="form.brand" label="Marca" />
 
-          <textarea-input v-model="form.description" label="Descrição do produto" />
+          <textarea-input v-model="form.description" label="Detalhes do produto" />
 
           <text-input v-model="form.code_bar" label="Código de barras" />
         </expansion-item>

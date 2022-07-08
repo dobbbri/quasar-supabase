@@ -2,7 +2,15 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProducts, useNameSearch, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody, SearchInput, WaitingLoad, BtnAdd } from 'src/components';
+import {
+  Page,
+  PageHeader,
+  PageBody,
+  SearchInput,
+  WaitingLoad,
+  BtnBack,
+  BtnAdd
+} from 'src/components';
 
 const router = useRouter();
 
@@ -35,6 +43,9 @@ onMounted(async () => {
 <template>
   <page>
     <page-header>
+      <template #left>
+        <btn-back :to="{ name: 'index' }" />
+      </template>
       <template #title>Produtos</template>
       <template #right>
         <btn-add :loading="loading.value" :to="{ name: 'product-form' }" />

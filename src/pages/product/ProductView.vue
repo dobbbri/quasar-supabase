@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useCategories, useTools } from 'src/composables';
+import { useProducts, useCategories, useTools, useDefaults } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -10,7 +10,8 @@ import {
   TextView,
   FabMenu,
   FabEditAction,
-  FabRemoveAction
+  FabRemoveAction,
+  ExpansionItem
 } from 'src/components';
 
 const router = useRouter();
@@ -19,8 +20,10 @@ const route = useRoute();
 const { loading, getProduct, removeProduct } = useProducts();
 const { getCategories } = useCategories();
 const { confirm, notify } = useTools();
+const { fmt } = useDefaults();
 
 const optionsCategories = ref([]);
+const categoryName = ref('');
 
 const form = ref({
   category_id: '',
@@ -90,9 +93,16 @@ const handleGetCategories = async () => {
   }
 };
 
+const handleGetCategoryNameById = (id) => {
+  const index = optionsCategories.value.findIndex((cat) => cat.id === id);
+  if (index !== -1) return optionsCategories.value[index].name;
+  return '';
+};
+
 onMounted(async () => {
-  await handleGetCategories();
   await handleGetProduct();
+  await handleGetCategories();
+  categoryName.value = handleGetCategoryNameById(form.value.category_id);
 });
 </script>
 
@@ -113,8 +123,21 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <text-view :value="form.name" label="Nome do Produto" />
-        <text-view :label="form.active ? 'Produto Ativo' : 'Produto Desativado'" />
+        <text-view
+          :value="form.name"
+          :value2="form.active ? '' : '*** Produto Desativado ***'"
+          label="Nome do Produto"
+        />
+        <text-view :value="categoryName" label="Categoria" />
+        <text-view v-if="form.brand" :value="form.brand" label="Marca" />
+        <text-view v-if="form.description" :value="form.description" label="Detalhes" />
+        <text-view :value="fmt.currency(form.price_to_sell)" label="Preço de venda" />
+
+        <expansion-item label="Custo e Lucro">
+          <text-view :value="fmt.currency(form.price_to_buy)" label="Preço de custo" />
+          <text-view :value="price_profit" label="lucro" />
+          <text-view :value="price_markup" label="Markup" />
+        </expansion-item>
       </page-body>
     </q-form>
   </page>
