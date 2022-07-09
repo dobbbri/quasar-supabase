@@ -25,13 +25,10 @@ const { notify } = useTools();
 const optionsMeasureUnits = ref([]);
 const form = ref({
   name: '',
-  description: '',
-  price_to_sell: 0,
+  detail: '',
+  price: 0,
   measure_unit: 'un.',
-  price_to_buy: 0,
-  has_stock_control: false,
-  stock_amount: 0,
-  stock_minimum_amount: 0,
+  coust_price: 0,
   brand: '',
   code_bar: '',
   image_name: null,
@@ -42,15 +39,15 @@ const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (form.value.price_to_sell, form.value.price_to_buy),
+  () => (form.value.price, form.value.coust_price),
   () => {
     let profit = 0;
     let markup = 0;
-    const price_to_sell = parseFloat(form.value.price_to_sell);
-    const price_to_buy = parseFloat(form.value.price_to_buy);
-    if (price_to_sell > 0 && price_to_buy > 0) {
-      profit = ((price_to_sell - price_to_buy) / price_to_sell) * 100;
-      markup = ((price_to_sell - price_to_buy) / price_to_buy) * 100;
+    const price = parseFloat(form.value.price);
+    const coust_price = parseFloat(form.value.coust_price);
+    if (price > 0 && coust_price > 0) {
+      profit = ((price - coust_price) / price) * 100;
+      markup = ((price - coust_price) / coust_price) * 100;
     }
     price_profit.value = Math.round(profit) + '%';
     price_markup.value = Math.round(markup) + '%';
@@ -118,9 +115,11 @@ onMounted(async () => {
           error-message="O nome do produto deve ser informado!"
         />
 
+        <textarea-input v-model="form.detail" label="Detalhes do produto" />
+
         <expansion-item default-opened group="price" label="Preço">
           <money-input
-            v-model="form.price_to_sell"
+            v-model="form.price"
             label="Preço de venda"
             :rules="[(val) => !!val]"
             error-message="O preço de venda do produto deve ser informado"
@@ -138,7 +137,7 @@ onMounted(async () => {
         </expansion-item>
 
         <expansion-item default-opened label="Custo e Lucro">
-          <money-input v-model="form.price_to_buy" label="Preço de custo" />
+          <money-input v-model="form.coust_price" label="Preço de custo" />
           <div class="line row q-gutter-x-md">
             <div class="line col">
               <text-input
@@ -161,8 +160,6 @@ onMounted(async () => {
 
         <expansion-item label="Avançado">
           <text-input v-model="form.brand" label="Marca" />
-
-          <textarea-input v-model="form.description" label="Detalhes do produto" />
 
           <text-input v-model="form.code_bar" label="Código de barras" />
         </expansion-item>

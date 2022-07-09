@@ -4,14 +4,21 @@
 }
 
 .title {
-  font-family: 'Ubuntu', sans-serif !important;
+  font-size: 17px;
+  font-family: 'Ubuntu', 'Helvetica', sans-serif !important;
+  &-bar {
+    text-transform: Uppercase;
+    font-weight: 400;
+  }
   &-expansion {
     font-size: 17px;
-    font-weight: 600;
+    font-weight: 400;
+    font-family: 'Ubuntu', 'Helvetica', sans-serif !important;
   }
   &-sidebar {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
+    font-family: 'Ubuntu', 'Helvetica', sans-serif !important;
   }
 }
 
@@ -62,10 +69,10 @@
 .q-field__label {
   left: 0;
   top: 10px;
-  // color: $primary;
+  color: $dark;
   font-size: 17px;
   font-weight: 500;
-  font-family: 'Ubuntu', sans-serif !important;
+  font-family: 'Ubuntu', 'Helvetica' sans-serif !important;
 }
 
 .q-field--float .q-field__label {

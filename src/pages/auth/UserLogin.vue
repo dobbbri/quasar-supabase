@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth, useTools, useDefaults } from 'src/composables';
 import { Page, PageHeader, PageBody } from 'src/components';
 
 const router = useRouter();
 
-const { loading, login } = useAuth();
+const { loading, login, logout } = useAuth();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
@@ -26,6 +26,18 @@ const handleSubmit = async () => {
     throw error;
   }
 };
+
+const handleLogout = async () => {
+  try {
+    await logout();
+  } catch (error) {
+    console.log('logout error : ', error);
+  }
+};
+
+onMounted(async () => {
+  await handleLogout();
+});
 </script>
 
 <template>

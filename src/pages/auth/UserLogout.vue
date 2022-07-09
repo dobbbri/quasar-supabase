@@ -17,7 +17,9 @@ const handleLogout = async () => {
   }
 };
 
-onMounted(() => handleLogout());
+onMounted(async () => {
+  await handleLogout();
+});
 </script>
 
 <template>

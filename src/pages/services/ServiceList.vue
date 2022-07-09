@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useNameSearch, useTools } from 'src/composables';
+import { useServices, useNameSearch, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -16,24 +16,24 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { loading, getProducts } = useProducts();
-const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
+const { loading, getServices } = useServices();
+const { searchQuery, matchingSearchQuery: services } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
-const handleViewProduct = (product) => {
-  router.push({ name: 'product-view', params: { id: product.id } });
+const handleViewService = (service) => {
+  router.push({ name: 'service-view', params: { id: service.id } });
 };
 
-const handleGetProducts = async () => {
+const handleGetServices = async () => {
   try {
-    documents.value = await getProducts('id, name, measure_unit, price, active');
+    documents.value = await getServices('id, name, measure_unit, price, active');
   } catch (error) {
-    notify.error('Erro ao obter os produtos.', error);
+    notify.error('Erro ao obter os serviços.', error);
   }
 };
 
 onMounted(async () => {
-  await handleGetProducts();
+  await handleGetServices();
 });
 </script>
 
@@ -43,9 +43,9 @@ onMounted(async () => {
       <template #left>
         <btn-back :to="{ name: 'index' }" />
       </template>
-      <template #title>Produtos</template>
+      <template #title>Serviços</template>
       <template #right>
-        <btn-add :loading="loading.value" :to="{ name: 'product-form' }" />
+        <btn-add :loading="loading.value" :to="{ name: 'service-form' }" />
       </template>
     </page-header>
 
@@ -56,19 +56,19 @@ onMounted(async () => {
 
       <q-list v-if="!loading.value" separator>
         <q-item
-          v-for="(product, index) in products"
+          v-for="(service, index) in services"
           :key="index"
           clickable
           class="q-px-xs"
-          @click="handleViewProduct(product)"
+          @click="handleViewService(service)"
         >
           <q-item-section>
             <q-item-label class="row">
-              <span class="col">
-                {{ product.name }}
+              <span class="col" :class="{ 'text-negative text-strike': !service.active }">
+                {{ service.name }}
               </span>
               <span
-                v-if="!product.active"
+                v-if="!service.active"
                 class="col-4 text-right negative"
                 style="margin-left: 5px"
               >
@@ -77,10 +77,10 @@ onMounted(async () => {
             </q-item-label>
             <q-item-label class="row" style="margin-top: 4px">
               <span class="col">
-                {{ product.brand }}
+                {{ service.brand }}
               </span>
               <span class="col text-right">
-                {{ fmt.currency(product.price) }} / {{ product.measure_unit }}
+                {{ fmt.currency(service.price) }} / {{ service.measure_unit }}
               </span>
             </q-item-label>
           </q-item-section>

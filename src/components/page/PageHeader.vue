@@ -25,7 +25,7 @@ const userStore = useUserStore();
         </slot>
       </div>
       <!-- <q-toolbar style="height: 60px"> -->
-      <q-toolbar-title class="text-white title absolute-center">
+      <q-toolbar-title class="text-white title-bar absolute-center">
         <slot name="title" />
       </q-toolbar-title>
       <!-- </q-toolbar> -->

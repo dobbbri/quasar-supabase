@@ -1,0 +1,131 @@
+<script setup>
+import { ref, onMounted, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useServices, useTools } from 'src/composables';
+import {
+  Page,
+  PageHeader,
+  PageBody,
+  TextInput,
+  MoneyInput,
+  CheckBox,
+  SelectOptions,
+  TextareaInput,
+  ExpansionItem,
+  BtnBack,
+  BtnSave
+} from 'src/components';
+
+const router = useRouter();
+const route = useRoute();
+
+const { loading, getService, addService, editService } = useServices();
+const { notify } = useTools();
+
+const optionsMeasureUnits = ref([]);
+const form = ref({
+  name: '',
+  detail: '',
+  price: 0,
+  measure_unit: 'un.',
+  code_bar: '',
+  image_name: null,
+  active: true
+});
+
+const isEditMode = computed(() => (route.params.id ? true : false));
+
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+
+const handleBackTo = () => {
+  if (route.params.id) {
+    router.push({ name: 'service-view', params: { id: route.params.id } });
+  } else {
+    router.push({ name: 'service-list' });
+  }
+};
+
+const handleSubmit = async () => {
+  try {
+    if (isEditMode.value) {
+      await editService(form.value);
+    } else {
+      await addService(form.value);
+    }
+    notify.success(`Serviço ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
+    router.push({ name: 'service-list' });
+  } catch (error) {
+    notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error);
+  }
+};
+
+const handleGetService = async () => {
+  try {
+    const data = await getService(route.params.id);
+    form.value = data[0];
+  } catch (error) {
+    notify.error('Erro ao obter o serviço.', error);
+  }
+};
+
+onMounted(async () => {
+  if (isEditMode.value) await handleGetService();
+});
+</script>
+
+<template>
+  <page>
+    <q-form @submit.prevent="handleSubmit">
+      <page-header>
+        <template #left>
+          <btn-back @click="handleBackTo()" />
+        </template>
+        <template #title>{{ title }}</template>
+        <template #right>
+          <btn-save :loading="loading.value" type="submit" />
+        </template>
+      </page-header>
+
+      <page-body>
+        <text-input
+          v-model="form.name"
+          label="Nome do serviço"
+          :rules="[(val) => val && val.length > 3]"
+          error-message="O nome do serviço deve ser informado!"
+        />
+
+        <textarea-input v-model="form.detail" label="Detalhes do serviço" />
+
+        <expansion-item default-opened group="price" label="Preço">
+          <money-input
+            v-model="form.price"
+            label="Preço de venda"
+            :rules="[(val) => !!val]"
+            error-message="O preço de venda do serviço deve ser informado"
+          />
+
+          <select-options
+            v-model="form.measure_unit"
+            label="Unidade de medida"
+            :options="optionsMeasureUnits"
+            :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+            :rules="[(val) => !!val]"
+            error-message="Uma unidade de medida deve ser selecionada"
+            :use-template="2"
+          />
+        </expansion-item>
+
+        <expansion-item label="Avançado">
+          <text-input v-model="form.brand" label="Marca" />
+
+          <text-input v-model="form.code_bar" label="Código de barras" />
+        </expansion-item>
+
+        <check-box
+          v-model="form.active"
+          :label="form.active ? 'Serviço Ativo' : 'Serviço Desativado'"
+        />
+      </page-body>
+    </q-form>
+  </page>
+</template>
