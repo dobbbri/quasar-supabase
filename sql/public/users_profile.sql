@@ -6,7 +6,9 @@
 
 CREATE TABLE public.users_profile (
 	id uuid NOT NULL,
-	"name" text NULL,
+	"name" varchar NULL,
+	last_name varchar NULL,
+	document_number varchar NULL,
 	CONSTRAINT profile_pkey PRIMARY KEY (id)
 );
 

@@ -22,22 +22,22 @@ const { confirm, notify, fmt } = useTools();
 
 const form = ref({
   price: 0,
-  coust_price: 0
+  cost_price: 0
 });
 
 const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (form.value.price, form.value.coust_price),
+  () => (form.value.price, form.value.cost_price),
   () => {
     let profit = 0;
     let markup = 0;
     const price = parseFloat(form.value.price);
-    const coust_price = parseFloat(form.value.coust_price);
-    if (price > 0 && coust_price > 0) {
-      profit = ((price - coust_price) / price) * 100;
-      markup = ((price - coust_price) / coust_price) * 100;
+    const cost_price = parseFloat(form.value.cost_price);
+    if (price > 0 && cost_price > 0) {
+      profit = ((price - cost_price) / price) * 100;
+      markup = ((price - cost_price) / cost_price) * 100;
     }
     price_profit.value = Math.round(profit) + '%';
     price_markup.value = Math.round(markup) + '%';
@@ -91,8 +91,6 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <text-view v-if="!form.active" class="disabled-text" label="*** desativado ***" />
-
         <text-view :value="form.name" label="Nome do Produto" />
 
         <text-view v-if="form.brand" :value="form.brand" label="Marca" />
@@ -102,7 +100,7 @@ onMounted(async () => {
         <text-view :value="fmt.currency(form.price) + '/' + form.measure_unit" label="Preço" />
 
         <expansion-item label="Custo e Lucro">
-          <text-view :value="fmt.currency(form.coust_price)" label="Preço de custo" />
+          <text-view :value="fmt.currency(form.cost_price)" label="Preço de custo" />
 
           <text-view :value="price_profit" label="lucro" />
 

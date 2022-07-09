@@ -8,7 +8,6 @@ import {
   PageBody,
   TextInput,
   MoneyInput,
-  CheckBox,
   SelectOptions,
   TextareaInput,
   ExpansionItem,
@@ -28,26 +27,25 @@ const form = ref({
   detail: '',
   price: 0,
   measure_unit: 'un.',
-  coust_price: 0,
+  cost_price: 0,
   brand: '',
   code_bar: '',
-  image_name: null,
-  active: true
+  image_name: null
 });
 
 const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (form.value.price, form.value.coust_price),
+  () => (form.value.price, form.value.cost_price),
   () => {
     let profit = 0;
     let markup = 0;
     const price = parseFloat(form.value.price);
-    const coust_price = parseFloat(form.value.coust_price);
-    if (price > 0 && coust_price > 0) {
-      profit = ((price - coust_price) / price) * 100;
-      markup = ((price - coust_price) / coust_price) * 100;
+    const cost_price = parseFloat(form.value.cost_price);
+    if (price > 0 && cost_price > 0) {
+      profit = ((price - cost_price) / price) * 100;
+      markup = ((price - cost_price) / cost_price) * 100;
     }
     price_profit.value = Math.round(profit) + '%';
     price_markup.value = Math.round(markup) + '%';
@@ -137,9 +135,9 @@ onMounted(async () => {
         </expansion-item>
 
         <expansion-item default-opened label="Custo e Lucro">
-          <money-input v-model="form.coust_price" label="Preço de custo" />
+          <money-input v-model="form.cost_price" label="Preço de custo" />
           <div class="line row q-gutter-x-md">
-            <div class="line col">
+            <div class="col">
               <text-input
                 v-model="price_profit"
                 label="lucro"
@@ -147,7 +145,7 @@ onMounted(async () => {
                 readonly
               />
             </div>
-            <div class="line col">
+            <div class="col">
               <text-input
                 v-model="price_markup"
                 label="Markup"
@@ -163,11 +161,6 @@ onMounted(async () => {
 
           <text-input v-model="form.code_bar" label="Código de barras" />
         </expansion-item>
-
-        <check-box
-          v-model="form.active"
-          :label="form.active ? 'Produto Ativo' : 'Produto Desativado'"
-        />
       </page-body>
     </q-form>
   </page>

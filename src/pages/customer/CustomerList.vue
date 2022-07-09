@@ -26,7 +26,7 @@ const handleViewCustomer = (customer) => {
 
 const handleGetCustomers = async () => {
   try {
-    documents.value = await getCustomers('id, name, active');
+    documents.value = await getCustomers('id, name');
   } catch (error) {
     notify.error('Erro ao obter os clientes.', error);
   }
@@ -63,7 +63,7 @@ onMounted(async () => {
           @click="handleViewCustomer(customer)"
         >
           <q-item-section>
-            <q-item-label :class="{ 'text-negative text-strike': !customer.active }">
+            <q-item-label>
               {{ customer.name }}
             </q-item-label>
           </q-item-section>

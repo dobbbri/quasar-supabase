@@ -9,18 +9,13 @@ CREATE TABLE public.products (
 	user_id uuid NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	"name" extensions."citext" NULL,
-	category_id int8 NULL,
-	price_to_buy numeric NULL DEFAULT '0'::numeric,
-	price_to_sell numeric NULL DEFAULT '0'::numeric,
-	has_stock_control bool NULL DEFAULT false,
-	stock_amount int4 NULL DEFAULT 0,
-	stock_minimum_amount int4 NULL DEFAULT 0,
+	price numeric NULL DEFAULT '0'::numeric,
+	cost_price numeric NULL DEFAULT '0'::numeric,
 	measure_unit varchar NULL,
 	code_bar varchar NULL,
-	description text NULL,
+	details text NULL,
 	image_name varchar NULL,
 	brand varchar NULL,
-	active bool NULL DEFAULT true,
 	CONSTRAINT products_pkey PRIMARY KEY (id)
 );
 
@@ -36,5 +31,4 @@ GRANT ALL ON TABLE public.products TO service_role;
 
 -- public.products foreign keys
 
-ALTER TABLE public.products ADD CONSTRAINT products_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.categories(id);
 ALTER TABLE public.products ADD CONSTRAINT products_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id);

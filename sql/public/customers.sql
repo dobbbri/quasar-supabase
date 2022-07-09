@@ -9,14 +9,12 @@ CREATE TABLE public.customers (
 	user_id uuid NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	"name" extensions."citext" NULL,
+  email varchar NULL,
 	phone_1 varchar NULL,
+  phone_2 varchar NULL,
+  is_legal_entity bool NULL DEFAULT false,
 	document_number varchar NULL,
-	email varchar NULL,
 	notes text NULL,
-	active bool NULL DEFAULT true,
-	phone_2 varchar NULL,
-	phone_1_has_whatsapp bool NULL,
-	is_legal_entity bool NULL DEFAULT false,
 	CONSTRAINT customers_pkey PRIMARY KEY (id)
 );
 

@@ -95,11 +95,7 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <text-view v-if="!form.active" class="disabled-text" label="*** desativado ***" />
-
         <expansion-item default-opened label="Informação do Cliente" style="margin-top: -20px">
-          <text-view :value="form.name" label="Nome do Cliente" />
-
           <text-view :value="form.name" label="Nome do Cliente" />
 
           <text-view v-if="form.email" :value="form.email" label="Email" />

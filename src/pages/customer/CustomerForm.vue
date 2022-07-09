@@ -9,8 +9,6 @@ import {
   PageBody,
   TextInput,
   PhoneInput,
-  CheckBox,
-  CheckboxIcon,
   TextareaInput,
   RadioOptions,
   CpfCnpjInput,
@@ -39,11 +37,9 @@ const form = ref({
   is_legal_entity: false,
   email: '',
   phone_1: '',
-  phone_1_has_whatsapp: false,
   phone_2: '',
   document_number: '',
-  notes: '',
-  active: true
+  notes: ''
 });
 
 const formAddress = ref({
@@ -177,25 +173,20 @@ onMounted(async () => {
         <expansion-item default-opened label="Telefones e Email">
           <text-input v-model="form.email" label="Email" />
 
-          <div class="row fit justify-between">
-            <phone-input
-              v-model="form.phone_1"
-              label="Celular/Whatsapp"
-              class="col-10"
-              :rules="[(val) => !!val]"
-              error-message="O telefone do cliente deve ser informado!"
-            />
-
-            <checkbox-icon
-              v-model="form.phone_1_has_whatsapp"
-              icon="whatsapp"
-              color="green"
-              class="col-1"
-              :tooltip="form.phone_1_has_whatsapp ? 'Possui Whatsapp' : 'Não possui Whatsapp'"
-            />
+          <div class="line row q-gutter-x-md">
+            <div class="col">
+              <phone-input
+                v-model="form.phone_1"
+                label="Celular/Whatsapp"
+                class="col-10"
+                :rules="[(val) => !!val]"
+                error-message="O telefone do cliente deve ser informado!"
+              />
+            </div>
+            <div class="col">
+              <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
+            </div>
           </div>
-
-          <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
         </expansion-item>
 
         <expansion-item label="Endereço">
@@ -205,23 +196,34 @@ onMounted(async () => {
             label="CEP"
             @blur="handleFindCEP"
           />
+
           <text-input v-model="formAddress.street" label="Endereço" />
-          <text-input v-model="formAddress.number" label="Número" />
-          <text-input v-model="formAddress.complement" label="Complemento" />
+
+          <div class="line row q-gutter-x-md">
+            <div class="col-4">
+              <text-input v-model="formAddress.number" label="Número" />
+            </div>
+            <div class="col">
+              <text-input v-model="formAddress.complement" label="Complemento" />
+            </div>
+          </div>
+
           <text-input v-model="formAddress.neighborhood" label="Bairro" />
-          <text-input v-model="formAddress.city" label="Cidade" />
-          <text-input v-model="formAddress.state" mask="AA" label="UF(estado)" />
+
+          <div class="line row q-gutter-x-md">
+            <div class="col">
+              <text-input v-model="formAddress.city" label="Cidade" />
+            </div>
+            <div class="col-3">
+              <text-input v-model="formAddress.state" mask="AA" label="UF(estado)" />
+            </div>
+          </div>
         </expansion-item>
 
         <expansion-item label="Avançado">
           <cpf-cnpj-input v-model="form.document_number" :is-legal-entity="form.is_legal_entity" />
           <textarea-input v-model="form.notes" label="Anotações" />
         </expansion-item>
-
-        <check-box
-          v-model="form.active"
-          :label="form.active ? 'Cliente Ativo' : 'Cliente Desativado'"
-        />
       </page-body>
     </q-form>
   </page>

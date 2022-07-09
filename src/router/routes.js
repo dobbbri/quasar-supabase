@@ -44,6 +44,23 @@ const routes = [
         name: 'initial-routines',
         component: () => import('pages/InitialRoutines.vue')
       },
+
+      {
+        path: '/customer-list',
+        name: 'customer-list',
+        component: () => import('pages/customer/CustomerList.vue')
+      },
+      {
+        path: '/customer-view/:id?',
+        name: 'customer-view',
+        component: () => import('pages/customer/CustomerView.vue')
+      },
+      {
+        path: '/customer-form/:id?',
+        name: 'customer-form',
+        component: () => import('pages/customer/CustomerForm.vue')
+      },
+
       {
         path: '/product-list',
         name: 'product-list',
@@ -59,20 +76,21 @@ const routes = [
         name: 'product-form',
         component: () => import('pages/product/ProductForm.vue')
       },
+
       {
-        path: '/customer-list',
-        name: 'customer-list',
-        component: () => import('pages/customer/CustomerList.vue')
+        path: '/service-list',
+        name: 'service-list',
+        component: () => import('pages/service/ServiceList.vue')
       },
       {
-        path: '/customer-view/:id?',
-        name: 'customer-view',
-        component: () => import('pages/customer/CustomerView.vue')
+        path: '/service-view/:id?',
+        name: 'service-view',
+        component: () => import('pages/service/ServiceView.vue')
       },
       {
-        path: '/customer-form/:id?',
-        name: 'customer-form',
-        component: () => import('pages/customer/CustomerForm.vue')
+        path: '/service-form/:id?',
+        name: 'service-form',
+        component: () => import('pages/service/ServiceForm.vue')
       },
 
       {
