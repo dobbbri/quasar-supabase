@@ -120,9 +120,7 @@ const handleSubmit = async () => {
 };
 
 const handleBackTo = () => {
-  if (route.params.id) {
-    router.push({ name: 'customer-view', params: { id: route.params.id } });
-  } else if (route.params.backTo) {
+  if (route.params.backTo) {
     router.push({ name: 'index' });
   } else {
     router.push({ name: 'customer-list' });
@@ -220,7 +218,7 @@ onMounted(async () => {
           </div>
         </expansion-item>
 
-        <expansion-item label="Avançado">
+        <expansion-item label="Outros Detalhes">
           <cpf-cnpj-input v-model="form.document_number" :is-legal-entity="form.is_legal_entity" />
           <textarea-input v-model="form.notes" label="Anotações" />
         </expansion-item>

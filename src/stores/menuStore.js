@@ -22,13 +22,13 @@ const menuPage = [
     name: 'Financeiro',
     btns: [
       {
-        title: 'Adicionar Recebimentos',
+        title: 'Lançar Recebimentos',
         icon: 'sym_o_add_circle',
         iconColor: 'green',
         routeName: 'revenue-form'
       },
       {
-        title: 'Adicionar Custos',
+        title: 'Lançar Custos',
         icon: 'sym_o_do_not_disturb_on',
         iconColor: 'red',
         routeName: 'cost-form'

@@ -8,7 +8,6 @@ import {
   PageBody,
   TextInput,
   MoneyInput,
-  CheckBox,
   SelectOptions,
   TextareaInput,
   ExpansionItem,
@@ -25,12 +24,9 @@ const { notify } = useTools();
 const optionsMeasureUnits = ref([]);
 const form = ref({
   name: '',
-  detail: '',
+  details: '',
   price: 0,
-  measure_unit: 'un.',
-  code_bar: '',
-  image_name: null,
-  active: true
+  measure_unit: 'un.'
 });
 
 const isEditMode = computed(() => (route.params.id ? true : false));
@@ -38,11 +34,7 @@ const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (route.params.id) {
-    router.push({ name: 'service-view', params: { id: route.params.id } });
-  } else {
-    router.push({ name: 'service-list' });
-  }
+  router.push({ name: 'service-list' });
 };
 
 const handleSubmit = async () => {
@@ -94,7 +86,7 @@ onMounted(async () => {
           error-message="O nome do serviço deve ser informado!"
         />
 
-        <textarea-input v-model="form.detail" label="Detalhes do serviço" />
+        <textarea-input v-model="form.details" label="Detalhes do serviço" />
 
         <expansion-item default-opened group="price" label="Preço">
           <money-input
@@ -115,16 +107,9 @@ onMounted(async () => {
           />
         </expansion-item>
 
-        <expansion-item label="Avançado">
-          <text-input v-model="form.brand" label="Marca" />
-
-          <text-input v-model="form.code_bar" label="Código de barras" />
-        </expansion-item>
-
-        <check-box
-          v-model="form.active"
-          :label="form.active ? 'Serviço Ativo' : 'Serviço Desativado'"
-        />
+        <!-- <expansion-item label="Outros Detalhes"> -->
+        <!--   <text-input v-model="form.code_bar" label="Código de barras" /> -->
+        <!-- </expansion-item> -->
       </page-body>
     </q-form>
   </page>

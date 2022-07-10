@@ -19,7 +19,9 @@ const route = useRoute();
 const { loading, getService, removeService } = useServices();
 const { confirm, notify, fmt } = useTools();
 
-const form = ref({});
+const form = ref({
+  price: 0
+});
 
 const handleEditService = (service) => {
   router.push({ name: 'service-form', params: { id: service.id } });
@@ -68,13 +70,15 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <text-view v-if="!form.active" class="disabled-text" label="*** desativado ***" />
-
         <text-view :value="form.name" label="Nome do Serviço" />
 
-        <text-view v-if="form.detail" :value="form.detail" label="Detalhes" />
+        <text-view v-if="form.details" :value="form.details" label="Detalhes" />
 
-        <text-view :value="fmt.currency(form.price) + '/' + form.measure_unit" label="Preço" />
+        <text-view
+          v-if="form.price > 0"
+          :value="fmt.currency(form.price) + '/' + form.measure_unit"
+          label="Preço"
+        />
       </page-body>
     </q-form>
   </page>

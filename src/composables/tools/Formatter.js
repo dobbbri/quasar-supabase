@@ -1,10 +1,13 @@
 export default function useFormatter() {
   const fmt = {
     currency(value) {
-      return value.toLocaleString('pt-br', {
-        style: 'currency',
-        currency: 'BRL'
-      });
+      try {
+        const format = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' };
+        return value.toLocaleString('pt-br', format);
+      } catch (e) {
+        console.log('fmt $ value: ', value, ' err: ', e);
+      }
+      return '*** Err ***';
     }
   };
 

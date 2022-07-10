@@ -4,7 +4,7 @@
 }
 
 .title {
-  font-size: 17px;
+  font-size: 16px;
   font-family: 'Ubuntu', 'Helvetica', sans-serif !important;
   &-bar {
     text-transform: Uppercase;
@@ -29,6 +29,13 @@
 
 .my-btn .q-btn__content.justify-start {
   justify-content: space-between;
+}
+
+.q-item__section--side > .q-icon {
+    font-size: 24px;
+    background: $blue-grey-2;
+    color: $primary;
+    border-radius: 50%;
 }
 
 .q-field__prepend,

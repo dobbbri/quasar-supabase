@@ -24,13 +24,11 @@ const { notify } = useTools();
 const optionsMeasureUnits = ref([]);
 const form = ref({
   name: '',
-  detail: '',
   price: 0,
   measure_unit: 'un.',
   cost_price: 0,
   brand: '',
-  code_bar: '',
-  image_name: null
+  details: ''
 });
 
 const price_profit = ref(0);
@@ -57,11 +55,7 @@ const isEditMode = computed(() => (route.params.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (route.params.id) {
-    router.push({ name: 'product-view', params: { id: route.params.id } });
-  } else {
-    router.push({ name: 'product-list' });
-  }
+  router.push({ name: 'product-list' });
 };
 
 const handleSubmit = async () => {
@@ -113,8 +107,6 @@ onMounted(async () => {
           error-message="O nome do produto deve ser informado!"
         />
 
-        <textarea-input v-model="form.detail" label="Detalhes do produto" />
-
         <expansion-item default-opened group="price" label="Preço">
           <money-input
             v-model="form.price"
@@ -156,10 +148,12 @@ onMounted(async () => {
           </div>
         </expansion-item>
 
-        <expansion-item label="Avançado">
+        <expansion-item label="Outros Detalhes">
           <text-input v-model="form.brand" label="Marca" />
 
-          <text-input v-model="form.code_bar" label="Código de barras" />
+          <textarea-input v-model="form.details" label="Detalhes do produto" />
+
+          <!-- <text-input v-model="form.code_bar" label="Código de barras" /> -->
         </expansion-item>
       </page-body>
     </q-form>

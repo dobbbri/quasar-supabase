@@ -95,9 +95,13 @@ onMounted(async () => {
 
         <text-view v-if="form.brand" :value="form.brand" label="Marca" />
 
-        <text-view v-if="form.detail" :value="form.detail" label="Detalhes" />
+        <text-view v-if="form.details" :value="form.details" label="Detalhes" />
 
-        <text-view :value="fmt.currency(form.price) + '/' + form.measure_unit" label="Preço" />
+        <text-view
+          v-if="form.price > 0"
+          :value="fmt.currency(form.price) + '/' + form.measure_unit"
+          label="Preço"
+        />
 
         <expansion-item label="Custo e Lucro">
           <text-view :value="fmt.currency(form.cost_price)" label="Preço de custo" />
