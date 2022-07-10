@@ -35,9 +35,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '/index',
-        name: 'index',
-        component: () => import('pages/IndexPage.vue')
+        path: '/main-menu',
+        name: 'main-menu',
+        component: () => import('pages/MainMenu.vue')
       },
       {
         path: '/initial-routines',

@@ -29,7 +29,7 @@ const handleSettings = async () => {
       store.setSettings(settings);
     }
     loading.value = false;
-    router.push({ name: 'index' });
+    router.push({ name: 'main-menu' });
   } catch (error) {
     loading.value = false;
     notify.error('Erro ao executar as rotinas iniciais.', error);

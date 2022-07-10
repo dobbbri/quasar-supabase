@@ -1,10 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { useUsersSettings, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody } from 'src/components';
+import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
 import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
 const store = useUsersSettingsStore();
+const router = useRouter();
 
 const { loading, editSettings } = useUsersSettings();
 const { notify } = useTools();
@@ -20,6 +22,7 @@ const handleSubmit = async () => {
       payment_methods: JSON.stringify(paymentMethods.value)
     });
     notify.success('Forma de pagamento gravado.');
+    router.push({ name: 'settings-form' });
   } catch (error) {
     notify.error(`Erro ao alterar a forma de pagamento.`, error);
   }
@@ -31,22 +34,11 @@ const handleSubmit = async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <q-btn
-            v-bind="attr.btn.icon"
-            icon="sym_o_arrow_back_ios_new"
-            flat
-            @click="$router.back()"
-          />
+          <btn-back :to="{ name: 'settings-form' }" />
         </template>
-        <template #title>Formas de Pagamento</template>
+        <template #title>Alterar</template>
         <template #right>
-          <q-btn
-            v-bind="attr.btn.basic"
-            label="Gravar"
-            :loading="loading.edit.value"
-            :disable="loading.disable.value"
-            type="submit"
-          />
+          <btn-save :loading="loading.value" type="submit" />
         </template>
       </page-header>
 
