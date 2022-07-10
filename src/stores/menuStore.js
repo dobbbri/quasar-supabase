@@ -112,6 +112,11 @@ const menuList = [
     icon: 'sym_o_local_atm',
     routeName: 'payment-method-form'
   },
+  {
+    title: 'Condições de Pagamento',
+    icon: 'sym_o_local_atm',
+    routeName: 'payment-condition-form'
+  },
   { title: 'Sair', icon: 'sym_o_logout', routeName: 'user-logout' }
 ];
 

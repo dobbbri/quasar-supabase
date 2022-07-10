@@ -107,6 +107,11 @@ const routes = [
         path: '/payment-method-form',
         name: 'payment-method-form',
         component: () => import('pages/settings/PaymentMethodForm.vue')
+      },
+      {
+        path: '/payment-condition-form',
+        name: 'payment-condition-form',
+        component: () => import('pages/settings/PaymentConditionForm.vue')
       }
     ],
     meta: {
