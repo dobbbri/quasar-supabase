@@ -7,7 +7,7 @@ const { attr } = useDefaults();
 
 defineProps({
   options: { type: Array, required: true },
-  useTemplate: { type: Number, default: 1 }
+  showId: { type: Boolean, default: false }
 });
 </script>
 
@@ -22,14 +22,12 @@ defineProps({
   >
     <template #option="scope">
       <q-item v-bind="scope.itemProps">
-        <q-item-section v-if="useTemplate == 1">
-          <q-item-label :class="{ 'text-negative text-strike': !scope.opt.active }">
-            {{ scope.opt.name }}
-          </q-item-label>
+        <q-item-section v-if="!showId">
+          <q-item-label> {{ scope.opt.name }} </q-item-label>
         </q-item-section>
         <q-item-section v-else>
           <q-item-label class="text-weight-bold">{{ scope.opt.id }}</q-item-label>
-          <q-item-label style="magin-top: -3px">{{ scope.opt.name }}</q-item-label>
+          <q-item-label caption>{{ scope.opt.name }}</q-item-label>
         </q-item-section>
       </q-item>
     </template>

@@ -58,7 +58,8 @@ const handleSubmit = async () => {
                   v-bind="attr.input.basic"
                   :id="index"
                   v-model="measureUnit.active"
-                  :label="`${measureUnit.id}  -  ${measureUnit.name}`"
+                  style="white-space: pre-wrap; line-height: 15px"
+                  :label="`${measureUnit.id} \n${measureUnit.name}`"
                 />
               </q-item-label>
             </q-item-section>

@@ -14,6 +14,10 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
+import { useUsersSettingsStore } from 'src/stores/settingsStore';
+
+const store = useUsersSettingsStore();
+const optionsMeasureUnits = store.measureUnits;
 
 const router = useRouter();
 const route = useRoute();
@@ -21,7 +25,6 @@ const route = useRoute();
 const { loading, getProduct, addProduct, editProduct } = useProducts();
 const { notify } = useTools();
 
-const optionsMeasureUnits = ref([]);
 const form = ref({
   name: '',
   price: 0,
@@ -119,10 +122,10 @@ onMounted(async () => {
             v-model="form.measure_unit"
             label="Unidade de medida"
             :options="optionsMeasureUnits"
+            :show-id="true"
             :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
             :rules="[(val) => !!val]"
             error-message="Uma unidade de medida deve ser selecionada"
-            :use-template="2"
           />
         </expansion-item>
 
