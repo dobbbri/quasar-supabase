@@ -20,67 +20,244 @@
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
     <link rel="icon" type="image/ico" href="favicon.ico" />
     <style>
-      .loader,
-      .loader:before,
-      .loader:after {
-        border-radius: 50%;
-        width: 2em;
-        height: 2em;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-        -webkit-animation: load7 1.8s infinite ease-in-out;
-        animation: load7 1.8s infinite ease-in-out;
-      }
-      .loader {
-        color: #0e4277;
-        font-size: 10px;
-        margin: 160px auto;
-        position: relative;
-        text-indent: -9999em;
-        -webkit-transform: translateZ(0);
-        -ms-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-animation-delay: -0.16s;
-        animation-delay: -0.16s;
-      }
-      .loader:before,
-      .loader:after {
-        content: '';
-        position: absolute;
-        top: 0;
-      }
-      .loader:before {
-        left: -3.5em;
-        -webkit-animation-delay: -0.32s;
-        animation-delay: -0.32s;
-      }
-      .loader:after {
-        left: 3.5em;
-      }
-      @-webkit-keyframes load7 {
-        0%,
-        80%,
-        100% {
-          box-shadow: 0 2.5em 0 -1.3em;
-        }
-        40% {
-          box-shadow: 0 2.5em 0 0;
-        }
-      }
-      @keyframes load7 {
-        0%,
-        80%,
-        100% {
-          box-shadow: 0 2.5em 0 -1.3em;
-        }
-        40% {
-          box-shadow: 0 2.5em 0 0;
-        }
-      }
+/* Mixins */
+body {
+  height: 100vh;
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+  overflow: hidden;
+  background: #000000;
+}
+body p {
+  margin: 0 auto;
+  color: #ffffff;
+}
+body .loader {
+  height: 100%;
+  position: relative;
+  margin: auto;
+  width: 400px;
+}
+body .loader_overlay {
+  width: 150px;
+  height: 150px;
+  background: transparent;
+  box-shadow: 0px 0px 0px 1000px rgba(0, 0, 0, 0.67),
+              0px 0px 19px 0px rgba(255, 255, 255, 0.16) inset;
+  border-radius: 100%;
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+body .loader_cogs {
+  z-index: -2;
+  width: 100px;
+  height: 100px;
+  top: -120px !important;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+body .loader_cogs__top {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  transform-origin: 50px 50px;
+  -webkit-animation: rotate 10s infinite linear;
+          animation: rotate 10s infinite linear;
+}
+body .loader_cogs__top div:nth-of-type(1) {
+  transform: rotate(30deg);
+}
+body .loader_cogs__top div:nth-of-type(2) {
+  transform: rotate(60deg);
+}
+body .loader_cogs__top div:nth-of-type(3) {
+  transform: rotate(90deg);
+}
+body .loader_cogs__top div.top_part {
+  width: 100px;
+  border-radius: 10px;
+  position: absolute;
+  height: 100px;
+  background: #011B38;
+}
+body .loader_cogs__top div.top_hole {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background: white;
+  position: absolute;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+body .loader_cogs__left {
+  position: relative;
+  width: 80px;
+  transform: rotate(16deg);
+  top: 28px;
+  transform-origin: 40px 40px;
+  animation: rotate_left 10s 0.1s infinite reverse linear;
+  left: -24px;
+  height: 80px;
+}
+body .loader_cogs__left div:nth-of-type(1) {
+  transform: rotate(30deg);
+}
+body .loader_cogs__left div:nth-of-type(2) {
+  transform: rotate(60deg);
+}
+body .loader_cogs__left div:nth-of-type(3) {
+  transform: rotate(90deg);
+}
+body .loader_cogs__left div.left_part {
+  width: 80px;
+  border-radius: 6px;
+  position: absolute;
+  height: 80px;
+  background: #7D8395;
+}
+body .loader_cogs__left div.left_hole {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: white;
+  position: absolute;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+body .loader_cogs__bottom {
+  position: relative;
+  width: 60px;
+  top: -65px;
+  transform-origin: 30px 30px;
+  -webkit-animation: rotate_left 10.2s 0.4s infinite linear;
+          animation: rotate_left 10.2s 0.4s infinite linear;
+  transform: rotate(4deg);
+  left: 79px;
+  height: 60px;
+}
+body .loader_cogs__bottom div:nth-of-type(1) {
+  transform: rotate(30deg);
+}
+body .loader_cogs__bottom div:nth-of-type(2) {
+  transform: rotate(60deg);
+}
+body .loader_cogs__bottom div:nth-of-type(3) {
+  transform: rotate(90deg);
+}
+body .loader_cogs__bottom div.bottom_part {
+  width: 60px;
+  border-radius: 5px;
+  position: absolute;
+  height: 60px;
+  background: #2296F6;
+}
+body .loader_cogs__bottom div.bottom_hole {
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  background: white;
+  position: absolute;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+/* Animations */
+@-webkit-keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotate_left {
+  from {
+    transform: rotate(16deg);
+  }
+  to {
+    transform: rotate(376deg);
+  }
+}
+@keyframes rotate_left {
+  from {
+    transform: rotate(16deg);
+  }
+  to {
+    transform: rotate(376deg);
+  }
+}
+@-webkit-keyframes rotate_right {
+  from {
+    transform: rotate(4deg);
+  }
+  to {
+    transform: rotate(364deg);
+  }
+}
+@keyframes rotate_right {
+  from {
+    transform: rotate(4deg);
+  }
+  to {
+    transform: rotate(364deg);
+  }
+}
     </style>
   </head>
   <body>
-    <div id="loader" class="loader">Loading...</div>
+    <div id="loader" class="loader">
+      <div class='loader_overlay'></div>
+      <div class='loader_cogs'>
+        <div class='loader_cogs__top'>
+          <div class='top_part'></div>
+          <div class='top_part'></div>
+          <div class='top_part'></div>
+          <div class='top_hole'></div>
+        </div>
+        <div class='loader_cogs__left'>
+          <div class='left_part'></div>
+          <div class='left_part'></div>
+          <div class='left_part'></div>
+          <div class='left_hole'></div>
+        </div>
+        <div class='loader_cogs__bottom'>
+          <div class='bottom_part'></div>
+          <div class='bottom_part'></div>
+          <div class='bottom_part'></div>
+          <div class='bottom_hole'><!-- lol --></div>
+        </div>
+        <p>Carregando</p>
+      </div>
+    </div>
     <!-- quasar:entry-point -->
     <script>
       document.onreadystatechange = function () {

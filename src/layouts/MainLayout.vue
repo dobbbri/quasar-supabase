@@ -17,9 +17,10 @@ import { LeftSidebar } from 'src/components';
 .app {
   width: 100%;
   height: 100%;
-  background-image: url(../assets/hero-bg.svg);
-  background-position: top center;
-  background-repeat: no-repeat;
+  background: #000000;
+  /* background-image: url(../assets/hero-bg.svg); */
+  /* background-position: top center; */
+  /* background-repeat: no-repeat; */
   &-layout {
     margin: 0 auto;
     z-index: 4000;
