@@ -20,11 +20,14 @@ const handleSettings = async () => {
     if (settings) {
       store.setSettings(settings);
     } else {
-      const { measureUnits, paymentMethods, paymentConditions } = store.getDefaults();
+      const { measureUnits, paymentMethods, paymentConditions, orderStatus, costCategory } =
+        store.getDefaults();
       settings = await addSettings({
         measure_units: measureUnits,
         payment_methods: paymentMethods,
-        payment_conditions: paymentConditions
+        payment_conditions: paymentConditions,
+        order_status: orderStatus,
+        cost_category: costCategory
       });
       store.setSettings(settings);
     }

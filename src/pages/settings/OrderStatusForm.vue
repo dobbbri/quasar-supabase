@@ -12,19 +12,19 @@ const { loading, editSettings } = useUsersSettings();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
-const paymentConditions = ref([]);
-paymentConditions.value = store.paymentConditions;
+const orderStatuses = ref([]);
+orderStatuses.value = store.orderStatus;
 
 const handleSubmit = async () => {
   try {
     await editSettings({
       id: store.id,
-      payment_conditions: JSON.stringify(paymentConditions.value)
+      order_status: JSON.stringify(orderStatuses.value)
     });
-    notify.success('Condição de pagamento gravado.');
+    notify.success('Situação do pedido gravado.');
     router.push({ name: 'settings-form' });
   } catch (error) {
-    notify.error(`Erro ao alterar a condição de pagamento.`, error);
+    notify.error(`Erro ao alterar a situação do pedido.`, error);
   }
 };
 </script>
@@ -43,21 +43,18 @@ const handleSubmit = async () => {
       </page-header>
 
       <page-body>
-        <q-banner v-bind="attr.banner"> Escolha como o cliente pode te pagar </q-banner>
+        <q-banner v-bind="attr.banner">Isto é impotante para a organição do seu negócio</q-banner>
 
         <q-list separator>
-          <q-item
-            v-for="(paymentCondition, index) in paymentConditions"
-            :key="index"
-            class="q-pa-none"
-          >
+          <q-item v-for="(orderStatus, index) in orderStatuses" :key="index" class="q-pa-none">
             <q-item-section>
               <q-item-label class="text-subtitle2">
                 <q-checkbox
                   v-bind="attr.input.basic"
                   :id="index"
-                  v-model="paymentCondition.active"
-                  :label="paymentCondition.name"
+                  v-model="orderStatus.active"
+                  :label="orderStatus.name"
+                  class="checkbox-fix"
                 />
               </q-item-label>
             </q-item-section>

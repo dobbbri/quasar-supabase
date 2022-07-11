@@ -112,6 +112,16 @@ const routes = [
         path: '/payment-condition-form',
         name: 'payment-condition-form',
         component: () => import('pages/settings/PaymentConditionForm.vue')
+      },
+      {
+        path: '/order-status-form',
+        name: 'order-status-form',
+        component: () => import('pages/settings/OrderStatusForm.vue')
+      },
+      {
+        path: '/cost-category-form',
+        name: 'cost-category-form',
+        component: () => import('pages/settings/CostCategoryForm.vue')
       }
     ],
     meta: {
