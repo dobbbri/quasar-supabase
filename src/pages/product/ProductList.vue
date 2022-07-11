@@ -41,7 +41,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back :to="{ name: 'index' }" />
+        <btn-back :to="{ name: 'main-menu' }" />
       </template>
       <template #title>Produtos</template>
       <template #right>

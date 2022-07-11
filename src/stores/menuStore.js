@@ -102,21 +102,6 @@ const menuPage = [
 
 const menuList = [
   { title: 'Configuracões', icon: 'sym_o_tune', routeName: 'settings-form' },
-  {
-    title: 'Unidade de Medidas',
-    icon: 'sym_o_scale',
-    routeName: 'measure-unit-form'
-  },
-  {
-    title: 'Formas de Pagamento',
-    icon: 'sym_o_local_atm',
-    routeName: 'payment-method-form'
-  },
-  {
-    title: 'Condições de Pagamento',
-    icon: 'sym_o_local_atm',
-    routeName: 'payment-condition-form'
-  },
   { title: 'Sair', icon: 'sym_o_logout', routeName: 'user-logout' }
 ];
 
