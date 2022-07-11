@@ -21,38 +21,38 @@ const defaults = {
     { group: null, id: 'm³', name: 'metros cúbicos', active: true }
   ],
   paymentMethods: [
-    { id: 'Dinheiro', name: 'Dinheiro', active: true },
-    { id: 'crédito', name: 'Cartão de Crédito', active: true },
-    { id: 'Débito', name: 'Cartão de Débito', active: true },
-    { id: 'Pix', name: 'Pix', active: true },
-    { id: 'Cheque', name: 'Cheque', active: true },
-    { id: 'Boleto', name: 'Boleto', active: true },
-    { id: 'Fiado', name: 'Fiado', active: true },
-    { id: 'Transferência', name: 'Transferência bancária', active: true },
-    { id: 'Outro', name: 'Outro', active: true }
+    { name: 'Dinheiro', active: true },
+    { name: 'Cartão de Crédito', active: true },
+    { name: 'Cartão de Débito', active: true },
+    { name: 'Pix', active: true },
+    { name: 'Cheque', active: true },
+    { name: 'Boleto', active: true },
+    { name: 'Fiado', active: true },
+    { name: 'Transf. bancária', active: true },
+    { name: 'Outro', active: true }
   ],
   orderStatus: [
-    { id: 'Pendente', name: 'Pendente', active: true },
-    { id: 'Aguardando Aprovação', name: 'Aguardando Aprovação', active: true },
-    { id: 'Aprovado', name: 'Aprovado', active: true },
-    { id: 'Aguardando Pagamento', name: 'Aguardando Pagamento', active: true },
-    { id: 'Enviado', name: 'Enviado', active: true },
-    { id: 'Concluido', name: 'Concluido', active: true },
-    { id: 'Cancelado', name: 'Cancelado', active: true }
+    { name: 'Pendente', active: true },
+    { name: 'Aguardando Aprovação', active: true },
+    { name: 'Aprovado', active: true },
+    { name: 'Aguardando Pagamento', active: true },
+    { name: 'Enviado', active: true },
+    { name: 'Concluido', active: true },
+    { name: 'Cancelado', active: true }
   ],
   costCategory: [
-    { id: 'Ajudantes', name: 'Ajudantes', active: true },
-    { id: 'Alimentação', name: 'Alimentação', active: true },
-    { id: 'Produtos', name: 'Produtos', active: true },
-    { id: 'Outros', name: 'Outros', active: true },
-    { id: 'Ferramentas', name: 'Ferramentas', active: true },
-    { id: 'Transporte', name: 'Transporte', active: true },
-    { id: 'Impostos', name: 'Impostos', active: true }
+    { name: 'Ajudantes', active: true },
+    { name: 'Alimentação', active: true },
+    { name: 'Produtos', active: true },
+    { name: 'Outros', active: true },
+    { name: 'Ferramentas', active: true },
+    { name: 'Transporte', active: true },
+    { name: 'Impostos', active: true }
   ],
   paymentConditions: [
-    { id: 'À vista', name: 'À vista', active: true },
-    { id: 'Sinal', name: 'Sinal', active: true },
-    { id: 'Parcelado', name: 'Parcelado', active: true }
+    { name: 'À vista', active: true },
+    { name: 'Sinal', active: true },
+    { name: 'Parcelado', active: true }
   ]
 };
 

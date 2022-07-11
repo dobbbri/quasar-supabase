@@ -64,8 +64,8 @@ onMounted(async () => {
         >
           <q-item-section>
             <q-item-label> {{ product.name }} </q-item-label>
-            <q-item-label v-if="product.brand"> marca: {{ product.brand }} </q-item-label>
-            <q-item-label v-if="product.details"> {{ product.details }} </q-item-label>
+            <q-item-label v-if="product.brand" caption> marca: {{ product.brand }} </q-item-label>
+            <q-item-label v-if="product.details" caption> {{ product.details }} </q-item-label>
             <q-item-label class="text-right">
               <b>{{ fmt.currency(product.price) }}/{{ product.measure_unit }}</b>
             </q-item-label>
