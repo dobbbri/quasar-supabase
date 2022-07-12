@@ -36,7 +36,7 @@ const handleSubmit = async () => {
         <template #left>
           <btn-back :to="{ name: 'settings-form' }" />
         </template>
-        <template #title>Alterar</template>
+        <template #title>Alterar Categorias</template>
         <template #right>
           <btn-save :loading="loading.value" type="submit" />
         </template>

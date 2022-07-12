@@ -17,8 +17,6 @@ import { LeftSidebar } from 'src/components';
 .app {
   width: 100%;
   height: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
   background: $blue-grey-1;
   /* background-image: url(../assets/hero-bg.svg); */
   /* background-position: top center; */
@@ -30,9 +28,4 @@ import { LeftSidebar } from 'src/components';
     max-width: 500px;
   }
 }
-@media (max-width: 500px) {
-  .app {
-    padding: 0;
-  }
-} ;
 </style>

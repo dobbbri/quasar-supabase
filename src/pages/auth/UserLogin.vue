@@ -45,7 +45,9 @@ onMounted(async () => {
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header>
-          <template #title>Entrar</template>
+          <template #title>
+            <div class="text-center text-weight-bold">Entrar</div>
+          </template>
         </page-header>
 
         <page-body>
@@ -81,8 +83,7 @@ onMounted(async () => {
             v-bind="attr.btn.basic"
             label="Esqueceu sua senha?"
             class="float-right"
-            style="margin-top: -1px"
-            color="dark"
+            text-color="info"
             flat
             :to="{ name: 'forgot-password' }"
             size="md"
@@ -102,10 +103,9 @@ onMounted(async () => {
           <q-btn
             v-bind="attr.btn.basic"
             label="Novo usuário? Crie uma conta"
-            color="dark"
+            text-color="info"
             flat
             class="full-width q-mt-sm"
-            :disable="loading"
             :to="{ name: 'register' }"
           />
         </page-body>

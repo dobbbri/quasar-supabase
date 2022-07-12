@@ -30,7 +30,9 @@ const handleSubmit = async () => {
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header>
-          <template #title>Alterar a Senha</template>
+          <template #title>
+            <div class="text-center text-weight-bold">Alterar a Senha</div>
+          </template>
         </page-header>
 
         <page-body>

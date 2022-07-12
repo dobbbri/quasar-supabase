@@ -10,7 +10,7 @@ const menuStore = useMenuStore();
   <div>
     <q-drawer v-model="menuStore.isSidebarOpen" class="bg-blue-grey-1">
       <q-toolbar class="toolbar-height">
-        <q-toolbar-title class="q-pl-md text-primary absolute-center title-bar">
+        <q-toolbar-title class="q-pl-md text-primary absolute-center title title-bar">
           Menu
         </q-toolbar-title>
         <div class="q-ml-auto">
@@ -39,7 +39,7 @@ const menuStore = useMenuStore();
             <q-icon :name="link.icon" size="md" />
           </q-item-section>
 
-          <q-item-section class="title-sidebar">
+          <q-item-section class="title title-sidebar">
             <q-item-label>{{ link.title }}</q-item-label>
           </q-item-section>
         </q-item>

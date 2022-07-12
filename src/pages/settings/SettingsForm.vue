@@ -29,7 +29,7 @@ onMounted(() => {
         <template #left>
           <btn-back :to="{ name: 'main-menu' }" />
         </template>
-        <template #title>Alterar</template>
+        <template #title>Configurações</template>
       </page-header>
 
       <page-body>

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody } from 'src/components';
+import { Page, PageHeader, PageBody, BtnBack } from 'src/components';
 
 const router = useRouter();
 
@@ -31,7 +31,12 @@ const handleSubmit = async () => {
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header>
-          <template #title>Redefinir a Senha</template>
+          <template #left>
+            <btn-back :to="{ name: 'login' }" />
+          </template>
+          <template #title>
+            <div class="absolute-center text-weight-bold">Redefinir a Senha</div>
+          </template>
         </page-header>
 
         <page-body>

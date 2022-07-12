@@ -25,7 +25,9 @@ onMounted(async () => {
 <template>
   <page>
     <page-header>
-      <template #title>Saindo...</template>
+      <template #title>
+        <div class="text-center text-weight-bold">Saindo...</div>
+      </template>
     </page-header>
   </page>
 </template>

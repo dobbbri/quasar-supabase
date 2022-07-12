@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody } from 'src/components';
+import { Page, PageHeader, PageBody, BtnBack } from 'src/components';
 
 const router = useRouter();
 
@@ -38,7 +38,12 @@ const handleSubmit = async () => {
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header>
-          <template #title>Criar Sua Conta</template>
+          <template #left>
+            <btn-back :to="{ name: 'login' }" />
+          </template>
+          <template #title>
+            <div class="absolute-center text-weight-bold">Criar Sua Conta</div>
+          </template>
         </page-header>
 
         <page-body>
@@ -104,7 +109,7 @@ const handleSubmit = async () => {
           <q-btn
             v-bind="attr.btn.basic"
             label="Já é usuário? Faça seu login"
-            color="dark"
+            text-color="info"
             flat
             class="full-width q-mt-sm"
             :disable="loading"

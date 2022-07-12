@@ -96,7 +96,7 @@ onMounted(async () => {
         <template #left>
           <btn-back @click="handleBackTo()" />
         </template>
-        <template #title>{{ title }}</template>
+        <template #title>{{ title }} Produto</template>
         <template #right>
           <btn-save :loading="loading.value" type="submit" />
         </template>
