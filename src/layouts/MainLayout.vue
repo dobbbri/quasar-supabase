@@ -17,13 +17,15 @@ import { LeftSidebar } from 'src/components';
 .app {
   width: 100%;
   height: 100%;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(14, 66, 119, 1) 50%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  padding-top: 5px;
+  padding-bottom: 5px;
+  /* background: rgb(0, 0, 0); */
+  /* background: linear-gradient( */
+  /*   90deg, */
+  /*   rgba(0, 0, 0, 1) 0%, */
+  /*   rgba(14, 66, 119, 1) 50%, */
+  /*   rgba(0, 0, 0, 1) 100% */
+  /* ); */
   /* background-image: url(../assets/hero-bg.svg); */
   /* background-position: top center; */
   /* background-repeat: no-repeat; */
@@ -34,4 +36,9 @@ import { LeftSidebar } from 'src/components';
     max-width: 500px;
   }
 }
+@media (max-width: 500px) {
+  .app {
+    padding: 0;
+  }
+} ;
 </style>
