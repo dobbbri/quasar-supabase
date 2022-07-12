@@ -46,7 +46,7 @@ onMounted(async () => {
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header>
           <template #title>
-            <div class="text-center text-weight-bold">Entrar</div>
+            <div class="text-center text-weight-bold">Faça seu Login</div>
           </template>
         </page-header>
 

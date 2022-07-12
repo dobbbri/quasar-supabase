@@ -42,7 +42,7 @@ const handleSubmit = async () => {
             <btn-back :to="{ name: 'login' }" />
           </template>
           <template #title>
-            <div class="absolute-center text-weight-bold">Criar Sua Conta</div>
+            <div class="absolute-center text-weight-bold">Crie Sua Conta</div>
           </template>
         </page-header>
 
