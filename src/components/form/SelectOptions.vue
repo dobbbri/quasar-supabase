@@ -27,7 +27,7 @@ defineProps({
         </q-item-section>
         <q-item-section v-else>
           <q-item-label class="text-weight-bold">{{ scope.opt.id }}</q-item-label>
-          <q-item-label caption>{{ scope.opt.name }}</q-item-label>
+          <q-item-label>{{ scope.opt.name }}</q-item-label>
         </q-item-section>
       </q-item>
     </template>

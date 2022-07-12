@@ -1,4 +1,9 @@
 // app global css in SCSS form
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
+
 .toolbar-height {
   min-height: 60px;
 }
@@ -7,6 +12,7 @@
   font-size: 16px;
   font-family: 'Ubuntu', 'Helvetica', sans-serif !important;
   &-bar {
+  font-family: 'Ubuntu', 'Helvetica', sans-serif !important;
     font-weight: 400;
   }
   &-expansion {
@@ -31,6 +37,9 @@
   font-weight: 400 !important;
 }
 
+.q-item__label + .q-item__label {
+  margin-top: 1px;
+}
 .q-item__section--side > .q-icon {
   font-size: 24px;
   background: $blue-grey-2;

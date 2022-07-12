@@ -64,9 +64,9 @@ onMounted(async () => {
         >
           <q-item-section>
             <q-item-label> {{ service.name }} </q-item-label>
-            <q-item-label v-if="service.details"> {{ service.details }} </q-item-label>
+            <q-item-label v-if="service.details" caption> {{ service.details }} </q-item-label>
             <q-item-label class="text-right">
-              <b>{{ fmt.currency(service.price) }}/{{ service.measure_unit }}</b>
+              {{ fmt.currency(service.price) }}/{{ service.measure_unit }}
             </q-item-label>
           </q-item-section>
         </q-item>
