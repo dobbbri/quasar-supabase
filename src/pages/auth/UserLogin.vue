@@ -105,7 +105,7 @@ onMounted(async () => {
             label="Novo usuário? Crie uma conta"
             text-color="info"
             flat
-            class="full-width q-mt-sm"
+            class="full-width q-mt-xs"
             :to="{ name: 'register' }"
           />
         </page-body>

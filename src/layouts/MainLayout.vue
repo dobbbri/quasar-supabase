@@ -17,7 +17,7 @@ import { LeftSidebar } from 'src/components';
 .app {
   width: 100%;
   height: 100%;
-  background: $blue-grey-1;
+  background: transparent;
   /* background-image: url(../assets/hero-bg.svg); */
   /* background-position: top center; */
   /* background-repeat: no-repeat; */

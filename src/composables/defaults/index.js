@@ -46,6 +46,8 @@ export default function useAttribute() {
     expansion: {
       headerClass: 'text-primary title title-expansion q-mt-md',
       denseToggle: false,
+      expandIcon: 'chevron_right',
+      expandedIcon: 'expand_less',
       dense: false
     },
 
