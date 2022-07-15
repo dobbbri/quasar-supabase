@@ -27,7 +27,6 @@ export default function useApi(table) {
       .eq('id', id);
     loading.value = false;
     if (error && status !== 406) throw error;
-    console.log(' [DEBUG] data : ', data);
     return data;
   };
 

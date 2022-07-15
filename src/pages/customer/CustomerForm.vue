@@ -54,60 +54,49 @@ const formAddress = ref({
 });
 
 const handleFindCEP = () => {
-  if (!formAddress.value.zip_code) return;
-  $q.loading.show();
+  console.log(' [DEBUG] zip_code : ', formAddress.value.zip_code);
+  if (formAddress.value && formAddress.value.zip_code.length == 9) {
+    $q.loading.show();
 
-  const url = `https://brasilapi.com.br/api/cep/v1/${formAddress.value.zip_code}`;
-  const options = {
-    method: 'GET',
-    mode: 'cors',
-    headers: { 'content-type': 'application/json;charset=utf-8' },
-    timeout: 30000
-  };
+    const url = `https://brasilapi.com.br/api/cep/v1/${formAddress.value.zip_code}`;
+    const options = {
+      method: 'GET',
+      mode: 'cors',
+      headers: { 'content-type': 'application/json;charset=utf-8' },
+      timeout: 30000
+    };
 
-  fetch(url, options)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      formAddress.value.street = data.street;
-      formAddress.value.neighborhood = data.neighborhood;
-      formAddress.value.state = data.state;
-      formAddress.value.city = data.city;
-    });
-  $q.loading.hide();
-};
-
-const hasAddress = computed(() => {
-  if (
-    formAddress.value.street ||
-    formAddress.value.number ||
-    formAddress.value.complement ||
-    formAddress.value.neighborhood ||
-    formAddress.value.city ||
-    formAddress.value.state ||
-    formAddress.value.zip_code
-  ) {
-    return true;
+    fetch(url, options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('CEP inválido!');
+      })
+      .then((data) => {
+        formAddress.value.street = data.street;
+        formAddress.value.neighborhood = data.neighborhood;
+        formAddress.value.state = data.state;
+        formAddress.value.city = data.city;
+      })
+      .catch((error) => notify.info(error.message));
+    $q.loading.hide();
   }
-  return false;
-});
+};
 
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
       const data = await editCustomer(form.value);
-      if (hasAddress.value) {
-        if (formAddress.value.id > 0) {
-          await editAddresses(formAddress.value);
-        } else {
-          formAddress.value.id = data[0].id;
-          await addAddresses(formAddress.value);
-        }
+      if (formAddress.value.id > 0) {
+        await editAddresses(formAddress.value);
+      } else {
+        formAddress.value.id = data[0].id;
+        await addAddresses(formAddress.value);
       }
     } else {
       const data = await addCustomer(form.value);
-      if (hasAddress.value) {
+      if (formAddress.value.address) {
         formAddress.value.id = data[0].id;
         await addAddresses(formAddress.value);
       }
@@ -132,7 +121,7 @@ const handleGetCustomer = async () => {
     const data = await getCustomer(route.params.id);
     form.value = data[0];
     const data2 = await getAddresses(form.value.id);
-    if (data2) formAddress.value = data2[0];
+    if (data2 && data2[0]) formAddress.value = data2[0];
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }
@@ -160,7 +149,7 @@ onMounted(async () => {
         <text-input
           v-model="form.name"
           label="Nome do cliente"
-          :rules="[(val) => val && val.length > 3]"
+          :rules="[(val) => !!val]"
           error-message="O nome do cliente deve ser informado!"
         />
 
@@ -175,14 +164,14 @@ onMounted(async () => {
             <div class="col">
               <phone-input
                 v-model="form.phone_1"
-                label="Celular/Whatsapp"
+                label="Telefone"
                 class="col-10"
                 :rules="[(val) => !!val]"
                 error-message="O telefone do cliente deve ser informado!"
               />
             </div>
             <div class="col">
-              <phone-input v-model="form.phone_2" label="Celular/Telefone fixo" />
+              <phone-input v-model="form.phone_2" label="Telefone" />
             </div>
           </div>
         </expansion-item>

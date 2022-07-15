@@ -22,7 +22,9 @@ const { getAddresses, removeAddresses } = useCustomersAddresses();
 const { confirm, notify } = useTools();
 
 const form = ref({});
-const formAddress = ref({});
+const formAddress = ref({
+  id: 0
+});
 
 const handleEditCustomer = (customer) => {
   router.push({ name: 'customer-form', params: { id: customer.id } });
@@ -32,7 +34,7 @@ const handleRemoveCustomer = async (customer) => {
   try {
     confirm.delete(`do cliente: ${customer.name}`).onOk(async () => {
       await removeCustomer(customer.id);
-      if (formAddress.value && formAddress.value.id) {
+      if (formAddress.value && formAddress.value.id > 0) {
         await removeAddresses(formAddress.value.id);
       }
       notify.success('Cliente excluido.');
@@ -48,26 +50,17 @@ const handleGetCustomer = async () => {
     const data = await getCustomer(route.params.id);
     form.value = data[0];
     const data2 = await getAddresses(form.value.id);
-    if (data2) formAddress.value = data2[0];
+    if (data2 && data2[0]) formAddress.value = data2[0];
   } catch (error) {
     notify.error('Erro a o obter o cliente.', error);
   }
 };
 
 const addressFormated = computed(() => {
-  const ad = formAddress.value;
-  if (
-    ad.street ||
-    ad.number ||
-    ad.complement ||
-    ad.neighborhood ||
-    ad.city ||
-    ad.state ||
-    ad.zip_code
-  ) {
+  if (formAddress.value.id > 0) {
     return [
-      `${ad.street}, ${ad.number}, ${ad.complement},`,
-      `${ad.neighborhood}, ${ad.city} - ${ad.state}, CEP ${ad.zip_code}`
+      `${formAddress.value.street}, ${formAddress.value.number}, ${formAddress.value.complement},`,
+      `${formAddress.value.neighborhood}, ${formAddress.value.city} - ${formAddress.value.state}, CEP ${formAddress.value.zip_code}`
     ];
   }
   return null;
@@ -104,11 +97,11 @@ onMounted(async () => {
             v-if="form.phone_1 || form.phone_2"
             :value="form.phone_1"
             :value2="form.phone_2"
-            label="Celular/Whatsapp"
+            label="Telefone"
           />
 
           <text-view
-            v-if="addressFormated"
+            v-if="formAddress.id > 0"
             :value="addressFormated[0]"
             :value2="addressFormated[1]"
             label="Endereço"
