@@ -5,7 +5,6 @@
 -- DROP TABLE public.customers_addresses;
 
 CREATE TABLE public.customers_addresses (
-  id int8 NOT NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	zip_code varchar NULL,
 	street varchar NULL,
@@ -14,6 +13,7 @@ CREATE TABLE public.customers_addresses (
 	neighborhood varchar NULL,
 	city varchar NULL,
 	state varchar NULL,
+	id int8 NOT NULL,
 	user_id uuid NULL,
 	CONSTRAINT customer_addresses_pkey PRIMARY KEY (id)
 );
@@ -30,5 +30,4 @@ GRANT ALL ON TABLE public.customers_addresses TO service_role;
 
 -- public.customers_addresses foreign keys
 
-ALTER TABLE public.customers_addresses ADD CONSTRAINT customers_addresses_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES public.customers(id);
 ALTER TABLE public.customers_addresses ADD CONSTRAINT customers_addresses_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id);

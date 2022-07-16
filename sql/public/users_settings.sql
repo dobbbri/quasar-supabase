@@ -8,6 +8,9 @@ CREATE TABLE public.users_settings (
 	id uuid NOT NULL,
 	measure_units json NULL,
 	payment_methods json NULL,
+	payment_conditions json NULL,
+	order_status json NULL,
+	cost_category json NULL,
 	CONSTRAINT settings_pkey PRIMARY KEY (id)
 );
 
