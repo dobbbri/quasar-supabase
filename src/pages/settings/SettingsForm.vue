@@ -3,21 +3,18 @@ import { ref, watch, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { Page, PageHeader, PageBody, BtnBack, BtnArrow } from 'src/components';
 
-const form = ref({
-  dark_mode: false,
-  has_stock_controlk: false
-});
+const darkMode = ref(false);
 const $q = useQuasar();
 
-watch(form.value.dark_mode, () => {
-  $q.dark.set(form.value.dark_mode);
-  $q.localStorage.set('darkMode', form.value.dark_mode);
+watch(darkMode, (darkMode) => {
+  $q.dark.set(darkMode);
+  $q.localStorage.set('darkMode', darkMode);
 });
 
 onMounted(() => {
   const darkModeIsActive = $q.localStorage.getItem('darkMode');
   if (darkModeIsActive) {
-    form.value.dark_mode = true;
+    darkMode.value = true;
   }
 });
 </script>
@@ -40,7 +37,7 @@ onMounted(() => {
             </q-item-section>
             <q-item-section avatar>
               <q-toggle
-                v-model="form.dark_mode"
+                v-model="darkMode"
                 checked-icon="sym_o_dark_mode"
                 unchecked-icon="sym_o_light_mode"
                 val="picture"

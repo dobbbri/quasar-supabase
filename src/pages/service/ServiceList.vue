@@ -59,7 +59,6 @@ onMounted(async () => {
           v-for="(service, index) in services"
           :key="index"
           clickable
-          class="q-px-xs"
           @click="handleViewService(service)"
         >
           <q-item-section>

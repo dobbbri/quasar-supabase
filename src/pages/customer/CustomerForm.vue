@@ -118,10 +118,10 @@ const handleBackTo = () => {
 
 const handleGetCustomer = async () => {
   try {
-    const data = await getCustomer(route.params.id);
+    let data = await getCustomer(route.params.id);
     form.value = data[0];
-    const data2 = await getAddresses(form.value.id);
-    if (data2 && data2[0]) formAddress.value = data2[0];
+    data = await getAddresses(form.value.id);
+    if (data) formAddress.value = data[0];
   } catch (error) {
     notify.error('Erro ao obter o cliente.', error);
   }

@@ -16,7 +16,7 @@ defineProps({
     :disable="loading"
     class="bg-negative"
     label="Remover"
-    padding="12px"
+    padding="8px"
     icon="sym_o_delete"
   />
 </template>

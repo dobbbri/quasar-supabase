@@ -16,7 +16,7 @@ defineProps({
     :disable="loading"
     class="bg-warning"
     label="Alterar"
-    padding="12px"
+    padding="8px"
     icon="sym_o_edit"
   />
 </template>

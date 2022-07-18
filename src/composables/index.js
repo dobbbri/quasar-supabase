@@ -1,7 +1,6 @@
 import useApi from 'src/composables/db/Api';
 import useApiImage from 'src/composables/db/ApiImage';
 import useAuth from 'src/composables/db/Auth';
-import useBrands from 'src/composables/db/Brands';
 import useCustomers from 'src/composables/db/Customers';
 import useCustomersAddresses from 'src/composables/db/CustomersAddresses';
 import useCustomersImages from 'src/composables/db/CustomersImages';
@@ -17,7 +16,6 @@ export {
   useApi,
   useApiImage,
   useAuth,
-  useBrands,
   useCustomers,
   useCustomersAddresses,
   useCustomersImages,

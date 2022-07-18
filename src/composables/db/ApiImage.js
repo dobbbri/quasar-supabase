@@ -1,9 +1,11 @@
-import { computed } from 'vue';
-import { useSupabase } from 'boot/supabase';
+import useSupabase from 'boot/supabase';
+import { useAuth } from 'src/composables';
 
 export default function useApiImage() {
-  const { supabase, supabaseUrl, supabaseBucket } = useSupabase();
-  const user = computed(() => supabase.auth.user());
+  const { supabase } = useSupabase();
+  const { user } = useAuth();
+  const supabaseBucket = process.env.SUPABASE_BUCKET;
+  const supabaseUrl = process.env.SUPABASE_URL;
 
   const addImage = async (folder, file) => {
     const extension = file.name.split('.').pop();

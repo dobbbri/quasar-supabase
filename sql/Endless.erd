@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram version="1" name="Endless.erd">
+	<entities>
+		<data-source id="postgres-jdbc-18205e5b9f5-1b3651b05ac206d4">
+			<entity id="1" name="users" fq-name="auth.users" order="0" x="821" y="262">
+				<path name="auth"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="2" name="customers" fq-name="public.customers" order="1" color-bg="204,192,184" x="1116" y="-154">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="3" name="customers_addresses" fq-name="public.customers_addresses" order="2" color-bg="204,192,184" border-width="3" x="1131" y="195">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="4" name="orders" fq-name="public.orders" order="3" color-bg="204,192,184" x="390" y="214">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="5" name="orders_products" fq-name="public.orders_products" order="4" color-bg="204,192,184" x="374" y="-177">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="6" name="orders_services" fq-name="public.orders_services" order="5" color-bg="204,192,184" x="396" y="474">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="7" name="products" fq-name="public.products" order="6" color-bg="204,192,184" x="712" y="-176">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="8" name="services" fq-name="public.services" order="7" color-bg="204,192,184" x="413" y="712">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="9" name="users_profile" fq-name="public.users_profile" order="8" color-bg="204,192,184" x="1135" y="509">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="10" name="users_settings" fq-name="public.users_settings" order="9" color-bg="204,192,184" x="1127" y="741">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+		</data-source>
+	</entities>
+	<relations>
+		<relation name="customers_user_id_fkey" fq-name="public.customers.customers_user_id_fkey" type="fk" pk-ref="1" fk-ref="2"/>
+		<relation name="customers_addresses_user_id_fkey" fq-name="public.customers_addresses.customers_addresses_user_id_fkey" type="fk" pk-ref="1" fk-ref="3"/>
+		<relation name="orders_user_id_fkey" fq-name="public.orders.orders_user_id_fkey" type="fk" pk-ref="1" fk-ref="4"/>
+		<relation name="orders_products_user_id_fkey" fq-name="public.orders_products.orders_products_user_id_fkey" type="fk" pk-ref="1" fk-ref="5"/>
+		<relation name="orders_services_user_id_fkey" fq-name="public.orders_services.orders_services_user_id_fkey" type="fk" pk-ref="1" fk-ref="6"/>
+		<relation name="products_user_id_fkey" fq-name="public.products.products_user_id_fkey" type="fk" pk-ref="1" fk-ref="7"/>
+		<relation name="services_user_id_fkey" fq-name="public.services.services_user_id_fkey" type="fk" pk-ref="1" fk-ref="8"/>
+		<relation name="users_profile_id_fkey" fq-name="public.users_profile.users_profile_id_fkey" type="fk" pk-ref="1" fk-ref="9"/>
+		<relation name="users_settings_id_fkey" fq-name="public.users_settings.users_settings_id_fkey" type="fk" pk-ref="1" fk-ref="10"/>
+		<relation name="customers_addresses_customer_id_fkey" fq-name="public.customers_addresses.customers_addresses_customer_id_fkey" type="fk" pk-ref="2" fk-ref="3"/>
+		<relation name="orders_customer_id_fkey" fq-name="public.orders.orders_customer_id_fkey" type="fk" pk-ref="2" fk-ref="4"/>
+		<relation name="orders_products_order_id_fkey" fq-name="public.orders_products.orders_products_order_id_fkey" type="fk" pk-ref="4" fk-ref="5"/>
+		<relation name="orders_services_order_id_fkey" fq-name="public.orders_services.orders_services_order_id_fkey" type="fk" pk-ref="4" fk-ref="6"/>
+		<relation name="orders_products_product_id_fkey" fq-name="public.orders_products.orders_products_product_id_fkey" type="fk" pk-ref="7" fk-ref="5"/>
+		<relation name="orders_services_service_id_fkey" fq-name="public.orders_services.orders_services_service_id_fkey" type="fk" pk-ref="8" fk-ref="6"/>
+	</relations>
+</diagram>

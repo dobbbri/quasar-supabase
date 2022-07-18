@@ -1,10 +1,11 @@
-import { ref, computed } from 'vue';
-import { useSupabase } from 'boot/supabase';
+import { ref } from 'vue';
+import useSupabase from 'boot/supabase';
+import { useAuth } from 'src/composables';
 
 export default function useApi(table) {
   const loading = ref(false);
   const { supabase } = useSupabase();
-  const user = computed(() => supabase.auth.user());
+  const { user } = useAuth();
 
   const list = async (fields = '*') => {
     loading.value = true;
@@ -27,6 +28,7 @@ export default function useApi(table) {
       .eq('id', id);
     loading.value = false;
     if (error && status !== 406) throw error;
+    if (data.length == 0) return null;
     return data;
   };
 

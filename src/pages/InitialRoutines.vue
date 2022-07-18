@@ -18,7 +18,7 @@ const handleSettings = async () => {
     loading.value = true;
     let settings = await getSettings();
     if (settings) {
-      store.setSettings(settings);
+      store.setSettings(settings[0]);
     } else {
       const { measureUnits, paymentMethods, paymentConditions, orderStatus, costCategory } =
         store.getDefaults();

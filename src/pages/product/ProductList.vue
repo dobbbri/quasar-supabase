@@ -59,7 +59,6 @@ onMounted(async () => {
           v-for="(product, index) in products"
           :key="index"
           clickable
-          class="q-px-xs"
           @click="handleViewProduct(product)"
         >
           <q-item-section>

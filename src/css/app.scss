@@ -3,17 +3,6 @@ body {
   font-family: 'IBM Plex Sans', sans-serif !important;
 }
 
-.q-expansion-item__container > q-item {
-  padding: 0 16px;
-}
-
-.q-item__section--side > .q-icon {
-  font-size: 28px;
-  background: #DEE4EB;
-  color: $primary;
-  border-radius: 50%;
-}
-
 .toolbar-height {
   min-height: 60px;
 }
@@ -75,6 +64,7 @@ body {
 .q-field--auto-height.q-field--labeled .q-field__control-container {
   padding-top: 0px;
 }
+
 .q-field--auto-height.q-field--labeled .q-field__native,
 .q-field--auto-height.q-field--labeled .q-field__prefix,
 .q-field--auto-height.q-field--labeled .q-field__suffix {
@@ -92,7 +82,7 @@ body {
 
 .q-field--float .q-field__label {
   transform: translateY(-110%);
-  background: white;
+  background: white ;
   z-index: 999;
   padding: 0 5px;
   margin-left: -2px;
@@ -132,41 +122,10 @@ body {
   margin-top: 13px;
 }
 
-.q-fab__label--external {
-  font-size: $tooltip-fontsize !important;
+
+// in Dark Mode
+.body--dark {
+  .q-field--float .q-field__label {
+    background: $dark-page ;
+  }
 }
-
-.q-fab__icon-holder {
-  min-width: 38px;
-  min-height: 38px;
-  position: relative;
-}
-
-// .q-fab__actions .q-btn {
-//     margin: 5px 0;
-// }
-
-// .q-field--float .q-field__label {
-//   transform: translateY(-35%) scale(0.85);
-// }
-//
-// .q-field__native,
-// .q-field__prefix,
-// .q-field__suffix,
-// .q-field__input {
-//   font-weight: 500;
-// }
-//
-// .q-field--labeled .q-field__native,
-// .q-field--labeled .q-field__prefix,
-// .q-field--labeled .q-field__suffix {
-//   line-height: 24px;
-//   padding-top: 28px;
-//   padding-bottom: 4px;
-// }
-//
-// .q-select__dropdown-icon {
-//   margin-top: 22px;
-//   cursor: pointer;
-//   transition: transform 0.28s;
-// }

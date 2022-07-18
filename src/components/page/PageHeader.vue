@@ -1,11 +1,10 @@
 <script setup>
-import { useDefaults } from 'src/composables';
+import { useDefaults, useAuth } from 'src/composables';
 import { useMenuStore } from 'src/stores/menuStore';
-import { useUserStore } from 'src/stores/userStore';
 
 const { attr } = useDefaults();
 const menuStore = useMenuStore();
-const userStore = useUserStore();
+const { isLoggedIn } = useAuth();
 </script>
 
 <template>
@@ -14,7 +13,7 @@ const userStore = useUserStore();
       <div>
         <slot name="left">
           <q-btn
-            v-if="userStore.isLoggedIn"
+            v-if="isLoggedIn"
             v-bind="attr.btn.icon"
             icon="sym_o_menu"
             flat
