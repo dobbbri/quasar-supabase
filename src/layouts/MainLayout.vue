@@ -6,7 +6,7 @@ import { LeftSidebar } from 'src/components';
   <div class="app position-relative" :style="'height: ' + $q.screen.height + 'px'">
     <q-layout view="lHh Lpr lFf" class="app-layout shadow-5" container>
       <left-sidebar />
-      <q-page-container>
+      <q-page-container class="bg-app">
         <router-view :key="$route.fullPath" />
       </q-page-container>
     </q-layout>
@@ -17,7 +17,7 @@ import { LeftSidebar } from 'src/components';
 .app {
   width: 100%;
   height: 100%;
-  /* background: #7d8395; */
+  background: #7d8395;
   /* background-image: url(../assets/hero-bg.svg); */
   /* background-position: top center; */
   /* background-repeat: no-repeat; */

@@ -15,7 +15,7 @@ export default function useAttribute() {
         textColor: 'grey-10',
         class: 'text-weight-bold'
       },
-      icon: { round: true, size: '28px', color: 'white' }
+      icon: { round: true, size: 'md', color: 'white' }
     },
 
     input: {

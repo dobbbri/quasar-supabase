@@ -7,10 +7,9 @@ const { attr } = useDefaults();
 <template>
   <q-fab
     v-bind="attr.fab.menu"
-    icon="sym_o_more_vert"
-    size="32px"
-    padding="2px"
-    class="bg-blue-grey-12"
+    icon="more_vert"
+    padding="xs"
+    class="bg-white"
     text-color="dark"
     flat
   >
@@ -18,12 +17,16 @@ const { attr } = useDefaults();
   </q-fab>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .q-fab__label--external {
   font-size: $tooltip-fontsize !important;
 }
-/* .q-btn--fab .q-icon, */
-/* .q-btn--fab-mini .q-icon { */
-/*   font-size: 28px; */
-/* } */
+.q-fab__icon-holder {
+  min-width: 30px !important;
+  min-height: 30px !important;
+}
+.q-btn--fab .q-icon,
+.q-btn--fab-mini .q-icon {
+  font-size: 30px !important;
+}
 </style>
