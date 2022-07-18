@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter, useRoute } from 'vue-router';
 import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
@@ -25,40 +25,18 @@ const $q = useQuasar();
 const router = useRouter();
 const route = useRoute();
 
-const { loading, getCustomer, addCustomer, editCustomer } = useCustomers();
-const { getAddresses, addAddresses, editAddresses } = useCustomersAddresses();
+const { loading, customer, addCustomer, editCustomer } = useCustomers();
+const { address, addAddress, editAddress } = useCustomersAddresses();
 const { notify } = useTools();
 
-const isEditMode = computed(() => (route.params.id ? true : false));
+const isEditMode = computed(() => (customer.value && customer.value.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
-const form = ref({
-  name: '',
-  is_legal_entity: false,
-  email: '',
-  phone_1: '',
-  phone_2: '',
-  document_number: '',
-  notes: ''
-});
-
-const formAddress = ref({
-  id: 0,
-  street: '',
-  number: '',
-  complement: '',
-  neighborhood: '',
-  city: '',
-  state: '',
-  zip_code: ''
-});
-
 const handleFindCEP = () => {
-  console.log(' [DEBUG] zip_code : ', formAddress.value.zip_code);
-  if (formAddress.value && formAddress.value.zip_code.length == 9) {
+  if (address.value && address.value.zip_code.length == 9) {
     $q.loading.show();
 
-    const url = `https://brasilapi.com.br/api/cep/v1/${formAddress.value.zip_code}`;
+    const url = `https://brasilapi.com.br/api/cep/v1/${address.value.zip_code}`;
     const options = {
       method: 'GET',
       mode: 'cors',
@@ -74,10 +52,10 @@ const handleFindCEP = () => {
         throw new Error('CEP inválido!');
       })
       .then((data) => {
-        formAddress.value.street = data.street;
-        formAddress.value.neighborhood = data.neighborhood;
-        formAddress.value.state = data.state;
-        formAddress.value.city = data.city;
+        address.value.street = data.street;
+        address.value.neighborhood = data.neighborhood;
+        address.value.state = data.state;
+        address.value.city = data.city;
       })
       .catch((error) => notify.info(error.message));
     $q.loading.hide();
@@ -87,18 +65,18 @@ const handleFindCEP = () => {
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      const data = await editCustomer(form.value);
-      if (formAddress.value.id > 0) {
-        await editAddresses(formAddress.value);
+      const data = await editCustomer(customer.value);
+      if (address.value.id > 0) {
+        await editAddress(address.value);
       } else {
-        formAddress.value.id = data[0].id;
-        await addAddresses(formAddress.value);
+        address.value.id = data[0].id;
+        await addAddress(address.value);
       }
     } else {
-      const data = await addCustomer(form.value);
-      if (formAddress.value.address) {
-        formAddress.value.id = data[0].id;
-        await addAddresses(formAddress.value);
+      const data = await addCustomer(customer.value);
+      if (address.value.address) {
+        address.value.id = data[0].id;
+        await addAddress(address.value);
       }
     }
     notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
@@ -115,21 +93,6 @@ const handleBackTo = () => {
     router.push({ name: 'customer-list' });
   }
 };
-
-const handleGetCustomer = async () => {
-  try {
-    let data = await getCustomer(route.params.id);
-    form.value = data[0];
-    data = await getAddresses(form.value.id);
-    if (data) formAddress.value = data[0];
-  } catch (error) {
-    notify.error('Erro ao obter o cliente.', error);
-  }
-};
-
-onMounted(async () => {
-  if (isEditMode.value) await handleGetCustomer();
-});
 </script>
 
 <template>
@@ -147,23 +110,23 @@ onMounted(async () => {
 
       <page-body>
         <text-input
-          v-model="form.name"
+          v-model="customer.name"
           label="Nome do cliente"
           :rules="[(val) => !!val]"
           error-message="O nome do cliente deve ser informado!"
         />
 
         <expansion-item default-opened group="person" label="Tipo de Pessoa">
-          <radio-options v-model="form.is_legal_entity" :options="optionsPerson" />
+          <radio-options v-model="customer.is_legal_entity" :options="optionsPerson" />
         </expansion-item>
 
         <expansion-item default-opened label="Telefones e Email">
-          <text-input v-model="form.email" label="Email" />
+          <text-input v-model="customer.email" label="Email" />
 
           <div class="line row q-gutter-x-md">
             <div class="col">
               <phone-input
-                v-model="form.phone_1"
+                v-model="customer.phone_1"
                 label="Telefone"
                 class="col-10"
                 :rules="[(val) => !!val]"
@@ -171,45 +134,48 @@ onMounted(async () => {
               />
             </div>
             <div class="col">
-              <phone-input v-model="form.phone_2" label="Telefone" />
+              <phone-input v-model="customer.phone_2" label="Telefone" />
             </div>
           </div>
         </expansion-item>
 
         <expansion-item label="Endereço">
           <text-input
-            v-model="formAddress.zip_code"
+            v-model="address.zip_code"
             mask="#####-###"
             label="CEP"
             @blur="handleFindCEP"
           />
 
-          <text-input v-model="formAddress.street" label="Endereço" />
+          <text-input v-model="address.street" label="Endereço" />
 
           <div class="line row q-gutter-x-md">
             <div class="col-4">
-              <text-input v-model="formAddress.number" label="Número" />
+              <text-input v-model="address.number" label="Número" />
             </div>
             <div class="col">
-              <text-input v-model="formAddress.complement" label="Complemento" />
+              <text-input v-model="address.complement" label="Complemento" />
             </div>
           </div>
 
-          <text-input v-model="formAddress.neighborhood" label="Bairro" />
+          <text-input v-model="address.neighborhood" label="Bairro" />
 
           <div class="line row q-gutter-x-md">
             <div class="col">
-              <text-input v-model="formAddress.city" label="Cidade" />
+              <text-input v-model="address.city" label="Cidade" />
             </div>
             <div class="col-3">
-              <text-input v-model="formAddress.state" mask="AA" label="UF(estado)" />
+              <text-input v-model="address.state" mask="AA" label="UF(estado)" />
             </div>
           </div>
         </expansion-item>
 
         <expansion-item label="Outros Detalhes">
-          <cpf-cnpj-input v-model="form.document_number" :is-legal-entity="form.is_legal_entity" />
-          <textarea-input v-model="form.notes" label="Anotações" />
+          <cpf-cnpj-input
+            v-model="customer.document_number"
+            :is-legal-entity="customer.is_legal_entity"
+          />
+          <textarea-input v-model="customer.notes" label="Anotações" />
         </expansion-item>
       </page-body>
     </q-form>

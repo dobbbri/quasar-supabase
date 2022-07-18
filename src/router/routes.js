@@ -56,7 +56,7 @@ const routes = [
         component: () => import('pages/customer/CustomerView.vue')
       },
       {
-        path: '/customer-form/:id?',
+        path: '/customer-form',
         name: 'customer-form',
         component: () => import('pages/customer/CustomerForm.vue')
       },

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useNameSearch, useTools } from 'src/composables';
+import { useCustomers, useCustomersAddresses, useNameSearch, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -16,12 +16,21 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { loading, getCustomers } = useCustomers();
+const { clearAddress } = useCustomersAddresses();
+const { loading, clearCustomer, getCustomers } = useCustomers();
 const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
 
-const handleViewCustomer = (customer) => {
-  router.push({ name: 'customer-view', params: { id: customer.id } });
+const handleAddCustomer = () => {
+  clearCustomer();
+  clearAddress();
+  router.push({ name: 'customer-form' });
+};
+
+const handleViewCustomer = (id) => {
+  clearCustomer();
+  clearAddress();
+  router.push({ name: 'customer-view', params: { id: id } });
 };
 
 const handleGetCustomers = async () => {
@@ -45,7 +54,7 @@ onMounted(async () => {
       </template>
       <template #title>Clientes</template>
       <template #right>
-        <btn-add :loading="loading.value" :to="{ name: 'customer-form' }" />
+        <btn-add @click="handleAddCustomer()" />
       </template>
     </page-header>
 
@@ -59,7 +68,8 @@ onMounted(async () => {
           v-for="(customer, index) in customers"
           :key="index"
           clickable
-          @click="handleViewCustomer(customer)"
+          class="q-px-xs"
+          @click="handleViewCustomer(customer.id)"
         >
           <q-item-section>
             <q-item-label>
