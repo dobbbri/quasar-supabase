@@ -83,7 +83,7 @@ const handleSubmit = async () => {
         <text-input
           v-model="product.name"
           label="Nome do produto"
-          :rules="[(val) => val && val.length > 3]"
+          :rules="[(val) => !!val]"
           error-message="O nome do produto deve ser informado!"
         />
 
@@ -91,7 +91,7 @@ const handleSubmit = async () => {
           <money-input
             v-model="product.price"
             label="Preço de venda"
-            :rules="[(val) => !!val]"
+            :rules="[(val) => Number(val.replaceAll('.', '').replaceAll(',', '.')) > 0]"
             error-message="O preço de venda do produto deve ser informado"
           />
 
