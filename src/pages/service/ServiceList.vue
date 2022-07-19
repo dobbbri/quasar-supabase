@@ -16,12 +16,17 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { loading, getServices } = useServices();
+const { loading, clearService, getServices } = useServices();
 const { searchQuery, matchingSearchQuery: services } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
-const handleViewService = (service) => {
-  router.push({ name: 'service-view', params: { id: service.id } });
+const handleAddService = () => {
+  clearService();
+  router.push({ name: 'service-form' });
+};
+
+const handleViewService = (id) => {
+  router.push({ name: 'service-view', params: { id: id } });
 };
 
 const handleGetServices = async () => {
@@ -45,7 +50,7 @@ onMounted(async () => {
       </template>
       <template #title>Serviços</template>
       <template #right>
-        <btn-add :loading="loading.value" :to="{ name: 'service-form' }" />
+        <btn-add @click="handleAddService()" />
       </template>
     </page-header>
 
@@ -59,7 +64,7 @@ onMounted(async () => {
           v-for="(service, index) in services"
           :key="index"
           clickable
-          @click="handleViewService(service)"
+          @click="handleViewService(service.id)"
         >
           <q-item-section>
             <q-item-label> {{ service.name }} </q-item-label>

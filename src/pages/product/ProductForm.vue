@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { ref, computed, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import { useProducts, useTools } from 'src/composables';
 import {
   Page,
@@ -20,30 +20,20 @@ const store = useUsersSettingsStore();
 const optionsMeasureUnits = store.measureUnits;
 
 const router = useRouter();
-const route = useRoute();
 
-const { loading, getProduct, addProduct, editProduct } = useProducts();
+const { loading, product, addProduct, editProduct } = useProducts();
 const { notify } = useTools();
-
-const form = ref({
-  name: '',
-  price: 0,
-  measure_unit: 'un.',
-  cost_price: 0,
-  brand: '',
-  details: ''
-});
 
 const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (form.value.price, form.value.cost_price),
+  () => (product.value.price, product.value.cost_price),
   () => {
     let profit = 0;
     let markup = 0;
-    const price = parseFloat(form.value.price);
-    const cost_price = parseFloat(form.value.cost_price);
+    const price = parseFloat(product.value.price);
+    const cost_price = parseFloat(product.value.cost_price);
     if (price > 0 && cost_price > 0) {
       profit = ((price - cost_price) / price) * 100;
       markup = ((price - cost_price) / cost_price) * 100;
@@ -53,7 +43,7 @@ watch(
   }
 );
 
-const isEditMode = computed(() => (route.params.id ? true : false));
+const isEditMode = computed(() => (product.value && product.value.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
@@ -64,9 +54,9 @@ const handleBackTo = () => {
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editProduct(form.value);
+      await editProduct(product.value);
     } else {
-      await addProduct(form.value);
+      await addProduct(product.value);
     }
     notify.success(`Produto ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
     router.push({ name: 'product-list' });
@@ -74,19 +64,6 @@ const handleSubmit = async () => {
     notify.error(`Erro ao ${title.value.toLowerCase()} o produto.`, error);
   }
 };
-
-const handleGetProduct = async () => {
-  try {
-    const data = await getProduct(route.params.id);
-    form.value = data[0];
-  } catch (error) {
-    notify.error('Erro ao obter o produto.', error);
-  }
-};
-
-onMounted(async () => {
-  if (isEditMode.value) await handleGetProduct();
-});
 </script>
 
 <template>
@@ -104,7 +81,7 @@ onMounted(async () => {
 
       <page-body>
         <text-input
-          v-model="form.name"
+          v-model="product.name"
           label="Nome do produto"
           :rules="[(val) => val && val.length > 3]"
           error-message="O nome do produto deve ser informado!"
@@ -112,14 +89,14 @@ onMounted(async () => {
 
         <expansion-item default-opened group="price" label="Preço">
           <money-input
-            v-model="form.price"
+            v-model="product.price"
             label="Preço de venda"
             :rules="[(val) => !!val]"
             error-message="O preço de venda do produto deve ser informado"
           />
 
           <select-options
-            v-model="form.measure_unit"
+            v-model="product.measure_unit"
             label="Unidade de medida"
             :options="optionsMeasureUnits"
             :show-id="true"
@@ -130,7 +107,7 @@ onMounted(async () => {
         </expansion-item>
 
         <expansion-item default-opened label="Custo e Lucro">
-          <money-input v-model="form.cost_price" label="Preço de custo" />
+          <money-input v-model="product.cost_price" label="Preço de custo" />
           <div class="line row q-gutter-x-md">
             <div class="col">
               <text-input
@@ -152,11 +129,11 @@ onMounted(async () => {
         </expansion-item>
 
         <expansion-item label="Outros Detalhes">
-          <text-input v-model="form.brand" label="Marca" />
+          <text-input v-model="product.brand" label="Marca" />
 
-          <textarea-input v-model="form.details" label="Detalhes do produto" />
+          <textarea-input v-model="product.details" label="Detalhes do produto" />
 
-          <!-- <text-input v-model="form.code_bar" label="Código de barras" /> -->
+          <!-- <text-input v-model="product.code_bar" label="Código de barras" /> -->
         </expansion-item>
       </page-body>
     </q-form>

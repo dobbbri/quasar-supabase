@@ -17,7 +17,7 @@ import {
 const router = useRouter();
 const route = useRoute();
 
-const { loading, getProduct, removeProduct } = useProducts();
+const { loading, product, getProduct, removeProduct } = useProducts();
 const { confirm, notify, fmt } = useTools();
 
 const form = ref({
@@ -29,12 +29,12 @@ const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (form.value.price, form.value.cost_price),
+  () => (product.value.price, product.value.cost_price),
   () => {
     let profit = 0;
     let markup = 0;
-    const price = parseFloat(form.value.price);
-    const cost_price = parseFloat(form.value.cost_price);
+    const price = parseFloat(product.value.price);
+    const cost_price = parseFloat(product.value.cost_price);
     if (price > 0 && cost_price > 0) {
       profit = ((price - cost_price) / price) * 100;
       markup = ((price - cost_price) / cost_price) * 100;
@@ -44,14 +44,10 @@ watch(
   }
 );
 
-const handleEditProduct = (product) => {
-  router.push({ name: 'product-form', params: { id: product.id } });
-};
-
-const handleRemoveProduct = async (product) => {
+const handleRemoveProduct = async () => {
   try {
-    confirm.delete(`do produto: ${product.name}`).onOk(async () => {
-      await removeProduct(product.id);
+    confirm.delete(`do produto: ${product.value.name}`).onOk(async () => {
+      await removeProduct(product.value.id);
       notify.success('Produto excluido.');
       router.push({ name: 'product-list' });
     });
@@ -63,7 +59,7 @@ const handleRemoveProduct = async (product) => {
 const handleGetProduct = async () => {
   try {
     const data = await getProduct(route.params.id);
-    form.value = data[0];
+    product.value = data[0];
   } catch (error) {
     notify.error('Erro ao obter o produto.', error);
   }
@@ -85,26 +81,26 @@ onMounted(async () => {
         <template #right>
           <fab-menu>
             <fab-remove-action :loading="loading.value" @click="handleRemoveProduct(form)" />
-            <fab-edit-action :loading="loading.value" @click="handleEditProduct(form)" />
+            <fab-edit-action :loading="loading.value" :to="{ name: 'product-form' }" />
           </fab-menu>
         </template>
       </page-header>
 
       <page-body>
-        <text-view :value="form.name" label="Nome do Produto" />
+        <text-view :value="product.name" label="Nome do Produto" />
 
-        <text-view v-if="form.brand" :value="form.brand" label="Marca" />
+        <text-view v-if="product.brand" :value="product.brand" label="Marca" />
 
-        <text-view v-if="form.details" :value="form.details" label="Detalhes" />
+        <text-view v-if="product.details" :value="product.details" label="Detalhes" />
 
         <text-view
-          v-if="form.price > 0"
-          :value="fmt.currency(form.price) + '/' + form.measure_unit"
+          v-if="product.price > 0"
+          :value="fmt.currency(product.price) + '/' + product.measure_unit"
           label="Preço"
         />
 
         <expansion-item label="Custo e Lucro">
-          <text-view :value="fmt.currency(form.cost_price)" label="Preço de custo" />
+          <text-view :value="fmt.currency(product.cost_price)" label="Preço de custo" />
 
           <text-view :value="price_profit" label="lucro" />
 

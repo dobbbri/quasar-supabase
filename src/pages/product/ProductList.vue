@@ -16,12 +16,18 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { loading, getProducts } = useProducts();
+const { loading, clearProduct, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
-const handleViewProduct = (product) => {
-  router.push({ name: 'product-view', params: { id: product.id } });
+const handleAddProduct = () => {
+  clearProduct();
+  router.push({ name: 'product-form' });
+};
+
+const handleViewProduct = (id) => {
+  clearProduct();
+  router.push({ name: 'product-view', params: { id: id } });
 };
 
 const handleGetProducts = async () => {
@@ -45,7 +51,7 @@ onMounted(async () => {
       </template>
       <template #title>Produtos</template>
       <template #right>
-        <btn-add :loading="loading.value" :to="{ name: 'product-form' }" />
+        <btn-add @click="handleAddProduct()" />
       </template>
     </page-header>
 
@@ -59,7 +65,7 @@ onMounted(async () => {
           v-for="(product, index) in products"
           :key="index"
           clickable
-          @click="handleViewProduct(product)"
+          @click="handleViewProduct(product.id)"
         >
           <q-item-section>
             <q-item-label> {{ product.name }} </q-item-label>

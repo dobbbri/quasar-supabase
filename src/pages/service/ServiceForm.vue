@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useServices, useTools } from 'src/composables';
 import {
   Page,
@@ -16,20 +16,13 @@ import {
 } from 'src/components';
 
 const router = useRouter();
-const route = useRoute();
 
-const { loading, getService, addService, editService } = useServices();
+const { loading, service, addService, editService } = useServices();
 const { notify } = useTools();
 
 const optionsMeasureUnits = ref([]);
-const form = ref({
-  name: '',
-  details: '',
-  price: 0,
-  measure_unit: 'un.'
-});
 
-const isEditMode = computed(() => (route.params.id ? true : false));
+const isEditMode = computed(() => (service.value && service.value.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
@@ -40,9 +33,9 @@ const handleBackTo = () => {
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editService(form.value);
+      await editService(service.value);
     } else {
-      await addService(form.value);
+      await addService(service.value);
     }
     notify.success(`Serviço ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
     router.push({ name: 'service-list' });
@@ -50,19 +43,6 @@ const handleSubmit = async () => {
     notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error);
   }
 };
-
-const handleGetService = async () => {
-  try {
-    const data = await getService(route.params.id);
-    form.value = data[0];
-  } catch (error) {
-    notify.error('Erro ao obter o serviço.', error);
-  }
-};
-
-onMounted(async () => {
-  if (isEditMode.value) await handleGetService();
-});
 </script>
 
 <template>
@@ -80,24 +60,24 @@ onMounted(async () => {
 
       <page-body>
         <text-input
-          v-model="form.name"
+          v-model="service.name"
           label="Nome do serviço"
           :rules="[(val) => val && val.length > 3]"
           error-message="O nome do serviço deve ser informado!"
         />
 
-        <textarea-input v-model="form.details" label="Detalhes do serviço" />
+        <textarea-input v-model="service.details" label="Detalhes do serviço" />
 
         <expansion-item default-opened group="price" label="Preço">
           <money-input
-            v-model="form.price"
+            v-model="service.price"
             label="Preço de venda"
             :rules="[(val) => !!val]"
             error-message="O preço de venda do serviço deve ser informado"
           />
 
           <select-options
-            v-model="form.measure_unit"
+            v-model="service.measure_unit"
             label="Unidade de medida"
             :options="optionsMeasureUnits"
             :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
@@ -108,7 +88,7 @@ onMounted(async () => {
         </expansion-item>
 
         <!-- <expansion-item label="Outros Detalhes"> -->
-        <!--   <text-input v-model="form.code_bar" label="Código de barras" /> -->
+        <!--   <text-input v-model="service.code_bar" label="Código de barras" /> -->
         <!-- </expansion-item> -->
       </page-body>
     </q-form>

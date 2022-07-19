@@ -121,8 +121,6 @@ const handleBackTo = () => {
         </expansion-item>
 
         <expansion-item default-opened label="Telefones e Email">
-          <text-input v-model="customer.email" label="Email" />
-
           <div class="line row q-gutter-x-md">
             <div class="col">
               <phone-input
@@ -137,6 +135,7 @@ const handleBackTo = () => {
               <phone-input v-model="customer.phone_2" label="Telefone" />
             </div>
           </div>
+          <text-input v-model="customer.email" label="Email" />
         </expansion-item>
 
         <expansion-item label="Endereço">
