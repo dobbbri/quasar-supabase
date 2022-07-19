@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useServices, useTools } from 'src/composables';
 import {
@@ -14,13 +14,15 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
+import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
 
 const { loading, service, addService, editService } = useServices();
 const { notify } = useTools();
 
-const optionsMeasureUnits = ref([]);
+const store = useUsersSettingsStore();
+const optionsMeasureUnits = store.measureUnits;
 
 const isEditMode = computed(() => (service.value && service.value.id ? true : false));
 

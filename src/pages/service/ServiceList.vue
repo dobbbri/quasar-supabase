@@ -26,6 +26,7 @@ const handleAddService = () => {
 };
 
 const handleViewService = (id) => {
+  clearService();
   router.push({ name: 'service-view', params: { id: id } });
 };
 
