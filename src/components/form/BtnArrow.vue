@@ -5,20 +5,7 @@ const { attr } = useDefaults();
 </script>
 
 <template>
-  <q-btn
-    v-bind="attr.btn.basic"
-    icon-right="sym_o_arrow_forward_ios"
-    flat
-    square
-    padding="md"
-    align="left"
-    class="full-width my-btn"
-  />
+  <q-btn v-bind="attr.btn.big" flat square padding="md" align="left" class="full-width my-btn">
+    <q-icon size="sm" name="sym_o_arrow_forward_ios" class="q-ml-auto"></q-icon>
+  </q-btn>
 </template>
-
-<style lang="scss" scoped>
-.q-icon {
-  max-width: 16px;
-  max-height: 16px;
-}
-</style>
