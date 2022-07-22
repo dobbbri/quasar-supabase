@@ -28,15 +28,15 @@ const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (product.value.price, product.value.cost_price),
+  () => (product.value.unit_price, product.value.cost_price),
   () => {
     let profit = 0;
     let markup = 0;
-    const price = parseFloat(product.value.price);
+    const unit_price = parseFloat(product.value.unit_price);
     const cost_price = parseFloat(product.value.cost_price);
-    if (price > 0 && cost_price > 0) {
-      profit = ((price - cost_price) / price) * 100;
-      markup = ((price - cost_price) / cost_price) * 100;
+    if (unit_price > 0 && cost_price > 0) {
+      profit = ((unit_price - cost_price) / unit_price) * 100;
+      markup = ((unit_price - cost_price) / cost_price) * 100;
     }
     price_profit.value = Math.round(profit) + '%';
     price_markup.value = Math.round(markup) + '%';
@@ -89,7 +89,7 @@ const handleSubmit = async () => {
 
         <expansion-item default-opened group="price" label="Preço">
           <money-input
-            v-model="product.price"
+            v-model="product.unit_price"
             label="Preço de venda"
             :rules="[(val) => Number(val.replaceAll('.', '').replaceAll(',', '.')) > 0]"
             error-message="O preço de venda do produto deve ser informado"

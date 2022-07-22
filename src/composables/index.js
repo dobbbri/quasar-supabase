@@ -7,10 +7,12 @@ import useCustomersImages from 'src/composables/db/CustomersImages';
 import useProducts from 'src/composables/db/Products';
 import useProductsImages from 'src/composables/db/ProductsImages';
 import useServices from 'src/composables/db/Services';
+import useOrders from 'src/composables/db/Orders';
 import useUsersSettings from 'src/composables/db/UsersSettings';
 import useNameSearch from 'src/composables/db/NameSearch';
 import useTools from 'src/composables/Tools';
 import useDefaults from 'src/composables/Defaults';
+import useActive from 'src/composables/active';
 
 export {
   useApi,
@@ -22,8 +24,10 @@ export {
   useProducts,
   useProductsImages,
   useServices,
+  useOrders,
   useUsersSettings,
   useNameSearch,
   useTools,
-  useDefaults
+  useDefaults,
+  useActive
 };

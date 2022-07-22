@@ -4,6 +4,11 @@ import { useMenuStore } from 'src/stores/menuStore';
 
 const { attr } = useDefaults();
 const menuStore = useMenuStore();
+
+const menuList = [
+  { title: 'Configuracões', icon: 'sym_o_tune', routeName: 'settings-form' },
+  { title: 'Sair', icon: 'sym_o_logout', routeName: 'user-logout' }
+];
 </script>
 
 <template>
@@ -28,7 +33,7 @@ const menuStore = useMenuStore();
 
       <q-list class="text-blue-grey-8">
         <q-item
-          v-for="(link, index) in menuStore.menuList"
+          v-for="(link, index) in menuList"
           :key="index"
           clickable
           :to="{ name: link.routeName }"

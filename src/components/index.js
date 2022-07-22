@@ -4,6 +4,7 @@ import PageBody from 'src/components/page/PageBody.vue';
 import PageFooter from 'src/components/page/PageFooter.vue';
 
 import LeftSidebar from 'src/components/menu/LeftSidebar.vue';
+import ShortcutMenu from 'src/components/menu/ShortcutMenu.vue';
 
 import TextInput from 'src/components/form/TextInput.vue';
 import MoneyInput from 'src/components/form/MoneyInput.vue';
@@ -40,6 +41,7 @@ export {
   PageBody,
   PageFooter,
   LeftSidebar,
+  ShortcutMenu,
   TextInput,
   MoneyInput,
   IntegerInput,

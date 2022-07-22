@@ -1,7 +1,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useCustomersAddresses, useNameSearch, useTools } from 'src/composables';
+import {
+  useOrders,
+  useCustomers,
+  useCustomersAddresses,
+  useNameSearch,
+  useTools,
+  useActive
+} from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -16,10 +23,22 @@ const router = useRouter();
 
 const documents = ref([]);
 
+const formName = 'customer-list';
+
+const { order } = useOrders();
+const { active } = useActive();
 const { clearAddress } = useCustomersAddresses();
 const { loading, clearCustomer, getCustomers } = useCustomers();
 const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
+
+const handleBackTo = () => {
+  if (active.value.formName !== formName.value) {
+    router.push({ name: active.value.formName });
+  } else {
+    router.push({ name: 'main-menu' });
+  }
+};
 
 const handleAddCustomer = () => {
   clearCustomer();
@@ -27,10 +46,16 @@ const handleAddCustomer = () => {
   router.push({ name: 'customer-form' });
 };
 
-const handleViewCustomer = (id) => {
+const handleViewCustomer = (selected) => {
   clearCustomer();
   clearAddress();
-  router.push({ name: 'customer-view', params: { id: id } });
+  if (active.value.formName !== formName.value) {
+    order.value.customer_id = selected.id;
+    active.value.customerName = selected.name;
+    router.push({ name: active.value.formName });
+  } else {
+    router.push({ name: 'customer-view', params: { id: selected.id } });
+  }
 };
 
 const handleGetCustomers = async () => {
@@ -50,7 +75,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back :to="{ name: 'main-menu' }" />
+        <btn-back @click="handleBackTo" />
       </template>
       <template #title>Clientes</template>
       <template #right>
@@ -69,7 +94,7 @@ onMounted(async () => {
           :key="index"
           clickable
           class="q-px-xs"
-          @click="handleViewCustomer(customer.id)"
+          @click="handleViewCustomer(customer)"
         >
           <q-item-section>
             <q-item-label>

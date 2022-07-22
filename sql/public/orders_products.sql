@@ -10,7 +10,7 @@ CREATE TABLE public.orders_products (
 	user_id uuid NULL,
 	order_id int8 NULL,
 	product_id int8 NULL,
-	quantity numeric NULL,
+	unit_price numeric NULL,
 	amount numeric NULL,
 	CONSTRAINT orders_items_pkey PRIMARY KEY (id)
 );

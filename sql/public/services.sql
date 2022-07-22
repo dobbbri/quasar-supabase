@@ -9,7 +9,7 @@ CREATE TABLE public.services (
 	user_id uuid NULL,
 	created_at timestamptz NULL DEFAULT now(),
 	"name" extensions."citext" NULL,
-	price numeric NULL DEFAULT '0'::numeric,
+	unit_price numeric NULL DEFAULT '0'::numeric,
 	measure_unit varchar NULL,
 	code_bar varchar NULL,
 	details text NULL,

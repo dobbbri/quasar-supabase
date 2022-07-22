@@ -13,7 +13,7 @@ const props = defineProps({
   <q-btn v-bind="attr.btn.big" class="btn-padding">
     <div class="row full-width">
       <div class="col-2 q-ma-auto">
-        <q-icon :name="props.item.icon" :color="props.item.iconColor" size="md" />
+        <q-icon :name="`sym_o_${props.item.icon}`" :color="props.item.color" size="md" />
       </div>
       <div class="col-10 text-left q-my-auto q-pl-md btn-text">
         {{ props.item.title }}

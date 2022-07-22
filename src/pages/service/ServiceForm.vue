@@ -70,9 +70,9 @@ const handleSubmit = async () => {
 
         <textarea-input v-model="service.details" label="Detalhes do serviço" />
 
-        <expansion-item default-opened group="price" label="Preço">
+        <expansion-item default-opened group="unit_price" label="Preço">
           <money-input
-            v-model="service.price"
+            v-model="service.unit_price"
             label="Preço de venda"
             :rules="[(val) => Number(val.replaceAll('.', '').replaceAll(',', '.')) > 0]"
             error-message="O preço de venda do serviço deve ser informado"

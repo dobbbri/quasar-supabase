@@ -32,6 +32,14 @@ const { notify } = useTools();
 const isEditMode = computed(() => (customer.value && customer.value.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
+const handleBackTo = () => {
+  if (route.params.backTo) {
+    router.push({ name: route.params.backTo });
+  } else {
+    router.push({ name: 'customer-list' });
+  }
+};
+
 const handleFindCEP = () => {
   if (address.value && address.value.zip_code.length == 9) {
     $q.loading.show();
@@ -83,14 +91,6 @@ const handleSubmit = async () => {
     router.push({ name: 'customer-list' });
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} o cliente.`, error);
-  }
-};
-
-const handleBackTo = () => {
-  if (route.params.backTo) {
-    router.push({ name: 'index' });
-  } else {
-    router.push({ name: 'customer-list' });
   }
 };
 </script>

@@ -67,8 +67,8 @@ onMounted(async () => {
         <text-view v-if="service.details" :value="service.details" label="Detalhes" />
 
         <text-view
-          v-if="service.price > 0"
-          :value="fmt.currency(service.price) + '/' + service.measure_unit"
+          v-if="service.unit_price > 0"
+          :value="fmt.currency(service.unit_price) + '/' + service.measure_unit"
           label="Preço"
         />
       </page-body>

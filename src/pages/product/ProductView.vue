@@ -21,7 +21,7 @@ const { loading, product, getProduct, removeProduct } = useProducts();
 const { confirm, notify, fmt } = useTools();
 
 const form = ref({
-  price: 0,
+  unit_price: 0,
   cost_price: 0
 });
 
@@ -29,15 +29,15 @@ const price_profit = ref(0);
 const price_markup = ref(0);
 
 watch(
-  () => (product.value.price, product.value.cost_price),
+  () => (product.value.unit_price, product.value.cost_price),
   () => {
     let profit = 0;
     let markup = 0;
-    const price = parseFloat(product.value.price);
+    const unit_price = parseFloat(product.value.unit_price);
     const cost_price = parseFloat(product.value.cost_price);
-    if (price > 0 && cost_price > 0) {
-      profit = ((price - cost_price) / price) * 100;
-      markup = ((price - cost_price) / cost_price) * 100;
+    if (unit_price > 0 && cost_price > 0) {
+      profit = ((unit_price - cost_price) / unit_price) * 100;
+      markup = ((unit_price - cost_price) / cost_price) * 100;
     }
     price_profit.value = Math.round(profit) + '%';
     price_markup.value = Math.round(markup) + '%';
@@ -94,8 +94,8 @@ onMounted(async () => {
         <text-view v-if="product.details" :value="product.details" label="Detalhes" />
 
         <text-view
-          v-if="product.price > 0"
-          :value="fmt.currency(product.price) + '/' + product.measure_unit"
+          v-if="product.unit_price > 0"
+          :value="fmt.currency(product.unit_price) + '/' + product.measure_unit"
           label="Preço"
         />
 

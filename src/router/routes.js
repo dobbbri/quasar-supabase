@@ -45,8 +45,9 @@ const routes = [
         component: () => import('pages/InitialRoutines.vue')
       },
 
+      // customers
       {
-        path: '/customer-list',
+        path: '/customer-list/:backTo?',
         name: 'customer-list',
         component: () => import('pages/customer/CustomerList.vue')
       },
@@ -61,6 +62,7 @@ const routes = [
         component: () => import('pages/customer/CustomerForm.vue')
       },
 
+      // products
       {
         path: '/product-list',
         name: 'product-list',
@@ -72,11 +74,12 @@ const routes = [
         component: () => import('pages/product/ProductView.vue')
       },
       {
-        path: '/product-form/:id?',
+        path: '/product-form',
         name: 'product-form',
         component: () => import('pages/product/ProductForm.vue')
       },
 
+      // services
       {
         path: '/service-list',
         name: 'service-list',
@@ -88,11 +91,19 @@ const routes = [
         component: () => import('pages/service/ServiceView.vue')
       },
       {
-        path: '/service-form/:id?',
+        path: '/service-form',
         name: 'service-form',
         component: () => import('pages/service/ServiceForm.vue')
       },
 
+      // orders
+      {
+        path: '/order-form',
+        name: 'order-form',
+        component: () => import('pages/order/OrderForm.vue')
+      },
+
+      // settings
       {
         path: '/settings-form',
         name: 'settings-form',
