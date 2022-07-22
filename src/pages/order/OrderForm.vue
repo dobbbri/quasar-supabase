@@ -1,12 +1,12 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrders, useTools, useActive } from 'src/composables';
 import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
 
 const router = useRouter();
 
-const formName = 'order-form';
+const formName = ref('order-form');
 
 const { active } = useActive();
 const { loading, order, addOrder, editOrder } = useOrders();
@@ -58,9 +58,9 @@ const handleSubmit = async () => {
         <q-btn :to="{ name: 'customer-list', params: { backTo: 'order-form' } }">xxxxx</q-btn>
         <br />
         cliente: {{ active.customerName }} <br />
-        {{ active }}
+        active: {{ active }}
         <br />
-        {{ order }}
+        order: {{ order }}
       </page-body>
     </q-form>
   </page>

@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useQuasar } from 'quasar';
-import { useRouter, useRoute } from 'vue-router';
-import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
+import { useRouter } from 'vue-router';
+import { useCustomers, useCustomersAddresses, useTools, useActive } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -23,8 +23,10 @@ const optionsPerson = store.personTypes;
 
 const $q = useQuasar();
 const router = useRouter();
-const route = useRoute();
 
+const formName = ref('customer-form');
+
+const { active } = useActive();
 const { loading, customer, addCustomer, editCustomer } = useCustomers();
 const { address, addAddress, editAddress } = useCustomersAddresses();
 const { notify } = useTools();
@@ -33,8 +35,10 @@ const isEditMode = computed(() => (customer.value && customer.value.id ? true : 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (route.params.backTo) {
-    router.push({ name: route.params.backTo });
+  if (active.value.formName == formName.value) {
+    router.push({ name: 'main-menu' });
+  } else if (active.value.formName !== formName.value) {
+    router.push({ name: active.value.formName });
   } else {
     router.push({ name: 'customer-list' });
   }

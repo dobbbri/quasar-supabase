@@ -5,19 +5,31 @@ import { useDefaults } from 'src/composables';
 const { attr } = useDefaults();
 
 const props = defineProps({
-  item: { type: Object, default: () => {} }
+  item: { type: Object, default: () => {} },
+  vAligned: { type: Boolean, default: true }
 });
 </script>
 
 <template>
-  <q-btn v-bind="attr.btn.big" class="btn-padding">
-    <div class="row full-width">
-      <div class="col-2 q-ma-auto">
-        <q-icon :name="`sym_o_${props.item.icon}`" :color="props.item.color" size="md" />
-      </div>
-      <div class="col-10 text-left q-my-auto q-pl-md btn-text">
+  <q-btn v-bind="attr.btn.big" align="left" class="q-pa-sm">
+    <div class="row justify-start items-center">
+      <q-icon
+        :name="`sym_o_${props.item.icon}`"
+        :class="`bg-${props.item.color}`"
+        class="q-pa-xs text-white"
+        style="border-radius: 4px; border: 2px solid white"
+        size="md"
+      />
+      <div v-if="!vAligned" class="q-pl-sm">
         {{ props.item.title }}
       </div>
+    </div>
+    <div
+      v-if="vAligned"
+      class="text-left q-mt-xs self-start"
+      style="line-height: 18px; height: 36px"
+    >
+      {{ props.item.title }}
     </div>
   </q-btn>
 </template>
