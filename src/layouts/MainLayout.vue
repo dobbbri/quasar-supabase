@@ -1,5 +1,11 @@
 <script setup>
 import { LeftSidebar, PageFooter, TabMenu } from 'src/components';
+import { useActive } from 'src/composables';
+
+const { clearActive } = useActive();
+
+clearActive();
+console.log(' [DEBUG] clearActive : ');
 </script>
 
 <template>

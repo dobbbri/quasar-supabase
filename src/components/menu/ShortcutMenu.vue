@@ -23,6 +23,7 @@ const shortcutsMenu = [
 const open = (path) => {
   clearActive();
   active.value.formName = path;
+  active.value.fromApp = 'main-menu';
 
   if (path == 'order-form') {
     clearOrder();
