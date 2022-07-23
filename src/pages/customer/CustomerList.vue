@@ -23,7 +23,7 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const formName = 'customer-list';
+const formName = ref('customer-list');
 
 const { order } = useOrders();
 const { active } = useActive();

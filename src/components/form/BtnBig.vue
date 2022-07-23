@@ -20,14 +20,14 @@ const props = defineProps({
         style="border-radius: 4px; border: 2px solid white"
         size="md"
       />
-      <div v-if="!vAligned" class="q-pl-sm">
+      <div v-if="!vAligned" class="q-pl-sm text-weight-medium">
         {{ props.item.title }}
       </div>
     </div>
     <div
       v-if="vAligned"
       class="text-left q-mt-xs self-start text-weight-medium"
-      style="line-height: 16px; height: 32px; font-size: 16px"
+      style="line-height: 15px; height: 30px; font-size: 15px"
     >
       {{ props.item.title }}
     </div>

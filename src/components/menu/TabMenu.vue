@@ -1,8 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useActive } from 'src/composables';
 
 const router = useRouter();
+const tab = ref('main-menu');
 const { active, clearActive } = useActive();
 
 const tabMenu = [
@@ -16,6 +18,7 @@ const tabMenu = [
 const open = (path) => {
   clearActive();
   active.value.formName = path;
+  tab.value = path;
 
   router.push({ name: path });
 };
@@ -23,10 +26,10 @@ const open = (path) => {
 
 <template>
   <q-tabs
-    align="center"
+    v-model="tab"
     active-color="primary"
     indicator-color="transparent"
-    class="text-grey-7"
+    class="text-grey-7 q-mx-auto"
     style="font-size: 16px"
     outside-arrows
     mobile-arrows
@@ -35,6 +38,7 @@ const open = (path) => {
     <q-tab
       v-for="(navItem, index) in tabMenu"
       :key="index"
+      :name="navItem.path"
       :label="navItem.title"
       :icon="navItem.icon"
       @click="open(navItem.path)"
