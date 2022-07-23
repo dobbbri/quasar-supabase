@@ -1,5 +1,5 @@
 <script setup>
-import { Page, PageHeader, PageBody, ShortcutMenu } from 'src/components';
+import { Page, PageHeader, PageBody, PageFooter, ShortcutMenu, TabMenu } from 'src/components';
 </script>
 
 <template>
@@ -11,6 +11,9 @@ import { Page, PageHeader, PageBody, ShortcutMenu } from 'src/components';
       <page-body>
         <shortcut-menu />
       </page-body>
+      <page-footer>
+        <tab-menu />
+      </page-footer>
     </q-form>
   </page>
 </template>

@@ -69,5 +69,10 @@ const open = (path) => {
         <btn-big :item="shortcutsMenu[7]" class="col" @click="open(shortcutsMenu[7].path)" />
       </div>
     </div>
+
+    <div>
+      <div class="q-mb-sm q-mt-lg text-primary title title-expansion">Compromissos</div>
+      <div class="row q-gutter-md"></div>
+    </div>
   </div>
 </template>

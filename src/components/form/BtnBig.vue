@@ -26,8 +26,8 @@ const props = defineProps({
     </div>
     <div
       v-if="vAligned"
-      class="text-left q-mt-xs self-start"
-      style="line-height: 18px; height: 36px"
+      class="text-left q-mt-xs self-start text-weight-medium"
+      style="line-height: 16px; height: 32px; font-size: 16px"
     >
       {{ props.item.title }}
     </div>

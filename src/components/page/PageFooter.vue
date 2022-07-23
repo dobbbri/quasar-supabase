@@ -1,8 +1,5 @@
 <template>
-  <div class="desktop-only row q-pb-xs q-pt-sm">
-    <slot />
-  </div>
-  <q-footer class="mobile-only bg-transparent row q-pa-md">
+  <q-footer class="bg-grey-4 row">
     <slot />
   </q-footer>
 </template>
