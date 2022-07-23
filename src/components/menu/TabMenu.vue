@@ -30,7 +30,6 @@ const open = (path) => {
     active-color="primary"
     indicator-color="transparent"
     class="text-grey-7 q-mx-auto"
-    style="font-size: 16px"
     outside-arrows
     mobile-arrows
     no-caps
@@ -41,7 +40,19 @@ const open = (path) => {
       :name="navItem.path"
       :label="navItem.title"
       :icon="navItem.icon"
+      style="font-size: 12px"
       @click="open(navItem.path)"
     />
   </q-tabs>
 </template>
+
+<style lang="scss">
+.q-tab {
+  padding: 0 10px;
+}
+.q-tab__label {
+  font-size: 14px !important;
+  line-height: 16px;
+  font-weight: 500;
+}
+</style>

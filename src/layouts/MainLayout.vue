@@ -1,11 +1,16 @@
 <script setup>
-import { LeftSidebar } from 'src/components';
+import { LeftSidebar, PageFooter, TabMenu } from 'src/components';
 </script>
 
 <template>
   <div class="app position-relative" :style="'height: ' + $q.screen.height + 'px'">
     <q-layout view="lHh Lpr lFf" class="app-layout shadow-5" container>
       <left-sidebar />
+
+      <page-footer>
+        <tab-menu />
+      </page-footer>
+
       <q-page-container class="bg-app">
         <router-view :key="$route.fullPath" />
       </q-page-container>
