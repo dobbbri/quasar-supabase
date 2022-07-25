@@ -11,6 +11,7 @@ import TextInput from 'src/components/form/TextInput.vue';
 import MoneyInput from 'src/components/form/MoneyInput.vue';
 import IntegerInput from 'src/components/form/IntegerInput.vue';
 import TextareaInput from 'src/components/form/TextareaInput.vue';
+import DateInput from 'src/components/form/DateInput.vue';
 import PasswordInput from 'src/components/form/PasswordInput.vue';
 import PhoneInput from 'src/components/form/PhoneInput.vue';
 import CpfCnpjInput from 'src/components/form/CpfCnpjInput.vue';
@@ -18,6 +19,7 @@ import SearchInput from 'src/components/form/SearchInput.vue';
 import ImagePicker from 'src/components/form/ImagePicker.vue';
 import CheckBox from 'src/components/form/CheckBox.vue';
 import CheckboxIcon from 'src/components/form/CheckboxIcon.vue';
+import SelectInput from 'src/components/form/SelectInput.vue';
 import SelectOptions from 'src/components/form/SelectOptions.vue';
 import RadioOptions from 'src/components/form/RadioOptions.vue';
 
@@ -48,6 +50,7 @@ export {
   MoneyInput,
   IntegerInput,
   TextareaInput,
+  DateInput,
   PasswordInput,
   PhoneInput,
   CpfCnpjInput,
@@ -56,6 +59,7 @@ export {
   ImagePicker,
   CheckBox,
   CheckboxIcon,
+  SelectInput,
   SelectOptions,
   RadioOptions,
   WaitingLoad,

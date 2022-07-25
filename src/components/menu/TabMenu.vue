@@ -30,7 +30,7 @@ const open = (path) => {
     v-model="tab"
     active-color="primary"
     indicator-color="transparent"
-    class="text-grey-7 q-mx-auto"
+    class="text-grey-7 full-width justify-around"
     outside-arrows
     mobile-arrows
     no-caps

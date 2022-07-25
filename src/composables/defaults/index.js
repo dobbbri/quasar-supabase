@@ -24,6 +24,7 @@ export default function useAttribute() {
         outlined: true,
         dense: false,
         optionsDense: false,
+        stackLabel: true,
         color: 'secondary'
       },
       search: {

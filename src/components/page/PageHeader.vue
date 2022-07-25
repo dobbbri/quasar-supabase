@@ -34,5 +34,4 @@ const { fromTabMenu } = useActive();
       </div>
     </q-toolbar>
   </q-header>
-  {{ isLoggedIn }} {{ !fromTabMenu }}
 </template>

@@ -47,7 +47,7 @@ const routes = [
 
       // customers
       {
-        path: '/customer-list/:backTo?',
+        path: '/customer-list',
         name: 'customer-list',
         component: () => import('pages/customer/CustomerList.vue')
       },
