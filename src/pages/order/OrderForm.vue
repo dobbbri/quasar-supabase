@@ -2,7 +2,16 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrders, useTools, useActive } from 'src/composables';
-import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
+import {
+  Page,
+  PageHeader,
+  PageBody,
+  BtnBack,
+  BtnSave,
+  SelectInput,
+  DateInput,
+  TextareaInput
+} from 'src/components';
 
 const router = useRouter();
 
@@ -24,6 +33,10 @@ const handleBackTo = () => {
   } else {
     router.push({ name: 'order-list' });
   }
+};
+
+const selectCustomer = () => {
+  router.push({ name: 'customer-list' });
 };
 
 const handleSubmit = async () => {
@@ -55,7 +68,12 @@ const handleSubmit = async () => {
       </page-header>
 
       <page-body>
-        <q-btn :to="{ name: 'customer-list', params: { backTo: 'order-form' } }">xxxxx</q-btn>
+        <select-input label="Cliente" :text="active.customerName" @focus="selectCustomer()" />
+        <textarea-input v-model="order.reference" label="Referencia" />
+        <date-input v-model:date="order.delivery_date" label="Data de entrega" />
+        <date-input v-model:date="order.budget_deadline" label="Validade do orçamento" />
+        <date-input v-model:date="order.deadline" label="Prazo de execução" />
+        <textarea-input v-model="order.notes" label="Observações" />
         <br />
         cliente: {{ active.customerName }} <br />
         active: {{ active }}

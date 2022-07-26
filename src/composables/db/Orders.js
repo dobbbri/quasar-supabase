@@ -8,12 +8,11 @@ export default function useOrders() {
 
   const clearOrder = () => {
     order.value = {
-      name: '',
-      is_legal_entity: false,
-      email: '',
-      phone_1: '',
-      phone_2: '',
-      document_number: '',
+      customer_id: 0,
+      reference: '',
+      delivery_date: '',
+      budget_deadline: '',
+      deadline: '',
       notes: ''
     };
   };
