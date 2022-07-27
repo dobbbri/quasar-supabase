@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrders, useTools, useActive } from 'src/composables';
 import {
@@ -10,14 +10,13 @@ import {
   BtnSave,
   SelectInput,
   DateInput,
-  TextareaInput
+  TextareaInput,
+  ExpansionItem
 } from 'src/components';
 
 const router = useRouter();
 
-const formName = ref('order-form');
-
-const { active } = useActive();
+const { active, fromTabMenu } = useActive();
 const { loading, order, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
 
@@ -26,16 +25,15 @@ const isEditMode = computed(() => (order.value && order.value.id ? true : false)
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.formName == formName.value) {
+  if (!fromTabMenu.value) {
     router.push({ name: 'main-menu' });
-  } else if (active.value.formName !== formName.value) {
-    router.push({ name: active.value.formName });
   } else {
     router.push({ name: 'order-list' });
   }
 };
 
 const selectCustomer = () => {
+  active.value.fromForm = 'order-form';
   router.push({ name: 'customer-list' });
 };
 
@@ -59,7 +57,7 @@ const handleSubmit = async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back @click="handleBackTo()" />
+          <btn-back v-if="!fromTabMenu" @click="handleBackTo()" />
         </template>
         <template #title>{{ title }} Pedido</template>
         <template #right>
@@ -68,12 +66,19 @@ const handleSubmit = async () => {
       </page-header>
 
       <page-body>
-        <select-input label="Cliente" :text="active.customerName" @focus="selectCustomer()" />
-        <textarea-input v-model="order.reference" label="Referencia" />
-        <date-input v-model:date="order.delivery_date" label="Data de entrega" />
-        <date-input v-model:date="order.budget_deadline" label="Validade do orçamento" />
-        <date-input v-model:date="order.deadline" label="Prazo de execução" />
-        <textarea-input v-model="order.notes" label="Observações" />
+        <expansion-item :fake="true" label="Pedido">
+          <select-input label="Cliente" :text="active.customerName" @focus="selectCustomer()" />
+          <textarea-input v-model="order.reference" label="Referencia" />
+        </expansion-item>
+
+        <expansion-item default-opened label="Informações básica">
+          <date-input v-model:date="order.delivery_date" label="Data de entrega" />
+          <date-input v-model:date="order.budget_deadline" label="Validade do orçamento" />
+          <date-input v-model:date="order.deadline" label="Prazo de execução" />
+          <textarea-input v-model="order.notes" label="Observações" />
+        </expansion-item>
+        <expansion-item label="Itens do pedido"> </expansion-item>
+        <expansion-item label="Detalhes"> </expansion-item>
         <br />
         cliente: {{ active.customerName }} <br />
         active: {{ active }}

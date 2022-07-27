@@ -1,11 +1,10 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { useCustomers, useCustomersAddresses, useOrders, useActive } from 'src/composables';
+import { useCustomers, useOrders, useActive } from 'src/composables';
 import { BtnBig } from 'src/components';
 
 const router = useRouter();
 const { clearCustomer } = useCustomers();
-const { clearAddress } = useCustomersAddresses();
 const { clearOrder } = useOrders();
 const { active, clearActive } = useActive();
 
@@ -23,16 +22,15 @@ const shortcutsMenu = [
 const open = (path) => {
   clearActive();
   active.value.formName = path;
-  active.value.fromApp = 'main-menu';
+  active.value.fromMenu = 'main-menu';
 
   if (path == 'order-form') {
     clearOrder();
   } else if (path == 'customer-form') {
     clearCustomer();
-    clearAddress();
   }
 
-  router.push({ name: path, params: { backTo: 'main-menu' } });
+  router.push({ name: path });
 };
 </script>
 

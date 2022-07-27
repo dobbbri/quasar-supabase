@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useCustomers, useCustomersAddresses, useTools } from 'src/composables';
+import { useCustomers, useTools } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -17,17 +17,14 @@ import {
 const router = useRouter();
 const route = useRoute();
 
-const { loading, customer, getCustomer, removeCustomer } = useCustomers();
-const { address, getAddress, removeAddress } = useCustomersAddresses();
+const { loading, customer, address, getCustomer, getAddress, removeCustomerAddress } =
+  useCustomers();
 const { confirm, notify } = useTools();
 
 const handleRemoveCustomer = async () => {
   try {
     confirm.delete(`do cliente: ${customer.value.name}`).onOk(async () => {
-      await removeCustomer(customer.value.id);
-      if (address.value && address.value.id > 0) {
-        await removeAddress(address.value.id);
-      }
+      await removeCustomerAddress(customer.value, address.value);
       notify.success('Cliente excluido.');
       router.push({ name: 'customer-list' });
     });

@@ -5,14 +5,14 @@ const active = ref(null);
 export default function useActive() {
   const clearActive = () => {
     active.value = {
-      formName: '',
-      fromApp: '',
+      fromMenu: '',
+      fromForm: '',
       customerName: ''
     };
   };
 
   const fromTabMenu = computed(() => {
-    return active.value.fromApp == 'tab-menu' ? true : false;
+    return active.value.fromMenu === 'tab-menu' ? true : false;
   });
 
   return {

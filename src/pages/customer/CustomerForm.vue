@@ -1,8 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
-import { useCustomers, useCustomersAddresses, useTools, useActive } from 'src/composables';
+import { useCustomers, useTools, useActive } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -24,23 +24,23 @@ const optionsPerson = store.personTypes;
 const $q = useQuasar();
 const router = useRouter();
 
-const formName = ref('customer-form');
-
-const { active } = useActive();
-const { loading, customer, addCustomer, editCustomer } = useCustomers();
-const { address, addAddress, editAddress } = useCustomersAddresses();
+const { active, fromTabMenu } = useActive();
+const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
 const { notify } = useTools();
 
 const isEditMode = computed(() => (customer.value && customer.value.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.formName == formName.value) {
-    router.push({ name: 'main-menu' });
-  } else if (active.value.formName !== formName.value) {
-    router.push({ name: active.value.formName });
-  } else {
+  if (active.value.fromForm) {
+    console.log(' [DEBUG] active 1: ', active.value.fromForm);
+    router.push({ name: active.value.fromForm });
+  } else if (fromTabMenu.value) {
+    console.log(' [DEBUG] active 2: ', fromTabMenu.value);
     router.push({ name: 'customer-list' });
+  } else {
+    console.log(' [DEBUG] active 3: ', active.value.fromMenu);
+    router.push({ name: active.value.fromMenu });
   }
 };
 
@@ -77,19 +77,9 @@ const handleFindCEP = () => {
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      const data = await editCustomer(customer.value);
-      if (address.value.id > 0) {
-        await editAddress(address.value);
-      } else {
-        address.value.id = data[0].id;
-        await addAddress(address.value);
-      }
+      await editCustomerAddress(customer.value, address.value);
     } else {
-      const data = await addCustomer(customer.value);
-      if (address.value.address) {
-        address.value.id = data[0].id;
-        await addAddress(address.value);
-      }
+      await addCustomerAddress(customer.value, address.value);
     }
     notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
     router.push({ name: 'customer-list' });
@@ -120,7 +110,7 @@ const handleSubmit = async () => {
           error-message="O nome do cliente deve ser informado!"
         />
 
-        <expansion-item default-opened group="person" label="Tipo de Pessoa">
+        <expansion-item :fake="true" label="Tipo de Pessoa">
           <radio-options v-model="customer.is_legal_entity" :options="optionsPerson" />
         </expansion-item>
 

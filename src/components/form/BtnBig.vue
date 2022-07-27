@@ -18,7 +18,7 @@ const props = defineProps({
         :class="`bg-${props.item.color}`"
         class="q-pa-xs text-white"
         style="border-radius: 4px; border: 2px solid white"
-        size="md"
+        size="sm"
       />
       <div v-if="!vAligned" class="q-pl-sm text-weight-medium">
         {{ props.item.title }}

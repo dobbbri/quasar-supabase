@@ -17,10 +17,9 @@ const tabMenu = [
 
 const open = (path) => {
   clearActive();
-  active.value.formName = path;
-  active.value.fromApp = 'tab-menu';
-  tab.value = path;
+  active.value.fromMenu = 'tab-menu';
 
+  tab.value = path;
   router.push({ name: path });
 };
 </script>

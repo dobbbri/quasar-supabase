@@ -87,7 +87,7 @@ const handleSubmit = async () => {
           error-message="O nome do produto deve ser informado!"
         />
 
-        <expansion-item default-opened group="price" label="Preço">
+        <expansion-item :fake="true" label="Preço">
           <money-input
             v-model="product.unit_price"
             label="Preço de venda"

@@ -70,7 +70,7 @@ const handleSubmit = async () => {
 
         <textarea-input v-model="service.details" label="Detalhes do serviço" />
 
-        <expansion-item default-opened group="unit_price" label="Preço">
+        <expansion-item :fake="true" label="Preço">
           <money-input
             v-model="service.unit_price"
             label="Preço de venda"

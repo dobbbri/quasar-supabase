@@ -5,12 +5,22 @@ const { attr } = useDefaults();
 
 defineProps({
   label: { type: String, required: true },
-  group: { type: String, default: '1-group-1' }
+  group: { type: String, default: '1-group-1' },
+  fake: { type: Boolean, default: false }
 });
 </script>
 
 <template>
+  <div v-if="fake">
+    <div v-bind="attr.expansion" class="text-primary title title-expansion">
+      {{ label }}
+    </div>
+    <div v-bind="attr.lineSpacing" class="q-pb-xs">
+      <slot />
+    </div>
+  </div>
   <q-expansion-item
+    v-else
     :group="group"
     v-bind="attr.expansion"
     :label="label"
