@@ -12,6 +12,7 @@ import MoneyInput from 'src/components/form/MoneyInput.vue';
 import IntegerInput from 'src/components/form/IntegerInput.vue';
 import TextareaInput from 'src/components/form/TextareaInput.vue';
 import DateInput from 'src/components/form/DateInput.vue';
+import CepInput from 'src/components/form/CepInput.vue';
 import PasswordInput from 'src/components/form/PasswordInput.vue';
 import PhoneInput from 'src/components/form/PhoneInput.vue';
 import CpfCnpjInput from 'src/components/form/CpfCnpjInput.vue';
@@ -51,6 +52,7 @@ export {
   IntegerInput,
   TextareaInput,
   DateInput,
+  CepInput,
   PasswordInput,
   PhoneInput,
   CpfCnpjInput,

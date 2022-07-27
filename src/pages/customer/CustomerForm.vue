@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { useQuasar } from 'quasar';
+// import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useCustomers, useTools, useActive } from 'src/composables';
 import {
@@ -12,6 +12,7 @@ import {
   TextareaInput,
   RadioOptions,
   CpfCnpjInput,
+  CepInput,
   ExpansionItem,
   BtnBack,
   BtnSave
@@ -21,7 +22,7 @@ import { useUsersSettingsStore } from 'src/stores/settingsStore';
 const store = useUsersSettingsStore();
 const optionsPerson = store.personTypes;
 
-const $q = useQuasar();
+// const $q = useQuasar();
 const router = useRouter();
 
 const { active, fromTabMenu } = useActive();
@@ -33,45 +34,19 @@ const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
   if (active.value.fromForm) {
-    console.log(' [DEBUG] active 1: ', active.value.fromForm);
     router.push({ name: active.value.fromForm });
   } else if (fromTabMenu.value) {
-    console.log(' [DEBUG] active 2: ', fromTabMenu.value);
     router.push({ name: 'customer-list' });
   } else {
-    console.log(' [DEBUG] active 3: ', active.value.fromMenu);
     router.push({ name: active.value.fromMenu });
   }
 };
 
-const handleFindCEP = () => {
-  if (address.value && address.value.zip_code.length == 9) {
-    $q.loading.show();
-
-    const url = `https://brasilapi.com.br/api/cep/v1/${address.value.zip_code}`;
-    const options = {
-      method: 'GET',
-      mode: 'cors',
-      headers: { 'content-type': 'application/json;charset=utf-8' },
-      timeout: 30000
-    };
-
-    fetch(url, options)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('CEP inválido!');
-      })
-      .then((data) => {
-        address.value.street = data.street;
-        address.value.neighborhood = data.neighborhood;
-        address.value.state = data.state;
-        address.value.city = data.city;
-      })
-      .catch((error) => notify.info(error.message));
-    $q.loading.hide();
-  }
+const fillAddress = (data) => {
+  address.value.street = data.street;
+  address.value.neighborhood = data.neighborhood;
+  address.value.state = data.state;
+  address.value.city = data.city;
 };
 
 const handleSubmit = async () => {
@@ -133,13 +108,7 @@ const handleSubmit = async () => {
         </expansion-item>
 
         <expansion-item label="Endereço">
-          <text-input
-            v-model="address.zip_code"
-            mask="#####-###"
-            label="CEP"
-            @blur="handleFindCEP"
-          />
-
+          <cep-input v-model:cep="address.zip_code" label="CEP" @result="fillAddress" />
           <text-input v-model="address.street" label="Endereço" />
 
           <div class="line row q-gutter-x-md">
