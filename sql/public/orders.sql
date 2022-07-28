@@ -10,7 +10,10 @@ CREATE TABLE public.orders (
 	user_id uuid NULL,
 	customer_id int8 NULL,
 	delivery_date date NULL,
-	observations text NULL,
+	"comments" text NULL,
+	reference text NULL,
+	deadline date NULL,
+	budget_deadline date NULL,
 	CONSTRAINT orders_pkey PRIMARY KEY (id)
 );
 

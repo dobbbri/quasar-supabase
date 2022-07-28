@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrders, useTools, useActive } from 'src/composables';
 import {
@@ -20,8 +20,6 @@ const router = useRouter();
 const { active, fromTabMenu } = useActive();
 const { loading, order, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
-
-active.value.fromForm = 'order-form';
 
 const isEditMode = computed(() => (order.value && order.value.id ? true : false));
 
@@ -52,6 +50,10 @@ const handleSubmit = async () => {
     notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error);
   }
 };
+
+onMounted(async () => {
+  active.value.fromForm = 'order-form';
+});
 </script>
 
 <template>
@@ -86,7 +88,16 @@ const handleSubmit = async () => {
           <item-btn label="Desconto" type="plus" :to="{ name: 'measure-unit-form' }" />
         </expansion-item>
 
-        <expansion-item label="Detalhes"> </expansion-item>
+        <expansion-item label="Detalhes">
+          <item-btn
+            label="Condições de pagamento"
+            type="plus"
+            :to="{ name: 'measure-unit-form' }"
+          />
+          <item-btn label="Meios de pagamento" type="arrow" :to="{ name: 'measure-unit-form' }" />
+          <item-btn label="Garantia" type="plus" :to="{ name: 'measure-unit-form' }" />
+          <item-btn label="Observações" type="plus" :to="{ name: 'measure-unit-form' }" />
+        </expansion-item>
         <br />
         cliente: {{ active.customerName }} <br />
         active: {{ active }}

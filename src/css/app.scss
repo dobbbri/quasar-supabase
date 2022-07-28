@@ -3,6 +3,10 @@ body {
   font-family: 'IBM Plex Sans', sans-serif !important;
 }
 
+.material-icons {
+  color: $info !important;
+}
+
 .toolbar-height {
   min-height: 60px;
 }

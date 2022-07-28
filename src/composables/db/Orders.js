@@ -2,9 +2,19 @@ import { ref } from 'vue';
 import { useApi } from 'src/composables';
 
 const order = ref(null);
+const productList = ref([]);
+const serviceList = ref([]);
 
 export default function useOrders() {
-  const { loading, list, get, add, edit, remove, count } = useApi('orders');
+  const {
+    loading,
+    list: getOrders,
+    get: getOrder,
+    add: addOrder,
+    edit: editOrder,
+    remove: removeOrder,
+    count: countOrder
+  } = useApi('orders');
 
   const clearOrder = () => {
     order.value = {
@@ -13,19 +23,21 @@ export default function useOrders() {
       delivery_date: '',
       budget_deadline: '',
       deadline: '',
-      notes: ''
+      comments: ''
     };
   };
 
   return {
     loading,
     order,
+    productList,
+    serviceList,
     clearOrder,
-    getOrders: list,
-    getOrder: get,
-    addOrder: add,
-    editOrder: edit,
-    removeOrder: remove,
-    countOrder: count
+    getOrders,
+    getOrder,
+    addOrder,
+    editOrder,
+    removeOrder,
+    countOrder
   };
 }

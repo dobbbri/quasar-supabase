@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useNameSearch, useTools, useActive } from 'src/composables';
+import { useOrders, useProducts, useNameSearch, useTools, useActive } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -16,17 +16,15 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const appName = 'product-list';
-
-const { active } = useActive();
-
+const { productList } = useOrders();
+const { active, fromTabMenu } = useActive();
 const { loading, clearProduct, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.formName !== appName.value) {
-    router.push({ name: active.value.formName });
+  if (active.value.fromForm) {
+    router.push({ name: active.value.fromForm });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -39,7 +37,12 @@ const handleAddProduct = () => {
 
 const handleViewProduct = (selected) => {
   clearProduct();
-  router.push({ name: 'product-view', params: { id: selected.id } });
+  if (active.value.fromForm) {
+    productList.value.push(selected);
+    router.push({ name: active.value.fromForm });
+  } else {
+    router.push({ name: 'product-view', params: { id: selected.id } });
+  }
 };
 
 const handleGetProducts = async () => {
@@ -59,7 +62,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back @click="handleBackTo()" />
+        <btn-back v-if="!fromTabMenu" @click="handleBackTo" />
       </template>
       <template #title>Produtos</template>
       <template #right>

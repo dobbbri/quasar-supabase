@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useServices, useNameSearch, useTools, useActive } from 'src/composables';
+import { useOrders, useServices, useNameSearch, useTools, useActive } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -16,17 +16,15 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const appName = 'service-list';
-
-const { active } = useActive();
-
+const { serviceList } = useOrders();
+const { active, fromTabMenu } = useActive();
 const { loading, clearService, getServices } = useServices();
 const { searchQuery, matchingSearchQuery: services } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.formName !== appName.value) {
-    router.push({ name: active.value.formName });
+  if (active.value.fromForm) {
+    router.push({ name: active.value.fromForm });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -39,7 +37,12 @@ const handleAddService = () => {
 
 const handleViewService = (selected) => {
   clearService();
-  router.push({ name: 'service-view', params: { id: selected.id } });
+  if (active.value.fromForm) {
+    serviceList.value.push(selected);
+    router.push({ name: active.value.fromForm });
+  } else {
+    router.push({ name: 'service-view', params: { id: selected.id } });
+  }
 };
 
 const handleGetServices = async () => {
@@ -59,7 +62,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back @click="handleBackTo()" />
+        <btn-back v-if="!fromTabMenu" @click="handleBackTo" />
       </template>
       <template #title>Serviços</template>
       <template #right>

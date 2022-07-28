@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useTools } from 'src/composables';
+import { useProducts, useTools, useActive } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -21,6 +21,7 @@ const optionsMeasureUnits = store.measureUnits;
 
 const router = useRouter();
 
+const { active, fromTabMenu } = useActive();
 const { loading, product, addProduct, editProduct } = useProducts();
 const { notify } = useTools();
 
@@ -48,7 +49,13 @@ const isEditMode = computed(() => (product.value && product.value.id ? true : fa
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  router.push({ name: 'product-list' });
+  if (active.value.fromForm) {
+    router.push({ name: active.value.fromForm });
+  } else if (fromTabMenu.value) {
+    router.push({ name: 'product-list' });
+  } else {
+    router.push({ name: active.value.fromMenu });
+  }
 };
 
 const handleSubmit = async () => {

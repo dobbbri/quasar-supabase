@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useServices, useTools } from 'src/composables';
+import { useServices, useTools, useActive } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -18,6 +18,7 @@ import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
 
+const { active, fromTabMenu } = useActive();
 const { loading, service, addService, editService } = useServices();
 const { notify } = useTools();
 
@@ -29,7 +30,13 @@ const isEditMode = computed(() => (service.value && service.value.id ? true : fa
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  router.push({ name: 'service-list' });
+  if (active.value.fromForm) {
+    router.push({ name: active.value.fromForm });
+  } else if (fromTabMenu.value) {
+    router.push({ name: 'service-list' });
+  } else {
+    router.push({ name: active.value.fromMenu });
+  }
 };
 
 const handleSubmit = async () => {
