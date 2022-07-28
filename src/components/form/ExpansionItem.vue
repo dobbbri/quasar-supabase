@@ -32,22 +32,18 @@ defineProps({
   </q-expansion-item>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .q-expansion-item__container > q-item {
   padding: 0 16px;
 }
 
 .q-item__section--side > .q-icon {
   font-size: 28px;
-  background: $blue-grey-3;
-  color: $primary;
-  border-radius: 50%;
 }
 
-.body--dark {
-  .q-item__section--side > .q-icon {
-    background: $blue-grey-6;
-    color: white;
-  }
+.q-expansion-item__toggle-icon {
+  background: $blue-grey-1;
+  color: $info;
+  border-radius: 50%;
 }
 </style>

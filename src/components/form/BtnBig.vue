@@ -17,7 +17,7 @@ const props = defineProps({
         :name="`sym_o_${props.item.icon}`"
         :class="`bg-${props.item.color}`"
         class="q-pa-xs text-white"
-        style="border-radius: 4px; border: 2px solid white"
+        style="border-radius: 6px; border: 2px solid white"
         size="sm"
       />
       <div v-if="!vAligned" class="q-pl-sm text-weight-medium">
@@ -26,7 +26,7 @@ const props = defineProps({
     </div>
     <div
       v-if="vAligned"
-      class="text-left q-mt-xs self-start text-weight-medium"
+      class="text-left full-width q-mt-xs self-start text-weight-medium"
       style="line-height: 15px; height: 30px; font-size: 14px"
     >
       {{ props.item.title }}

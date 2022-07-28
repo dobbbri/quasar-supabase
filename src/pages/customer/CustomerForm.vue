@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue';
-// import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useCustomers, useTools, useActive } from 'src/composables';
 import {
@@ -22,7 +21,6 @@ import { useUsersSettingsStore } from 'src/stores/settingsStore';
 const store = useUsersSettingsStore();
 const optionsPerson = store.personTypes;
 
-// const $q = useQuasar();
 const router = useRouter();
 
 const { active, fromTabMenu } = useActive();

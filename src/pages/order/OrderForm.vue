@@ -11,7 +11,8 @@ import {
   SelectInput,
   DateInput,
   TextareaInput,
-  ExpansionItem
+  ExpansionItem,
+  ItemBtn
 } from 'src/components';
 
 const router = useRouter();
@@ -19,6 +20,8 @@ const router = useRouter();
 const { active, fromTabMenu } = useActive();
 const { loading, order, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
+
+active.value.fromForm = 'order-form';
 
 const isEditMode = computed(() => (order.value && order.value.id ? true : false));
 
@@ -33,7 +36,6 @@ const handleBackTo = () => {
 };
 
 const selectCustomer = () => {
-  active.value.fromForm = 'order-form';
   router.push({ name: 'customer-list' });
 };
 
@@ -66,7 +68,7 @@ const handleSubmit = async () => {
       </page-header>
 
       <page-body>
-        <expansion-item :fake="true" label="Pedido">
+        <expansion-item :fake="true" label="Pedido: ">
           <select-input label="Cliente" :text="active.customerName" @focus="selectCustomer()" />
           <textarea-input v-model="order.reference" label="Referencia" />
         </expansion-item>
@@ -77,7 +79,13 @@ const handleSubmit = async () => {
           <date-input v-model:date="order.deadline" label="Prazo de execução" />
           <textarea-input v-model="order.notes" label="Observações" />
         </expansion-item>
-        <expansion-item label="Itens do pedido"> </expansion-item>
+
+        <expansion-item label="Itens do pedido">
+          <item-btn label="Serviços" type="plus" :to="{ name: 'measure-unit-form' }" />
+          <item-btn label="Produtos" type="plus" :to="{ name: 'measure-unit-form' }" />
+          <item-btn label="Desconto" type="plus" :to="{ name: 'measure-unit-form' }" />
+        </expansion-item>
+
         <expansion-item label="Detalhes"> </expansion-item>
         <br />
         cliente: {{ active.customerName }} <br />

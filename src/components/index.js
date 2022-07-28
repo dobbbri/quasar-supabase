@@ -33,7 +33,8 @@ import BtnBack from 'src/components/form/BtnBack.vue';
 import BtnSave from 'src/components/form/BtnSave.vue';
 import BtnAdd from 'src/components/form/BtnAdd.vue';
 import BtnBig from 'src/components/form/BtnBig.vue';
-import BtnArrow from 'src/components/form/BtnArrow.vue';
+
+import ItemBtn from 'src/components/form/ItemBtn.vue';
 
 import FabMenu from 'src/components/form/FabMenu.vue';
 import FabEditAction from 'src/components/form/FabEditAction.vue';
@@ -69,7 +70,7 @@ export {
   BtnBack,
   BtnSave,
   BtnAdd,
-  BtnArrow,
+  ItemBtn,
   BtnBig,
   FabMenu,
   FabEditAction,
