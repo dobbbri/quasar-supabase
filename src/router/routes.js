@@ -40,9 +40,9 @@ const routes = [
         component: () => import('pages/MainMenu.vue')
       },
       {
-        path: '/initial-routines',
-        name: 'initial-routines',
-        component: () => import('pages/InitialRoutines.vue')
+        path: '/load-data',
+        name: 'load-data',
+        component: () => import('pages/LoadData.vue')
       },
 
       // customers

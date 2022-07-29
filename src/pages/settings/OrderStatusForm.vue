@@ -1,30 +1,25 @@
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUsersSettings, useTools, useDefaults } from 'src/composables';
+import { useUsersSettings, useTools, useDefaults, useData } from 'src/composables';
 import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
-const store = useUsersSettingsStore();
 const router = useRouter();
 
+const { settingId, orderStatuses, toJSON } = useData();
 const { loading, editSettings } = useUsersSettings();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
-const orderStatuses = ref([]);
-orderStatuses.value = store.orderStatus;
-
 const handleSubmit = async () => {
   try {
     await editSettings({
-      id: store.id,
-      order_status: JSON.stringify(orderStatuses.value)
+      id: settingId.value,
+      order_status: toJSON(orderStatuses.value)
     });
-    notify.success('Situação do pedido gravado.');
+    notify.success('Situações dos pedidos gravada.');
     router.push({ name: 'settings-form' });
   } catch (error) {
-    notify.error(`Erro ao alterar a situação do pedido.`, error);
+    notify.error(`Erro ao alterar a situações dos pedidos.`, error);
   }
 };
 </script>

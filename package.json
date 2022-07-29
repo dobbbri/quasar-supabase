@@ -14,11 +14,10 @@
   "dependencies": {
     "@quasar/extras": "^1.15.0",
     "@supabase/supabase-js": "^1.35.4",
-    "pinia": "^2.0.14",
     "quasar": "^2.7.5",
     "vue": "^3.2.37",
     "vue-currency-input": "^2.5.1",
-    "vue-router": "^4.0.16"
+    "vue-router": "^4.1.3"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.0.5",

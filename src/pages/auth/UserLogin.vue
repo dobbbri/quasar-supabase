@@ -20,7 +20,7 @@ const form = ref({
 const handleSubmit = async () => {
   try {
     await login(form.value);
-    router.push({ name: 'initial-routines' });
+    router.push({ name: 'load-data' });
   } catch (error) {
     notify.error('Credenciais inválidas', error);
     throw error;

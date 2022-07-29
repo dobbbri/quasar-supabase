@@ -1,30 +1,25 @@
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUsersSettings, useTools, useDefaults } from 'src/composables';
+import { useUsersSettings, useTools, useDefaults, useData } from 'src/composables';
 import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
-const store = useUsersSettingsStore();
 const router = useRouter();
 
+const { settingId, costCategories, toJSON } = useData();
 const { loading, editSettings } = useUsersSettings();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
-const costCategories = ref([]);
-costCategories.value = store.costCategory;
-
 const handleSubmit = async () => {
   try {
     await editSettings({
-      id: store.id,
-      cost_category: JSON.stringify(costCategories.value)
+      id: settingId.value,
+      cost_category: toJSON(costCategories.value)
     });
-    notify.success('Situação do pedido gravado.');
+    notify.success('Categorias de custo gravada.');
     router.push({ name: 'settings-form' });
   } catch (error) {
-    notify.error(`Erro ao alterar a situação do pedido.`, error);
+    notify.error(`Erro ao alterar as categorias de custo.`, error);
   }
 };
 </script>

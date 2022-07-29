@@ -1,30 +1,25 @@
 <script setup>
-import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUsersSettings, useTools, useDefaults } from 'src/composables';
+import { useUsersSettings, useTools, useDefaults, useData } from 'src/composables';
 import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
-const store = useUsersSettingsStore();
 const router = useRouter();
 
+const { settingId, measureUnits, toJSON } = useData();
 const { loading, editSettings } = useUsersSettings();
 const { notify } = useTools();
 const { attr } = useDefaults();
 
-const measureUnits = ref([]);
-measureUnits.value = store.measureUnits;
-
 const handleSubmit = async () => {
   try {
     await editSettings({
-      id: store.id,
-      measure_units: JSON.stringify(measureUnits.value)
+      id: settingId.value,
+      measure_units: toJSON(measureUnits.value)
     });
-    notify.success('Unidade de medida gravada.');
+    notify.success('Unidades de medidas gravada.');
     router.push({ name: 'settings-form' });
   } catch (error) {
-    notify.error(`Erro ao alterar a unidade de medida.`, error);
+    notify.error(`Erro ao alterar as unidades de medidas.`, error);
   }
 };
 </script>

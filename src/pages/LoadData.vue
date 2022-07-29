@@ -1,12 +1,20 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useUsersSettings, useTools } from 'src/composables';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
+import { useUsersSettings, useTools, useData } from 'src/composables';
 import { Page, PageHeader, WaitingLoad } from 'src/components';
 
 const router = useRouter();
-const store = useUsersSettingsStore();
+const {
+  settingId,
+  measureUnits,
+  orderStatuses,
+  costCategories,
+  paymentMethods,
+  paymentConditions,
+  toJS,
+  toJSON
+} = useData();
 
 const { getSettings, addSettings } = useUsersSettings();
 const { notify } = useTools();
@@ -18,18 +26,20 @@ const handleSettings = async () => {
     loading.value = true;
     let settings = await getSettings();
     if (settings) {
-      store.setSettings(settings[0]);
+      settingId.value = settings[0].id;
+      measureUnits.value = toJS(settings[0].measure_units);
+      paymentMethods.value = toJS(settings[0].payment_methods);
+      paymentConditions.value = toJS(settings[0].payment_conditions);
+      orderStatuses.value = toJS(settings[0].order_status);
+      costCategories.value = toJS(settings[0].cost_category);
     } else {
-      const { measureUnits, paymentMethods, paymentConditions, orderStatus, costCategory } =
-        store.getDefaults();
       settings = await addSettings({
-        measure_units: measureUnits,
-        payment_methods: paymentMethods,
-        payment_conditions: paymentConditions,
-        order_status: orderStatus,
-        cost_category: costCategory
+        measure_units: toJSON(measureUnits.value),
+        payment_methods: toJSON(paymentMethods.value),
+        payment_conditions: toJSON(paymentConditions.value),
+        order_status: toJSON(orderStatuses.value),
+        cost_category: toJSON(costCategories.value)
       });
-      store.setSettings(settings);
     }
     loading.value = false;
     router.push({ name: 'main-menu' });
