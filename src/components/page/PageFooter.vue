@@ -5,7 +5,7 @@ const { isLoggedIn } = useAuth();
 </script>
 
 <template>
-  <q-footer v-if="isLoggedIn" class="bg-grey-4 row">
+  <q-footer v-if="isLoggedIn" class="bg-primary row">
     <slot />
   </q-footer>
 </template>

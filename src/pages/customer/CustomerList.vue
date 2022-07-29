@@ -39,7 +39,7 @@ const handleViewCustomer = (selected) => {
   clearCustomer();
   if (active.value.fromForm) {
     order.value.customer_id = selected.id;
-    active.value.customerName = selected.name;
+    order.value.customerName = selected.name;
     router.push({ name: active.value.fromForm });
   } else {
     router.push({ name: 'customer-view', params: { id: selected.id } });

@@ -1,9 +1,8 @@
 <script setup>
-import { useDefaults, useAuth } from 'src/composables';
-import { useMenuStore } from 'src/stores/menuStore';
+import { useDefaults, useAuth, useActive } from 'src/composables';
 
 const { attr } = useDefaults();
-const menuStore = useMenuStore();
+const { toggleSidebar } = useActive();
 const { isLoggedIn } = useAuth();
 </script>
 
@@ -17,7 +16,7 @@ const { isLoggedIn } = useAuth();
             v-bind="attr.btn.icon"
             icon="sym_o_menu"
             flat
-            @click="menuStore.toggleSidebar()"
+            @click="toggleSidebar()"
           >
             <q-tooltip>Menu</q-tooltip>
           </q-btn>

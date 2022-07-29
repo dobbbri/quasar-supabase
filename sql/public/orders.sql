@@ -9,6 +9,7 @@ CREATE TABLE public.orders (
 	created_at timestamptz NULL DEFAULT now(),
 	user_id uuid NULL,
 	customer_id int8 NULL,
+	customer_name extensions."citext" NULL,
 	delivery_date date NULL,
 	"comments" text NULL,
 	reference text NULL,

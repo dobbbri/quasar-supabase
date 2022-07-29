@@ -27,9 +27,10 @@ const open = (path) => {
 <template>
   <q-tabs
     v-model="tab"
-    active-color="primary"
+    padding="xs"
+    active-color="info"
     indicator-color="transparent"
-    class="text-grey-7 full-width justify-around"
+    class="text-grey-2 full-width justify-around toolbar-height"
     outside-arrows
     mobile-arrows
     no-caps
@@ -40,6 +41,7 @@ const open = (path) => {
       :name="navItem.path"
       :label="navItem.title"
       :icon="navItem.icon"
+      class="toolbar-height"
       style="font-size: 12px"
       @click="open(navItem.path)"
     />

@@ -9,8 +9,8 @@ const { clearOrder } = useOrders();
 const { active, clearActive } = useActive();
 
 const shortcutsMenu = [
-  { title: 'Adicionar Pedido', icon: 'post_add', color: 'blue', path: 'order-form' },
-  { title: 'Adicionar Cliente', icon: 'person_add', color: 'orange', path: 'customer-form' },
+  { title: 'Criar Novo Pedido', icon: 'post_add', color: 'blue', path: 'order-form' },
+  { title: 'Adicionar Novo Cliente', icon: 'person_add', color: 'orange', path: 'customer-form' },
   { title: 'Emitir Recibo', icon: 'receipt_long', color: 'grey', path: 'print-receipt' },
   { title: 'Lançar Recebimentos', icon: 'add_circle', color: 'green', path: 'revenue-form' },
   { title: 'Lançar Custos', icon: 'do_not_disturb_on', color: 'red', path: 'cost-form' },
