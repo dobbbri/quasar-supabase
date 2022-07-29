@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useTools, useActive } from 'src/composables';
+import { useCustomers, useTools, useActive, useData } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -16,13 +16,10 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
-
-const store = useUsersSettingsStore();
-const optionsPerson = store.personTypes;
 
 const router = useRouter();
 
+const { personTypes } = useData();
 const { active, fromTabMenu } = useActive();
 const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
 const { notify } = useTools();
@@ -84,7 +81,7 @@ const handleSubmit = async () => {
         />
 
         <expansion-item :fake="true" label="Tipo de Pessoa">
-          <radio-options v-model="customer.is_legal_entity" :options="optionsPerson" />
+          <radio-options v-model="customer.is_legal_entity" :options="personTypes" />
         </expansion-item>
 
         <expansion-item default-opened label="Telefones e Email">

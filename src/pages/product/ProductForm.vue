@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useTools, useActive } from 'src/composables';
+import { useProducts, useTools, useActive, useData } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -14,13 +14,10 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
-
-const store = useUsersSettingsStore();
-const optionsMeasureUnits = store.measureUnits;
 
 const router = useRouter();
 
+const { measureUnits } = useData();
 const { active, fromTabMenu } = useActive();
 const { loading, product, addProduct, editProduct } = useProducts();
 const { notify } = useTools();
@@ -105,7 +102,7 @@ const handleSubmit = async () => {
           <select-options
             v-model="product.measure_unit"
             label="Unidade de medida"
-            :options="optionsMeasureUnits"
+            :options="measureUnits"
             :show-id="true"
             :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
             :rules="[(val) => !!val]"

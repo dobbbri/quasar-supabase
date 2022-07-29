@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useServices, useTools, useActive } from 'src/composables';
+import { useServices, useTools, useActive, useData } from 'src/composables';
 import {
   Page,
   PageHeader,
@@ -14,16 +14,13 @@ import {
   BtnBack,
   BtnSave
 } from 'src/components';
-import { useUsersSettingsStore } from 'src/stores/settingsStore';
 
 const router = useRouter();
 
+const { measureUnits } = useData();
 const { active, fromTabMenu } = useActive();
 const { loading, service, addService, editService } = useServices();
 const { notify } = useTools();
-
-const store = useUsersSettingsStore();
-const optionsMeasureUnits = store.measureUnits;
 
 const isEditMode = computed(() => (service.value && service.value.id ? true : false));
 
@@ -88,7 +85,7 @@ const handleSubmit = async () => {
           <select-options
             v-model="service.measure_unit"
             label="Unidade de medida"
-            :options="optionsMeasureUnits"
+            :options="measureUnits"
             :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
             :rules="[(val) => !!val]"
             error-message="Uma unidade de medida deve ser selecionada"
