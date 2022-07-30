@@ -2,20 +2,6 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCustomers, useTools, useActive, useData } from 'src/composables';
-import {
-  Page,
-  PageHeader,
-  PageBody,
-  TextInput,
-  PhoneInput,
-  TextareaInput,
-  RadioOptions,
-  CpfCnpjInput,
-  CepInput,
-  ExpansionItem,
-  BtnBack,
-  BtnSave
-} from 'src/components';
 
 const router = useRouter();
 

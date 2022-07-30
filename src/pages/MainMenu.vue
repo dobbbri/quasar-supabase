@@ -1,5 +1,5 @@
 <script setup>
-import { Page, PageHeader, PageBody, ShortcutMenu } from 'src/components';
+import { ShortcutMenu } from 'src/components';
 </script>
 
 <template>

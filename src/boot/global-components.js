@@ -68,7 +68,7 @@ const globalComponents = {
   'btn-big': BtnBig,
   'fab-menu': FabMenu,
   'fab-edit-action': FabEditAction,
-  'fabRemove-action': FabRemoveAction
+  'fab-remove-action': FabRemoveAction
 };
 
 export default boot(async ({ app }) => {

@@ -2,15 +2,6 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useOrders, useServices, useNameSearch, useTools, useActive } from 'src/composables';
-import {
-  Page,
-  PageHeader,
-  PageBody,
-  SearchInput,
-  WaitingLoad,
-  BtnBack,
-  BtnAdd
-} from 'src/components';
 
 const router = useRouter();
 

@@ -1,6 +1,5 @@
 <script setup>
 import { defineProps } from 'vue';
-import { Page, TextInput, MoneyInput } from 'src/components';
 import { useOrders } from 'src/composables';
 
 const { productList } = useOrders();

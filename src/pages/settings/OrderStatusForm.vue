@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useUsersSettings, useTools, useDefaults, useData } from 'src/composables';
-import { Page, PageHeader, PageBody, BtnBack, BtnSave } from 'src/components';
 
 const router = useRouter();
 

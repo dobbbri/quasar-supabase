@@ -1,7 +1,3 @@
-<script setup>
-import { Page, PageHeader, PageBody, BtnBack, ItemBtn } from 'src/components';
-</script>
-
 <template>
   <page>
     <q-form>

@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUsersSettings, useTools, useData } from 'src/composables';
-import { Page, PageHeader, WaitingLoad } from 'src/components';
 
 const router = useRouter();
 const {

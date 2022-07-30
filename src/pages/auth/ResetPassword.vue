@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useAuth, useTools, useDefaults } from 'src/composables';
-import { Page, PageHeader, PageBody } from 'src/components';
 
 const router = useRouter();
 const route = useRoute();

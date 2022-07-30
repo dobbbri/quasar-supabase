@@ -2,7 +2,6 @@
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from 'src/composables';
-import { Page, PageHeader } from 'src/components';
 
 const router = useRouter();
 const { logout } = useAuth();

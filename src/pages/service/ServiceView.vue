@@ -2,16 +2,6 @@
 import { onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useServices, useTools } from 'src/composables';
-import {
-  Page,
-  PageHeader,
-  PageBody,
-  BtnBack,
-  TextView,
-  FabMenu,
-  FabEditAction,
-  FabRemoveAction
-} from 'src/components';
 
 const router = useRouter();
 const route = useRoute();
