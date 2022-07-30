@@ -8,7 +8,7 @@ const state = ref({
 });
 
 export default function useStore() {
-  const clearActive = () => {
+  const clearState = () => {
     state.value = {
       fromMenu: '',
       from1Form: '',
@@ -16,9 +16,7 @@ export default function useStore() {
     };
   };
 
-  const fromTabMenu = computed(() => {
-    return state.value.fromMenu === 'tab-menu' ? true : false;
-  });
+  const fromTabMenu = computed(() => (state.value.fromMenu === 'tab-menu' ? true : false));
 
   const toggleSidebar = () => {
     state.value.sidebarIsOpen = !state.value.sidebarIsOpen;
@@ -26,7 +24,7 @@ export default function useStore() {
 
   return {
     state,
-    clearActive,
+    clearState,
     fromTabMenu,
     toggleSidebar
   };

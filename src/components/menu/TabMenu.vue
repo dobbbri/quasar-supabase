@@ -5,7 +5,7 @@ import { useStore } from 'src/composables';
 
 const router = useRouter();
 const tab = ref('main-menu');
-const { state, clearActive } = useStore();
+const { state, clearState } = useStore();
 
 const tabMenu = [
   { title: 'Início', icon: 'sym_o_grid_view', path: 'main-menu' },
@@ -16,7 +16,7 @@ const tabMenu = [
 ];
 
 const open = (path) => {
-  clearActive();
+  clearState();
   state.value.fromMenu = 'tab-menu';
 
   tab.value = path;

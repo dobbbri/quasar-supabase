@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { LeftSidebar, TabMenu } from 'src/components';
 import { useStore } from 'src/composables';
 
-const { clearActive } = useStore();
+const { clearState } = useStore();
 
 const removeLoader = () => {
   const loading = document.querySelector('#loading');
@@ -14,7 +14,7 @@ const removeLoader = () => {
 };
 
 onMounted(() => {
-  clearActive();
+  clearState();
   removeLoader();
 });
 </script>
