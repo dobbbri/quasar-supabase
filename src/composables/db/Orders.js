@@ -2,8 +2,10 @@ import { ref } from 'vue';
 import { useApi } from 'src/composables';
 
 const order = ref(null);
-const productList = ref([]);
-const serviceList = ref([]);
+const orderProduct = ref(null);
+const orderService = ref(null);
+const productList = ref(null);
+const serviceList = ref(null);
 const temp = ref(null);
 
 export default function useOrders() {
@@ -31,6 +33,25 @@ export default function useOrders() {
   //   remove: removeOrdeServicer
   // } = useApi('orders_services');
 
+  const clearOrderProduct = () => {
+    orderProduct.value = {
+      id: 0,
+      name: '',
+      price: 0,
+      measure_unit: 'un.',
+      amount: 0
+    };
+  };
+  const clearOrderService = () => {
+    orderService.value = {
+      id: 0,
+      name: '',
+      price: 0,
+      measure_unit: 'un.',
+      amount: 0
+    };
+  };
+
   const clearOrder = () => {
     order.value = {
       customer_id: 0,
@@ -42,9 +63,13 @@ export default function useOrders() {
       total: 0
     };
     temp.value = {
+      order_id: '',
+      created_at: '',
       delivery_date: '',
       budget_deadline: '',
-      deadline: ''
+      deadline: '',
+      products_total: 0,
+      services_total: 0
     };
     productList.value = [];
     serviceList.value = [];
@@ -53,9 +78,14 @@ export default function useOrders() {
   return {
     loading,
     order,
+    temp,
+    orderProduct,
+    orderService,
     productList,
     serviceList,
     clearOrder,
+    clearOrderProduct,
+    clearOrderService,
     getOrders,
     getOrder,
     addOrder,

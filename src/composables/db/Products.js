@@ -9,7 +9,7 @@ export default function useProducts() {
   const clearProduct = () => {
     product.value = {
       name: '',
-      price: 0,
+      unit_price: 0,
       measure_unit: 'un.',
       cost_price: 0,
       brand: '',

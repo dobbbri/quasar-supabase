@@ -7,10 +7,7 @@ const { attr } = useDefaults();
 const $q = useQuasar();
 
 const props = defineProps({
-  cep: {
-    type: [String, Number],
-    required: true
-  }
+  cep: { type: [String, Number], required: true }
 });
 
 const emit = defineEmits(['update:cep', 'result']);

@@ -27,8 +27,8 @@ const isEditMode = computed(() => (service.value && service.value.id ? true : fa
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.fromForm) {
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    router.push({ name: active.value.from1Form });
   } else if (fromTabMenu.value) {
     router.push({ name: 'service-list' });
   } else {

@@ -3,14 +3,16 @@ import { ref, computed } from 'vue';
 const active = ref({
   sidebarIsOpen: false,
   fromMenu: '',
-  fromForm: ''
+  from1Form: '',
+  from2Form: ''
 });
 
 export default function useActive() {
   const clearActive = () => {
     active.value = {
       fromMenu: '',
-      fromForm: ''
+      from1Form: '',
+      from2Form: ''
     };
   };
 

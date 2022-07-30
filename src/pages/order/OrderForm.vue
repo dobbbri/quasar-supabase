@@ -8,6 +8,7 @@ import {
   PageBody,
   BtnBack,
   BtnSave,
+  TextInput,
   SelectInput,
   DateInput,
   TextareaInput,
@@ -18,7 +19,7 @@ import {
 const router = useRouter();
 
 const { active, fromTabMenu } = useActive();
-const { loading, order, serviceList, productList, addOrder, editOrder } = useOrders();
+const { loading, order, temp, serviceList, productList, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
 
 const isEditMode = computed(() => (order.value && order.value.id ? true : false));
@@ -52,7 +53,7 @@ const handleSubmit = async () => {
 };
 
 onMounted(async () => {
-  active.value.fromForm = 'order-form';
+  active.value.from1Form = 'order-form';
 });
 </script>
 
@@ -74,7 +75,7 @@ onMounted(async () => {
           <div class="line row q-gutter-x-md">
             <div class="col">
               <text-input
-                v-model="price_profit"
+                v-model="temp.order_id"
                 label="Número"
                 input-class="text-center no-pointer-events"
                 readonly
@@ -82,7 +83,7 @@ onMounted(async () => {
             </div>
             <div class="col">
               <text-input
-                v-model="price_markup"
+                v-model="temp.created_at"
                 label="Data"
                 input-class="text-center no-pointer-events"
                 readonly

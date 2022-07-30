@@ -16,15 +16,15 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { serviceList } = useOrders();
+const { orderService, serviceList, clearOrderService } = useOrders();
 const { active, fromTabMenu } = useActive();
 const { loading, clearService, getServices } = useServices();
 const { searchQuery, matchingSearchQuery: services } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.fromForm) {
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    router.push({ name: active.value.from1Form });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -35,13 +35,19 @@ const handleAddService = () => {
   router.push({ name: 'service-form' });
 };
 
-const handleViewService = (selected) => {
+const handleViewService = (service) => {
   clearService();
-  if (active.value.fromForm) {
-    serviceList.value.push(selected);
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    clearOrderService();
+    orderService.value.id = service.id;
+    orderService.value.name = service.name;
+    orderService.value.price = service.price;
+    orderService.value.measure_unit = service.measure_unit;
+    orderService.value.amount = service.amount;
+    serviceList.value.push(orderService);
+    router.push({ name: active.value.from1Form });
   } else {
-    router.push({ name: 'service-view', params: { id: selected.id } });
+    router.push({ name: 'service-view', params: { id: service.id } });
   }
 };
 

@@ -23,8 +23,8 @@ const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents)
 const { notify } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.fromForm) {
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    router.push({ name: active.value.from1Form });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -37,10 +37,10 @@ const handleAddCustomer = () => {
 
 const handleViewCustomer = (selected) => {
   clearCustomer();
-  if (active.value.fromForm) {
+  if (active.value.from1Form) {
     order.value.customer_id = selected.id;
     order.value.customerName = selected.name;
-    router.push({ name: active.value.fromForm });
+    router.push({ name: active.value.from1Form });
   } else {
     router.push({ name: 'customer-view', params: { id: selected.id } });
   }

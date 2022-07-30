@@ -16,15 +16,15 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { productList } = useOrders();
+const { orderProduct, productList, clearOrderProduct } = useOrders();
 const { active, fromTabMenu } = useActive();
 const { loading, clearProduct, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.fromForm) {
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    router.push({ name: active.value.from1Form });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -35,13 +35,19 @@ const handleAddProduct = () => {
   router.push({ name: 'product-form' });
 };
 
-const handleViewProduct = (selected) => {
+const handleViewProduct = (product) => {
   clearProduct();
-  if (active.value.fromForm) {
-    productList.value.push(selected);
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    clearOrderProduct();
+    orderProduct.value.id = product.id;
+    orderProduct.value.name = product.name;
+    orderProduct.value.price = product.price;
+    orderProduct.value.measure_unit = product.measure_unit;
+    orderProduct.value.amount = product.amount;
+    productList.value.push(orderProduct);
+    router.push({ name: active.value.from1Form });
   } else {
-    router.push({ name: 'product-view', params: { id: selected.id } });
+    router.push({ name: 'product-view', params: { id: product.id } });
   }
 };
 

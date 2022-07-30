@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useCustomers, useOrders, useActive } from 'src/composables';
-import { BtnBig } from 'src/components';
 
 const router = useRouter();
 const { clearCustomer } = useCustomers();

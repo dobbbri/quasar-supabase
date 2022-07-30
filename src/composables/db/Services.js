@@ -10,7 +10,7 @@ export default function useServices() {
     service.value = {
       name: '',
       details: '',
-      price: 0,
+      unit_price: 0,
       measure_unit: 'un.'
     };
   };

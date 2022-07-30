@@ -28,8 +28,8 @@ const isEditMode = computed(() => (customer.value && customer.value.id ? true : 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.fromForm) {
-    router.push({ name: active.value.fromForm });
+  if (active.value.from1Form) {
+    router.push({ name: active.value.from1Form });
   } else if (fromTabMenu.value) {
     router.push({ name: 'customer-list' });
   } else {
