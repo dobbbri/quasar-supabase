@@ -1,21 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useOrders, useProducts, useNameSearch, useTools, useActive } from 'src/composables';
+import { useOrders, useProducts, useNameSearch, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
 const documents = ref([]);
 
 const { orderProduct, productList, clearOrderProduct } = useOrders();
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, clearProduct, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.from1Form) {
-    router.push({ name: active.value.from1Form });
+  if (state.value.from1Form) {
+    router.push({ name: state.value.from1Form });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -28,7 +28,7 @@ const handleAddProduct = () => {
 
 const handleViewProduct = (product) => {
   clearProduct();
-  if (active.value.from1Form) {
+  if (state.value.from1Form) {
     clearOrderProduct();
     orderProduct.value.id = product.id;
     orderProduct.value.name = product.name;
@@ -36,7 +36,7 @@ const handleViewProduct = (product) => {
     orderProduct.value.measure_unit = product.measure_unit;
     orderProduct.value.amount = product.amount;
     productList.value.push(orderProduct);
-    router.push({ name: active.value.from1Form });
+    router.push({ name: state.value.from1Form });
   } else {
     router.push({ name: 'product-view', params: { id: product.id } });
   }

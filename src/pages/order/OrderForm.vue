@@ -1,11 +1,11 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useOrders, useTools, useActive } from 'src/composables';
+import { useOrders, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, order, temp, serviceList, productList, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
 
@@ -40,7 +40,7 @@ const handleSubmit = async () => {
 };
 
 onMounted(async () => {
-  active.value.from1Form = 'order-form';
+  state.value.from1Form = 'order-form';
 });
 </script>
 
@@ -105,7 +105,7 @@ onMounted(async () => {
           <textarea-input v-model="order.comments" label="Informações adicionais" />
         </expansion-item>
         <br />
-        active: {{ active }}
+        state: {{ state }}
         <br />
         order: {{ order }}
         <br />

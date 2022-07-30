@@ -1,11 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useActive } from 'src/composables';
+import { useStore } from 'src/composables';
 
 const router = useRouter();
 const tab = ref('main-menu');
-const { active, clearActive } = useActive();
+const { state, clearActive } = useStore();
 
 const tabMenu = [
   { title: 'Início', icon: 'sym_o_grid_view', path: 'main-menu' },
@@ -17,7 +17,7 @@ const tabMenu = [
 
 const open = (path) => {
   clearActive();
-  active.value.fromMenu = 'tab-menu';
+  state.value.fromMenu = 'tab-menu';
 
   tab.value = path;
   router.push({ name: path });

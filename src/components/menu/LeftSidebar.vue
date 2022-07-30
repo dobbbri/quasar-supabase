@@ -1,8 +1,8 @@
 <script setup>
-import { useDefaults, useActive } from 'src/composables';
+import { useDefaults, useStore } from 'src/composables';
 
 const { attr } = useDefaults();
-const { active, toggleSidebar } = useActive();
+const { state, toggleSidebar } = useStore();
 
 const menuList = [
   { title: 'Configuracões', icon: 'sym_o_tune', routeName: 'settings-form' },
@@ -12,7 +12,7 @@ const menuList = [
 
 <template>
   <div>
-    <q-drawer v-model="active.sidebarIsOpen" class="bg-blue-grey-1">
+    <q-drawer v-model="state.sidebarIsOpen" class="bg-blue-grey-1">
       <q-toolbar class="toolbar-height">
         <q-toolbar-title class="q-pl-md text-primary absolute-center title title-bar">
           Menu

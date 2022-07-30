@@ -1,12 +1,12 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useTools, useActive, useData } from 'src/composables';
+import { useProducts, useTools, useStore, useData } from 'src/composables';
 
 const router = useRouter();
 
 const { measureUnits } = useData();
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, product, addProduct, editProduct } = useProducts();
 const { notify } = useTools();
 
@@ -34,12 +34,12 @@ const isEditMode = computed(() => (product.value && product.value.id ? true : fa
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.from1Form) {
-    router.push({ name: active.value.from1Form });
+  if (state.value.from1Form) {
+    router.push({ name: state.value.from1Form });
   } else if (fromTabMenu.value) {
     router.push({ name: 'product-list' });
   } else {
-    router.push({ name: active.value.fromMenu });
+    router.push({ name: state.value.fromMenu });
   }
 };
 

@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted } from 'vue';
 import { LeftSidebar, TabMenu } from 'src/components';
-import { useActive } from 'src/composables';
+import { useStore } from 'src/composables';
 
-const { clearActive } = useActive();
+const { clearActive } = useStore();
 
 const removeLoader = () => {
   const loading = document.querySelector('#loading');

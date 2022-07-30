@@ -1,15 +1,15 @@
 import { ref, computed } from 'vue';
 
-const active = ref({
+const state = ref({
   sidebarIsOpen: false,
   fromMenu: '',
   from1Form: '',
   from2Form: ''
 });
 
-export default function useActive() {
+export default function useStore() {
   const clearActive = () => {
-    active.value = {
+    state.value = {
       fromMenu: '',
       from1Form: '',
       from2Form: ''
@@ -17,15 +17,15 @@ export default function useActive() {
   };
 
   const fromTabMenu = computed(() => {
-    return active.value.fromMenu === 'tab-menu' ? true : false;
+    return state.value.fromMenu === 'tab-menu' ? true : false;
   });
 
   const toggleSidebar = () => {
-    active.value.sidebarIsOpen = !active.value.sidebarIsOpen;
+    state.value.sidebarIsOpen = !state.value.sidebarIsOpen;
   };
 
   return {
-    active,
+    state,
     clearActive,
     fromTabMenu,
     toggleSidebar

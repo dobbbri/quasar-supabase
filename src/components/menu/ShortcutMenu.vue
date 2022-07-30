@@ -1,11 +1,11 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { useCustomers, useOrders, useActive } from 'src/composables';
+import { useCustomers, useOrders, useStore } from 'src/composables';
 
 const router = useRouter();
 const { clearCustomer } = useCustomers();
 const { clearOrder } = useOrders();
-const { active, clearActive } = useActive();
+const { state, clearActive } = useStore();
 
 const shortcutsMenu = [
   { title: 'Criar Novo Pedido', icon: 'post_add', color: 'blue', path: 'order-form' },
@@ -20,8 +20,8 @@ const shortcutsMenu = [
 
 const open = (path) => {
   clearActive();
-  active.value.formName = path;
-  active.value.fromMenu = 'main-menu';
+  state.value.formName = path;
+  state.value.fromMenu = 'main-menu';
 
   if (path == 'order-form') {
     clearOrder();

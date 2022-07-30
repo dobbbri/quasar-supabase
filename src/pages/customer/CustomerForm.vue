@@ -1,12 +1,12 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useTools, useActive, useData } from 'src/composables';
+import { useCustomers, useTools, useStore, useData } from 'src/composables';
 
 const router = useRouter();
 
 const { personTypes } = useData();
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
 const { notify } = useTools();
 
@@ -14,12 +14,12 @@ const isEditMode = computed(() => (customer.value && customer.value.id ? true : 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.from1Form) {
-    router.push({ name: active.value.from1Form });
+  if (state.value.from1Form) {
+    router.push({ name: state.value.from1Form });
   } else if (fromTabMenu.value) {
     router.push({ name: 'customer-list' });
   } else {
-    router.push({ name: active.value.fromMenu });
+    router.push({ name: state.value.fromMenu });
   }
 };
 

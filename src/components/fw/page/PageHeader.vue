@@ -1,8 +1,8 @@
 <script setup>
-import { useDefaults, useAuth, useActive } from 'src/composables';
+import { useDefaults, useAuth, useStore } from 'src/composables';
 
 const { attr } = useDefaults();
-const { toggleSidebar } = useActive();
+const { toggleSidebar } = useStore();
 const { isLoggedIn } = useAuth();
 </script>
 

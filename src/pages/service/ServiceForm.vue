@@ -1,12 +1,12 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useServices, useTools, useActive, useData } from 'src/composables';
+import { useServices, useTools, useStore, useData } from 'src/composables';
 
 const router = useRouter();
 
 const { measureUnits } = useData();
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, service, addService, editService } = useServices();
 const { notify } = useTools();
 
@@ -15,12 +15,12 @@ const isEditMode = computed(() => (service.value && service.value.id ? true : fa
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (active.value.from1Form) {
-    router.push({ name: active.value.from1Form });
+  if (state.value.from1Form) {
+    router.push({ name: state.value.from1Form });
   } else if (fromTabMenu.value) {
     router.push({ name: 'service-list' });
   } else {
-    router.push({ name: active.value.fromMenu });
+    router.push({ name: state.value.fromMenu });
   }
 };
 

@@ -1,21 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useOrders, useCustomers, useNameSearch, useTools, useActive } from 'src/composables';
+import { useOrders, useCustomers, useNameSearch, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
 const documents = ref([]);
 
 const { order } = useOrders();
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, clearCustomer, getCustomers } = useCustomers();
 const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.from1Form) {
-    router.push({ name: active.value.from1Form });
+  if (state.value.from1Form) {
+    router.push({ name: state.value.from1Form });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -28,10 +28,10 @@ const handleAddCustomer = () => {
 
 const handleViewCustomer = (selected) => {
   clearCustomer();
-  if (active.value.from1Form) {
+  if (state.value.from1Form) {
     order.value.customer_id = selected.id;
     order.value.customerName = selected.name;
-    router.push({ name: active.value.from1Form });
+    router.push({ name: state.value.from1Form });
   } else {
     router.push({ name: 'customer-view', params: { id: selected.id } });
   }

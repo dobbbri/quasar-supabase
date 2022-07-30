@@ -11,7 +11,7 @@ import useUsersSettings from 'src/composables/db/UsersSettings';
 import useNameSearch from 'src/composables/db/NameSearch';
 import useTools from 'src/composables/Tools';
 import useDefaults from 'src/composables/Defaults';
-import useActive from 'src/composables/active';
+import useStore from 'src/composables/store';
 import useData from 'src/composables/data';
 
 export {
@@ -28,6 +28,6 @@ export {
   useNameSearch,
   useTools,
   useDefaults,
-  useActive,
+  useStore,
   useData
 };

@@ -1,21 +1,21 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useOrders, useServices, useNameSearch, useTools, useActive } from 'src/composables';
+import { useOrders, useServices, useNameSearch, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
 const documents = ref([]);
 
 const { orderService, serviceList, clearOrderService } = useOrders();
-const { active, fromTabMenu } = useActive();
+const { state, fromTabMenu } = useStore();
 const { loading, clearService, getServices } = useServices();
 const { searchQuery, matchingSearchQuery: services } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (active.value.from1Form) {
-    router.push({ name: active.value.from1Form });
+  if (state.value.from1Form) {
+    router.push({ name: state.value.from1Form });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -28,7 +28,7 @@ const handleAddService = () => {
 
 const handleViewService = (service) => {
   clearService();
-  if (active.value.from1Form) {
+  if (state.value.from1Form) {
     clearOrderService();
     orderService.value.id = service.id;
     orderService.value.name = service.name;
@@ -36,7 +36,7 @@ const handleViewService = (service) => {
     orderService.value.measure_unit = service.measure_unit;
     orderService.value.amount = service.amount;
     serviceList.value.push(orderService);
-    router.push({ name: active.value.from1Form });
+    router.push({ name: state.value.from1Form });
   } else {
     router.push({ name: 'service-view', params: { id: service.id } });
   }
