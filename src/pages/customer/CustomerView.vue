@@ -57,10 +57,8 @@ onMounted(async () => {
         </template>
         <template #title>Cliente</template>
         <template #right>
-          <fab-menu>
-            <fab-remove-action :loading="loading.value" @click="handleRemoveCustomer()" />
-            <fab-edit-action :loading="loading.value" :to="{ name: 'customer-form' }" />
-          </fab-menu>
+          <btn-remove :loading="loading.value" @click="handleRemoveCustomer()" />
+          <btn-edit :loading="loading.value" :to="{ name: 'customer-form' }" />
         </template>
       </page-header>
 

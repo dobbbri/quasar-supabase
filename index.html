@@ -155,9 +155,6 @@
           loading.classList.add('main_done');
         } else if (document.readyState == 'complete') {
           loading.classList.add('init_done');
-          window.setTimeout(function () {
-            loading.remove();
-          }, 400);
         }
       };
     </script>

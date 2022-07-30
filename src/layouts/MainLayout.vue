@@ -1,11 +1,22 @@
 <script setup>
+import { onMounted } from 'vue';
 import { LeftSidebar, TabMenu } from 'src/components';
 import { useActive } from 'src/composables';
 
 const { clearActive } = useActive();
 
-clearActive();
-console.log(' [DEBUG] clearActive : ');
+const removeLoader = () => {
+  const loading = document.querySelector('#loading');
+  loading.classList.add('init_done');
+  window.setTimeout(function () {
+    loading.remove();
+  }, 200);
+};
+
+onMounted(() => {
+  clearActive();
+  removeLoader();
+});
 </script>
 
 <template>
