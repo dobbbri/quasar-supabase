@@ -39,10 +39,9 @@ onMounted(() => {
 .app {
   width: 100%;
   height: 100%;
-  background: #7d8395;
-  /* background-image: url(../assets/hero-bg.svg); */
-  /* background-position: top center; */
-  /* background-repeat: no-repeat; */
+  background-image: url(../assets/hero-bg.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
   &-layout {
     margin: 0 auto;
     z-index: 4000;
