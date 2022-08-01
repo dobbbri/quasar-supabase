@@ -6,7 +6,7 @@ import { useServices, useTools, useStore, useData } from 'src/composables';
 const router = useRouter();
 
 const { measureUnits } = useData();
-const { state, fromTabMenu } = useStore();
+const { state, isFromTabMenu } = useStore();
 const { loading, service, addService, editService } = useServices();
 const { notify } = useTools();
 
@@ -15,12 +15,12 @@ const isEditMode = computed(() => (service.value && service.value.id ? true : fa
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (state.value.from1Form) {
-    router.push({ name: state.value.from1Form });
-  } else if (fromTabMenu.value) {
+  if (state.value.from.form1) {
+    router.push({ name: state.value.from.form1 });
+  } else if (isFromTabMenu.value) {
     router.push({ name: 'service-list' });
   } else {
-    router.push({ name: state.value.fromMenu });
+    router.push({ name: state.value.from.menu });
   }
 };
 

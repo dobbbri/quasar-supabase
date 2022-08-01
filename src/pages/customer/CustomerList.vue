@@ -8,14 +8,14 @@ const router = useRouter();
 const documents = ref([]);
 
 const { order } = useOrders();
-const { state, fromTabMenu } = useStore();
+const { state, isFromTabMenu } = useStore();
 const { loading, clearCustomer, getCustomers } = useCustomers();
 const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
 const { notify } = useTools();
 
 const handleBackTo = () => {
-  if (state.value.from1Form) {
-    router.push({ name: state.value.from1Form });
+  if (state.value.from.form1) {
+    router.push({ name: state.value.from.form1 });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -28,10 +28,10 @@ const handleAddCustomer = () => {
 
 const handleViewCustomer = (selected) => {
   clearCustomer();
-  if (state.value.from1Form) {
+  if (state.value.from.form1) {
     order.value.customer_id = selected.id;
     order.value.customerName = selected.name;
-    router.push({ name: state.value.from1Form });
+    router.push({ name: state.value.from.form1 });
   } else {
     router.push({ name: 'customer-view', params: { id: selected.id } });
   }
@@ -54,7 +54,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back v-if="!fromTabMenu" @click="handleBackTo" />
+        <btn-back v-if="!isFromTabMenu" @click="handleBackTo" />
       </template>
       <template #title>Clientes</template>
       <template #right>

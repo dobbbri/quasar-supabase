@@ -8,14 +8,14 @@ const router = useRouter();
 const documents = ref([]);
 
 const { orderService, serviceList, clearOrderService } = useOrders();
-const { state, fromTabMenu } = useStore();
+const { state, isFromTabMenu } = useStore();
 const { loading, clearService, getServices } = useServices();
 const { searchQuery, matchingSearchQuery: services } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (state.value.from1Form) {
-    router.push({ name: state.value.from1Form });
+  if (state.value.from.form1) {
+    router.push({ name: state.value.from.form1 });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -28,7 +28,7 @@ const handleAddService = () => {
 
 const handleViewService = (service) => {
   clearService();
-  if (state.value.from1Form) {
+  if (state.value.from.form1) {
     clearOrderService();
     orderService.value.id = service.id;
     orderService.value.name = service.name;
@@ -36,7 +36,7 @@ const handleViewService = (service) => {
     orderService.value.measure_unit = service.measure_unit;
     orderService.value.amount = service.amount;
     serviceList.value.push(orderService);
-    router.push({ name: state.value.from1Form });
+    router.push({ name: state.value.from.form1 });
   } else {
     router.push({ name: 'service-view', params: { id: service.id } });
   }
@@ -59,7 +59,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back v-if="!fromTabMenu" @click="handleBackTo" />
+        <btn-back v-if="!isFromTabMenu" @click="handleBackTo" />
       </template>
       <template #title>Serviços</template>
       <template #right>

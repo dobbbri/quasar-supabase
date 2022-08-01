@@ -6,7 +6,7 @@ import { useCustomers, useTools, useStore, useData } from 'src/composables';
 const router = useRouter();
 
 const { personTypes } = useData();
-const { state, fromTabMenu } = useStore();
+const { state, isFromTabMenu } = useStore();
 const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
 const { notify } = useTools();
 
@@ -14,12 +14,12 @@ const isEditMode = computed(() => (customer.value && customer.value.id ? true : 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (state.value.from1Form) {
-    router.push({ name: state.value.from1Form });
-  } else if (fromTabMenu.value) {
+  if (state.value.from.form1) {
+    router.push({ name: state.value.from.form1 });
+  } else if (isFromTabMenu.value) {
     router.push({ name: 'customer-list' });
   } else {
-    router.push({ name: state.value.fromMenu });
+    router.push({ name: state.value.from.menu });
   }
 };
 

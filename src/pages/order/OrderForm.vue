@@ -5,7 +5,7 @@ import { useOrders, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
-const { state, fromTabMenu } = useStore();
+const { state, isFromTabMenu } = useStore();
 const { loading, order, temp, serviceList, productList, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
 
@@ -14,7 +14,7 @@ const isEditMode = computed(() => (order.value && order.value.id ? true : false)
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  if (!fromTabMenu.value) {
+  if (!isFromTabMenu.value) {
     router.push({ name: 'main-menu' });
   } else {
     router.push({ name: 'order-list' });
@@ -40,7 +40,7 @@ const handleSubmit = async () => {
 };
 
 onMounted(async () => {
-  state.value.from1Form = 'order-form';
+  state.value.from.form1 = 'order-form';
 });
 </script>
 
@@ -49,7 +49,7 @@ onMounted(async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back v-if="!fromTabMenu" @click="handleBackTo()" />
+          <btn-back v-if="!isFromTabMenu" @click="handleBackTo()" />
         </template>
         <template #title>{{ title }} Pedido</template>
         <template #right>
@@ -58,7 +58,7 @@ onMounted(async () => {
       </page-header>
 
       <page-body>
-        <expansion-item :fake="true" label="Pedido">
+        <expansion-item v-if="temp.order_id" :fake="true" label="Pedido">
           <div class="line row q-gutter-x-md">
             <div class="col">
               <text-input
@@ -89,8 +89,8 @@ onMounted(async () => {
         </expansion-item>
 
         <expansion-item group="itens" default-opened label="Itens do pedido">
-          <item-btn label="Serviços" type="plus" :to="{ name: 'service-list' }" />
-          <item-btn label="Produtos" type="plus" :to="{ name: 'product-list' }" />
+          <item-btn label="Serviços" type="plus" :to="{ name: 'order-service-list' }" />
+          <item-btn label="Produtos" type="plus" :to="{ name: 'order-product-list' }" />
           <item-btn label="Desconto" type="plus" :to="{ name: 'measure-unit-form' }" />
         </expansion-item>
 

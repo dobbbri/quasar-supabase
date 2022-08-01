@@ -5,7 +5,7 @@ import { useCustomers, useOrders, useStore } from 'src/composables';
 const router = useRouter();
 const { clearCustomer } = useCustomers();
 const { clearOrder } = useOrders();
-const { state, clearState } = useStore();
+const { state, clearFromState } = useStore();
 
 const shortcutsMenu = [
   { title: 'Criar Novo Pedido', icon: 'post_add', color: 'blue', path: 'order-form' },
@@ -19,9 +19,9 @@ const shortcutsMenu = [
 ];
 
 const open = (path) => {
-  clearState();
+  clearFromState();
   state.value.formName = path;
-  state.value.fromMenu = 'main-menu';
+  state.value.from.menu = 'main-menu';
 
   if (path == 'order-form') {
     clearOrder();

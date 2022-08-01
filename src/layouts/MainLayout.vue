@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { LeftSidebar, TabMenu } from 'src/components';
 import { useStore } from 'src/composables';
 
-const { clearState } = useStore();
+const { clearFromState } = useStore();
 
 const removeLoader = () => {
   const loading = document.querySelector('#loading');
@@ -14,13 +14,13 @@ const removeLoader = () => {
 };
 
 onMounted(() => {
-  clearState();
+  clearFromState();
   removeLoader();
 });
 </script>
 
 <template>
-  <div class="app position-relative" :style="'height: ' + $q.screen.height + 'px'">
+  <div v-cloak class="app position-relative" :style="'height: ' + $q.screen.height + 'px'">
     <q-layout view="lHh Lpr lFf" class="app-layout shadow-5" container>
       <left-sidebar />
 

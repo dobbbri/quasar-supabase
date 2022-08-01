@@ -7,15 +7,17 @@ const router = useRouter();
 
 const documents = ref([]);
 
-const { orderProduct, productList, clearOrderProduct } = useOrders();
-const { state, fromTabMenu } = useStore();
+const { productList } = useOrders();
+const { state, isFromTabMenu } = useStore();
 const { loading, clearProduct, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (state.value.from1Form) {
-    router.push({ name: state.value.from1Form });
+  if (state.value.from.form2) {
+    router.push({ name: state.value.from.form2 });
+  } else if (state.value.from.form1) {
+    router.push({ name: state.value.from.form1 });
   } else {
     router.push({ name: 'main-menu' });
   }
@@ -27,16 +29,14 @@ const handleAddProduct = () => {
 };
 
 const handleViewProduct = (product) => {
-  clearProduct();
-  if (state.value.from1Form) {
-    clearOrderProduct();
-    orderProduct.value.id = product.id;
-    orderProduct.value.name = product.name;
-    orderProduct.value.price = product.price;
-    orderProduct.value.measure_unit = product.measure_unit;
-    orderProduct.value.amount = product.amount;
-    productList.value.push(orderProduct);
-    router.push({ name: state.value.from1Form });
+  if (state.value.from.form2) {
+    productList.value.unshift({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      measure_unit: product.measure_unit,
+      amount: 0
+    });
   } else {
     router.push({ name: 'product-view', params: { id: product.id } });
   }
@@ -59,7 +59,7 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back v-if="!fromTabMenu" @click="handleBackTo" />
+        <btn-back v-if="!isFromTabMenu" @click="handleBackTo" />
       </template>
       <template #title>Produtos</template>
       <template #right>
@@ -69,8 +69,6 @@ onMounted(async () => {
 
     <page-body>
       <search-input v-model="searchQuery" />
-
-      <waiting-load :showing="loading.value" />
 
       <q-list v-if="!loading.value" separator>
         <q-item

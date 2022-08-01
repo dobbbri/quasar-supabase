@@ -2,21 +2,25 @@ import { ref, computed } from 'vue';
 
 const state = ref({
   sidebarIsOpen: false,
-  fromMenu: '',
-  from1Form: '',
-  from2Form: ''
+  from: {
+    menu: '',
+    form1: '',
+    form2: '',
+    form3: ''
+  }
 });
 
 export default function useStore() {
-  const clearState = () => {
-    state.value = {
-      fromMenu: '',
-      from1Form: '',
-      from2Form: ''
+  const clearFromState = () => {
+    state.value.from = {
+      menu: '',
+      form1: '',
+      form2: '',
+      form3: ''
     };
   };
 
-  const fromTabMenu = computed(() => (state.value.fromMenu === 'tab-menu' ? true : false));
+  const isFromTabMenu = computed(() => (state.value.from.menu === 'tab-menu' ? true : false));
 
   const toggleSidebar = () => {
     state.value.sidebarIsOpen = !state.value.sidebarIsOpen;
@@ -24,8 +28,8 @@ export default function useStore() {
 
   return {
     state,
-    clearState,
-    fromTabMenu,
+    clearFromState,
+    isFromTabMenu,
     toggleSidebar
   };
 }
