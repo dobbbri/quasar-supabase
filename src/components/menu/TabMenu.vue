@@ -18,7 +18,6 @@ const tabMenu = [
 const open = (path) => {
   clearFromState();
   state.value.from.menu = 'tab-menu';
-
   tab.value = path;
   router.push({ name: path });
 };

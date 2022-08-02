@@ -1,19 +1,21 @@
 <script setup>
-import { defineProps } from 'vue';
+import { ref } from 'vue';
 import { useDefaults } from 'src/composables';
 const { attr } = useDefaults();
 
-const props = defineProps({
-  isLegalEntity: { type: Boolean, default: true }
-});
+const mask = ref('###.###.###-##');
+
+const setMask = (value) => {
+  mask.value = value.length > 11 ? '##.###.###/####-##' : '###.###.###-##';
+};
 </script>
 
 <template>
   <q-input
     v-bind="attr.input.basic"
     type="tel"
-    :label="props.isLegalEntity ? 'CNPJ' : 'CPF'"
-    :mask="isLegalEntity ? '##.###.###/####-##' : '###.###.###-##'"
+    :mask="mask"
     debounce="530"
+    @update:model-value="(newValue) => setMask(newValue)"
   />
 </template>

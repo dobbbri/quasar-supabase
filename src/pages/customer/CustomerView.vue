@@ -34,7 +34,7 @@ const handleGetCustomer = async () => {
 };
 
 const addressFormated = computed(() => {
-  if (address.value.id > 0) {
+  if (address.value && address.value.street > 0) {
     return [
       `${address.value.street}, ${address.value.number}, ${address.value.complement},`,
       `${address.value.neighborhood}, ${address.value.city} - ${address.value.state}, CEP ${address.value.zip_code}`
@@ -76,7 +76,7 @@ onMounted(async () => {
           />
 
           <text-view
-            v-if="address.id > 0"
+            v-if="address && address.street > 0"
             :value="addressFormated[0]"
             :value2="addressFormated[1]"
             label="Endereço"
@@ -85,7 +85,7 @@ onMounted(async () => {
           <text-view
             v-if="customer.document_number"
             :value="customer.document_number"
-            :label="customer.is_legal_entity ? 'CNPJ' : 'CPF'"
+            :label="customer.document_number > 11 ? 'CNPJ' : 'CPF'"
           />
 
           <text-view v-if="customer.notes" :value="customer.notes" label="Anotações" />

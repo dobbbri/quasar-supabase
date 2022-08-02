@@ -3,20 +3,20 @@ import { ref, computed } from 'vue';
 const state = ref({
   sidebarIsOpen: false,
   from: {
-    menu: '',
-    form1: '',
-    form2: '',
-    form3: ''
+    menu: null,
+    form1: null,
+    form2: null,
+    form3: null
   }
 });
 
 export default function useStore() {
   const clearFromState = () => {
     state.value.from = {
-      menu: '',
-      form1: '',
-      form2: '',
-      form3: ''
+      menu: null,
+      form1: null,
+      form2: null,
+      form3: null
     };
   };
 

@@ -1,11 +1,10 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useTools, useStore, useData } from 'src/composables';
+import { useCustomers, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
-const { personTypes } = useData();
 const { state, isFromTabMenu } = useStore();
 const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
 const { notify } = useTools();
@@ -66,16 +65,12 @@ const handleSubmit = async () => {
           error-message="O nome do cliente deve ser informado!"
         />
 
-        <expansion-item :fake="true" label="Tipo de Pessoa">
-          <radio-options v-model="customer.is_legal_entity" :options="personTypes" />
-        </expansion-item>
-
         <expansion-item default-opened label="Telefones e Email">
           <div class="line row q-gutter-x-md">
             <div class="col">
               <phone-input
                 v-model="customer.phone_1"
-                label="Telefone"
+                label="Celular"
                 class="col-10"
                 :rules="[(val) => !!val]"
                 error-message="O telefone do cliente deve ser informado!"
@@ -89,7 +84,13 @@ const handleSubmit = async () => {
         </expansion-item>
 
         <expansion-item label="Endereço">
-          <cep-input v-model:cep="address.zip_code" label="CEP" @result="fillAddress" />
+          <cep-input
+            v-model:cep="address.zip_code"
+            label="CEP"
+            hint="Preencha o CEP para realizar a busca automática de endereço"
+            @result="fillAddress"
+          />
+
           <text-input v-model="address.street" label="Endereço" />
 
           <div class="line row q-gutter-x-md">
@@ -114,10 +115,7 @@ const handleSubmit = async () => {
         </expansion-item>
 
         <expansion-item label="Outros Detalhes">
-          <cpf-cnpj-input
-            v-model="customer.document_number"
-            :is-legal-entity="customer.is_legal_entity"
-          />
+          <cpf-cnpj-input v-model="customer.document_number" label="CPF/CNPJ" />
           <textarea-input v-model="customer.notes" label="Anotações" />
         </expansion-item>
       </page-body>

@@ -20,8 +20,8 @@ export default function useAttribute() {
 
     input: {
       basic: {
-        hideBottomSpace: true,
-        outlined: true,
+        hideBottomSpace: false,
+        outlined: false,
         dense: false,
         optionsDense: false,
         stackLabel: true,
@@ -46,10 +46,10 @@ export default function useAttribute() {
 
     expansion: {
       headerClass: 'text-primary title title-expansion q-mt-md',
-      denseToggle: false,
+      denseToggle: true,
       expandIcon: 'chevron_right',
       expandedIcon: 'expand_less',
-      dense: false
+      dense: true
     },
 
     banner: {
