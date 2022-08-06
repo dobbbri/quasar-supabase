@@ -27,7 +27,6 @@ const handleAddService = () => {
 };
 
 const handleViewService = (service) => {
-  clearService();
   if (state.value.from.form1) {
     clearOrderService();
     orderService.value.id = service.id;
@@ -38,6 +37,7 @@ const handleViewService = (service) => {
     serviceList.value.push(orderService);
     router.push({ name: state.value.from.form1 });
   } else {
+    clearService();
     router.push({ name: 'service-view', params: { id: service.id } });
   }
 };

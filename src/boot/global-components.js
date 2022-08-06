@@ -34,8 +34,8 @@ const globalComponents = {
   'btn-back': () => import('components/fw/form/BtnBack.vue'),
   'btn-save': () => import('components/fw/form/BtnSave.vue'),
   'btn-add': () => import('components/fw/form/BtnAdd.vue'),
-  'btn-edit': () => import('components/fw/form/BtnEdit.vue'),
-  'btn-remove': () => import('components/fw/form/BtnRemove.vue'),
+  // 'btn-edit': () => import('components/fw/form/BtnEdit.vue'),
+  // 'btn-remove': () => import('components/fw/form/BtnRemove.vue'),
   'btn-big': () => import('components/fw/form/BtnBig.vue'),
 
   'item-btn': () => import('components/fw/form/ItemBtn.vue'),
@@ -47,7 +47,6 @@ const globalComponents = {
 
 export default boot(async ({ app }) => {
   for (const key in globalComponents) {
-    // app.component(key, globalComponents[key]);
     app.component(key, defineAsyncComponent(globalComponents[key]));
   }
 });
