@@ -20,11 +20,11 @@ export default function useAttribute() {
 
     input: {
       basic: {
-        hideBottomSpace: false,
-        outlined: false,
+        hideBottomSpace: true,
+        outlined: true,
         dense: false,
         optionsDense: false,
-        stackLabel: true,
+        stackLabel: false,
         color: 'secondary'
       },
       search: {

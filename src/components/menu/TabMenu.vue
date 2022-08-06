@@ -41,7 +41,7 @@ const open = (path) => {
       :label="navItem.title"
       :icon="navItem.icon"
       class="toolbar-height"
-      style="font-size: 12px"
+      style="font-size: 10px"
       @click="open(navItem.path)"
     />
   </q-tabs>

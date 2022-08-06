@@ -4,10 +4,10 @@ export default function useConfirm() {
   const confirm = {
     delete: (message) => {
       return Dialog.create({
-        title: 'Confirmação',
-        message: `Tem certeza de que deseja remover ${message}?`,
+        title: 'Atenção',
+        message: `${message}. Confirma?`,
         cancel: { label: 'Não', flat: true, noCaps: true },
-        ok: { label: 'Sim, remover', flat: true, noCaps: true, color: 'negative' },
+        ok: { label: 'Ok. Excluir', flat: true, noCaps: true, color: 'negative' },
         persistent: true
       });
     },
@@ -15,7 +15,7 @@ export default function useConfirm() {
       return Dialog.create({
         title: 'Sair',
         message: 'Você realmente quer ir embora?',
-        ok: { label: 'Sair', flat: true, noCaps: true, color: 'negative' },
+        ok: { label: 'Ok. Sair', flat: true, noCaps: true, color: 'negative' },
         cancel: { label: 'Cancelar', flat: true, noCaps: true },
         persistent: true
       });

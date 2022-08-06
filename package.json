@@ -14,7 +14,7 @@
   "dependencies": {
     "@quasar/extras": "^1.15.1",
     "@supabase/supabase-js": "^1.35.4",
-    "quasar": "^2.7.6",
+    "quasar": "^2.7.7",
     "vue": "^3.2.37",
     "vue-currency-input": "^2.5.1",
     "vue-router": "^4.1.3"

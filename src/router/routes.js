@@ -78,6 +78,11 @@ const routes = [
         name: 'product-form',
         component: () => import('pages/product/ProductForm.vue')
       },
+      {
+        path: '/calculate-sale-value-form',
+        name: 'calculate-sale-value-form',
+        component: () => import('pages/product/CalculateSaleValueForm.vue')
+      },
 
       // services
       {

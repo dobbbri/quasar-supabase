@@ -1,82 +1,53 @@
+import { defineAsyncComponent } from 'vue';
 import { boot } from 'quasar/wrappers';
-import Page from 'src/components/fw/page/Page.vue';
-import PageHeader from 'src/components/fw/page/PageHeader.vue';
-import PageBody from 'src/components/fw/page/PageBody.vue';
-import PageFooter from 'src/components/fw/page/PageFooter.vue';
-
-import TextInput from 'src/components/fw/form/TextInput.vue';
-import MoneyInput from 'src/components/fw/form/MoneyInput.vue';
-import IntegerInput from 'src/components/fw/form/IntegerInput.vue';
-import TextareaInput from 'src/components/fw/form/TextareaInput.vue';
-import DateInput from 'src/components/fw/form/DateInput.vue';
-import CepInput from 'src/components/fw/form/CepInput.vue';
-import PasswordInput from 'src/components/fw/form/PasswordInput.vue';
-import PhoneInput from 'src/components/fw/form/PhoneInput.vue';
-import CpfCnpjInput from 'src/components/fw/form/CpfCnpjInput.vue';
-import SearchInput from 'src/components/fw/form/SearchInput.vue';
-// import ImagePicker from 'src/components/fw/form/ImagePicker.vue';
-import CheckBox from 'src/components/fw/form/CheckBox.vue';
-// import CheckboxIcon from 'src/components/fw/form/CheckboxIcon.vue';
-import SelectInput from 'src/components/fw/form/SelectInput.vue';
-import SelectOptions from 'src/components/fw/form/SelectOptions.vue';
-import RadioOptions from 'src/components/fw/form/RadioOptions.vue';
-
-import ExpansionItem from 'src/components/fw/form/ExpansionItem.vue';
-import WaitingLoad from 'src/components/fw/form/WaitingLoad.vue';
-
-import TextView from 'src/components/fw/form/TextView.vue';
-
-import BtnBack from 'src/components/fw/form/BtnBack.vue';
-import BtnSave from 'src/components/fw/form/BtnSave.vue';
-import BtnAdd from 'src/components/fw/form/BtnAdd.vue';
-import BtnEdit from 'src/components/fw/form/BtnEdit.vue';
-import BtnRemove from 'src/components/fw/form/BtnRemove.vue';
-import BtnBig from 'src/components/fw/form/BtnBig.vue';
-
-import ItemBtn from 'src/components/fw/form/ItemBtn.vue';
-
-import FabMenu from 'src/components/fw/form/FabMenu.vue';
-import FabEditAction from 'src/components/fw/form/FabEditAction.vue';
-import FabRemoveAction from 'src/components/fw/form/FabRemoveAction.vue';
 
 const globalComponents = {
-  page: Page,
-  'page-header': PageHeader,
-  'page-body': PageBody,
-  'page-footer': PageFooter,
-  'text-input': TextInput,
-  'money-input': MoneyInput,
-  'integer-input': IntegerInput,
-  'textarea-input': TextareaInput,
-  'date-input': DateInput,
-  'cep-input': CepInput,
-  'password-input': PasswordInput,
-  'phone-input': PhoneInput,
-  'cpf-cnpj-input': CpfCnpjInput,
-  'expansion-item': ExpansionItem,
-  'search-input': SearchInput,
-  // 'image-picker': ImagePicker,
-  'check-box': CheckBox,
-  // 'checkbox-icon': CheckboxIcon,
-  'select-input': SelectInput,
-  'select-options': SelectOptions,
-  'radio-options': RadioOptions,
-  'waiting-load': WaitingLoad,
-  'text-view': TextView,
-  'btn-back': BtnBack,
-  'btn-save': BtnSave,
-  'btn-add': BtnAdd,
-  'btn-edit': BtnEdit,
-  'btn-remove': BtnRemove,
-  'item-btn': ItemBtn,
-  'btn-big': BtnBig,
-  'fab-menu': FabMenu,
-  'fab-edit-action': FabEditAction,
-  'fab-remove-action': FabRemoveAction
+  page: () => import('components/fw/page/Page.vue'),
+  'page-header': () => import('components/fw/page/PageHeader.vue'),
+  'page-body': () => import('components/fw/page/PageBody.vue'),
+  'page-footer': () => import('components/fw/page/PageFooter.vue'),
+
+  'text-input': () => import('components/fw/form/TextInput.vue'),
+  'money-input': () => import('components/fw/form/MoneyInput.vue'),
+  'integer-input': () => import('components/fw/form/IntegerInput.vue'),
+  'percentage-input': () => import('components/fw/form/PercentageInput.vue'),
+  'textarea-input': () => import('components/fw/form/TextareaInput.vue'),
+  'date-input': () => import('components/fw/form/DateInput.vue'),
+  'cep-input': () => import('components/fw/form/CepInput.vue'),
+  'password-input': () => import('components/fw/form/PasswordInput.vue'),
+  'phone-input': () => import('components/fw/form/PhoneInput.vue'),
+  'cpf-cnpj-input': () => import('components/fw/form/CpfCnpjInput.vue'),
+  'search-input': () => import('components/fw/form/SearchInput.vue'),
+  // 'ImagePicker': () =>  import ('components/fw/form/ImagePicker.vue'),
+  'check-box': () => import('components/fw/form/CheckBox.vue'),
+  // 'CheckboxIcon': () =>  import ('components/fw/form/CheckboxIcon.vue'),
+  'select-input': () => import('components/fw/form/SelectInput.vue'),
+  'select-options': () => import('components/fw/form/SelectOptions.vue'),
+  'radio-options': () => import('components/fw/form/RadioOptions.vue'),
+  'btn-toggle': () => import('components/fw/form/BtnToggle.vue'),
+
+  'expansion-item': () => import('components/fw/form/ExpansionItem.vue'),
+  'waiting-load': () => import('components/fw/form/WaitingLoad.vue'),
+
+  'text-view': () => import('components/fw/form/TextView.vue'),
+
+  'btn-back': () => import('components/fw/form/BtnBack.vue'),
+  'btn-save': () => import('components/fw/form/BtnSave.vue'),
+  'btn-add': () => import('components/fw/form/BtnAdd.vue'),
+  'btn-edit': () => import('components/fw/form/BtnEdit.vue'),
+  'btn-remove': () => import('components/fw/form/BtnRemove.vue'),
+  'btn-big': () => import('components/fw/form/BtnBig.vue'),
+
+  'item-btn': () => import('components/fw/form/ItemBtn.vue'),
+
+  'fab-menu': () => import('components/fw/form/FabMenu.vue'),
+  'fab-edit-action': () => import('components/fw/form/FabEditAction.vue'),
+  'fab-remove-action': () => import('components/fw/form/FabRemoveAction.vue')
 };
 
 export default boot(async ({ app }) => {
   for (const key in globalComponents) {
-    app.component(key, globalComponents[key]);
+    // app.component(key, globalComponents[key]);
+    app.component(key, defineAsyncComponent(globalComponents[key]));
   }
 });
