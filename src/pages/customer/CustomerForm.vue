@@ -68,13 +68,7 @@ const handleSubmit = async () => {
         <expansion-item default-opened label="Telefones e Email">
           <div class="line row q-gutter-x-md">
             <div class="col">
-              <phone-input
-                v-model="customer.phone_1"
-                label="Celular"
-                class="col-10"
-                :rules="[(val) => !!val]"
-                error-message="O telefone do cliente deve ser informado!"
-              />
+              <phone-input v-model="customer.phone_1" label="Celular" class="col-10" />
             </div>
             <div class="col">
               <phone-input v-model="customer.phone_2" label="Telefone" />
@@ -109,7 +103,7 @@ const handleSubmit = async () => {
               <text-input v-model="address.city" label="Cidade" />
             </div>
             <div class="col-3">
-              <text-input v-model="address.state" mask="AA" label="UF(estado)" />
+              <text-input v-model="address.state" mask="AA" label="UF" />
             </div>
           </div>
         </expansion-item>
