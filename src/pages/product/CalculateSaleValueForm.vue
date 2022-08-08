@@ -31,6 +31,9 @@ watchEffect(() => {
   profitValue.value = product.value.unit_price - product.value.cost_price;
   profit.value = calcPctProfit(product.value.unit_price, product.value.cost_price);
   markup.value = calcPctMakup(product.value.unit_price, product.value.cost_price);
+  if (profit.value > 0 && parseFloat(percentage.value) == 0) {
+    percentage.value = calcPctProfit(product.value.unit_price, product.value.cost_price);
+  }
 });
 </script>
 
@@ -51,7 +54,7 @@ watchEffect(() => {
           <money-input v-model="costPrice" label="Preço de custo" />
         </div>
         <div class="col">
-          <percentage-input v-model="percentage" :label="`% ${toggle}`" />
+          <integer-input v-model="percentage" :label="`% ${toggle}`" />
         </div>
       </div>
 
@@ -60,8 +63,13 @@ watchEffect(() => {
           <money-input v-model="profitValue" label="Lucro bruto" tabindex="-1" />
         </div>
         <div class="col">
-          <text-input v-model="markup" label="% Markup" tabindex="-1" />
-          <text-input v-model="profit" label="% Margem..." tabindex="-1" />
+          <text-input
+            v-if="toggle == 'Margem...'"
+            v-model="markup"
+            label="% Markup"
+            tabindex="-1"
+          />
+          <text-input v-else v-model="profit" label="% Margem..." tabindex="-1" />
         </div>
       </div>
 
