@@ -17,8 +17,32 @@ export default function useProducts() {
     };
   };
 
+  const calcMarkup = (costPrice, percentage) => {
+    const pct = percentage / 100.0;
+    const multiplier = 1.0 + pct;
+    return Math.round(costPrice * multiplier);
+  };
+
+  const calcProfit = (costPrice, percentage) => {
+    const pct = percentage / 100.0;
+    const multiplier = 1.0 - pct;
+    return Math.round(costPrice / multiplier);
+  };
+
+  const calcPctMakup = (unitPrice, costPrice) => {
+    return Math.round(((unitPrice - costPrice) / costPrice) * 100);
+  };
+
+  const calcPctProfit = (unitPrice, costPrice) => {
+    return Math.round(((unitPrice - costPrice) / unitPrice) * 100);
+  };
+
   return {
     loading,
+    calcMarkup,
+    calcPctMakup,
+    calcProfit,
+    calcPctProfit,
     product,
     clearProduct,
     getProducts: list,

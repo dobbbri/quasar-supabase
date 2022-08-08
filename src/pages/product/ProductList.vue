@@ -38,6 +38,7 @@ const handleViewProduct = (product) => {
       amount: 0
     });
   } else {
+    clearProduct();
     router.push({ name: 'product-view', params: { id: product.id } });
   }
 };

@@ -1,37 +1,31 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useProducts, useTools } from 'src/composables';
 
 const router = useRouter();
 const route = useRoute();
 
-const { loading, product, getProduct, removeProduct } = useProducts();
+const { loading, calcPctMakup, calcPctProfit, product, getProduct, removeProduct } = useProducts();
 const { confirm, notify, fmt } = useTools();
 
-const form = ref({
-  unit_price: 0,
-  cost_price: 0
+const markup = computed(() => {
+  const unit_price = parseFloat(product.value.unit_price) || 0;
+  const cost_price = parseFloat(product.value.cost_price) || 0;
+  if (unit_price > 0 && cost_price > 0) {
+    return `${calcPctMakup(unit_price, cost_price)}%`;
+  }
+  return '';
 });
 
-const price_profit = ref(0);
-const price_markup = ref(0);
-
-watch(
-  () => (product.value.unit_price, product.value.cost_price),
-  () => {
-    let profit = 0;
-    let markup = 0;
-    const unit_price = parseFloat(product.value.unit_price);
-    const cost_price = parseFloat(product.value.cost_price);
-    if (unit_price > 0 && cost_price > 0) {
-      profit = ((unit_price - cost_price) / unit_price) * 100;
-      markup = ((unit_price - cost_price) / cost_price) * 100;
-    }
-    price_profit.value = Math.round(profit) + '%';
-    price_markup.value = Math.round(markup) + '%';
+const profit = computed(() => {
+  const unit_price = parseFloat(product.value.unit_price) || 0;
+  const cost_price = parseFloat(product.value.cost_price) || 0;
+  if (unit_price > 0 && cost_price > 0) {
+    return `${calcPctProfit(unit_price, cost_price)}%`;
   }
-);
+  return '';
+});
 
 const handleRemoveProduct = async () => {
   try {
@@ -91,9 +85,9 @@ onMounted(async () => {
         <expansion-item label="Custo e Lucro">
           <text-view :value="fmt.currency(product.cost_price)" label="Preço de custo" />
 
-          <text-view :value="price_profit" label="lucro" />
+          <text-view :value="profit" label="Margen de lucro" />
 
-          <text-view :value="price_markup" label="Markup" />
+          <text-view :value="markup" label="Markup" />
         </expansion-item>
       </page-body>
     </q-form>

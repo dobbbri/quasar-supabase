@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProducts, useTools, useStore, useData } from 'src/composables';
 
@@ -9,25 +9,6 @@ const { measureUnits } = useData();
 const { state, isFromTabMenu } = useStore();
 const { loading, product, addProduct, editProduct } = useProducts();
 const { notify } = useTools();
-
-const price_profit = ref(0);
-const price_markup = ref(0);
-
-watch(
-  () => (product.value.unit_price, product.value.cost_price),
-  () => {
-    let profit = 0;
-    let markup = 0;
-    const unit_price = parseFloat(product.value.unit_price);
-    const cost_price = parseFloat(product.value.cost_price);
-    if (unit_price > 0 && cost_price > 0) {
-      profit = ((unit_price - cost_price) / unit_price) * 100;
-      markup = ((unit_price - cost_price) / cost_price) * 100;
-    }
-    price_profit.value = Math.round(profit) + '%';
-    price_markup.value = Math.round(markup) + '%';
-  }
-);
 
 const isEditMode = computed(() => (product.value && product.value.id ? true : false));
 
@@ -79,53 +60,43 @@ const handleSubmit = async () => {
           error-message="O nome do produto deve ser informado!"
         />
 
+        <select-options
+          v-model="product.measure_unit"
+          label="Unidade de medida"
+          :options="measureUnits"
+          :show-id="true"
+          :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
+        />
+
         <expansion-item :fake="true" label="Preço">
-          <money-input
-            v-model="product.unit_price"
-            label="Preço de venda"
-            :rules="[(val) => Number(val.replaceAll('.', '').replaceAll(',', '.')) > 0]"
-            error-message="O preço de venda do produto deve ser informado"
-          />
-
-          <select-options
-            v-model="product.measure_unit"
-            label="Unidade de medida"
-            :options="measureUnits"
-            :show-id="true"
-            :option-disable="(opt) => (Object(opt) === opt ? opt.active === false : false)"
-            :rules="[(val) => !!val]"
-            error-message="Uma unidade de medida deve ser selecionada"
-          />
-        </expansion-item>
-
-        <expansion-item default-opened label="Custo e Lucro">
-          <money-input v-model="product.cost_price" label="Preço de custo" />
           <div class="line row q-gutter-x-md">
             <div class="col">
-              <text-input
-                v-model="price_profit"
-                label="lucro"
-                input-class="text-center no-pointer-events"
-                readonly
-              />
+              <money-input v-model="product.unit_price" label="Preço de venda" />
             </div>
-            <div class="col">
-              <text-input
-                v-model="price_markup"
-                label="Markup"
-                input-class="text-center no-pointer-events"
-                readonly
-              />
+            <div class="q-mt-auto">
+              <q-btn
+                icon="sym_o_calculate"
+                size="20px"
+                padding="3px"
+                class="bg-info q-pa-sm justify-center"
+                text-color="white"
+                flat
+                :to="{ name: 'calculate-sale-value-form' }"
+              >
+                <q-tooltip>calcular preço de venda</q-tooltip>
+              </q-btn>
             </div>
           </div>
+
+          <money-input v-model="product.cost_price" label="Preço de custo" />
         </expansion-item>
 
-        <expansion-item label="Outros Detalhes">
+        <expansion-item default-opened label="Outros Detalhes">
           <text-input v-model="product.brand" label="Marca" />
 
           <textarea-input v-model="product.details" label="Detalhes do produto" />
 
-          <!-- <text-input v-model="product.code_bar" label="Código de barras" /> -->
+          <text-input v-model="product.code_bar" label="Código de barras" />
         </expansion-item>
       </page-body>
     </q-form>
