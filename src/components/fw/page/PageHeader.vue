@@ -7,7 +7,7 @@ const { isLoggedIn } = useAuth();
 </script>
 
 <template>
-  <q-header class="bg-primary text-white">
+  <q-header v-cloak class="bg-primary text-white">
     <q-toolbar class="full-width toolbar-height">
       <div>
         <slot name="left">

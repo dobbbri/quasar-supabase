@@ -25,7 +25,6 @@ export default function useCustomers() {
   const clearCustomer = () => {
     customer.value = {
       name: '',
-      is_legal_entity: false,
       email: '',
       phone_1: '',
       phone_2: '',

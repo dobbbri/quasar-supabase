@@ -33,9 +33,9 @@ const handleViewProduct = (product) => {
     productList.value.unshift({
       id: product.id,
       name: product.name,
-      price: product.price,
+      unit_price: product.unit_price,
       measure_unit: product.measure_unit,
-      amount: 0
+      amount: 1
     });
   } else {
     clearProduct();
