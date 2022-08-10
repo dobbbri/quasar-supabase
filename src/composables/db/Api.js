@@ -12,7 +12,7 @@ export default function useApi(table) {
     const { error, data } = await supabase
       .from(table)
       .select(fields)
-      .eq('user_id', user.value.id)
+      .match({ user_id: user.value.id })
       .order('name', { ascending: true });
     loading.value = false;
     if (error) throw error;
@@ -21,11 +21,10 @@ export default function useApi(table) {
 
   const get = async (id, fields = '*') => {
     loading.value = true;
-    const { error, data, status } = await supabase
-      .from(table)
-      .select(fields)
-      .eq('user_id', user.value.id)
-      .eq('id', id);
+    const { error, data, status } = await supabase.from(table).select(fields).match({
+      user_id: user.value.id,
+      id: id
+    });
     loading.value = false;
     if (error && status !== 406) throw error;
     if (data.length == 0) return null;
@@ -47,8 +46,10 @@ export default function useApi(table) {
     const { error, data } = await supabase
       .from(table)
       .update({ ...form })
-      .eq('user_id', user.value.id)
-      .eq('id', id);
+      .match({
+        user_id: user.value.id,
+        id: id
+      });
     loading.value = false;
     if (error) throw error;
     return data;
@@ -56,11 +57,10 @@ export default function useApi(table) {
 
   const remove = async (id) => {
     loading.value = true;
-    const { error, data } = await supabase
-      .from(table)
-      .delete()
-      .eq('user_id', user.value.id)
-      .eq('id', id);
+    const { error, data } = await supabase.from(table).delete().match({
+      user_id: user.value.id,
+      id: id
+    });
     loading.value = false;
     if (error) throw error;
     return data;
@@ -71,7 +71,7 @@ export default function useApi(table) {
     const { error, count } = await supabase
       .from(table)
       .select('id', { count: 'exact' })
-      .eq('user_id', user.value.id);
+      .match({ user_id: user.value.id });
     loading.value = false;
     if (error) throw error;
     return count;

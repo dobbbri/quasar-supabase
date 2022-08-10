@@ -12,7 +12,7 @@ export default function useUsersSettings() {
     const { error, data, status } = await supabase
       .from('users_settings')
       .select(fields)
-      .eq('id', user.value.id);
+      .match({ id: user.value.id });
     loading.value = false;
     if (error && status !== 406) throw error;
     if (data.length == 0) return null;
@@ -35,7 +35,7 @@ export default function useUsersSettings() {
     const { error } = await supabase
       .from('users_settings')
       .update({ ...form })
-      .eq('id', user.value.id);
+      .match({ id: user.value.id });
     loading.value = false;
     if (error) throw error;
   };

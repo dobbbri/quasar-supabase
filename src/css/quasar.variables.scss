@@ -18,8 +18,8 @@ $body-line-height: 1.5 !default;
 $tooltip-fontsize: 14px !default;
 
 $input-font-size: $body-font-size !default;
-$input-text-color: $dark !default;
-$input-label-color: $primary !default;
+$input-text-color: rgba(0, 0, 0, 1.00) !default;
+$input-label-color: rgba(97, 97, 97, 1.00) !default;
 
 $button-font-size: $body-font-size !default;
 $button-padding: 4px 16px !default;
