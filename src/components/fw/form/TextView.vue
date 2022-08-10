@@ -21,18 +21,21 @@ defineProps({
 <style lang="scss">
 .text-view {
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 
   .label {
     width: 100%;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 400;
     font-size: $input-font-size;
+    color: $input-label-color;
   }
 
   .value {
+    color: $input-text-color;
     font-size: $input-font-size;
     line-height: $body-line-height;
-    color: $grey-8;
+    font-weight: 500;
   }
 }
 </style>

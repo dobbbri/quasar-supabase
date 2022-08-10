@@ -4,7 +4,7 @@
 }
 
 body {
-  font-family: 'IBM Plex Sans', sans-serif !important;
+  font-family: 'Ubuntu', 'Helvetica' sans-serif !important;
 }
 
 .material-icons {
@@ -17,7 +17,6 @@ body {
 
 .title {
   font-size: 17px;
-  font-family: 'Ubuntu', 'Helvetica Neue', sans-serif !important;
   &-bar {
     font-weight: 500;
   }
@@ -74,23 +73,51 @@ body {
   margin-top: 0;
 }
 
-.q-field__label {
-  left: 0;
-  top: 10px;
-  color: $dark;
-  font-size: 17px;
-  font-weight: 500;
-  font-family: 'Ubuntu', 'Helvetica' sans-serif !important;
+// .q-field__label {
+//   left: 0;
+//   top: 10px;
+//   color: $dark;
+//   font-size: 17px;
+//   font-weight: 500;
+//   font-family: 'Ubuntu', 'Helvetica' sans-serif !important;
+// }
+
+.q-field {
+  &__native, &__prefix, &__suffix, &__input {
+    font-weight: 500
+  }
+  &__label {
+    opacity: 1;
+    left: 0;
+    top: 10px;
+    // color: $primary;
+    font-size: 17px;
+    font-weight: 400;
+  }
+  &--float .q-field__label {
+    transform: translateY(-110%);
+    background: white;
+    z-index: 999;
+    padding: 0 5px;
+    margin-left: -2px;
+    text-transform: lowercase;
+  }
+  &--highlighted {
+    .q-field__label {
+      color: currentColor;
+    }
+  }
 }
 
-.q-field--float .q-field__label {
-  transform: translateY(-110%);
-  background: white;
-  z-index: 999;
-  padding: 0 5px;
-  margin-left: -2px;
-  text-transform: lowercase;
-}
+// .q-field--float .q-field__label {
+//   transform: translateY(-110%);
+//   background: white;
+//   z-index: 999;
+//   padding: 0 5px;
+//   margin-left: -2px;
+//   text-transform: lowercase;
+//   // color: $blue-grey-3;
+// }
 
 .q-field--labeled .q-field__native,
 .q-field--labeled .q-field__prefix,
@@ -98,21 +125,59 @@ body {
   padding: 0 3px;
 }
 
-.q-field__native,
-.q-field__prefix,
-.q-field__suffix,
-.q-field__input {
-  font-weight: 400;
+.q-placeholder {
+  &::-webkit-input-placeholder {
+    color: inherit;
+    opacity: 0.9;
+  }
+  &::-moz-placeholder {
+    color: inherit;
+    opacity: 0.9;
+  }
+  &:-ms-input-placeholder {
+    color: inherit !important;
+    opacity: 0.9 !important;
+  }
+  &::-ms-input-placeholder {
+    color: inherit;
+    opacity: 0.9;
+  }
+  &::placeholder {
+    color: inherit;
+    opacity: 0.9;
+  }
 }
 
-.q-field--outlined .q-field__control:before {
-  border-color: $primary;
-}
 
-.q-field--outlined .q-field__control:hover::before {
-  border-color: $primary;
-  border-width: 2px;
-}
+// .q-field__native,
+// .q-field__prefix,
+// .q-field__suffix,
+// .q-field__input {
+//   font-weight: 400;
+// }
+
+// .q-field--outlined .q-field__control {
+//
+//   // }
+//   &:hover:before {
+//     border-width: 2px;
+//     // border: 2px solid $primary;
+//     // > .q-field__label {
+//     //   color: #000 !important;
+//     // }
+//   }
+//   // &:after {
+//   //   border: 2px solid $blue-grey-3;
+//   // }
+// }
+
+// .q-field--outlined .q-field__control:hover::before {
+//   border-color: $primary;
+//   border-width: 2px;
+//   >.q-field--float .q-field__label {
+//     color: $negative;
+//   }
+// }
 
 .only-image > .q-checkbox__inner {
   width: 0.7em;
