@@ -81,7 +81,7 @@ const handleSubmit = async () => {
           <cep-input
             v-model:cep="address.zip_code"
             label="CEP"
-            hint="Preencha o CEP para realizar a busca automática de endereço"
+            hint="Preencha o CEP para buscar automática de endereço"
             @result="fillAddress"
           />
 

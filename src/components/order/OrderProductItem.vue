@@ -1,5 +1,8 @@
 <script setup>
-import { toRef, defineProps } from 'vue';
+import { toRef, defineProps, computed } from 'vue';
+import { useTools } from 'src/composables';
+
+const { fmt } = useTools();
 
 const props = defineProps({
   product: {
@@ -10,26 +13,57 @@ const props = defineProps({
 });
 
 const product = toRef(props, 'product');
+
+const total = computed(() => {
+  return product.value.unit_price * product.value.amount;
+});
 </script>
 
 <template>
-  <div v-if="product" class="q-mt-sm">
-    <text-input v-model="product.name" label="Nome do produto" readonly />
-    <text-input v-model="product.measure_unit" label="Unidade de medida" readonly />
+  <div v-if="product" class="q-pa-md q-pt-none shadow-2">
+    <text-view :value="product.name" label="nome do produto" class="q-pl-md" />
     <div class="row q-gutter-x-md">
-      <div class="col">
-        <money-input v-model="product.unit_price" label="Preço de venda" readonly />
+      <div class="col q-pl-md">
+        <text-view
+          :value="fmt.currency(product.unit_price) + '/' + product.measure_unit"
+          label="preço de venda"
+        />
       </div>
+      <div class="col text-right ar">
+        <btn-icon
+          icon="sym_o_delete"
+          class="bg-negative"
+          tooltip="Remover"
+          :loading="loading"
+          :disable="loading"
+          index="-1"
+        />
+      </div>
+    </div>
+    <div class="row q-gutter-x-md ar">
       <div class="col">
         <money-input v-model="product.amount" label="quantidade" />
+      </div>
+      <div class="col">
+        <text-view :value="fmt.currency(total)" label="valor total" class="text-weight-bold" />
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.q-field--outlined.q-field--readonly .q-field__control:before {
-  border-style: solid;
-  border-color: $blue-grey-2;
+/* .text-view { */
+/*   margin-left: 14px; */
+/* } */
+.ar {
+  margin-right: 14px;
+  .text-view {
+    .label {
+      text-align: right;
+    }
+    .value {
+      text-align: right;
+    }
+  }
 }
 </style>

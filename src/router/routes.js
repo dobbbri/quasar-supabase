@@ -112,6 +112,11 @@ const routes = [
         name: 'order-product-list',
         component: () => import('pages/order/OrderProductList.vue')
       },
+      {
+        path: '/order-product-select',
+        name: 'order-product-select',
+        component: () => import('pages/order/OrderProductSelect.vue')
+      },
 
       // settings
       {

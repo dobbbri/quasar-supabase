@@ -46,12 +46,12 @@ onMounted(async () => {
         color="info"
         text-color="white"
         class="full-width"
-        :to="{ name: 'product-list' }"
+        :to="{ name: 'order-product-select' }"
       />
 
       <!-- <waiting-load :showing="loading.value" /> -->
 
-      <q-list separator style="margin: 0 -16px">
+      <q-list style="margin: 0 -16px">
         <q-item v-for="(product, index) in productList" :key="index">
           <q-item-section>
             <order-product-item :product="product" />

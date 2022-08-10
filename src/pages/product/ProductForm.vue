@@ -74,17 +74,12 @@ const handleSubmit = async () => {
               <money-input v-model="product.unit_price" label="Preço de venda" />
             </div>
             <div class="q-mt-auto">
-              <q-btn
+              <btn-icon
                 icon="sym_o_calculate"
-                size="20px"
-                padding="3px"
-                class="bg-info q-pa-sm justify-center"
-                text-color="white"
-                flat
+                class="bg-info"
+                tooltip="calcular preço de venda"
                 :to="{ name: 'calculate-sale-value-form' }"
-              >
-                <q-tooltip>calcular preço de venda</q-tooltip>
-              </q-btn>
+              />
             </div>
           </div>
 

@@ -31,13 +31,12 @@ const globalComponents = {
 
   'text-view': () => import('components/fw/form/TextView.vue'),
 
+  'btn-icon': () => import('components/fw/form/BtnIcon.vue'),
   'btn-back': () => import('components/fw/form/BtnBack.vue'),
   'btn-save': () => import('components/fw/form/BtnSave.vue'),
   'btn-add': () => import('components/fw/form/BtnAdd.vue'),
-  // 'btn-edit': () => import('components/fw/form/BtnEdit.vue'),
-  // 'btn-remove': () => import('components/fw/form/BtnRemove.vue'),
-  'btn-big': () => import('components/fw/form/BtnBig.vue'),
 
+  'btn-big': () => import('components/fw/form/BtnBig.vue'),
   'item-btn': () => import('components/fw/form/ItemBtn.vue'),
 
   'fab-menu': () => import('components/fw/form/FabMenu.vue'),

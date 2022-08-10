@@ -1,33 +1,30 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProducts, useNameSearch, useTools, useStore } from 'src/composables';
+import { useOrders, useProducts, useNameSearch, useTools } from 'src/composables';
+import CheckBox from 'src/components/fw/form/CheckBox.vue';
 
 const router = useRouter();
 
 const documents = ref([]);
 
-const { state, isFromTabMenu } = useStore();
-const { loading, clearProduct, getProducts } = useProducts();
+const { productList } = useOrders();
+const { loading, getProducts } = useProducts();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const handleBackTo = () => {
-  if (state.value.from.form1) {
-    router.push({ name: state.value.from.form1 });
-  } else {
-    router.push({ name: 'main-menu' });
-  }
+  router.push({ name: 'order-product-list' });
 };
 
-const handleAddProduct = () => {
-  clearProduct();
-  router.push({ name: 'product-form' });
-};
-
-const handleViewProduct = (product) => {
-  clearProduct();
-  router.push({ name: 'product-view', params: { id: product.id } });
+const handleSelectProduct = (product) => {
+  productList.value.unshift({
+    id: product.id,
+    name: product.name,
+    unit_price: product.unit_price,
+    measure_unit: product.measure_unit,
+    amount: 1
+  });
 };
 
 const handleGetProducts = async () => {
@@ -47,28 +44,27 @@ onMounted(async () => {
   <page>
     <page-header>
       <template #left>
-        <btn-back v-if="!isFromTabMenu" @click="handleBackTo" />
+        <btn-back @click="handleBackTo" />
       </template>
-      <template #title>Produtos</template>
-      <template #right>
-        <btn-add @click="handleAddProduct()" />
-      </template>
+      <template #title>Selecionar Produtos</template>
+      <template #right> </template>
     </page-header>
 
     <page-body>
       <search-input v-model="searchQuery" />
 
-      <q-list v-if="!loading.value" separator>
+      <q-list v-if="!loading.value" separator style="margin: 0 -16px">
         <q-item
           v-for="(product, index) in products"
           :key="index"
           clickable
-          @click="handleViewProduct(product)"
+          @click="handleSelectProduct(product)"
         >
+          <q-item-section avatar>
+            <check-box />
+          </q-item-section>
           <q-item-section>
             <q-item-label> {{ product.name }} </q-item-label>
-            <q-item-label v-if="product.brand" caption> marca: {{ product.brand }} </q-item-label>
-            <q-item-label v-if="product.details" caption> {{ product.details }} </q-item-label>
             <q-item-label class="text-right">
               {{ fmt.currency(product.unit_price) }}/{{ product.measure_unit }}
             </q-item-label>

@@ -79,7 +79,7 @@ onMounted(async () => {
         <text-view
           v-if="product.unit_price > 0"
           :value="fmt.currency(product.unit_price) + '/' + product.measure_unit"
-          label="Preço"
+          label="Preço de venda"
         />
 
         <expansion-item label="Custo e Lucro">

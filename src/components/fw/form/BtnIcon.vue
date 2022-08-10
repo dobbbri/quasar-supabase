@@ -5,12 +5,22 @@ import { useDefaults } from 'src/composables';
 const { attr } = useDefaults();
 
 defineProps({
-  tooltip: { type: String, default: null }
+  loading: Boolean,
+  tooltip: { type: String, default: '' }
 });
 </script>
 
 <template>
-  <q-btn v-bind="attr.btn.icon">
-    <q-tooltip v-if="tooltip">{{ tooltip }}</q-tooltip>
+  <q-btn
+    v-bind="attr.btn.icon"
+    size="18px"
+    padding="6px"
+    class="q-pa-sm justify-center"
+    text-color="white"
+    flat
+    :loading="loading"
+    :disable="loading"
+  >
+    <q-tooltip>{{ tooltip }}</q-tooltip>
   </q-btn>
 </template>
