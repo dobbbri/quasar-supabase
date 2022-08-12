@@ -108,14 +108,14 @@ const routes = [
         component: () => import('pages/order/OrderForm.vue')
       },
       {
-        path: '/order-product-list',
-        name: 'order-product-list',
-        component: () => import('pages/order/OrderProductList.vue')
+        path: '/order-item-list',
+        name: 'order-item-list',
+        component: () => import('pages/order/OrderItemList.vue')
       },
       {
-        path: '/order-product-select',
-        name: 'order-product-select',
-        component: () => import('pages/order/OrderProductSelect.vue')
+        path: '/order-item-select',
+        name: 'order-item-select',
+        component: () => import('pages/order/OrderItemSelect.vue')
       },
 
       // settings

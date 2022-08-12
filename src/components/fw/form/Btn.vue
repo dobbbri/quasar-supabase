@@ -10,11 +10,5 @@ defineProps({
 </script>
 
 <template>
-  <q-btn
-    v-bind="attr.btn.basic"
-    :loading="loading"
-    :disable="loading"
-    color="positive"
-    label="Gravar"
-  />
+  <q-btn v-bind="attr.btn.basic" :loading="loading" :disable="loading" />
 </template>

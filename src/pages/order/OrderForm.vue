@@ -90,7 +90,7 @@ onMounted(async () => {
 
         <expansion-item group="itens" default-opened label="Itens do pedido">
           <item-btn label="Serviços" type="plus" :to="{ name: 'order-service-list' }" />
-          <item-btn label="Produtos" type="plus" :to="{ name: 'order-product-list' }" />
+          <item-btn label="Produtos" type="plus" :to="{ name: 'order-item-list' }" />
           <item-btn label="Desconto" type="plus" :to="{ name: 'measure-unit-form' }" />
         </expansion-item>
 

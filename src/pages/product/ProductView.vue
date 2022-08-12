@@ -29,7 +29,7 @@ const profit = computed(() => {
 
 const handleRemoveProduct = async () => {
   try {
-    confirm.delete(`do produto: ${product.value.name}`).onOk(async () => {
+    confirm.delete(`o produto: ${product.value.name}`).onOk(async () => {
       await removeProduct(product.value.id);
       notify.success('Produto excluido.');
       router.push({ name: 'product-list' });

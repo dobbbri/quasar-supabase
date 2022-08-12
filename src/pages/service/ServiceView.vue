@@ -11,7 +11,7 @@ const { confirm, notify, fmt } = useTools();
 
 const handleRemoveService = async () => {
   try {
-    confirm.delete(`do serviço: ${service.value.name}`).onOk(async () => {
+    confirm.delete(`o serviço: ${service.value.name}`).onOk(async () => {
       await removeService(service.value.id);
       notify.success('Serviço excluido.');
       router.push({ name: 'service-list' });

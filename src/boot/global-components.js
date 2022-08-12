@@ -31,6 +31,7 @@ const globalComponents = {
 
   'text-view': () => import('components/fw/form/TextView.vue'),
 
+  btn: () => import('components/fw/form/Btn.vue'),
   'btn-icon': () => import('components/fw/form/BtnIcon.vue'),
   'btn-back': () => import('components/fw/form/BtnBack.vue'),
   'btn-save': () => import('components/fw/form/BtnSave.vue'),

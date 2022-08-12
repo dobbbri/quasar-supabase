@@ -12,7 +12,7 @@ const { confirm, notify } = useTools();
 
 const handleRemoveCustomer = async () => {
   try {
-    confirm.delete(`do cliente: ${customer.value.name}`).onOk(async () => {
+    confirm.delete(`o cliente: ${customer.value.name}`).onOk(async () => {
       await removeCustomerAddress(customer.value, address.value);
       notify.success('Cliente excluido.');
       router.push({ name: 'customer-list' });

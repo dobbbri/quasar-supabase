@@ -32,7 +32,9 @@ const handleViewProduct = (product) => {
 
 const handleGetProducts = async () => {
   try {
-    documents.value = await getProducts('id, name, details, brand, unit_price, measure_unit');
+    documents.value = await getProducts(
+      'id, name, details, brand, code_bar, unit_price, measure_unit'
+    );
   } catch (error) {
     notify.error('Erro ao obter os produtos.', error);
   }
@@ -69,8 +71,13 @@ onMounted(async () => {
             <q-item-label> {{ product.name }} </q-item-label>
             <q-item-label v-if="product.brand" caption> marca: {{ product.brand }} </q-item-label>
             <q-item-label v-if="product.details" caption> {{ product.details }} </q-item-label>
-            <q-item-label class="text-right">
-              {{ fmt.currency(product.unit_price) }}/{{ product.measure_unit }}
+            <q-item-label class="full-width row">
+              <div class="col">
+                {{ product.code_bar }}
+              </div>
+              <div class="col text-right">
+                {{ fmt.currency(product.unit_price) }}/{{ product.measure_unit }}
+              </div>
             </q-item-label>
           </q-item-section>
         </q-item>

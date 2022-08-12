@@ -1,14 +1,15 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { OrderProductItem } from 'src/components';
-import { useOrders, useStore, useDefaults } from 'src/composables';
+import { OrderAddItemAmount } from 'src/components';
+import { useOrders, useStore, useDefaults, useTools } from 'src/composables';
 
 const router = useRouter();
 
 const { productList } = useOrders();
 const { state, isFromTabMenu } = useStore();
 const { attr } = useDefaults();
+const { confirm, notify } = useTools();
 
 const handleBackTo = () => {
   if (state.value.from.form1) {
@@ -22,8 +23,20 @@ const handleAddProduct = () => {
   router.push({ name: 'product-form' });
 };
 
+const handleRemoveProduct = (index) => {
+  try {
+    const product = productList.value[index];
+    confirm.delete(`o produto ${product.name}`).onOk(async () => {
+      productList.value.splice(index, 1);
+      notify.success('Produto excluido.');
+    });
+  } catch (error) {
+    notify.error('Erro ao excluir o produto', error);
+  }
+};
+
 onMounted(async () => {
-  state.value.from.form2 = 'order-product-list';
+  state.value.from.form2 = 'order-item-list';
 });
 </script>
 
@@ -46,7 +59,7 @@ onMounted(async () => {
         color="info"
         text-color="white"
         class="full-width"
-        :to="{ name: 'order-product-select' }"
+        :to="{ name: 'order-item-select' }"
       />
 
       <!-- <waiting-load :showing="loading.value" /> -->
@@ -54,7 +67,7 @@ onMounted(async () => {
       <q-list style="margin: 0 -16px">
         <q-item v-for="(product, index) in productList" :key="index">
           <q-item-section>
-            <order-product-item :product="product" />
+            <order-add-item-amount :product="product" @remove="handleRemoveProduct(index)" />
           </q-item-section>
         </q-item>
       </q-list>

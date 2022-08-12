@@ -4,10 +4,10 @@ export default function useConfirm() {
   const confirm = {
     delete: (message) => {
       return Dialog.create({
-        title: 'Atenção',
-        message: `${message}. Confirma?`,
-        cancel: { label: 'Não', flat: true, noCaps: true },
-        ok: { label: 'Ok. Excluir', flat: true, noCaps: true, color: 'negative' },
+        // title: 'Atenção',
+        message: `Tem certeza que quer excluir ${message}?`,
+        cancel: { label: 'Cancelar', flat: true, noCaps: true },
+        ok: { label: 'Excluir', flat: true, noCaps: true, color: 'negative' },
         persistent: true
       });
     },
