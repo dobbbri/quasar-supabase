@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import { LeftSidebar, TabMenu } from 'src/components';
+import { LeftSidebar, TabMenu, OrderFooter } from 'src/components';
 import { useStore } from 'src/composables';
 
 const { clearFromState } = useStore();
@@ -25,7 +25,19 @@ onMounted(() => {
       <left-sidebar />
 
       <page-footer>
-        <tab-menu />
+        <order-footer
+          v-if="$route.matched.some(({ name }) => name === 'order-form')"
+          class="bg-primary text-white"
+        />
+        <order-footer
+          v-else-if="$route.matched.some(({ name }) => name === 'order-item-list')"
+          class="text-grey-7 bg-grey-4"
+        />
+        <order-footer
+          v-else-if="$route.matched.some(({ name }) => name === 'order-item-select')"
+          class="text-grey-7 bg-grey-4"
+        />
+        <tab-menu v-else class="text-grey-7 bg-grey-4" />
       </page-footer>
 
       <q-page-container class="bg-app">

@@ -1,19 +1,20 @@
 <script setup>
-import { ref, onMounted, watchEffect } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useOrders, useProducts, useNameSearch, useTools } from 'src/composables';
+import { useOrders, useProducts, useServices, useNameSearch, useTools } from 'src/composables';
 
 const router = useRouter();
 
 const documents = ref([]);
-const productsSelectd = ref([]);
 
-const { productList } = useOrders();
+const { temp } = useOrders();
 const { loading, getProducts } = useProducts();
+const { getServices } = useServices();
 const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const title = ref('');
+const itemList = ref([]);
 
 const handleBackTo = () => {
   router.push({ name: 'order-item-list' });
@@ -23,7 +24,13 @@ const handleAddToProductList = () => {
   products.value.forEach((product) => {
     if (product.selected) {
       product.amount = 1;
-      productList.value.unshift(product);
+      if (temp.value.active == 'service') {
+        temp.value.service.list.unshift(product);
+        temp.value.service.total += product.unit_price;
+      } else {
+        temp.value.product.list.unshift(product);
+        temp.value.product.total += product.unit_price;
+      }
     }
   });
   handleBackTo();
@@ -37,14 +44,24 @@ const handleGetProducts = async () => {
   }
 };
 
-watchEffect(() => {
-  title.value = `${productsSelectd.value.length} Selecionados`;
-});
+const handleGetServices = async () => {
+  try {
+    documents.value = await getServices('id, name, code_bar, unit_price, measure_unit, selected');
+  } catch (error) {
+    notify.error('Erro ao obter os servicos.', error);
+  }
+};
 
 onMounted(async () => {
-  title.value = 'Selecionar Produtos';
-  productsSelectd.value = [];
-  await handleGetProducts();
+  if (temp.value.active == 'service') {
+    title.value = 'servicos';
+    itemList.value = temp.value.service.list;
+    await handleGetServices();
+  } else {
+    title.value = 'produtos';
+    itemList.value = temp.value.product.list;
+    await handleGetProducts();
+  }
 });
 </script>
 
@@ -54,7 +71,7 @@ onMounted(async () => {
       <template #left>
         <btn-back @click="handleBackTo" />
       </template>
-      <template #title>Selecionar Produtos</template>
+      <template #title>Selecionar {{ title }}</template>
       <template #right>
         <btn color="info" label="Continuar" @click="handleAddToProductList()" />
       </template>

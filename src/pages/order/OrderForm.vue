@@ -6,7 +6,7 @@ import { useOrders, useTools, useStore } from 'src/composables';
 const router = useRouter();
 
 const { state, isFromTabMenu } = useStore();
-const { loading, order, temp, serviceList, productList, addOrder, editOrder } = useOrders();
+const { loading, order, temp, addOrder, editOrder } = useOrders();
 const { notify } = useTools();
 
 const isEditMode = computed(() => (order.value && order.value.id ? true : false));
@@ -37,6 +37,11 @@ const handleSubmit = async () => {
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error);
   }
+};
+
+const handleListSelectedItems = (value) => {
+  temp.value.active = value;
+  router.push({ name: 'order-item-list' });
 };
 
 onMounted(async () => {
@@ -77,7 +82,6 @@ onMounted(async () => {
               />
             </div>
           </div>
-
           <select-input label="Cliente" :text="order.customerName" @focus="selectCustomer()" />
           <textarea-input v-model="order.reference" label="Sobre oque é o pedido" />
         </expansion-item>
@@ -89,29 +93,35 @@ onMounted(async () => {
         </expansion-item>
 
         <expansion-item group="itens" default-opened label="Itens do pedido">
-          <item-btn label="Serviços" type="plus" :to="{ name: 'order-service-list' }" />
-          <item-btn label="Produtos" type="plus" :to="{ name: 'order-item-list' }" />
+          <item-btn
+            label="Serviços"
+            type="plus"
+            :total="temp.service.total"
+            @click="handleListSelectedItems('service')"
+          />
+          <item-btn
+            label="Produtos"
+            type="plus"
+            :total="temp.product.total"
+            @click="handleListSelectedItems('product')"
+          />
           <item-btn label="Desconto" type="plus" :to="{ name: 'measure-unit-form' }" />
         </expansion-item>
 
         <expansion-item group="details" default-opened label="Detalhes">
-          <item-btn
-            label="Condições de pagamento"
-            type="plus"
-            :to="{ name: 'measure-unit-form' }"
-          />
+          <item-btn label="Condições de pagamento" type="plus" :to="{ name: 'measure-unit' }" />
           <item-btn label="Meios de pagamento" type="arrow" :to="{ name: 'measure-unit-form' }" />
           <item-btn label="Garantia" type="plus" :to="{ name: 'measure-unit-form' }" />
           <textarea-input v-model="order.comments" label="Informações adicionais" />
         </expansion-item>
         <br />
-        state: {{ state }}
-        <br />
-        order: {{ order }}
-        <br />
-        services: {{ serviceList }}
-        <br />
-        products: {{ productList }}
+        temp: {{ temp }}
+        <!-- <br /> -->
+        <!-- order: {{ order }} -->
+        <!-- <br /> -->
+        <!-- services: {{ serviceList }} -->
+        <!-- <br /> -->
+        <!-- products: {{ productList }} -->
       </page-body>
     </q-form>
   </page>

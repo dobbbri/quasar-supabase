@@ -1,9 +1,9 @@
 import { ref } from 'vue';
 
 const measureUnits = ref([
-  { group: 'Unidade', id: 'un.', name: 'unidades', active: true },
+  { group: 'Unidade', id: 'un', name: 'unidades', active: true },
   { group: 'Área', id: 'm²', name: 'metros quadrados', active: true },
-  { group: null, id: 'km²', name: 'kilometro quadrados', active: true },
+  { group: null, id: 'km²', name: 'kilometros quadrados', active: true },
   { group: 'Distância', id: 'mm', name: 'milimetros', active: true },
   { group: null, id: 'cm', name: 'centimetros', active: true },
   { group: null, id: 'm', name: 'metros', active: true },
@@ -15,7 +15,7 @@ const measureUnits = ref([
   { group: null, id: 'dias', name: 'dias', active: true },
   { group: null, id: 'semanas', name: 'semanas', active: true },
   { group: null, id: 'meses', name: 'meses', active: true },
-  { group: 'Volume', id: 'ml', name: 'mililitro', active: true },
+  { group: 'Volume', id: 'ml', name: 'mililitros', active: true },
   { group: null, id: 'l', name: 'litro', active: true },
   { group: null, id: 'm³', name: 'metros cúbicos', active: true }
 ]);
@@ -39,17 +39,28 @@ const orderStatuses = ref([
   { name: 'Aguardando Pagamento', active: true },
   { name: 'Enviado', active: true },
   { name: 'Concluido', active: true },
+  { name: 'Garantia', active: true },
   { name: 'Cancelado', active: true }
 ]);
 
 const costCategories = ref([
   { name: 'Ajudantes', active: true },
   { name: 'Alimentação', active: true },
-  { name: 'Produtos', active: true },
-  { name: 'Outros', active: true },
+  { name: 'Aluguel', active: true },
+  { name: 'Combustíveis', active: true },
+  { name: 'Conta de luz', active: true },
+  { name: 'Conta de água', active: true },
   { name: 'Ferramentas', active: true },
-  { name: 'Transporte', active: true },
-  { name: 'Impostos', active: true }
+  { name: 'Funcionários', active: true },
+  { name: 'Impostos', active: true },
+  { name: 'Internet', active: true },
+  { name: 'Matéria-prima', active: true },
+  { name: 'Outros', active: true },
+  { name: 'Produtos', active: true },
+  { name: 'Retirada de lucro', active: true },
+  { name: 'Taxas', active: true },
+  { name: 'Telefone', active: true },
+  { name: 'Transporte', active: true }
 ]);
 
 const paymentConditions = ref([

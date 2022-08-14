@@ -1,15 +1,18 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { OrderAddItemAmount } from 'src/components';
+import { OrderItemForm } from 'src/components';
 import { useOrders, useStore, useDefaults, useTools } from 'src/composables';
 
 const router = useRouter();
 
-const { productList } = useOrders();
+const { temp } = useOrders();
 const { state, isFromTabMenu } = useStore();
 const { attr } = useDefaults();
 const { confirm, notify } = useTools();
+
+const title = ref('');
+const itemList = ref([]);
 
 const handleBackTo = () => {
   if (state.value.from.form1) {
@@ -23,19 +26,26 @@ const handleAddProduct = () => {
   router.push({ name: 'product-form' });
 };
 
-const handleRemoveProduct = (index) => {
+const handleRemoveItem = (index) => {
   try {
-    const product = productList.value[index];
-    confirm.delete(`o produto ${product.name}`).onOk(async () => {
-      productList.value.splice(index, 1);
-      notify.success('Produto excluido.');
+    const item = itemList.value[index];
+    confirm.delete(`o ${title.value} ${item.name}`).onOk(async () => {
+      itemList.value.splice(index, 1);
+      notify.success(`${title.value} excluido.`);
     });
   } catch (error) {
-    notify.error('Erro ao excluir o produto', error);
+    notify.error(`Erro ao excluir o ${title.value}`, error);
   }
 };
 
 onMounted(async () => {
+  if (temp.value.active == 'service') {
+    title.value = 'servicos';
+    itemList.value = temp.value.service.list;
+  } else {
+    title.value = 'produtos';
+    itemList.value = temp.value.product.list;
+  }
   state.value.from.form2 = 'order-item-list';
 });
 </script>
@@ -46,7 +56,7 @@ onMounted(async () => {
       <template #left>
         <btn-back v-if="!isFromTabMenu" @click="handleBackTo" />
       </template>
-      <template #title>Produtos</template>
+      <template #title>Adicionar {{ title }}</template>
       <template #right>
         <btn-add @click="handleAddProduct()" />
       </template>
@@ -65,9 +75,9 @@ onMounted(async () => {
       <!-- <waiting-load :showing="loading.value" /> -->
 
       <q-list style="margin: 0 -16px">
-        <q-item v-for="(product, index) in productList" :key="index">
+        <q-item v-for="(product, index) in itemList" :key="index">
           <q-item-section>
-            <order-add-item-amount :product="product" @remove="handleRemoveProduct(index)" />
+            <order-item-form :product="product" @remove="handleRemoveItem(index)" />
           </q-item-section>
         </q-item>
       </q-list>
