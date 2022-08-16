@@ -24,13 +24,13 @@ const { fmt } = useTools();
         </div>
       </q-item-label>
     </q-item-section>
-    <q-icon v-if="total > 0" size="sm" color="info" name="sym_o_arrow_forward_ios" />
+    <q-icon v-if="total > 0" size="xs" color="info" name="sym_o_arrow_forward_ios" />
     <q-icon
       v-if="total == 0"
       size="sm"
       color="white"
-      style="border-radius: 50%"
-      class="bg-info"
+      style="border-radius: 50%; padding: 0"
+      class="bg-positive"
       name="sym_o_add"
     />
   </q-item>

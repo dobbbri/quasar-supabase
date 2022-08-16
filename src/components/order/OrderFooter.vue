@@ -1,43 +1,20 @@
 <script setup>
-import { ref } from 'vue';
-import { useOrders, useTools } from 'src/composables';
+import { defineProps } from 'vue';
+import { useTools } from 'src/composables';
 
-const { order, temp } = useOrders();
 const { fmt } = useTools();
 
-const subtotal = ref(0);
-const selected = ref(0);
-const desc = ref('');
-
-if (temp.value.active == 'product') {
-  desc.value = 'Produtos';
-  subtotal.value = temp.value.product.total;
-  selected.value = temp.value.product.selected;
-}
-if (temp.value.active == 'service') {
-  desc.value = 'Serviços';
-  subtotal.value = temp.value.service.total;
-  selected.value = temp.value.service.selected;
-}
+defineProps({
+  label: { type: String, required: true, default: '' },
+  total: { type: Number, default: 0 },
+  amount: { type: Number, default: 0 }
+});
 </script>
 
 <template>
-  <div v-if="$route.matched.some(({ name }) => name === 'order-form')">
-    <q-toolbar class="text-weight-bold full-width">
-      <q-toolbar-title> Total </q-toolbar-title>
-      <div class="q-ml-auto">{{ fmt.currency(order.total) }}</div>
-    </q-toolbar>
-  </div>
-  <div v-else-if="$route.matched.some(({ name }) => name === 'order-item-lits')">
-    <q-toolbar class="text-weight-bold full-width">
-      <q-toolbar-title>{{ desc }} subtotal </q-toolbar-title>
-      <div class="q-ml-auto">{{ fmt.currency(subtotal) }}</div>
-    </q-toolbar>
-  </div>
-  <div v-else-if="$route.matched.some(({ name }) => name === 'order-item-select')">
-    <q-toolbar class="text-weight-bold full-width">
-      <q-toolbar-title>selecionados </q-toolbar-title>
-      <div class="q-ml-auto">{{ selected }}</div>
-    </q-toolbar>
-  </div>
+  <q-toolbar class="text-weight-bold toolbar-height full-width">
+    <q-toolbar-title>{{ label }}</q-toolbar-title>
+    <div v-if="total > 0" class="q-ml-auto">{{ fmt.currency(total) }}</div>
+    <div v-if="amount > 0" class="q-ml-auto">{{ amount }}</div>
+  </q-toolbar>
 </template>

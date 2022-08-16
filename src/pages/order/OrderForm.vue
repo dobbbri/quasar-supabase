@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { OrderFooter } from 'src/components';
 import { useOrders, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
@@ -12,6 +13,10 @@ const { notify } = useTools();
 const isEditMode = computed(() => (order.value && order.value.id ? true : false));
 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+
+const total = computed(() => {
+  return temp.value.product.total + temp.value.service.total;
+});
 
 const handleBackTo = () => {
   if (!isFromTabMenu.value) {
@@ -27,6 +32,9 @@ const selectCustomer = () => {
 
 const handleSubmit = async () => {
   try {
+    order.total = total;
+    order.product_total = temp.value.product.total;
+    order.service_total = temp.value.service.total;
     if (isEditMode.value) {
       await editOrder(order.value);
     } else {
@@ -82,15 +90,16 @@ onMounted(async () => {
               />
             </div>
           </div>
-          <select-input label="Cliente" :text="order.customerName" @focus="selectCustomer()" />
-          <textarea-input v-model="order.reference" label="Sobre oque é o pedido" />
         </expansion-item>
 
-        <expansion-item group="basic" default-opened label="Informações básica">
-          <date-input v-model:date="order.delivery_date" label="Data de entrega" />
-          <date-input v-model:date="order.budget_deadline" label="Validade do orçamento" />
-          <date-input v-model:date="order.deadline" label="Prazo de execução" />
-        </expansion-item>
+        <select-input label="Cliente" :text="order.customerName" @focus="selectCustomer()" />
+        <!-- <textarea-input v-model="order.reference" label="Sobre oque é o pedido" /> -->
+
+        <!-- <expansion-item group="basic" default-opened label="Informações básica"> -->
+        <!--   <date-input v-model:date="order.delivery_date" label="Data de entrega" /> -->
+        <!--   <date-input v-model:date="order.budget_deadline" label="Validade do orçamento" /> -->
+        <!--   <date-input v-model:date="order.deadline" label="Prazo de execução" /> -->
+        <!-- </expansion-item> -->
 
         <expansion-item group="itens" default-opened label="Itens do pedido">
           <item-btn
@@ -114,8 +123,8 @@ onMounted(async () => {
           <item-btn label="Garantia" type="plus" :to="{ name: 'measure-unit-form' }" />
           <textarea-input v-model="order.comments" label="Informações adicionais" />
         </expansion-item>
-        <br />
-        temp: {{ temp }}
+        <!-- <br /> -->
+        <!-- temp: {{ temp }} -->
         <!-- <br /> -->
         <!-- order: {{ order }} -->
         <!-- <br /> -->
@@ -123,6 +132,10 @@ onMounted(async () => {
         <!-- <br /> -->
         <!-- products: {{ productList }} -->
       </page-body>
+
+      <page-footer class="text-white bg-primary">
+        <order-footer label="Total" :total="total" />
+      </page-footer>
     </q-form>
   </page>
 </template>

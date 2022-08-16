@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { OrderFooter } from 'src/components';
 import { useOrders, useProducts, useServices, useNameSearch, useTools } from 'src/composables';
 
 const router = useRouter();
@@ -16,6 +17,12 @@ const { notify, fmt } = useTools();
 const title = ref('');
 const itemList = ref([]);
 
+const amount = computed(() => {
+  return itemList.value.reduce((total, product) => {
+    return product.selected ? total + 1 : total;
+  }, 0);
+});
+
 const handleBackTo = () => {
   router.push({ name: 'order-item-list' });
 };
@@ -24,12 +31,11 @@ const handleAddToProductList = () => {
   products.value.forEach((product) => {
     if (product.selected) {
       product.amount = 1;
+      product.total = product.unit_price;
       if (temp.value.active == 'service') {
         temp.value.service.list.unshift(product);
-        temp.value.service.total += product.unit_price;
       } else {
         temp.value.product.list.unshift(product);
-        temp.value.product.total += product.unit_price;
       }
     }
   });
@@ -75,11 +81,14 @@ onMounted(async () => {
       <template #right>
         <btn color="info" label="Continuar" @click="handleAddToProductList()" />
       </template>
+      <template #fixedTop>
+        <div class="q-px-md">
+          <search-input v-model="searchQuery" />
+        </div>
+      </template>
     </page-header>
 
     <page-body>
-      <search-input v-model="searchQuery" />
-
       <q-list v-if="!loading.value" separator style="margin: 0 -16px">
         <q-item v-for="(product, index) in products" :key="index">
           <q-item-section>
@@ -97,5 +106,9 @@ onMounted(async () => {
         </q-item>
       </q-list>
     </page-body>
+
+    <page-footer class="text-grey-9 bg-grey-4">
+      <order-footer label="`${title} selecionados`" :amount="amount" />
+    </page-footer>
   </page>
 </template>

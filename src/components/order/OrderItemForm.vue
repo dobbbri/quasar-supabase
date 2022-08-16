@@ -1,5 +1,5 @@
 <script setup>
-import { toRef, defineProps, computed, defineEmits } from 'vue';
+import { toRef, defineProps, defineEmits, watch } from 'vue';
 import { useTools } from 'src/composables';
 
 const { fmt } = useTools();
@@ -12,9 +12,13 @@ defineEmits(['remove']);
 
 const product = toRef(props, 'product');
 
-const total = computed(() => {
-  return product.value.unit_price * product.value.amount;
-});
+watch(
+  () => product.value.amount,
+  () => {
+    product.value.total = product.value.unit_price * product.value.amount;
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -42,7 +46,7 @@ const total = computed(() => {
         />
       </div>
       <div class="col ar">
-        <text-view :value="fmt.currency(total)" label="valor" class="text-weight-bold" />
+        <text-view :value="fmt.currency(product.total)" label="valor" class="text-weight-bold" />
       </div>
     </div>
   </div>

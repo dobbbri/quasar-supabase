@@ -1,8 +1,9 @@
 <script setup>
 import { onMounted } from 'vue';
-import { LeftSidebar, TabMenu, OrderFooter } from 'src/components';
-import { useStore } from 'src/composables';
+import { LeftSidebar, TabMenu } from 'src/components';
+import { useAuth, useStore } from 'src/composables';
 
+const { isLoggedIn } = useAuth();
 const { clearFromState } = useStore();
 
 const removeLoader = () => {
@@ -24,20 +25,8 @@ onMounted(() => {
     <q-layout view="lHh Lpr lFf" class="app-layout shadow-5" container>
       <left-sidebar />
 
-      <page-footer>
-        <order-footer
-          v-if="$route.matched.some(({ name }) => name === 'order-form')"
-          class="bg-primary text-white"
-        />
-        <order-footer
-          v-else-if="$route.matched.some(({ name }) => name === 'order-item-list')"
-          class="text-grey-7 bg-grey-4"
-        />
-        <order-footer
-          v-else-if="$route.matched.some(({ name }) => name === 'order-item-select')"
-          class="text-grey-7 bg-grey-4"
-        />
-        <tab-menu v-else class="text-grey-7 bg-grey-4" />
+      <page-footer v-if="isLoggedIn">
+        <tab-menu class="text-grey-7 bg-grey-4" />
       </page-footer>
 
       <q-page-container class="bg-app">

@@ -28,11 +28,12 @@ export default function useAttribute() {
         color: 'secondary'
       },
       search: {
+        hideBottomSpace: true,
         clearable: true,
         dense: false,
         outlined: true,
         color: 'secondary',
-        class: 'q-mb-md q-py-sx'
+        class: 'q-py-sx'
       }
     },
 

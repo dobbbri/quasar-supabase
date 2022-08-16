@@ -10,7 +10,7 @@ defineProps({
 </script>
 
 <template>
-  <q-field v-bind="attr.input.basic">
+  <q-field v-bind="attr.input.basic" :stack-label="text ? true : false">
     <template #control>
       <div class="self-center full-width no-outline" tabindex="0" @click="selectCustomer">
         {{ text }}

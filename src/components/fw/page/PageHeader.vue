@@ -7,8 +7,8 @@ const { isLoggedIn } = useAuth();
 </script>
 
 <template>
-  <q-header v-cloak class="bg-primary text-white">
-    <q-toolbar class="full-width toolbar-height">
+  <q-header v-cloak class="bg-white">
+    <q-toolbar class="full-width toolbar-height bg-primary text-white">
       <div>
         <slot name="left">
           <q-btn
@@ -31,5 +31,6 @@ const { isLoggedIn } = useAuth();
         <slot name="right" />
       </div>
     </q-toolbar>
+    <slot name="fixedTop" />
   </q-header>
 </template>
