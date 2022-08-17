@@ -10,7 +10,7 @@ export default function useFormatter() {
       return '*** Err ***';
     },
 
-    BrDateToDbDate(date) {
+    brDateToDbDate(date) {
       try {
         const temp = date.split('/');
         // 01/12/2022
@@ -22,13 +22,17 @@ export default function useFormatter() {
       }
     },
 
-    DbDateToBrDate(date) {
+    dbDateToBrDate(date) {
       try {
         const d = new Date(date);
         return d.toLocaleString('pt-BR', 'short');
       } catch (e) {
         console.log('fmt dateToBR: ', date, ' err: ', e);
       }
+    },
+
+    capitalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
   };
 

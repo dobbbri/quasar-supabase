@@ -73,15 +73,6 @@ body {
   margin-top: 0;
 }
 
-// .q-field__label {
-//   left: 0;
-//   top: 10px;
-//   color: $dark;
-//   font-size: 17px;
-//   font-weight: 500;
-//   font-family: 'Ubuntu', 'Helvetica' sans-serif !important;
-// }
-
 .q-field {
   &__native, &__prefix, &__suffix, &__input {
     font-weight: 500
@@ -90,7 +81,6 @@ body {
     opacity: 1;
     left: 0;
     top: 10px;
-    // color: $primary;
     font-size: 17px;
     font-weight: 400;
   }
@@ -108,16 +98,6 @@ body {
     }
   }
 }
-
-// .q-field--float .q-field__label {
-//   transform: translateY(-110%);
-//   background: white;
-//   z-index: 999;
-//   padding: 0 5px;
-//   margin-left: -2px;
-//   text-transform: lowercase;
-//   // color: $blue-grey-3;
-// }
 
 .q-field--labeled .q-field__native,
 .q-field--labeled .q-field__prefix,

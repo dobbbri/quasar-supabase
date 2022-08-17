@@ -13,7 +13,7 @@ defineProps({
 
 <template>
   <q-toolbar class="text-weight-bold toolbar-height full-width">
-    <q-toolbar-title>{{ label }}</q-toolbar-title>
+    <q-toolbar-title>{{ fmt.capitalize(label) }}</q-toolbar-title>
     <div v-if="total > 0" class="q-ml-auto">{{ fmt.currency(total) }}</div>
     <div v-if="amount > 0" class="q-ml-auto">{{ amount }}</div>
   </q-toolbar>

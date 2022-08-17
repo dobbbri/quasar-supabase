@@ -23,7 +23,7 @@ const handleBackTo = () => {
     if (temp.value.active == 'service') {
       temp.value.service.total = total;
     } else {
-      itemList.value = temp.value.product.total = total;
+      temp.value.product.total = total;
     }
     router.push({ name: state.value.from.form1 });
   } else {
@@ -87,16 +87,16 @@ onMounted(async () => {
       <!-- <waiting-load :showing="loading.value" /> -->
 
       <q-list style="margin: 0 -16px">
-        <q-item v-for="(product, index) in itemList" :key="index">
+        <q-item v-for="(item, index) in itemList" :key="index">
           <q-item-section>
-            <order-item-form :product="product" @remove="handleRemoveItem(index)" />
+            <order-item-form :product="item" @remove="handleRemoveItem(index)" />
           </q-item-section>
         </q-item>
       </q-list>
     </page-body>
 
     <page-footer class="text-grey-9 bg-grey-4">
-      <order-footer label="subtotal" :total="total" />
+      <order-footer :label="`${title} subtotal:`" :total="total" />
     </page-footer>
   </page>
 </template>

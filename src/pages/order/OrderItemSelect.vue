@@ -11,16 +11,13 @@ const documents = ref([]);
 const { temp } = useOrders();
 const { loading, getProducts } = useProducts();
 const { getServices } = useServices();
-const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
+const { searchQuery, matchingSearchQuery: items } = useNameSearch(documents);
 const { notify, fmt } = useTools();
 
 const title = ref('');
-const itemList = ref([]);
 
 const amount = computed(() => {
-  return itemList.value.reduce((total, product) => {
-    return product.selected ? total + 1 : total;
-  }, 0);
+  return items.value.reduce((total, item) => (item.selected ? total + 1 : total), 0);
 });
 
 const handleBackTo = () => {
@@ -28,14 +25,14 @@ const handleBackTo = () => {
 };
 
 const handleAddToProductList = () => {
-  products.value.forEach((product) => {
-    if (product.selected) {
-      product.amount = 1;
-      product.total = product.unit_price;
+  items.value.forEach((item) => {
+    if (item.selected) {
+      item.amount = 1;
+      item.total = item.unit_price;
       if (temp.value.active == 'service') {
-        temp.value.service.list.unshift(product);
+        temp.value.service.list.unshift(item);
       } else {
-        temp.value.product.list.unshift(product);
+        temp.value.product.list.unshift(item);
       }
     }
   });
@@ -61,11 +58,9 @@ const handleGetServices = async () => {
 onMounted(async () => {
   if (temp.value.active == 'service') {
     title.value = 'servicos';
-    itemList.value = temp.value.service.list;
     await handleGetServices();
   } else {
     title.value = 'produtos';
-    itemList.value = temp.value.product.list;
     await handleGetProducts();
   }
 });
@@ -90,25 +85,25 @@ onMounted(async () => {
 
     <page-body>
       <q-list v-if="!loading.value" separator style="margin: 0 -16px">
-        <q-item v-for="(product, index) in products" :key="index">
+        <q-item v-for="(item, index) in items" :key="index">
           <q-item-section>
-            <q-item-label> {{ product.name }} </q-item-label>
+            <q-item-label> {{ item.name }} </q-item-label>
             <q-item-label class="full-width row">
               <div class="col">
-                {{ product.code_bar }}
+                {{ item.code_bar }}
               </div>
               <div class="col q-pl-sm">
-                {{ fmt.currency(product.unit_price) }}/{{ product.measure_unit }}
+                {{ fmt.currency(item.unit_price) }}/{{ item.measure_unit }}
               </div>
             </q-item-label>
           </q-item-section>
-          <check-box v-model="product.selected" />
+          <check-box v-model="item.selected" />
         </q-item>
       </q-list>
     </page-body>
 
     <page-footer class="text-grey-9 bg-grey-4">
-      <order-footer label="`${title} selecionados`" :amount="amount" />
+      <order-footer :label="`${title} selecionados:`" :amount="amount" />
     </page-footer>
   </page>
 </template>
