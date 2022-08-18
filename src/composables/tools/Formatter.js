@@ -2,10 +2,29 @@ export default function useFormatter() {
   const fmt = {
     currency(value) {
       try {
-        const format = { minimumFractionDigits: 2, style: 'currency', currency: 'BRL' };
-        return value.toLocaleString('pt-br', format);
+        const options = {
+          maximumFractionDigits: 2,
+          // roundingIncrement: 5,
+          style: 'currency',
+          currency: 'BRL'
+        };
+        const cnf = new Intl.NumberFormat('pt-br', options);
+        return cnf.format(value);
       } catch (e) {
-        console.log('fmt money: ', value, ' err: ', e);
+        console.log('fmt currency: ', value, ' err: ', e);
+      }
+      return '*** Err ***';
+    },
+
+    integer(value) {
+      try {
+        const options = {
+          maximumFractionDigits: 0
+        };
+        const inf = new Intl.NumberFormat('pt-br', options);
+        return inf.format(value);
+      } catch (e) {
+        console.log('fmt integer: ', value, ' err: ', e);
       }
       return '*** Err ***';
     },

@@ -33,6 +33,10 @@ body {
   font-weight: 600;
 }
 
+.q-item {
+  min-height: 42px !important;
+  padding: 0px 16px;
+}
 .q-item__label + .q-item__label {
   margin-top: 1px;
 }

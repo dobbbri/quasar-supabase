@@ -21,10 +21,6 @@ const amount = computed(() => {
 });
 
 const handleBackTo = () => {
-  router.push({ name: 'order-item-list' });
-};
-
-const handleAddToProductList = () => {
   items.value.forEach((item) => {
     if (item.selected) {
       item.amount = 1;
@@ -36,7 +32,7 @@ const handleAddToProductList = () => {
       }
     }
   });
-  handleBackTo();
+  router.push({ name: 'order-item-list' });
 };
 
 const handleGetProducts = async () => {
@@ -73,9 +69,6 @@ onMounted(async () => {
         <btn-back @click="handleBackTo" />
       </template>
       <template #title>Selecionar {{ title }}</template>
-      <template #right>
-        <btn color="info" label="Continuar" @click="handleAddToProductList()" />
-      </template>
       <template #fixedTop>
         <div class="q-px-md">
           <search-input v-model="searchQuery" />

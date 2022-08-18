@@ -19,7 +19,7 @@ const { fmt } = useTools();
         <div class="col">
           {{ label }}
         </div>
-        <div v-if="total > 0" class="col q-pr-sm text-right">
+        <div v-if="total > 0" class="col q-pr-xs text-right">
           {{ fmt.currency(total) }}
         </div>
       </q-item-label>
