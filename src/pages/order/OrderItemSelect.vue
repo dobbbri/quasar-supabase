@@ -77,7 +77,7 @@ onMounted(async () => {
     </page-header>
 
     <page-body>
-      <q-list v-if="!loading.value" separator style="margin: 0 -16px">
+      <q-list v-if="!loading.value" separator class="q-mt-sm -q-mx-md">
         <q-item v-for="(item, index) in items" :key="index">
           <q-item-section>
             <q-item-label> {{ item.name }} </q-item-label>

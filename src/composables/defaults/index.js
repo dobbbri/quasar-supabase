@@ -1,5 +1,13 @@
 export default function useAttribute() {
   const attr = {
+    page: {
+      class: 'full-width q-pa-md bg-app'
+    },
+
+    lineSpacing: {
+      class: 'q-gutter-y-sm'
+    },
+
     btn: {
       basic: {
         rounded: false,
@@ -11,7 +19,7 @@ export default function useAttribute() {
       big: {
         rounded: false,
         noCaps: true,
-        color: 'grey-3',
+        color: 'white',
         textColor: 'grey-10',
         class: 'text-weight-bold'
       },
@@ -25,7 +33,8 @@ export default function useAttribute() {
         dense: false,
         optionsDense: false,
         stackLabel: false,
-        color: 'secondary'
+        color: 'secondary',
+        bgColor: 'white'
       },
       search: {
         hideBottomSpace: true,
@@ -33,23 +42,17 @@ export default function useAttribute() {
         dense: false,
         outlined: true,
         color: 'secondary',
-        class: 'q-py-sx'
+        bgColor: 'white',
+        class: 'q-py-sx -q-mt-md'
       }
     },
 
-    page: {
-      class: 'full-width q-pa-md'
-    },
-
-    lineSpacing: {
-      class: 'q-gutter-y-sm'
-    },
-
     expansion: {
-      headerClass: 'text-primary title title-expansion q-mt-md',
+      headerClass: 'text-primary bg-white title title-expansion q-mt-md',
       denseToggle: true,
       expandIcon: 'chevron_right',
       expandedIcon: 'expand_less',
+      class: 'bg-white -q-mx-md',
       dense: true
     },
 

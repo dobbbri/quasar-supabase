@@ -26,7 +26,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="row justify-center q-mt-lg">
+  <div class="row justify-center">
     <page>
       <q-form v-bind="attr.form" @submit.prevent="handleSubmit">
         <page-header>
@@ -38,7 +38,7 @@ const handleSubmit = async () => {
           </template>
         </page-header>
 
-        <page-body>
+        <page-body class="q-mt-lg">
           <q-input
             v-bind="attr.input.basic"
             v-model="email"

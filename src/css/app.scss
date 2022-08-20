@@ -1,10 +1,31 @@
 // app global css in SCSS form
+
+$white : #ffffff !default;
+$black : #000000 !default;
+
+.-q-mt-md {
+  margin-top: -16px
+}
+
+.-q-mx-md {
+  margin-left: -16px;
+  margin-right: -16px;
+}
+
 [v-cloak] {
   display: none;
 }
 
 body {
   font-family: 'Ubuntu', 'Helvetica' sans-serif !important;
+}
+
+.bg-app {
+  background: $white;
+}
+
+.bg-toolbar {
+  background: $white;
 }
 
 .material-icons {
@@ -15,13 +36,21 @@ body {
   height: 60px !important;
 }
 
+.header-border {
+  border-bottom: 1px solid $grey-4
+}
+
+.footer-border {
+  border-top: 1px solid $grey-4
+}
+
 .title {
   font-size: 17px;
   &-bar {
-    font-weight: 500;
+    font-weight: 600;
   }
   &-expansion {
-    font-weight: 700;
+    font-weight: 600;
   }
   &-sidebar {
     font-weight: 500;
@@ -79,7 +108,7 @@ body {
 
 .q-field {
   &__native, &__prefix, &__suffix, &__input {
-    font-weight: 500
+    font-weight: 500;
   }
   &__label {
     opacity: 1;
@@ -102,6 +131,16 @@ body {
     }
   }
 }
+
+// .q-field__bottom {
+//     font-size: 12px;
+//     min-height: 16px;
+//     line-height: 1;
+//     color: rgba(0, 0, 0, 0.54);
+//     padding: 4px 12px 0;
+//     -webkit-backface-visibility: hidden;
+//     backface-visibility: hidden;
+// }
 
 .q-field--labeled .q-field__native,
 .q-field--labeled .q-field__prefix,
@@ -132,37 +171,6 @@ body {
   }
 }
 
-
-// .q-field__native,
-// .q-field__prefix,
-// .q-field__suffix,
-// .q-field__input {
-//   font-weight: 400;
-// }
-
-// .q-field--outlined .q-field__control {
-//
-//   // }
-//   &:hover:before {
-//     border-width: 2px;
-//     // border: 2px solid $primary;
-//     // > .q-field__label {
-//     //   color: #000 !important;
-//     // }
-//   }
-//   // &:after {
-//   //   border: 2px solid $blue-grey-3;
-//   // }
-// }
-
-// .q-field--outlined .q-field__control:hover::before {
-//   border-color: $primary;
-//   border-width: 2px;
-//   >.q-field--float .q-field__label {
-//     color: $negative;
-//   }
-// }
-
 .only-image > .q-checkbox__inner {
   width: 0.7em;
   min-width: 0.7em;
@@ -172,10 +180,6 @@ body {
 .q-checkbox__icon {
   font-size: $field-height;
   margin-top: 13px;
-}
-
-.bg-app {
-  background: white;
 }
 
 // in Dark Mode
@@ -188,3 +192,5 @@ body {
     background: $dark-page;
   }
 }
+
+

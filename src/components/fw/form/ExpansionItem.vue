@@ -12,20 +12,14 @@ defineProps({
 
 <template>
   <div v-if="fake">
-    <div v-bind="attr.expansion" class="text-primary title title-expansion">
+    <div v-bind="attr.expansion">
       {{ label }}
     </div>
     <div v-bind="attr.lineSpacing" class="q-pb-xs">
       <slot />
     </div>
   </div>
-  <q-expansion-item
-    v-else
-    :group="group"
-    v-bind="attr.expansion"
-    :label="label"
-    style="margin-left: -16px; margin-right: -16px"
-  >
+  <q-expansion-item v-else :group="group" v-bind="attr.expansion" :label="label">
     <div v-bind="attr.lineSpacing" class="q-px-md q-pb-xs">
       <slot />
     </div>
@@ -42,8 +36,8 @@ defineProps({
 }
 
 .q-expansion-item__toggle-icon {
-  background: $blue-grey-1;
-  color: $info;
+  // background: $blue-grey-1;
+  color: $dark !important;
   border-radius: 50%;
 }
 </style>

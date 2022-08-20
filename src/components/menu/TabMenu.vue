@@ -27,9 +27,9 @@ const open = (path) => {
   <q-tabs
     v-model="tab"
     padding="xs"
-    active-color="dark"
+    active-color="primary"
     indicator-color="transparent"
-    class="full-width justify-around toolbar-height"
+    class="full-width justify-around toolbar-height text-grey-7 bg-toolbar"
     outside-arrows
     mobile-arrows
     no-caps

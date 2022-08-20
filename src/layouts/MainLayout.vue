@@ -26,7 +26,7 @@ onMounted(() => {
       <left-sidebar />
 
       <page-footer v-if="isLoggedIn">
-        <tab-menu class="text-grey-7 bg-grey-4" />
+        <tab-menu />
       </page-footer>
 
       <q-page-container class="bg-app">

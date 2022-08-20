@@ -60,7 +60,7 @@ onMounted(async () => {
     <page-body>
       <search-input v-model="searchQuery" />
 
-      <q-list v-if="!loading.value" separator>
+      <q-list v-if="!loading.value" separator class="q-mt-sm -q-mx-md">
         <q-item
           v-for="(product, index) in products"
           :key="index"
