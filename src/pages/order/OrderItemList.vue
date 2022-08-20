@@ -31,9 +31,9 @@ const handleBackTo = () => {
   }
 };
 
-const handleAddProduct = () => {
-  router.push({ name: 'product-form' });
-};
+// const handleAddProduct = () => {
+//   router.push({ name: 'product-form' });
+// };
 
 const handleRemoveItem = (index) => {
   try {
@@ -66,9 +66,9 @@ onMounted(async () => {
         <btn-back v-if="!isFromTabMenu" @click="handleBackTo" />
       </template>
       <template #title>Adicionar {{ title }}</template>
-      <template #right>
-        <btn-add @click="handleAddProduct()" />
-      </template>
+      <!-- <template #right> -->
+      <!--   <btn-add @click="handleAddProduct()" /> -->
+      <!-- </template> -->
       <template #fixedTop>
         <div class="q-px-md q-pt-md q-pb-sm bg-white">
           <q-btn

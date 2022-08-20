@@ -30,7 +30,7 @@ const { fmt } = useTools();
       size="sm"
       color="white"
       style="border-radius: 50%; padding: 0"
-      class="bg-positive"
+      class="bg-info"
       name="sym_o_add"
     />
   </q-item>

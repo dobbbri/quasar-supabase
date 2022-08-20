@@ -11,10 +11,16 @@ defineProps({
 
 <template>
   <q-btn
-    v-bind="attr.btn.basic"
+    v-bind="attr.btn.icon"
+    icon="sym_o_done"
+    size="18px"
+    padding="6px"
+    class="bg-positive q-pa-sm justify-center"
+    text-color="white"
+    flat
     :loading="loading"
     :disable="loading"
-    color="positive"
-    label="Gravar"
-  />
+  >
+    <q-tooltip>Gravar</q-tooltip>
+  </q-btn>
 </template>
