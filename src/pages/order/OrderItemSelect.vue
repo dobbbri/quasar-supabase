@@ -22,13 +22,14 @@ const amount = computed(() => {
 
 const handleBackTo = () => {
   items.value.forEach((item) => {
-    if (item.selected) {
-      item.amount = 1;
-      item.total = item.unit_price;
+    const { selected, ...newItem } = item;
+    if (selected) {
+      newItem.amount = 1;
+      newItem.total = newItem.unit_price;
       if (temp.value.active == 'service') {
-        temp.value.service.list.unshift(item);
+        temp.value.service.list.unshift(newItem);
       } else {
-        temp.value.product.list.unshift(item);
+        temp.value.product.list.unshift(newItem);
       }
     }
   });
@@ -37,23 +38,23 @@ const handleBackTo = () => {
 
 const handleGetProducts = async () => {
   try {
-    documents.value = await getProducts('id, name, code_bar, unit_price, measure_unit, selected');
+    documents.value = await getProducts();
   } catch (error) {
-    notify.error('Erro ao obter os produtos.', error);
+    notify.error('Erro ao obter produtos.', error);
   }
 };
 
 const handleGetServices = async () => {
   try {
-    documents.value = await getServices('id, name, code_bar, unit_price, measure_unit, selected');
+    documents.value = await getServices();
   } catch (error) {
-    notify.error('Erro ao obter os servicos.', error);
+    notify.error('Erro ao obter serviços.', error);
   }
 };
 
 onMounted(async () => {
   if (temp.value.active == 'service') {
-    title.value = 'servicos';
+    title.value = 'serviços';
     await handleGetServices();
   } else {
     title.value = 'produtos';
