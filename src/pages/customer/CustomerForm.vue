@@ -1,10 +1,11 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCustomers, useTools } from 'src/composables';
+import { useCustomers, useTools, useStore } from 'src/composables';
 
 const router = useRouter();
 
+const { state, isFromTabMenu } = useStore();
 const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
 const { notify } = useTools();
 
@@ -12,7 +13,11 @@ const isEditMode = computed(() => (customer.value && customer.value.id ? true : 
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
 
 const handleBackTo = () => {
-  router.push({ name: 'customer-list' });
+  if (isFromTabMenu.value) {
+    router.push({ name: 'customer-list' });
+  } else {
+    router.push({ name: state.value.from.menu });
+  }
 };
 
 const fillAddress = (data) => {
@@ -30,7 +35,7 @@ const handleSubmit = async () => {
       await addCustomerAddress(customer.value, address.value);
     }
     notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
-    router.push({ name: 'customer-list' });
+    handleBackTo();
   } catch (error) {
     notify.error(`Erro ao ${title.value.toLowerCase()} o cliente.`, error);
   }
