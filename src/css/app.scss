@@ -3,6 +3,10 @@
 $white : #ffffff !default;
 $black : #000000 !default;
 
+.-q-ml-sm {
+  margin-left: -4px
+}
+
 .-q-mt-md {
   margin-top: -16px
 }
@@ -21,10 +25,6 @@ body {
 }
 
 .bg-app {
-  background: $white;
-}
-
-.bg-toolbar {
   background: $white;
 }
 
@@ -132,15 +132,11 @@ body {
   }
 }
 
-// .q-field__bottom {
-//     font-size: 12px;
-//     min-height: 16px;
-//     line-height: 1;
-//     color: rgba(0, 0, 0, 0.54);
-//     padding: 4px 12px 0;
-//     -webkit-backface-visibility: hidden;
-//     backface-visibility: hidden;
-// }
+.q-btn {
+  .on-left {
+    margin-right: 0px;
+  }
+}
 
 .q-field--labeled .q-field__native,
 .q-field--labeled .q-field__prefix,

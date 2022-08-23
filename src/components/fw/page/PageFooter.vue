@@ -1,5 +1,5 @@
 <template>
-  <q-footer class="full-width footer-border">
+  <q-footer class="full-width">
     <slot />
   </q-footer>
 </template>

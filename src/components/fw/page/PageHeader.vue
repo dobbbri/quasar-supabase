@@ -8,14 +8,14 @@ const { isLoggedIn } = useAuth();
 
 <template>
   <q-header v-cloak class="bg-app">
-    <q-toolbar class="full-width toolbar-height bg-toolbar header-border">
+    <q-toolbar class="full-width toolbar-height bg-toolbar">
       <div>
         <slot name="left">
           <q-btn
             v-if="isLoggedIn"
             v-bind="attr.btn.icon"
             icon="sym_o_menu"
-            color="dark"
+            color="info"
             flat
             @click="toggleSidebar()"
           >
@@ -24,7 +24,7 @@ const { isLoggedIn } = useAuth();
         </slot>
       </div>
       <!-- <q-toolbar style="height: 60px"> -->
-      <q-toolbar-title class="text-dark title title-bar">
+      <q-toolbar-title class="text-dark title title-bar absolute-center">
         <slot name="title" />
       </q-toolbar-title>
       <!-- </q-toolbar> -->

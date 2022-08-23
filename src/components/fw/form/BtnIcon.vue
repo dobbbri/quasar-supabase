@@ -16,7 +16,7 @@ defineProps({
     size="18px"
     padding="6px"
     class="q-pa-sm justify-center"
-    text-color="white"
+    text-color="info"
     flat
     :loading="loading"
     :disable="loading"

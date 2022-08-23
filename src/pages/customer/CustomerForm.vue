@@ -6,8 +6,15 @@ import { useCustomers, useTools, useStore } from 'src/composables';
 const router = useRouter();
 
 const { state, isFromTabMenu } = useStore();
-const { loading, customer, address, addCustomerAddress, editCustomerAddress } = useCustomers();
-const { notify } = useTools();
+const {
+  loading,
+  customer,
+  address,
+  addCustomerAddress,
+  editCustomerAddress,
+  removeCustomerAddress
+} = useCustomers();
+const { confirm, notify } = useTools();
 
 const isEditMode = computed(() => (customer.value && customer.value.id ? true : false));
 const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
@@ -25,6 +32,18 @@ const fillAddress = (data) => {
   address.value.neighborhood = data.neighborhood;
   address.value.state = data.state;
   address.value.city = data.city;
+};
+
+const handleRemoveCustomer = async () => {
+  try {
+    confirm.delete(`o cliente: ${customer.value.name}`).onOk(async () => {
+      await removeCustomerAddress(customer.value, address.value);
+      notify.success('Cliente excluido.');
+      router.push({ name: 'customer-list' });
+    });
+  } catch (error) {
+    notify.error('Erro ao excluir o cliente', error);
+  }
 };
 
 const handleSubmit = async () => {
@@ -47,11 +66,11 @@ const handleSubmit = async () => {
     <q-form @submit.prevent="handleSubmit">
       <page-header>
         <template #left>
-          <btn-back @click="handleBackTo()" />
+          <btn-header label="Cancelar" @click="handleBackTo()" />
         </template>
-        <template #title>{{ title }} Cliente</template>
+        <template #title>Cliente</template>
         <template #right>
-          <btn-save :loading="loading.value" type="submit" />
+          <btn-header label="Gravar" :loading="loading.value" type="submit" />
         </template>
       </page-header>
 
@@ -110,6 +129,15 @@ const handleSubmit = async () => {
           <cpf-cnpj-input v-model="customer.document_number" label="CPF/CNPJ" />
           <textarea-input v-model="customer.notes" label="Anotações" />
         </expansion-item>
+
+        <q-btn
+          outline
+          no-caps
+          color="negative"
+          label="Excluir cliente"
+          :loading="loading.value"
+          @click="handleRemoveCustomer()"
+        />
       </page-body>
     </q-form>
   </page>

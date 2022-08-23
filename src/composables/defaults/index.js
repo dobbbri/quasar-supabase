@@ -1,7 +1,7 @@
 export default function useAttribute() {
   const attr = {
     page: {
-      class: 'full-width q-pa-md bg-app'
+      class: 'full-width q-pa-md q-pt-none bg-app'
     },
 
     lineSpacing: {
@@ -22,6 +22,13 @@ export default function useAttribute() {
         color: 'white',
         textColor: 'grey-10',
         class: 'text-weight-bold'
+      },
+      header: {
+        rounded: true,
+        flat: true,
+        noCaps: true,
+        bgColor: 'white',
+        textColor: 'info'
       },
       icon: { round: true, size: 'md', color: 'white' }
     },

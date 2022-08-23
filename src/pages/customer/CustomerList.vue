@@ -58,7 +58,7 @@ onMounted(async () => {
       </template>
       <template #title>Clientes</template>
       <template #right>
-        <btn-add @click="handleAddCustomer()" />
+        <btn-header label="Adicionar" @click="handleAddCustomer()" />
       </template>
     </page-header>
 

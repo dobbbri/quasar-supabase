@@ -38,11 +38,12 @@ const globalComponents = {
   'btn-add': () => import('components/fw/form/BtnAdd.vue'),
 
   'btn-big': () => import('components/fw/form/BtnBig.vue'),
-  'item-btn': () => import('components/fw/form/ItemBtn.vue'),
+  'btn-header': () => import('components/fw/form/BtnHeader.vue'),
+  'item-btn': () => import('components/fw/form/ItemBtn.vue')
 
-  'fab-menu': () => import('components/fw/form/FabMenu.vue'),
-  'fab-edit-action': () => import('components/fw/form/FabEditAction.vue'),
-  'fab-remove-action': () => import('components/fw/form/FabRemoveAction.vue')
+  // 'fab-menu': () => import('components/fw/form/FabMenu.vue'),
+  // 'fab-edit-action': () => import('components/fw/form/FabEditAction.vue'),
+  // 'fab-remove-action': () => import('components/fw/form/FabRemoveAction.vue')
 };
 
 export default boot(async ({ app }) => {

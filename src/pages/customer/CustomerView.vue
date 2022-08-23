@@ -1,26 +1,12 @@
 <script setup>
 import { onMounted, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useCustomers, useTools } from 'src/composables';
 
-const router = useRouter();
 const route = useRoute();
 
-const { loading, customer, address, getCustomer, getAddress, removeCustomerAddress } =
-  useCustomers();
-const { confirm, notify } = useTools();
-
-const handleRemoveCustomer = async () => {
-  try {
-    confirm.delete(`o cliente: ${customer.value.name}`).onOk(async () => {
-      await removeCustomerAddress(customer.value, address.value);
-      notify.success('Cliente excluido.');
-      router.push({ name: 'customer-list' });
-    });
-  } catch (error) {
-    notify.error('Erro ao excluir o cliente', error);
-  }
-};
+const { loading, customer, address, getCustomer, getAddress } = useCustomers();
+const { notify } = useTools();
 
 const handleGetCustomer = async () => {
   try {
@@ -53,14 +39,11 @@ onMounted(async () => {
     <q-form>
       <page-header>
         <template #left>
-          <btn-back :to="{ name: 'customer-list' }" />
+          <btn-back label="Clientes" :to="{ name: 'customer-list' }" />
         </template>
         <template #title>Cliente</template>
         <template #right>
-          <fab-menu>
-            <fab-remove-action :loading="loading.value" @click="handleRemoveCustomer()" />
-            <fab-edit-action :loading="loading.value" :to="{ name: 'customer-form' }" />
-          </fab-menu>
+          <btn-header label="Alterar" :loading="loading.value" :to="{ name: 'customer-form' }" />
         </template>
       </page-header>
 
