@@ -8,7 +8,7 @@ const { isLoggedIn } = useAuth();
 
 <template>
   <q-header v-cloak class="bg-app">
-    <q-toolbar class="full-width toolbar-height bg-toolbar">
+    <q-toolbar class="full-width toolbar-height">
       <div>
         <slot name="left">
           <q-btn
@@ -24,7 +24,7 @@ const { isLoggedIn } = useAuth();
         </slot>
       </div>
       <!-- <q-toolbar style="height: 60px"> -->
-      <q-toolbar-title class="text-dark title title-bar absolute-center">
+      <q-toolbar-title class="text-dark absolute-center">
         <slot name="title" />
       </q-toolbar-title>
       <!-- </q-toolbar> -->
@@ -32,6 +32,6 @@ const { isLoggedIn } = useAuth();
         <slot name="right" />
       </div>
     </q-toolbar>
-    <slot name="fixedTop" />
+    <slot name="subheader" />
   </q-header>
 </template>

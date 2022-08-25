@@ -69,7 +69,7 @@ onMounted(async () => {
       <!-- <template #right> -->
       <!--   <btn-add @click="handleAddProduct()" /> -->
       <!-- </template> -->
-      <template #fixedTop>
+      <template #subheader>
         <div class="q-px-md q-pt-md q-pb-sm bg-white">
           <q-btn
             v-bind="attr.btn.basic"

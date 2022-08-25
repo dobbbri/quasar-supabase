@@ -3,8 +3,16 @@
 $white : #ffffff !default;
 $black : #000000 !default;
 
+.hide {
+  display: none !important;
+}
+
 .-q-ml-sm {
-  margin-left: -4px
+  margin-left: -8px
+}
+
+.-q-mt-sm {
+  margin-top: -8px
 }
 
 .-q-mt-md {
@@ -33,28 +41,7 @@ body {
 }
 
 .toolbar-height {
-  height: 60px !important;
-}
-
-.header-border {
-  border-bottom: 1px solid $grey-4
-}
-
-.footer-border {
-  border-top: 1px solid $grey-4
-}
-
-.title {
-  font-size: 17px;
-  &-bar {
-    font-weight: 600;
-  }
-  &-expansion {
-    font-weight: 600;
-  }
-  &-sidebar {
-    font-weight: 500;
-  }
+  height: $toolbar-height !important;
 }
 
 .disabled-text {

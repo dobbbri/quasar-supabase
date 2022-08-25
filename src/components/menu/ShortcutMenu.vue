@@ -34,7 +34,7 @@ const open = (path) => {
 </script>
 
 <template>
-  <div v-cloak>
+  <div>
     <div>
       <div class="q-my-sm text-primary title title-expansion">Atalhos pricipais</div>
       <div class="row q-gutter-y-md">

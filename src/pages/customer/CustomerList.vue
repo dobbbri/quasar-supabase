@@ -60,11 +60,12 @@ onMounted(async () => {
       <template #right>
         <btn-header label="Adicionar" @click="handleAddCustomer()" />
       </template>
+      <template #subheader>
+        <search-input v-model="searchQuery" />
+      </template>
     </page-header>
 
     <page-body>
-      <search-input v-model="searchQuery" />
-
       <waiting-load :showing="loading.value" />
 
       <q-list v-if="!loading.value" separator class="q-mt-sm -q-mx-md">

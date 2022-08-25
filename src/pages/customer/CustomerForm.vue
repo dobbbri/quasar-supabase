@@ -82,7 +82,7 @@ const handleSubmit = async () => {
           error-message="O nome do cliente deve ser informado!"
         />
 
-        <expansion-item default-opened label="Telefones e Email">
+        <expansion-item :fake="true" label="Telefones e Email">
           <div class="line row q-gutter-x-md">
             <div class="col">
               <phone-input v-model="customer.phone_1" label="Celular" class="col-10" />
@@ -131,10 +131,12 @@ const handleSubmit = async () => {
         </expansion-item>
 
         <q-btn
-          outline
+          flat
+          rounded
           no-caps
           color="negative"
           label="Excluir cliente"
+          class="q-mt-lg -q-mx-md"
           :loading="loading.value"
           @click="handleRemoveCustomer()"
         />

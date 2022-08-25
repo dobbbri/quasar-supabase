@@ -70,10 +70,8 @@ onMounted(async () => {
         <btn-back @click="handleBackTo" />
       </template>
       <template #title>Selecionar {{ title }}</template>
-      <template #fixedTop>
-        <div class="q-px-md">
-          <search-input v-model="searchQuery" />
-        </div>
+      <template #subheader>
+        <search-input v-model="searchQuery" />
       </template>
     </page-header>
 

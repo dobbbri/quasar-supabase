@@ -55,11 +55,12 @@ onMounted(async () => {
       <template #right>
         <btn-add @click="handleAddProduct()" />
       </template>
+      <template #subheader>
+        <search-input v-model="searchQuery" />
+      </template>
     </page-header>
 
     <page-body>
-      <search-input v-model="searchQuery" />
-
       <q-list v-if="!loading.value" separator class="q-mt-sm -q-mx-md">
         <q-item
           v-for="(product, index) in products"

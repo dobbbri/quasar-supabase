@@ -29,7 +29,7 @@ const open = (path) => {
     padding="xs"
     active-color="white"
     indicator-color="transparent"
-    class="full-width justify-around toolbar-height text-info bg-toolbar"
+    class="full-width justify-around toolbar-height text-info"
     outside-arrows
     mobile-arrows
     no-caps

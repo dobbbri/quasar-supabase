@@ -1,7 +1,7 @@
 export default function useAttribute() {
   const attr = {
     page: {
-      class: 'full-width q-pa-md q-pt-none bg-app'
+      class: 'full-width q-px-md q-py-sm bg-app'
     },
 
     lineSpacing: {
@@ -50,7 +50,7 @@ export default function useAttribute() {
         outlined: true,
         color: 'secondary',
         bgColor: 'white',
-        class: 'q-py-sx -q-mt-md'
+        class: 'q-py-sx q-mx-md'
       }
     },
 
