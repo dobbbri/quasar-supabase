@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
-import { LeftSidebar, TabMenu } from 'src/components';
+import { SideBar, TabBar } from 'src/components';
 import { useAuth, useStore } from 'src/composables';
 
 const { isLoggedIn } = useAuth();
@@ -23,10 +23,10 @@ onMounted(() => {
 <template>
   <div v-cloak class="app position-relative" :style="'height: ' + $q.screen.height + 'px'">
     <q-layout view="lHh Lpr lFf" class="app-layout shadow-5" container>
-      <left-sidebar />
+      <side-bar />
 
       <page-footer v-if="isLoggedIn">
-        <tab-menu />
+        <tab-bar />
       </page-footer>
 
       <q-page-container class="bg-app">
