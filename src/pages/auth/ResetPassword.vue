@@ -1,27 +1,27 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useAuth, useTools, useDefaults } from 'src/composables';
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useAuth, useTools, useDefaults } from 'src/composables'
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
-const { loading, resetPassword } = useAuth();
-const { notify } = useTools();
-const { attr } = useDefaults();
+const { loading, resetPassword } = useAuth()
+const { notify } = useTools()
+const { attr } = useDefaults()
 
-const token = route.params.token;
-const password = ref('');
+const token = route.params.token
+const password = ref('')
 
 const handleSubmit = async () => {
   try {
-    await resetPassword(token, password.value);
-    notify.success('Senha alterada.');
-    router.push({ name: 'login' });
+    await resetPassword(token, password.value)
+    notify.success('Senha alterada.')
+    router.push({ name: 'login' })
   } catch (error) {
-    notify.error('Erro ao trocar a senha.', error);
+    notify.error('Erro ao trocar a senha.', error)
   }
-};
+}
 </script>
 
 <template>

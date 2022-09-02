@@ -1,13 +1,13 @@
 <script setup>
-import { ref } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { ref } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
-const mask = ref('(##) ####-#####');
+const mask = ref('(##) ####-#####')
 
 const setMask = (value) => {
-  mask.value = value.length > 14 ? '(##) #####-####' : '(##) ####-#####';
-};
+  mask.value = value.length > 14 ? '(##) #####-####' : '(##) ####-#####'
+}
 </script>
 
 <template>

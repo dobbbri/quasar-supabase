@@ -1,13 +1,13 @@
 <script setup>
-import { defineProps } from 'vue';
-import { useDefaults } from 'src/composables';
+import { defineProps } from 'vue'
+import { useDefaults } from 'src/composables'
 
-const { attr } = useDefaults();
+const { attr } = useDefaults()
 
 const props = defineProps({
   item: { type: Object, default: () => {} },
   vAligned: { type: Boolean, default: true }
-});
+})
 </script>
 
 <template>

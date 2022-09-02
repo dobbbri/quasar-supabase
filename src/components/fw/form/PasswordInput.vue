@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { ref } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
-const isPwd = ref(true);
+const isPwd = ref(true)
 </script>
 
 <template>

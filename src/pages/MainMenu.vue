@@ -1,5 +1,5 @@
 <script setup>
-import { ShortcutMenu } from 'src/components';
+import { ShortcutMenu } from 'src/components'
 </script>
 
 <template>

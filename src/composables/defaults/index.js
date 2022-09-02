@@ -79,7 +79,7 @@ export default function useAttribute() {
         textColor: 'white'
       }
     }
-  };
+  }
 
-  return { attr };
+  return { attr }
 }

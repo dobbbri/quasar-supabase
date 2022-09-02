@@ -1,15 +1,15 @@
 <script setup>
-import { ref, defineProps } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { ref, defineProps } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
-const opened = ref(true);
+const opened = ref(true)
 
 defineProps({
   label: { type: String, required: true },
   group: { type: String, default: '1-group-1' },
   fake: { type: Boolean, default: false }
-});
+})
 </script>
 
 <template>

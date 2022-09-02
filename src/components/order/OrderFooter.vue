@@ -1,14 +1,14 @@
 <script setup>
-import { defineProps } from 'vue';
-import { useTools } from 'src/composables';
+import { defineProps } from 'vue'
+import { useTools } from 'src/composables'
 
-const { fmt } = useTools();
+const { fmt } = useTools()
 
 defineProps({
   label: { type: String, required: true, default: '' },
   total: { type: Number, default: 0 },
   amount: { type: Number, default: 0 }
-});
+})
 </script>
 
 <template>

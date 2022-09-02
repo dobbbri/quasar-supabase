@@ -1,38 +1,38 @@
 <script setup>
-import { onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useServices, useTools } from 'src/composables';
+import { onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useServices, useTools } from 'src/composables'
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
-const { loading, service, getService, removeService } = useServices();
-const { confirm, notify, fmt } = useTools();
+const { loading, service, getService, removeService } = useServices()
+const { confirm, notify, fmt } = useTools()
 
 const handleRemoveService = async () => {
   try {
     confirm.delete(`o serviço: ${service.value.name}`).onOk(async () => {
-      await removeService(service.value.id);
-      notify.success('Serviço excluido.');
-      router.push({ name: 'service-list' });
-    });
+      await removeService(service.value.id)
+      notify.success('Serviço excluido.')
+      router.push({ name: 'service-list' })
+    })
   } catch (error) {
-    notify.error('Erro ao excluir o serviço', error);
+    notify.error('Erro ao excluir o serviço', error)
   }
-};
+}
 
 const handleGetService = async () => {
   try {
-    const data = await getService(route.params.id);
-    service.value = data[0];
+    const data = await getService(route.params.id)
+    service.value = data[0]
   } catch (error) {
-    notify.error('Erro ao obter o serviço.', error);
+    notify.error('Erro ao obter o serviço.', error)
   }
-};
+}
 
 onMounted(async () => {
-  await handleGetService();
-});
+  await handleGetService()
+})
 </script>
 
 <template>

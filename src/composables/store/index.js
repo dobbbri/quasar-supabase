@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 
 const state = ref({
   sidebarIsOpen: false,
@@ -8,7 +8,7 @@ const state = ref({
     form2: null,
     form3: null
   }
-});
+})
 
 export default function useStore() {
   const clearFromState = () => {
@@ -17,19 +17,19 @@ export default function useStore() {
       form1: null,
       form2: null,
       form3: null
-    };
-  };
+    }
+  }
 
-  const isFromTabMenu = computed(() => (state.value.from.menu === 'tab-menu' ? true : false));
+  const isFromTabMenu = computed(() => (state.value.from.menu === 'tab-menu' ? true : false))
 
   const toggleSidebar = () => {
-    state.value.sidebarIsOpen = !state.value.sidebarIsOpen;
-  };
+    state.value.sidebarIsOpen = !state.value.sidebarIsOpen
+  }
 
   return {
     state,
     clearFromState,
     isFromTabMenu,
     toggleSidebar
-  };
+  }
 }

@@ -1,35 +1,35 @@
 <script setup>
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useProducts, useTools, useData } from 'src/composables';
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useProducts, useTools, useData } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { measureUnits } = useData();
-const { loading, product, addProduct, editProduct } = useProducts();
-const { notify } = useTools();
+const { measureUnits } = useData()
+const { loading, product, addProduct, editProduct } = useProducts()
+const { notify } = useTools()
 
-const isEditMode = computed(() => (product.value && product.value.id ? true : false));
+const isEditMode = computed(() => (product.value && product.value.id ? true : false))
 
-const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const handleBackTo = () => {
-  router.push({ name: 'product-list' });
-};
+  router.push({ name: 'product-list' })
+}
 
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editProduct(product.value);
+      await editProduct(product.value)
     } else {
-      await addProduct(product.value);
+      await addProduct(product.value)
     }
-    notify.success(`Produto ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
-    router.push({ name: 'product-list' });
+    notify.success(`Produto ${isEditMode.value ? 'alterado' : 'adicionado'}.`)
+    router.push({ name: 'product-list' })
   } catch (error) {
-    notify.error(`Erro ao ${title.value.toLowerCase()} o produto.`, error);
+    notify.error(`Erro ao ${title.value.toLowerCase()} o produto.`, error)
   }
-};
+}
 </script>
 
 <template>

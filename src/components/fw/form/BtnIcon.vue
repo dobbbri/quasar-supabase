@@ -1,13 +1,13 @@
 <script setup>
-import { defineProps } from 'vue';
-import { useDefaults } from 'src/composables';
+import { defineProps } from 'vue'
+import { useDefaults } from 'src/composables'
 
-const { attr } = useDefaults();
+const { attr } = useDefaults()
 
 defineProps({
   loading: Boolean,
   tooltip: { type: String, default: '' }
-});
+})
 </script>
 
 <template>

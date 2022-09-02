@@ -1,4 +1,4 @@
-import { Notify } from 'quasar';
+import { Notify } from 'quasar'
 
 export default function useNoyify() {
   const notify = {
@@ -9,7 +9,7 @@ export default function useNoyify() {
         iconSize: 'lg',
         iconColor: 'green',
         timeout: 2000
-      });
+      })
     },
 
     info: (message, caption) => {
@@ -21,11 +21,11 @@ export default function useNoyify() {
         iconColor: 'blue',
         timeout: 200000,
         actions: [{ label: 'Fechar', color: 'white' }]
-      });
+      })
     },
 
     error: (message, error = null) => {
-      if (process.env.DEV) console.info(`${message} - error: ${error.code} - ${error.message}`);
+      if (process.env.DEV) console.info(`${message} - error: ${error.code} - ${error.message}`)
       Notify.create({
         message: message,
         caption: `${error.message} (${error.code || ''})`,
@@ -34,11 +34,11 @@ export default function useNoyify() {
         iconColor: 'red',
         timeout: 200000,
         actions: [{ label: 'Fechar', color: 'white' }]
-      });
+      })
     }
-  };
+  }
 
   return {
     notify
-  };
+  }
 }

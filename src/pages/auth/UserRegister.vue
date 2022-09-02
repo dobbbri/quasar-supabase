@@ -1,35 +1,35 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuth, useTools, useDefaults } from 'src/composables';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth, useTools, useDefaults } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { loading, register } = useAuth();
-const { notify } = useTools();
-const { attr } = useDefaults();
+const { loading, register } = useAuth()
+const { notify } = useTools()
+const { attr } = useDefaults()
 
-const isPwd = ref(true);
+const isPwd = ref(true)
 
 const form = ref({
   email: 'sergiodobri@gmail.com',
   password: '123456',
   privacy_policy: false,
   terms_of_use: false
-});
+})
 
 const handleSubmit = async () => {
   try {
-    await register(form.value);
+    await register(form.value)
     notify.info(
       'Para finalizar o registro,',
       `um email de confirmação foi enviado para: ${form.value.email}.`
-    );
-    router.push({ name: 'login' });
+    )
+    router.push({ name: 'login' })
   } catch (error) {
-    notify.error('Credenciais inválidas', error);
+    notify.error('Credenciais inválidas', error)
   }
-};
+}
 </script>
 
 <template>

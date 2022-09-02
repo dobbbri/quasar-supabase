@@ -1,11 +1,11 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from 'vue'
 
 defineProps({
   icon: { type: String, required: true },
   color: { type: String, default: 'primary' },
   tooltip: { type: String, default: '' }
-});
+})
 </script>
 
 <template>

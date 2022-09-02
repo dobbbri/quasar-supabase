@@ -1,40 +1,40 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { useProducts, useDefaults } from 'src/composables';
+import { ref, watchEffect } from 'vue'
+import { useProducts, useDefaults } from 'src/composables'
 
-const { product, calcMarkup, calcPctMakup, calcProfit, calcPctProfit } = useProducts();
-const { attr } = useDefaults();
+const { product, calcMarkup, calcPctMakup, calcProfit, calcPctProfit } = useProducts()
+const { attr } = useDefaults()
 
-const profit = ref(0);
-const markup = ref(0);
-const profitValue = ref(0);
-const percentage = ref(0);
-const costPrice = ref(parseFloat(product.value.cost_price));
+const profit = ref(0)
+const markup = ref(0)
+const profitValue = ref(0)
+const percentage = ref(0)
+const costPrice = ref(parseFloat(product.value.cost_price))
 
-percentage.value = 0;
+percentage.value = 0
 
-const toggle = ref('Margem...');
+const toggle = ref('Margem...')
 const toggleOptions = [
   { label: 'markup', value: 'Markup' },
   { label: 'margem de lucro', value: 'Margem...' }
-];
+]
 
 watchEffect(() => {
   if (parseFloat(percentage.value) > 0 && costPrice.value > 0) {
     if (toggle.value == 'Markup') {
-      product.value.unit_price = calcMarkup(costPrice.value, parseFloat(percentage.value));
+      product.value.unit_price = calcMarkup(costPrice.value, parseFloat(percentage.value))
     } else {
-      product.value.unit_price = calcProfit(costPrice.value, parseFloat(percentage.value));
+      product.value.unit_price = calcProfit(costPrice.value, parseFloat(percentage.value))
     }
   }
-  product.value.cost_price = costPrice.value;
-  profitValue.value = product.value.unit_price - product.value.cost_price;
-  profit.value = calcPctProfit(product.value.unit_price, product.value.cost_price);
-  markup.value = calcPctMakup(product.value.unit_price, product.value.cost_price);
+  product.value.cost_price = costPrice.value
+  profitValue.value = product.value.unit_price - product.value.cost_price
+  profit.value = calcPctProfit(product.value.unit_price, product.value.cost_price)
+  markup.value = calcPctMakup(product.value.unit_price, product.value.cost_price)
   if (profit.value > 0 && parseFloat(percentage.value) == 0) {
-    percentage.value = calcPctProfit(product.value.unit_price, product.value.cost_price);
+    percentage.value = calcPctProfit(product.value.unit_price, product.value.cost_price)
   }
-});
+})
 </script>
 
 <template>

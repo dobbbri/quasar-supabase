@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const measureUnits = ref([
   { group: 'Unidade', id: 'un', name: 'unidades', active: true },
@@ -18,7 +18,7 @@ const measureUnits = ref([
   { group: 'Volume', id: 'ml', name: 'mililitros', active: true },
   { group: null, id: 'l', name: 'litro', active: true },
   { group: null, id: 'm³', name: 'metros cúbicos', active: true }
-]);
+])
 
 const paymentMethods = ref([
   { name: 'Dinheiro', active: true },
@@ -30,7 +30,7 @@ const paymentMethods = ref([
   { name: 'Fiado', active: true },
   { name: 'Transf. bancária', active: true },
   { name: 'Outro', active: true }
-]);
+])
 
 const orderStatuses = ref([
   { name: 'Pendente', active: true },
@@ -41,7 +41,7 @@ const orderStatuses = ref([
   { name: 'Concluido', active: true },
   { name: 'Garantia', active: true },
   { name: 'Cancelado', active: true }
-]);
+])
 
 const costCategories = ref([
   { name: 'Ajudantes', active: true },
@@ -61,38 +61,38 @@ const costCategories = ref([
   { name: 'Taxas', active: true },
   { name: 'Telefone', active: true },
   { name: 'Transporte', active: true }
-]);
+])
 
 const paymentConditions = ref([
   { name: 'À vista', active: true },
   { name: 'Sinal', active: true },
   { name: 'Parcelado', active: true }
-]);
+])
 
 const personTypes = ref([
   { label: 'Pessoa Física', value: false },
   { label: 'Pessoa Juríca', value: true }
-]);
+])
 
-const settingId = ref(0);
+const settingId = ref(0)
 
 export default function useData() {
   const convertToObject = (source) => {
-    let newTarget = [];
+    let newTarget = []
     for (var i = 0; i < source.length; i++) {
-      const obj = source[i];
-      newTarget.push(obj);
+      const obj = source[i]
+      newTarget.push(obj)
     }
-    return newTarget;
-  };
+    return newTarget
+  }
 
   const toJS = (value) => {
-    return convertToObject(JSON.parse(value));
-  };
+    return convertToObject(JSON.parse(value))
+  }
 
   const toJSON = (value) => {
-    return JSON.stringify(value);
-  };
+    return JSON.stringify(value)
+  }
 
   return {
     settingId,
@@ -104,5 +104,5 @@ export default function useData() {
     personTypes,
     toJS,
     toJSON
-  };
+  }
 }

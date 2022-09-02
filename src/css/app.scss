@@ -1,22 +1,19 @@
 // app global css in SCSS form
 
-$white : #ffffff !default;
-$black : #000000 !default;
-
 .hide {
-   display: none !important;
+  display: none !important;
 }
 
 .-q-ml-sm {
-  margin-left: -8px
+  margin-left: -8px;
 }
 
 .-q-mt-sm {
-  margin-top: -8px
+  margin-top: -8px;
 }
 
 .-q-mt-md {
-  margin-top: -16px
+  margin-top: -16px;
 }
 
 .-q-mx-md {
@@ -94,7 +91,10 @@ body {
 }
 
 .q-field {
-  &__native, &__prefix, &__suffix, &__input {
+  &__native,
+  &__prefix,
+  &__suffix,
+  &__input {
     font-weight: 500;
   }
   &__label {

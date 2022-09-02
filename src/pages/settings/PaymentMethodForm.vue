@@ -1,26 +1,26 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import { useUsersSettings, useTools, useDefaults, useData } from 'src/composables';
+import { useRouter } from 'vue-router'
+import { useUsersSettings, useTools, useDefaults, useData } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { settingId, paymentMethods, toJSON } = useData();
-const { loading, editSettings } = useUsersSettings();
-const { notify } = useTools();
-const { attr } = useDefaults();
+const { settingId, paymentMethods, toJSON } = useData()
+const { loading, editSettings } = useUsersSettings()
+const { notify } = useTools()
+const { attr } = useDefaults()
 
 const handleSubmit = async () => {
   try {
     await editSettings({
       id: settingId.value,
       payment_methods: toJSON(paymentMethods.value)
-    });
-    notify.success('Formas de pagamento gravada.');
-    router.push({ name: 'settings-form' });
+    })
+    notify.success('Formas de pagamento gravada.')
+    router.push({ name: 'settings-form' })
   } catch (error) {
-    notify.error(`Erro ao alterar aa formas de pagamento.`, error);
+    notify.error(`Erro ao alterar aa formas de pagamento.`, error)
   }
-};
+}
 </script>
 
 <template>

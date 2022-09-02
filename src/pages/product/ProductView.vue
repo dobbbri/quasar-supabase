@@ -1,56 +1,56 @@
 <script setup>
-import { onMounted, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useProducts, useTools } from 'src/composables';
+import { onMounted, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { useProducts, useTools } from 'src/composables'
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+const route = useRoute()
 
-const { loading, calcPctMakup, calcPctProfit, product, getProduct, removeProduct } = useProducts();
-const { confirm, notify, fmt } = useTools();
+const { loading, calcPctMakup, calcPctProfit, product, getProduct, removeProduct } = useProducts()
+const { confirm, notify, fmt } = useTools()
 
 const markup = computed(() => {
-  const unit_price = parseFloat(product.value.unit_price) || 0;
-  const cost_price = parseFloat(product.value.cost_price) || 0;
+  const unit_price = parseFloat(product.value.unit_price) || 0
+  const cost_price = parseFloat(product.value.cost_price) || 0
   if (unit_price > 0 && cost_price > 0) {
-    return `${calcPctMakup(unit_price, cost_price)}%`;
+    return `${calcPctMakup(unit_price, cost_price)}%`
   }
-  return '';
-});
+  return ''
+})
 
 const profit = computed(() => {
-  const unit_price = parseFloat(product.value.unit_price) || 0;
-  const cost_price = parseFloat(product.value.cost_price) || 0;
+  const unit_price = parseFloat(product.value.unit_price) || 0
+  const cost_price = parseFloat(product.value.cost_price) || 0
   if (unit_price > 0 && cost_price > 0) {
-    return `${calcPctProfit(unit_price, cost_price)}%`;
+    return `${calcPctProfit(unit_price, cost_price)}%`
   }
-  return '';
-});
+  return ''
+})
 
 const handleRemoveProduct = async () => {
   try {
     confirm.delete(`o produto: ${product.value.name}`).onOk(async () => {
-      await removeProduct(product.value.id);
-      notify.success('Produto excluido.');
-      router.push({ name: 'product-list' });
-    });
+      await removeProduct(product.value.id)
+      notify.success('Produto excluido.')
+      router.push({ name: 'product-list' })
+    })
   } catch (error) {
-    notify.error('Erro ao excluir o produto', error);
+    notify.error('Erro ao excluir o produto', error)
   }
-};
+}
 
 const handleGetProduct = async () => {
   try {
-    const data = await getProduct(route.params.id);
-    product.value = data[0];
+    const data = await getProduct(route.params.id)
+    product.value = data[0]
   } catch (error) {
-    notify.error('Erro ao obter o produto.', error);
+    notify.error('Erro ao obter o produto.', error)
   }
-};
+}
 
 onMounted(async () => {
-  await handleGetProduct();
-});
+  await handleGetProduct()
+})
 </script>
 
 <template>

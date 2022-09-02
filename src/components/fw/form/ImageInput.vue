@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const newImage = ref(null);
-const image = ref(null);
-const file = ref(null);
+const newImage = ref(null)
+const image = ref(null)
+const file = ref(null)
 
-const handleSelectImage = () => file.value.pickFiles();
+const handleSelectImage = () => file.value.pickFiles()
 // const handleSubmit = async () => {
 //     if (image.value) {
 //       if (form.value.image_name) {
@@ -23,9 +23,9 @@ const handleSelectImage = () => file.value.pickFiles();
 
 const loadImage = () => {
   if (image.value) {
-    newImage.value = URL.createObjectURL(image.value);
+    newImage.value = URL.createObjectURL(image.value)
   }
-};
+}
 </script>
 
 <template>

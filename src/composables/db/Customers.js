@@ -1,8 +1,8 @@
-import { ref } from 'vue';
-import { useApi } from 'src/composables';
+import { ref } from 'vue'
+import { useApi } from 'src/composables'
 
-const customer = ref(null);
-const address = ref(null);
+const customer = ref(null)
+const address = ref(null)
 
 export default function useCustomers() {
   const {
@@ -13,14 +13,14 @@ export default function useCustomers() {
     edit: editCustomer,
     remove: removeCustomer,
     count: countCustomer
-  } = useApi('customers');
+  } = useApi('customers')
 
   const {
     get: getAddress,
     add: addAddress,
     edit: editAddress,
     remove: removeAddress
-  } = useApi('customers_addresses');
+  } = useApi('customers_addresses')
 
   const clearCustomer = () => {
     customer.value = {
@@ -30,9 +30,9 @@ export default function useCustomers() {
       phone_2: '',
       document_number: '',
       notes: ''
-    };
-    clearAddress();
-  };
+    }
+    clearAddress()
+  }
 
   const clearAddress = () => {
     address.value = {
@@ -44,33 +44,33 @@ export default function useCustomers() {
       city: '',
       state: '',
       zip_code: ''
-    };
-  };
+    }
+  }
 
   const addCustomerAddress = async (customer, address) => {
-    const data = await addCustomer(customer);
+    const data = await addCustomer(customer)
     if (address.address) {
-      address.id = data[0].id;
-      await addAddress(address);
+      address.id = data[0].id
+      await addAddress(address)
     }
-  };
+  }
 
   const editCustomerAddress = async (customer, address) => {
-    const data = await editCustomer(customer);
+    const data = await editCustomer(customer)
     if (address.id > 0) {
-      await editAddress(address);
+      await editAddress(address)
     } else {
-      address.id = data[0].id;
-      await addAddress(address);
+      address.id = data[0].id
+      await addAddress(address)
     }
-  };
+  }
 
   const removeCustomerAddress = async (customer, address) => {
-    await removeCustomer(customer.id);
+    await removeCustomer(customer.id)
     if (address && address.id > 0) {
-      await removeAddress(address.id);
+      await removeAddress(address.id)
     }
-  };
+  }
 
   return {
     loading,
@@ -85,5 +85,5 @@ export default function useCustomers() {
     removeCustomerAddress,
     removeAddress,
     countCustomer
-  };
+  }
 }

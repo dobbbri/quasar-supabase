@@ -1,37 +1,37 @@
 <script setup>
-import { onMounted, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { useCustomers, useTools } from 'src/composables';
+import { onMounted, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { useCustomers, useTools } from 'src/composables'
 
-const route = useRoute();
+const route = useRoute()
 
-const { loading, customer, address, getCustomer, getAddress } = useCustomers();
-const { notify } = useTools();
+const { loading, customer, address, getCustomer, getAddress } = useCustomers()
+const { notify } = useTools()
 
 const handleGetCustomer = async () => {
   try {
-    let data = await getCustomer(route.params.id);
-    customer.value = data[0];
-    data = await getAddress(customer.value.id);
-    if (data) address.value = data[0];
+    let data = await getCustomer(route.params.id)
+    customer.value = data[0]
+    data = await getAddress(customer.value.id)
+    if (data) address.value = data[0]
   } catch (error) {
-    notify.error('Erro a o obter o cliente.', error);
+    notify.error('Erro a o obter o cliente.', error)
   }
-};
+}
 
 const addressFormated = computed(() => {
   if (address.value && address.value.street > 0) {
     return [
       `${address.value.street}, ${address.value.number}, ${address.value.complement},`,
       `${address.value.neighborhood}, ${address.value.city} - ${address.value.state}, CEP ${address.value.zip_code}`
-    ];
+    ]
   }
-  return null;
-});
+  return null
+})
 
 onMounted(async () => {
-  await handleGetCustomer();
-});
+  await handleGetCustomer()
+})
 </script>
 
 <template>

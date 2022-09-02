@@ -1,53 +1,53 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useOrders, useCustomers, useNameSearch, useTools, useStore } from 'src/composables';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useOrders, useCustomers, useNameSearch, useTools, useStore } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const documents = ref([]);
+const documents = ref([])
 
-const { order } = useOrders();
-const { state, isFromTabMenu } = useStore();
-const { loading, clearCustomer, getCustomers } = useCustomers();
-const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents);
-const { notify } = useTools();
+const { order } = useOrders()
+const { state, isFromTabMenu } = useStore()
+const { loading, clearCustomer, getCustomers } = useCustomers()
+const { searchQuery, matchingSearchQuery: customers } = useNameSearch(documents)
+const { notify } = useTools()
 
 const handleBackTo = () => {
   if (state.value.from.form1) {
-    router.push({ name: state.value.from.form1 });
+    router.push({ name: state.value.from.form1 })
   } else {
-    router.push({ name: 'main-menu' });
+    router.push({ name: 'main-menu' })
   }
-};
+}
 
 const handleAddCustomer = () => {
-  clearCustomer();
-  router.push({ name: 'customer-form' });
-};
+  clearCustomer()
+  router.push({ name: 'customer-form' })
+}
 
 const handleViewCustomer = (selected) => {
-  clearCustomer();
+  clearCustomer()
   if (state.value.from.form1) {
-    order.value.customer_id = selected.id;
-    order.value.customerName = selected.name;
-    router.push({ name: state.value.from.form1 });
+    order.value.customer_id = selected.id
+    order.value.customerName = selected.name
+    router.push({ name: state.value.from.form1 })
   } else {
-    router.push({ name: 'customer-view', params: { id: selected.id } });
+    router.push({ name: 'customer-view', params: { id: selected.id } })
   }
-};
+}
 
 const handleGetCustomers = async () => {
   try {
-    documents.value = await getCustomers('id, name');
+    documents.value = await getCustomers('id, name')
   } catch (error) {
-    notify.error('Erro ao obter os clientes.', error);
+    notify.error('Erro ao obter os clientes.', error)
   }
-};
+}
 
 onMounted(async () => {
-  await handleGetCustomers();
-});
+  await handleGetCustomers()
+})
 </script>
 
 <template>

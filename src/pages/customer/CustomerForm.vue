@@ -1,11 +1,11 @@
 <script setup>
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useCustomers, useTools, useStore } from 'src/composables';
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useCustomers, useTools, useStore } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { state, isFromTabMenu } = useStore();
+const { state, isFromTabMenu } = useStore()
 const {
   loading,
   customer,
@@ -13,52 +13,52 @@ const {
   addCustomerAddress,
   editCustomerAddress,
   removeCustomerAddress
-} = useCustomers();
-const { confirm, notify } = useTools();
+} = useCustomers()
+const { confirm, notify } = useTools()
 
-const isEditMode = computed(() => (customer.value && customer.value.id ? true : false));
-const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+const isEditMode = computed(() => (customer.value && customer.value.id ? true : false))
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const handleBackTo = () => {
   if (isFromTabMenu.value) {
-    router.push({ name: 'customer-list' });
+    router.push({ name: 'customer-list' })
   } else {
-    router.push({ name: state.value.from.menu });
+    router.push({ name: state.value.from.menu })
   }
-};
+}
 
 const fillAddress = (data) => {
-  address.value.street = data.street;
-  address.value.neighborhood = data.neighborhood;
-  address.value.state = data.state;
-  address.value.city = data.city;
-};
+  address.value.street = data.street
+  address.value.neighborhood = data.neighborhood
+  address.value.state = data.state
+  address.value.city = data.city
+}
 
 const handleRemoveCustomer = async () => {
   try {
     confirm.delete(`o cliente: ${customer.value.name}`).onOk(async () => {
-      await removeCustomerAddress(customer.value, address.value);
-      notify.success('Cliente excluido.');
-      router.push({ name: 'customer-list' });
-    });
+      await removeCustomerAddress(customer.value, address.value)
+      notify.success('Cliente excluido.')
+      router.push({ name: 'customer-list' })
+    })
   } catch (error) {
-    notify.error('Erro ao excluir o cliente', error);
+    notify.error('Erro ao excluir o cliente', error)
   }
-};
+}
 
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editCustomerAddress(customer.value, address.value);
+      await editCustomerAddress(customer.value, address.value)
     } else {
-      await addCustomerAddress(customer.value, address.value);
+      await addCustomerAddress(customer.value, address.value)
     }
-    notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
-    handleBackTo();
+    notify.success(`Cliente ${isEditMode.value ? 'alterado' : 'adicionado'}.`)
+    handleBackTo()
   } catch (error) {
-    notify.error(`Erro ao ${title.value.toLowerCase()} o cliente.`, error);
+    notify.error(`Erro ao ${title.value.toLowerCase()} o cliente.`, error)
   }
-};
+}
 </script>
 
 <template>

@@ -1,28 +1,28 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuth, useTools, useDefaults } from 'src/composables';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth, useTools, useDefaults } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { loading, sendPasswordResetEmail } = useAuth();
-const { notify } = useTools();
-const { attr } = useDefaults();
+const { loading, sendPasswordResetEmail } = useAuth()
+const { notify } = useTools()
+const { attr } = useDefaults()
 
-const email = ref('');
+const email = ref('')
 
 const handleSubmit = async () => {
   try {
-    await sendPasswordResetEmail(email.value);
+    await sendPasswordResetEmail(email.value)
     notify.info(
       'Para finalizar o registro,',
       `foi enviado um email de confirmação para: ${email.value}.`
-    );
-    router.push({ name: 'login' });
+    )
+    router.push({ name: 'login' })
   } catch (error) {
-    notify.error('Erro ao enviar email de troca de senha.', error);
+    notify.error('Erro ao enviar email de troca de senha.', error)
   }
-};
+}
 </script>
 
 <template>

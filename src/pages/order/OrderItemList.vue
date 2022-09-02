@@ -1,35 +1,35 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { OrderItemForm, OrderFooter } from 'src/components';
-import { useOrders, useStore, useDefaults, useTools } from 'src/composables';
+import { computed, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { OrderItemForm, OrderFooter } from 'src/components'
+import { useOrders, useStore, useDefaults, useTools } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { temp } = useOrders();
-const { state, isFromTabMenu } = useStore();
-const { attr } = useDefaults();
-const { confirm, notify } = useTools();
+const { temp } = useOrders()
+const { state, isFromTabMenu } = useStore()
+const { attr } = useDefaults()
+const { confirm, notify } = useTools()
 
-const title = ref('');
-const itemList = ref([]);
+const title = ref('')
+const itemList = ref([])
 
 const total = computed(() => {
-  return itemList.value.reduce((total, product) => total + product.unit_price * product.amount, 0);
-});
+  return itemList.value.reduce((total, product) => total + product.unit_price * product.amount, 0)
+})
 
 const handleBackTo = () => {
   if (state.value.from.form1) {
     if (temp.value.active == 'service') {
-      temp.value.service.total = total;
+      temp.value.service.total = total
     } else {
-      temp.value.product.total = total;
+      temp.value.product.total = total
     }
-    router.push({ name: state.value.from.form1 });
+    router.push({ name: state.value.from.form1 })
   } else {
-    router.push({ name: 'main-menu' });
+    router.push({ name: 'main-menu' })
   }
-};
+}
 
 // const handleAddProduct = () => {
 //   router.push({ name: 'product-form' });
@@ -37,26 +37,26 @@ const handleBackTo = () => {
 
 const handleRemoveItem = (index) => {
   try {
-    const item = itemList.value[index];
+    const item = itemList.value[index]
     confirm.delete(`o ${title.value} ${item.name}`).onOk(async () => {
-      itemList.value.splice(index, 1);
-      notify.success(`${title.value} excluido.`);
-    });
+      itemList.value.splice(index, 1)
+      notify.success(`${title.value} excluido.`)
+    })
   } catch (error) {
-    notify.error(`Erro ao excluir o ${title.value}`, error);
+    notify.error(`Erro ao excluir o ${title.value}`, error)
   }
-};
+}
 
 onMounted(async () => {
   if (temp.value.active == 'service') {
-    title.value = 'servicos';
-    itemList.value = temp.value.service.list;
+    title.value = 'servicos'
+    itemList.value = temp.value.service.list
   } else {
-    title.value = 'produtos';
-    itemList.value = temp.value.product.list;
+    title.value = 'produtos'
+    itemList.value = temp.value.product.list
   }
-  state.value.from.form2 = 'order-item-list';
-});
+  state.value.from.form2 = 'order-item-list'
+})
 </script>
 
 <template>

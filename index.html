@@ -66,14 +66,14 @@
       <img src="icons/favicon-128x128.png" alt="Loading..." />
     </div>
     <script>
-      var loading = document.querySelector('#loading');
+      var loading = document.querySelector('#loading')
       document.onreadystatechange = function () {
         if (document.readyState == 'loading') {
-          loading.classList.add('main_done');
+          loading.classList.add('main_done')
         } else if (document.readyState == 'complete') {
-          loading.classList.add('init_done');
+          loading.classList.add('init_done')
         }
-      };
+      }
     </script>
     <!-- quasar:entry-point -->
   </body>

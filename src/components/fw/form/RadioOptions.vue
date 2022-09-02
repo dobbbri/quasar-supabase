@@ -1,6 +1,6 @@
 <script setup>
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 </script>
 
 <template>

@@ -1,21 +1,21 @@
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   url: { type: String, default: '' }
-});
+})
 
-const emit = defineEmits(['update:file']);
+const emit = defineEmits(['update:file'])
 
-const file = ref(null);
-const image = ref(props.url);
+const file = ref(null)
+const image = ref(props.url)
 
 const updateThumbnail = () => {
   if (file.value) {
-    image.value = URL.createObjectURL(file.value);
-    emit('update:file', file.value);
+    image.value = URL.createObjectURL(file.value)
+    emit('update:file', file.value)
   }
-};
+}
 </script>
 
 <template>

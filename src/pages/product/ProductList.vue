@@ -1,48 +1,48 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useProducts, useNameSearch, useTools, useStore } from 'src/composables';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useProducts, useNameSearch, useTools, useStore } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const documents = ref([]);
+const documents = ref([])
 
-const { state, isFromTabMenu } = useStore();
-const { loading, clearProduct, getProducts } = useProducts();
-const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents);
-const { notify, fmt } = useTools();
+const { state, isFromTabMenu } = useStore()
+const { loading, clearProduct, getProducts } = useProducts()
+const { searchQuery, matchingSearchQuery: products } = useNameSearch(documents)
+const { notify, fmt } = useTools()
 
 const handleBackTo = () => {
   if (state.value.from.form1) {
-    router.push({ name: state.value.from.form1 });
+    router.push({ name: state.value.from.form1 })
   } else {
-    router.push({ name: 'main-menu' });
+    router.push({ name: 'main-menu' })
   }
-};
+}
 
 const handleAddProduct = () => {
-  clearProduct();
-  router.push({ name: 'product-form' });
-};
+  clearProduct()
+  router.push({ name: 'product-form' })
+}
 
 const handleViewProduct = (product) => {
-  clearProduct();
-  router.push({ name: 'product-view', params: { id: product.id } });
-};
+  clearProduct()
+  router.push({ name: 'product-view', params: { id: product.id } })
+}
 
 const handleGetProducts = async () => {
   try {
     documents.value = await getProducts(
       'id, name, details, brand, code_bar, unit_price, measure_unit'
-    );
+    )
   } catch (error) {
-    notify.error('Erro ao obter os produtos.', error);
+    notify.error('Erro ao obter os produtos.', error)
   }
-};
+}
 
 onMounted(async () => {
-  await handleGetProducts();
-});
+  await handleGetProducts()
+})
 </script>
 
 <template>

@@ -1,66 +1,66 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { OrderFooter } from 'src/components';
-import { useOrders, useProducts, useServices, useNameSearch, useTools } from 'src/composables';
+import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { OrderFooter } from 'src/components'
+import { useOrders, useProducts, useServices, useNameSearch, useTools } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const documents = ref([]);
+const documents = ref([])
 
-const { temp } = useOrders();
-const { loading, getProducts } = useProducts();
-const { getServices } = useServices();
-const { searchQuery, matchingSearchQuery: items } = useNameSearch(documents);
-const { notify, fmt } = useTools();
+const { temp } = useOrders()
+const { loading, getProducts } = useProducts()
+const { getServices } = useServices()
+const { searchQuery, matchingSearchQuery: items } = useNameSearch(documents)
+const { notify, fmt } = useTools()
 
-const title = ref('');
+const title = ref('')
 
 const amount = computed(() => {
-  return items.value.reduce((total, item) => (item.selected ? total + 1 : total), 0);
-});
+  return items.value.reduce((total, item) => (item.selected ? total + 1 : total), 0)
+})
 
 const handleBackTo = () => {
   items.value.forEach((item) => {
-    const { selected, ...newItem } = item;
+    const { selected, ...newItem } = item
     if (selected) {
-      newItem.amount = 1;
-      newItem.total = newItem.unit_price;
+      newItem.amount = 1
+      newItem.total = newItem.unit_price
       if (temp.value.active == 'service') {
-        temp.value.service.list.unshift(newItem);
+        temp.value.service.list.unshift(newItem)
       } else {
-        temp.value.product.list.unshift(newItem);
+        temp.value.product.list.unshift(newItem)
       }
     }
-  });
-  router.push({ name: 'order-item-list' });
-};
+  })
+  router.push({ name: 'order-item-list' })
+}
 
 const handleGetProducts = async () => {
   try {
-    documents.value = await getProducts();
+    documents.value = await getProducts()
   } catch (error) {
-    notify.error('Erro ao obter produtos.', error);
+    notify.error('Erro ao obter produtos.', error)
   }
-};
+}
 
 const handleGetServices = async () => {
   try {
-    documents.value = await getServices();
+    documents.value = await getServices()
   } catch (error) {
-    notify.error('Erro ao obter serviços.', error);
+    notify.error('Erro ao obter serviços.', error)
   }
-};
+}
 
 onMounted(async () => {
   if (temp.value.active == 'service') {
-    title.value = 'serviços';
-    await handleGetServices();
+    title.value = 'serviços'
+    await handleGetServices()
   } else {
-    title.value = 'produtos';
-    await handleGetProducts();
+    title.value = 'produtos'
+    await handleGetProducts()
   }
-});
+})
 </script>
 
 <template>

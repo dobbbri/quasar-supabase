@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useStore } from 'src/composables';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'src/composables'
 
-const router = useRouter();
-const tab = ref('main-menu');
-const { state, clearFromState } = useStore();
+const router = useRouter()
+const tab = ref('main-menu')
+const { state, clearFromState } = useStore()
 
 const tabMenu = [
   { title: 'Início', icon: 'sym_o_grid_view', path: 'main-menu' },
@@ -13,14 +13,14 @@ const tabMenu = [
   { title: 'Pedidos', icon: 'sym_o_list_alt', path: 'order-list' },
   { title: 'Financeiro', icon: 'sym_o_insert_chart', path: 'finance' },
   { title: 'Agenda', icon: 'sym_o_calendar_month', path: 'appointment-list' }
-];
+]
 
 const open = (path) => {
-  clearFromState();
-  state.value.from.menu = 'tab-menu';
-  tab.value = path;
-  router.push({ name: path });
-};
+  clearFromState()
+  state.value.from.menu = 'tab-menu'
+  tab.value = path
+  router.push({ name: path })
+}
 </script>
 
 <template>

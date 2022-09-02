@@ -1,23 +1,23 @@
 <script setup>
-import { onMounted } from 'vue';
-import { SideBar, TabBar } from 'src/components';
-import { useAuth, useStore } from 'src/composables';
+import { onMounted } from 'vue'
+import { SideBar, TabBar } from 'src/components'
+import { useAuth, useStore } from 'src/composables'
 
-const { isLoggedIn } = useAuth();
-const { clearFromState } = useStore();
+const { isLoggedIn } = useAuth()
+const { clearFromState } = useStore()
 
 const removeLoader = () => {
-  const loading = document.querySelector('#loading');
-  loading.classList.add('init_done');
+  const loading = document.querySelector('#loading')
+  loading.classList.add('init_done')
   window.setTimeout(function () {
-    loading.remove();
-  }, 200);
-};
+    loading.remove()
+  }, 200)
+}
 
 onMounted(() => {
-  clearFromState();
-  removeLoader();
-});
+  clearFromState()
+  removeLoader()
+})
 </script>
 
 <template>

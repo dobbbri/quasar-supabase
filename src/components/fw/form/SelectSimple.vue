@@ -1,22 +1,22 @@
 <!-- todo -->
 <!-- https://quasar.dev/vue-components/select#filtering-and-autocomplete -->
 <script setup>
-import { ref, defineProps } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { ref, defineProps } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
 const props = defineProps({
   options: { type: String, required: true }
-});
+})
 
-const options = ref(props.options);
+const options = ref(props.options)
 
 const filterFn = (val, update) => {
   update(() => {
-    const needle = val.toLowerCase();
-    options.value = props.options.filter((v) => v.toLowerCase().indexOf(needle) > -1);
-  });
-};
+    const needle = val.toLowerCase()
+    options.value = props.options.filter((v) => v.toLowerCase().indexOf(needle) > -1)
+  })
+}
 </script>
 
 <template>

@@ -1,42 +1,42 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuth, useTools, useDefaults } from 'src/composables';
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuth, useTools, useDefaults } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { loading, login, logout } = useAuth();
-const { notify } = useTools();
-const { attr } = useDefaults();
+const { loading, login, logout } = useAuth()
+const { notify } = useTools()
+const { attr } = useDefaults()
 
-const isPwd = ref(true);
+const isPwd = ref(true)
 
 const form = ref({
   email: 'sergiodobri@gmail.com',
   password: '123456'
-});
+})
 
 const handleSubmit = async () => {
   try {
-    await login(form.value);
-    router.push({ name: 'load-data' });
+    await login(form.value)
+    router.push({ name: 'load-data' })
   } catch (error) {
-    notify.error('Credenciais inválidas', error);
-    throw error;
+    notify.error('Credenciais inválidas', error)
+    throw error
   }
-};
+}
 
 const handleLogout = async () => {
   try {
-    await logout();
+    await logout()
   } catch (error) {
-    console.log('logout error : ', error);
+    console.log('logout error : ', error)
   }
-};
+}
 
 onMounted(async () => {
-  await handleLogout();
-});
+  await handleLogout()
+})
 </script>
 
 <template>

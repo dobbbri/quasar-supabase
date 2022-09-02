@@ -1,35 +1,35 @@
 <script setup>
-import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { useServices, useTools, useData } from 'src/composables';
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useServices, useTools, useData } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { measureUnits } = useData();
-const { loading, service, addService, editService } = useServices();
-const { notify } = useTools();
+const { measureUnits } = useData()
+const { loading, service, addService, editService } = useServices()
+const { notify } = useTools()
 
-const isEditMode = computed(() => (service.value && service.value.id ? true : false));
+const isEditMode = computed(() => (service.value && service.value.id ? true : false))
 
-const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const handleBackTo = () => {
-  router.push({ name: 'service-list' });
-};
+  router.push({ name: 'service-list' })
+}
 
 const handleSubmit = async () => {
   try {
     if (isEditMode.value) {
-      await editService(service.value);
+      await editService(service.value)
     } else {
-      await addService(service.value);
+      await addService(service.value)
     }
-    notify.success(`Serviço ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
-    router.push({ name: 'service-list' });
+    notify.success(`Serviço ${isEditMode.value ? 'alterado' : 'adicionado'}.`)
+    router.push({ name: 'service-list' })
   } catch (error) {
-    notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error);
+    notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error)
   }
-};
+}
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-import { Dialog } from 'quasar';
+import { Dialog } from 'quasar'
 
 export default function useConfirm() {
   const confirm = {
@@ -9,7 +9,7 @@ export default function useConfirm() {
         cancel: { label: 'Cancelar', flat: true, noCaps: true },
         ok: { label: 'Excluir', flat: true, noCaps: true, color: 'negative' },
         persistent: true
-      });
+      })
     },
     exit: () => {
       return Dialog.create({
@@ -18,11 +18,11 @@ export default function useConfirm() {
         ok: { label: 'Ok. Sair', flat: true, noCaps: true, color: 'negative' },
         cancel: { label: 'Cancelar', flat: true, noCaps: true },
         persistent: true
-      });
+      })
     }
-  };
+  }
 
   return {
     confirm
-  };
+  }
 }

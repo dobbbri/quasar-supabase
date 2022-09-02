@@ -1,14 +1,14 @@
 <!-- todo -->
 <!-- https://quasar.dev/vue-components/select#filtering-and-autocomplete -->
 <script setup>
-import { defineProps } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { defineProps } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
 defineProps({
   options: { type: Array, required: true },
   showId: { type: Boolean, default: false }
-});
+})
 </script>
 
 <template>

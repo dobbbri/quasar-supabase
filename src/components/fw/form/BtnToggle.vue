@@ -1,11 +1,11 @@
 <script setup>
-import { defineProps } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { defineProps } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
 defineProps({
   options: { type: Object, required: true }
-});
+})
 </script>
 
 <template>

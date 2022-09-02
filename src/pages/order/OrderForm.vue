@@ -1,60 +1,60 @@
 <script setup>
-import { computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { OrderFooter } from 'src/components';
-import { useOrders, useTools, useStore } from 'src/composables';
+import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { OrderFooter } from 'src/components'
+import { useOrders, useTools, useStore } from 'src/composables'
 
-const router = useRouter();
+const router = useRouter()
 
-const { state, isFromTabMenu } = useStore();
-const { loading, order, temp, addOrder, editOrder } = useOrders();
-const { notify } = useTools();
+const { state, isFromTabMenu } = useStore()
+const { loading, order, temp, addOrder, editOrder } = useOrders()
+const { notify } = useTools()
 
-const isEditMode = computed(() => (order.value && order.value.id ? true : false));
+const isEditMode = computed(() => (order.value && order.value.id ? true : false))
 
-const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'));
+const title = computed(() => (isEditMode.value ? 'Alterar' : 'Adicionar'))
 
 const total = computed(() => {
-  return temp.value.product.total + temp.value.service.total;
-});
+  return temp.value.product.total + temp.value.service.total
+})
 
 const handleBackTo = () => {
   if (!isFromTabMenu.value) {
-    router.push({ name: 'main-menu' });
+    router.push({ name: 'main-menu' })
   } else {
-    router.push({ name: 'order-list' });
+    router.push({ name: 'order-list' })
   }
-};
+}
 
 const selectCustomer = () => {
-  router.push({ name: 'customer-list' });
-};
+  router.push({ name: 'customer-list' })
+}
 
 const handleSubmit = async () => {
   try {
-    order.total = total;
-    order.product_total = temp.value.product.total;
-    order.service_total = temp.value.service.total;
+    order.total = total
+    order.product_total = temp.value.product.total
+    order.service_total = temp.value.service.total
     if (isEditMode.value) {
-      await editOrder(order.value);
+      await editOrder(order.value)
     } else {
-      await addOrder(order.value);
+      await addOrder(order.value)
     }
-    notify.success(`Pedido ${isEditMode.value ? 'alterado' : 'adicionado'}.`);
-    router.push({ name: 'order-list' });
+    notify.success(`Pedido ${isEditMode.value ? 'alterado' : 'adicionado'}.`)
+    router.push({ name: 'order-list' })
   } catch (error) {
-    notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error);
+    notify.error(`Erro ao ${title.value.toLowerCase()} o serviço.`, error)
   }
-};
+}
 
 const handleListSelectedItems = (value) => {
-  temp.value.active = value;
-  router.push({ name: 'order-item-list' });
-};
+  temp.value.active = value
+  router.push({ name: 'order-item-list' })
+}
 
 onMounted(async () => {
-  state.value.from.form1 = 'order-form';
-});
+  state.value.from.form1 = 'order-form'
+})
 </script>
 
 <template>

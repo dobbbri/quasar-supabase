@@ -1,10 +1,10 @@
-import { ref } from 'vue';
-import { useApi } from 'src/composables';
+import { ref } from 'vue'
+import { useApi } from 'src/composables'
 
-const service = ref(null);
+const service = ref(null)
 
 export default function useServices() {
-  const { loading, list, get, add, edit, remove, count } = useApi('services');
+  const { loading, list, get, add, edit, remove, count } = useApi('services')
 
   const clearService = () => {
     service.value = {
@@ -12,8 +12,8 @@ export default function useServices() {
       details: '',
       unit_price: 0,
       measure_unit: 'un.'
-    };
-  };
+    }
+  }
 
   return {
     loading,
@@ -25,5 +25,5 @@ export default function useServices() {
     editService: edit,
     removeService: remove,
     countService: count
-  };
+  }
 }

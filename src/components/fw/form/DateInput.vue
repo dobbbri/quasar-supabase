@@ -1,16 +1,16 @@
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
-import { useDefaults } from 'src/composables';
-const { attr } = useDefaults();
+import { ref, defineProps, defineEmits } from 'vue'
+import { useDefaults } from 'src/composables'
+const { attr } = useDefaults()
 
 defineProps({
   date: {
     type: [String, Number],
     required: true
   }
-});
+})
 
-const emit = defineEmits(['update:date']);
+const emit = defineEmits(['update:date'])
 
 const myLocale = ref({
   /* starting with Sunday */
@@ -24,22 +24,22 @@ const myLocale = ref({
   firstDayOfWeek: 0, // 0-6, 0 - Sunday, 1 Monday, ...
   format24h: true,
   pluralDay: 'dias'
-});
+})
 
 const isValidDate = (date) => {
   if (date) {
-    const temp = date.split('/');
+    const temp = date.split('/')
     // const d = new Date(temp[2] + '/' + temp[1] + '/' + temp[0]);
     // ISO standard YYYY-MM-DD
-    const d = new Date(temp[2], temp[1] - 1, temp[0]);
+    const d = new Date(temp[2], temp[1] - 1, temp[0])
     return (
       d &&
       d.getDate() === Number(temp[0]) &&
       d.getMonth() + 1 === Number(temp[1]) &&
       d.getFullYear() === Number(temp[2])
-    );
+    )
   }
-};
+}
 // Quasar.utils.date.formatDate(new Date(), 'DD.MM.YYYY')
 </script>
 

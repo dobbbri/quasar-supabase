@@ -1,10 +1,10 @@
-import { ref } from 'vue';
-import { useApi } from 'src/composables';
+import { ref } from 'vue'
+import { useApi } from 'src/composables'
 
-const temp = ref(null);
-const order = ref(null);
-const orderProduct = ref(null);
-const orderService = ref(null);
+const temp = ref(null)
+const order = ref(null)
+const orderProduct = ref(null)
+const orderService = ref(null)
 
 export default function useOrders() {
   const {
@@ -15,7 +15,7 @@ export default function useOrders() {
     edit: editOrder,
     remove: removeOrder,
     count: countOrder
-  } = useApi('orders');
+  } = useApi('orders')
 
   // const {
   //   get: getOrderProduct,
@@ -42,7 +42,7 @@ export default function useOrders() {
       products_total: 0,
       services_total: 0,
       total: 0
-    };
+    }
     temp.value = {
       order_id: '',
       created_at: '',
@@ -60,8 +60,8 @@ export default function useOrders() {
         list: [],
         selected: 0
       }
-    };
-  };
+    }
+  }
 
   const clearOrderProduct = () => {
     orderProduct.value = {
@@ -70,8 +70,8 @@ export default function useOrders() {
       price: 0,
       measure_unit: 'un.',
       amount: 0
-    };
-  };
+    }
+  }
   const clearOrderService = () => {
     orderService.value = {
       id: 0,
@@ -79,8 +79,8 @@ export default function useOrders() {
       price: 0,
       measure_unit: 'un.',
       amount: 0
-    };
-  };
+    }
+  }
 
   return {
     loading,
@@ -97,7 +97,7 @@ export default function useOrders() {
     editOrder,
     removeOrder,
     countOrder
-  };
+  }
 }
 
 // clientId,clientName,

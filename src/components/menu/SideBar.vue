@@ -1,13 +1,13 @@
 <script setup>
-import { useDefaults, useStore } from 'src/composables';
+import { useDefaults, useStore } from 'src/composables'
 
-const { attr } = useDefaults();
-const { state, toggleSidebar } = useStore();
+const { attr } = useDefaults()
+const { state, toggleSidebar } = useStore()
 
 const menuList = [
   { title: 'Configuracões', icon: 'sym_o_tune', routeName: 'settings-form' },
   { title: 'Sair', icon: 'sym_o_logout', routeName: 'user-logout' }
-];
+]
 </script>
 
 <template>

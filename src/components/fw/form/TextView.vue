@@ -1,11 +1,11 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from 'vue'
 
 defineProps({
   label: { type: String, default: '' },
   value: { type: [String, Number], default: '' },
   value2: { type: String, default: '' }
-});
+})
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import { useCustomers, useOrders, useStore } from 'src/composables';
+import { useRouter } from 'vue-router'
+import { useCustomers, useOrders, useStore } from 'src/composables'
 
-const router = useRouter();
-const { clearCustomer } = useCustomers();
-const { clearOrder } = useOrders();
-const { state, clearFromState } = useStore();
+const router = useRouter()
+const { clearCustomer } = useCustomers()
+const { clearOrder } = useOrders()
+const { state, clearFromState } = useStore()
 
 const shortcutsMenu = [
   { title: 'Criar Novo Pedido', icon: 'post_add', color: 'blue', path: 'order-form' },
@@ -16,21 +16,21 @@ const shortcutsMenu = [
   { title: 'Agendar Compromisso', icon: 'more_time', color: 'indigo', path: 'appointment-form' },
   { title: 'Catalogo de Serviços', icon: 'design_services', color: 'purple', path: 'service-list' },
   { title: 'Catalogo de Produtos', icon: 'inventory_2', color: 'deep-purple', path: 'product-list' }
-];
+]
 
 const open = (path) => {
-  clearFromState();
-  state.value.formName = path;
-  state.value.from.menu = 'main-menu';
+  clearFromState()
+  state.value.formName = path
+  state.value.from.menu = 'main-menu'
 
   if (path == 'order-form') {
-    clearOrder();
+    clearOrder()
   } else if (path == 'customer-form') {
-    clearCustomer();
+    clearCustomer()
   }
 
-  router.push({ name: path });
-};
+  router.push({ name: path })
+}
 </script>
 
 <template>

@@ -1,24 +1,24 @@
 <script setup>
-import { toRef, defineProps, defineEmits, watch } from 'vue';
-import { useTools } from 'src/composables';
+import { toRef, defineProps, defineEmits, watch } from 'vue'
+import { useTools } from 'src/composables'
 
-const { fmt } = useTools();
+const { fmt } = useTools()
 
 const props = defineProps({
   product: { type: Object, required: true, default: () => {} }
-});
+})
 
-defineEmits(['remove']);
+defineEmits(['remove'])
 
-const product = toRef(props, 'product');
+const product = toRef(props, 'product')
 
 watch(
   () => product.value.amount,
   () => {
-    product.value.total = product.value.unit_price * product.value.amount;
+    product.value.total = product.value.unit_price * product.value.amount
   },
   { deep: true }
-);
+)
 </script>
 
 <template>

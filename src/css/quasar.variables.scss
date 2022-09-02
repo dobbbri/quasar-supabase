@@ -1,4 +1,6 @@
 // Quasar SCSS (& Sass) Variables
+$white: #ffffff !default;
+$black: #000000 !default;
 
 $primary: rgba(14, 66, 119, 1);
 $secondary: #028ff5;
@@ -18,8 +20,8 @@ $body-line-height: 1.7 !default;
 $tooltip-fontsize: 14px !default;
 
 $input-font-size: $body-font-size !default;
-$input-text-color: rgba(0, 0, 0, 1.00) !default;
-$input-label-color: rgba(97, 97, 97, 1.00) !default;
+$input-text-color: rgba(0, 0, 0, 1) !default;
+$input-label-color: rgba(97, 97, 97, 1) !default;
 
 $button-font-size: $body-font-size !default;
 $button-padding: 4px 16px !default;

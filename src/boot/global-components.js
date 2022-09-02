@@ -1,5 +1,5 @@
-import { defineAsyncComponent } from 'vue';
-import { boot } from 'quasar/wrappers';
+import { defineAsyncComponent } from 'vue'
+import { boot } from 'quasar/wrappers'
 
 const globalComponents = {
   page: () => import('components/fw/page/Page.vue'),
@@ -44,10 +44,10 @@ const globalComponents = {
   // 'fab-menu': () => import('components/fw/form/FabMenu.vue'),
   // 'fab-edit-action': () => import('components/fw/form/FabEditAction.vue'),
   // 'fab-remove-action': () => import('components/fw/form/FabRemoveAction.vue')
-};
+}
 
 export default boot(async ({ app }) => {
   for (const key in globalComponents) {
-    app.component(key, defineAsyncComponent(globalComponents[key]));
+    app.component(key, defineAsyncComponent(globalComponents[key]))
   }
-});
+})
