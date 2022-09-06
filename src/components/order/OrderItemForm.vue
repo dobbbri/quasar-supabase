@@ -39,7 +39,7 @@ watch(
       <div class="col q-pl-md">
         <btn-icon
           icon="sym_o_delete"
-          class="bg-negative"
+          class="bg-negative text-white"
           tooltip="Excluir"
           index="-1"
           @click="$emit('remove')"
