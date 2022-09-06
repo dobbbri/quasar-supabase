@@ -66,7 +66,7 @@ onMounted(async () => {
         </template>
         <template #title>{{ title }} Pedido</template>
         <template #right>
-          <btn-save :loading="loading.value" type="submit" />
+          <btn-save :loading="loading" type="submit" />
         </template>
       </page-header>
 

@@ -71,9 +71,9 @@ onMounted(async () => {
     </page-header>
 
     <page-body>
-      <waiting-load :showing="loading.value" />
+      <waiting-load :showing="loading" />
 
-      <q-list v-if="!loading.value" separator class="q-mt-sm -q-mx-md">
+      <q-list v-if="!loading" separator class="q-mt-sm -q-mx-md">
         <q-item
           v-for="(service, index) in services"
           :key="index"

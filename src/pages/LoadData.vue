@@ -59,6 +59,6 @@ onMounted(() => {
       <template #title>Endless</template>
     </page-header>
 
-    <waiting-load :showing="loading.value" />
+    <waiting-load :showing="loading" />
   </page>
 </template>

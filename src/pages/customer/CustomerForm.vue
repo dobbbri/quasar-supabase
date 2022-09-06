@@ -70,7 +70,7 @@ const handleSubmit = async () => {
         </template>
         <template #title>Cliente</template>
         <template #right>
-          <btn-header label="Gravar" :loading="loading.value" type="submit" />
+          <btn-header label="Gravar" :loading="loading" type="submit" />
         </template>
       </page-header>
 
@@ -137,7 +137,7 @@ const handleSubmit = async () => {
           color="negative"
           label="Excluir cliente"
           class="q-mt-lg -q-mx-md"
-          :loading="loading.value"
+          :loading="loading"
           @click="handleRemoveCustomer()"
         />
       </page-body>

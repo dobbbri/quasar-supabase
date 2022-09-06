@@ -63,8 +63,8 @@ onMounted(async () => {
         <template #title>Produto</template>
         <template #right>
           <fab-menu>
-            <fab-remove-action :loading="loading.value" @click="handleRemoveProduct(form)" />
-            <fab-edit-action :loading="loading.value" :to="{ name: 'product-form' }" />
+            <fab-remove-action :loading="loading" @click="handleRemoveProduct(form)" />
+            <fab-edit-action :loading="loading" :to="{ name: 'product-form' }" />
           </fab-menu>
         </template>
       </page-header>

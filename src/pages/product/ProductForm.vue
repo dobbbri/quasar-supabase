@@ -41,7 +41,7 @@ const handleSubmit = async () => {
         </template>
         <template #title>{{ title }} Produto</template>
         <template #right>
-          <btn-save :loading="loading.value" type="submit" />
+          <btn-save :loading="loading" type="submit" />
         </template>
       </page-header>
 

@@ -61,7 +61,7 @@ onMounted(async () => {
     </page-header>
 
     <page-body>
-      <q-list v-if="!loading.value" separator class="q-mt-sm -q-mx-md">
+      <q-list v-if="!loading" separator class="q-mt-sm -q-mx-md">
         <q-item
           v-for="(product, index) in products"
           :key="index"

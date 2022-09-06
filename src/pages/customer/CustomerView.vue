@@ -43,7 +43,7 @@ onMounted(async () => {
         </template>
         <template #title>Cliente</template>
         <template #right>
-          <btn-header label="Alterar" :loading="loading.value" :to="{ name: 'customer-form' }" />
+          <btn-header label="Alterar" :loading="loading" :to="{ name: 'customer-form' }" />
         </template>
       </page-header>
 
