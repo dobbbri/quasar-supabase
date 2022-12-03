@@ -70,7 +70,7 @@ const open = (path) => {
 
     <div>
       <div class="q-mb-sm q-mt-lg text-primary title title-expansion">Compromissos</div>
-      <div class="row q-gutter-md"></div>
+      <div class="row q-gutter-md" />
     </div>
   </div>
 </template>

@@ -24,11 +24,11 @@ module.exports = {
     // See https://eslint.vuejs.org/rules/#available-rules
     // 'plugin:vue/vue3-essential', // Priority A: Essential (Error Prevention)
     // 'plugin:vue/vue3-strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
-    'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
+    'plugin:vue/vue3-recommended' // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
-    'plugin:prettier/recommended'
+    // 'plugin:prettier/recommended'
   ],
 
   plugins: [
@@ -56,6 +56,8 @@ module.exports = {
 
   // add your custom rules here
   rules: {
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/max-attributes-per-line': 'off',
     'prefer-promise-reject-errors': 'off',
     'vue/multi-word-component-names': 0,
     // allow debugger during development only
